@@ -108,11 +108,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0003-zstd.patch::${_patches_url}/zstd-patches-v2/0001-zstd-patches.patch"
         )
 
-validpgpkeys=(
-    'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
-    '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
-)
-
 # Archlinux patches
 _commits=""
 for _patch in $_commits; do
