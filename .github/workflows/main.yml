@@ -12,6 +12,7 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           pkgdir: 'linux-xanmod-custom'
+          makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -27,6 +28,7 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           pkgdir: 'linux-xanmod-lts'
+          makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -42,6 +44,7 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           pkgdir: 'linux-xanmod-edge'
+          makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -57,6 +60,7 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           pkgdir: 'linux-xanmod-cacule-uksm-cjktty'
+          makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
