@@ -9,12 +9,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: antman666/pkgbuild-action@master
+        uses: 2m/arch-pkgbuild-builder@v1.18
         with:
-          pkgdir: "linux-xanmod-custom"
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          target: 'pkgbuild'
+          pkgname: 'linux-xanmod-custom'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -27,12 +25,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: antman666/pkgbuild-action@master
+        uses: 2m/arch-pkgbuild-builder@v1.18
         with:
-          pkgdir: "linux-xanmod-lts"
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          target: 'pkgbuild'
+          pkgname: 'linux-xanmod-lts'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -45,12 +41,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: antman666/pkgbuild-action@master
+        uses: 2m/arch-pkgbuild-builder@v1.18
         with:
-          pkgdir: "linux-xanmod-edge"
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          target: 'pkgbuild'
+          pkgname: 'linux-xanmod-edge'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -63,12 +57,10 @@ jobs:
       - name: build linux-xanmod-cacule-uksm for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: antman666/pkgbuild-action@master
+        uses: 2m/arch-pkgbuild-builder@v1.18
         with:
-          pkgdir: "linux-xanmod-cacule-uksm-cjktty"
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          target: 'pkgbuild'
+          pkgname: 'linux-xanmod-cacule-uksm-cjktty'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
