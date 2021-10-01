@@ -60,6 +60,7 @@ _makenconfig=
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-edge
+pkgname=('linux-xanmod' 'linux-xanmod-headers')
 _major=5.14
 pkgver=${_major}.9
 _branch=5.x
@@ -125,6 +126,7 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/${_compiler}/config .config
+
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
@@ -206,10 +208,10 @@ prepare() {
 
 build() {
   cd linux-${_major}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
+  make LLVM=$_LLVM LLVM_IAS=$_LLVM all -j${nproc}
 }
 
-_package() {
+package_linux-xanmod() {
   pkgdesc="The Linux kernel and modules with Xanmod patches"
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
@@ -234,7 +236,7 @@ _package() {
   rm "$modulesdir"/{source,build}
 }
 
-_package-headers() {
+package_linux-xanmod-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
   depends=(pahole)
 
@@ -311,13 +313,5 @@ _package-headers() {
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
-
-pkgname=("${pkgbase}" "${pkgbase}-headers")
-for _p in "${pkgname[@]}"; do
-  eval "package_$_p() {
-    $(declare -f "_package${_p#$pkgbase}")
-    _package${_p#$pkgbase}
-  }"
-done
 
 # vim:set ts=8 sts=2 sw=2 et:

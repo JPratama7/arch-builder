@@ -125,6 +125,7 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/${_compiler}/config .config
+
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
@@ -206,7 +207,7 @@ prepare() {
 
 build() {
   cd linux-${_major}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
+  make LLVM=$_LLVM LLVM_IAS=$_LLVM all -j${nproc}
 }
 
 _package() {
