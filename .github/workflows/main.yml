@@ -1,0 +1,77 @@
+name: Github Action Build PKGBUILD
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build_xanmod_custom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-xanmod-custom for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@master
+        with:
+          pkgdir: "linux-xanmod-custom"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build_xanmod_lts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-xanmod-custom for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@master
+        with:
+          pkgdir: "linux-xanmod-lts"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build_xanmod_edge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-xanmod-custom for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@master
+        with:
+          pkgdir: "linux-xanmod-edge"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build_xanmod_cacule_uksm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build linux-xanmod-cacule-uksm for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@master
+        with:
+          pkgdir: "linux-xanmod-cacule-uksm-cjktty"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
