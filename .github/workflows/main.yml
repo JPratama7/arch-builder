@@ -11,7 +11,6 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          target: 'pkgbuild'
           pkgdir: 'linux-xanmod-custom'
       - uses: ncipollo/release-action@v1.8.6
         with:
@@ -27,7 +26,6 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          target: 'pkgbuild'
           pkgdir: 'linux-xanmod-lts'
       - uses: ncipollo/release-action@v1.8.6
         with:
@@ -43,7 +41,6 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          target: 'pkgbuild'
           pkgdir: 'linux-xanmod-edge'
       - uses: ncipollo/release-action@v1.8.6
         with:
@@ -59,7 +56,6 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          target: 'pkgbuild'
           pkgdir: 'linux-xanmod-cacule-uksm-cjktty'
       - uses: ncipollo/release-action@v1.8.6
         with:
