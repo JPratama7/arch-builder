@@ -38,9 +38,7 @@ _compiler=clang
 
 
 # Compress modules with ZSTD (to save disk space)
-if [ -z ${_compress_modules+x} ]; then
-  _compress_modules=n
-fi
+_compress_modules=y
 
 # Compile ONLY used modules to VASTLY reduce the number of modules built
 # and the build time.
@@ -158,6 +156,8 @@ prepare() {
   # Compress modules by default (following Arch's kernel)
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+    scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
+    scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 3
   fi
 
   # Let's user choose microarchitecture optimization in GCC
