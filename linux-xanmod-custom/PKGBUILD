@@ -53,11 +53,6 @@ _futex2=y
 
 _lrng_enable=y
 
-## Setting some security options
-use_selinux=n
-use_tomoyo=n
-use_yama=n
-use_apparmor=y
 
 # Compile ONLY used modules to VASTLYreduce the number of modules built
 # and the build time.
@@ -266,11 +261,7 @@ prepare() {
   scripts/config --enable CONFIG_NTFS3_FS_POSIX_ACL
   
   
-  
-  
 
-  scripts/config --disable CONFIG_DEFAULT_SECURITY_APPARMOR
-  scripts/config --enable CONFIG_DEFAULT_SECURITY_DAC
   scripts/config --enable CONFIG_FTRACE
   scripts/config --enable CONFIG_FTRACE_SYSCALLS
 
