@@ -80,7 +80,7 @@ url="http://www.xanmod.org/"
 arch=(x86_64)
 license=(GPL2)
 makedepends=(
-  xmlto kmod inetutils bc libelf cpio perl tar xz
+  xmlto kmod inetutils bc libelf cpio perl tar xz coreutils initramfs pahole
 )
 
 if [ "${_compiler}" = "clang" ]; then
