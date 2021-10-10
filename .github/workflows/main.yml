@@ -3,6 +3,7 @@ on:
   push:
   workflow_dispatch:
 jobs:
+
   build_xanmod_custom:
     runs-on: ubuntu-latest
     steps:
@@ -11,14 +12,15 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          pkgdir: 'linux-xanmod-custom'
+          pkgdir: 'kernel/linux-xanmod-custom'
           makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
-          tag: "xanmod-custom"
+          tag: "kernel"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
   build_xanmod_lts:
     runs-on: ubuntu-latest
     steps:
@@ -27,14 +29,15 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          pkgdir: 'linux-xanmod-lts'
+          pkgdir: 'kernel/linux-xanmod-lts'
           makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
-          tag: "xanmod-lts"
+          tag: "kernel"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
   build_xanmod_edge:
     runs-on: ubuntu-latest
     steps:
@@ -43,14 +46,15 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          pkgdir: 'linux-xanmod-edge'
+          pkgdir: 'kernel/linux-xanmod-edge'
           makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
-          tag: "xanmod-edge"
+          tag: "kernel"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
   build_xanmod_cacule_uksm_cjktty:
     runs-on: ubuntu-latest
     steps:
@@ -59,11 +63,28 @@ jobs:
       - id: makepkg
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
-          pkgdir: 'linux-xanmod-cacule-uksm-cjktty'
+          pkgdir: 'kernel/linux-xanmod-cacule-uksm-cjktty'
           makepkgArgs: '--skippgpcheck'
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
-          tag: "xanmod-cacule-uksm-cjktty"
+          tag: "kernel"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_slimjet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build slimjet for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: edlanglois/pkgbuild-action@v1.1.7
+        with:
+          pkgdir: 'app/slimjet'
+          makepkgArgs: '--skippgpcheck'
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "app"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}

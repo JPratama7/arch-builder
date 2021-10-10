@@ -1,4 +1,5 @@
-# Maintainer: Joan Figueras <ffigue at gmail dot com>
+# Maintainer: JPratama7 <josepratama080@gmail.com
+# Original Maintainer: Joan Figueras <ffigue at gmail dot com>
 # Contributor: Torge Matthies <openglfreak at googlemail dot com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Yoshi2889 <rick.2889 at gmail dot com>
@@ -14,7 +15,9 @@
 ## Valid numbers between: 0 to 99
 ## Default is: 0 => generic
 ## Good option if your package is for one machine: 98 (Intel native) or 99 (AMD native)
-_microarchitecture=0
+if [ -z ${_microarchitecture+x} ]; then
+  _microarchitecture=0
+fi
 
 ## Disable NUMA since most users do not have multiple processors. Breaks CUDA/NvEnc.
 ## Archlinux and Xanmod enable it by default.
@@ -33,12 +36,14 @@ if [ -z ${use_tracers+x} ]; then
 fi
 
 ## Choose between GCC and CLANG config (default is GCC)
-# gcc or clang
-_compiler=clang
-
+if [ -z ${_compiler+x} ]; then
+  _compiler=gcc
+fi
 
 # Compress modules with ZSTD (to save disk space)
-_compress_modules=y
+if [ -z ${_compress_modules+x} ]; then
+  _compress_modules=y
+fi
 
 # Compile ONLY used modules to VASTLY reduce the number of modules built
 # and the build time.
@@ -57,20 +62,19 @@ _makenconfig=
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
-pkgbase=linux-xanmod-edge
-pkgname=('linux-xanmod' 'linux-xanmod-headers')
+pkgbase=linux-xanmod
 _major=5.14
-pkgver=${_major}.9
+pkgver=${_major}.11
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
-pkgdesc='Linux Xanmod - Latest Mainline (EDGE)'
+pkgdesc='Linux Xanmod - Current Stable (STABLE)'
 url="http://www.xanmod.org/"
 arch=(x86_64)
 
 license=(GPL2)
 makedepends=(
-  bc cpio kmod libelf perl tar xz coreutils initramfs pahole
+  bc cpio kmod libelf perl tar xz
 )
 if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm lld python)
@@ -82,7 +86,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh)
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
-
+validpgpkeys=(
+    'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
+    '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
+)
 
 # Archlinux patches
 _commit="ec9e9a4219fe221dec93fa16fddbe44a34933d8d"
@@ -94,7 +101,7 @@ done
 
 sha256sums=('7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2'
             'SKIP'
-            '6411c502e290ed9b77fc314a885cc8ca23f0674e821afa04ae263482e9cbb076'
+            '28a693aa89638012562172da2790e951f233f222e288c83f9e568ce28a542bbb'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
@@ -110,7 +117,7 @@ prepare() {
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-xanmod-edge}" > localversion.20-pkgname
+  echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
 
   # Archlinux patches
   local src
@@ -124,7 +131,6 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/${_compiler}/config .config
-
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
@@ -156,10 +162,14 @@ prepare() {
   # Compress modules by default (following Arch's kernel)
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
-    scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
-    scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 3
   fi
 
+  # Enable Os Clang Optimization
+  echo "Enable Os Optimization"
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+  
   # Let's user choose microarchitecture optimization in GCC
   sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
 
@@ -211,7 +221,7 @@ build() {
   make LLVM=$_LLVM LLVM_IAS=$_LLVM all
 }
 
-package_linux-xanmod() {
+_package() {
   pkgdesc="The Linux kernel and modules with Xanmod patches"
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
@@ -236,7 +246,7 @@ package_linux-xanmod() {
   rm "$modulesdir"/{source,build}
 }
 
-package_linux-xanmod-headers() {
+_package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
   depends=(pahole)
 
@@ -313,5 +323,13 @@ package_linux-xanmod-headers() {
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
+
+pkgname=("${pkgbase}" "${pkgbase}-headers")
+for _p in "${pkgname[@]}"; do
+  eval "package_$_p() {
+    $(declare -f "_package${_p#$pkgbase}")
+    _package${_p#$pkgbase}
+  }"
+done
 
 # vim:set ts=8 sts=2 sw=2 et:
