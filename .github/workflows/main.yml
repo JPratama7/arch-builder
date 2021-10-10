@@ -14,7 +14,7 @@ jobs:
         with:
           pkgdir: 'kernel/linux-xanmod-custom'
           makepkgArgs: '--skippgpcheck'
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
@@ -31,7 +31,7 @@ jobs:
         with:
           pkgdir: 'kernel/linux-xanmod-lts'
           makepkgArgs: '--skippgpcheck'
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
@@ -48,7 +48,7 @@ jobs:
         with:
           pkgdir: 'kernel/linux-xanmod-edge'
           makepkgArgs: '--skippgpcheck'
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
@@ -65,7 +65,7 @@ jobs:
         with:
           pkgdir: 'kernel/linux-xanmod-cacule-uksm-cjktty'
           makepkgArgs: '--skippgpcheck'
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
@@ -82,9 +82,8 @@ jobs:
         with:
           pkgdir: 'app/slimjet'
           makepkgArgs: '--skippgpcheck'
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "app"
-          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
