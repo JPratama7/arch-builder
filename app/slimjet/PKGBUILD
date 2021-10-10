@@ -22,7 +22,7 @@ prepare() {
     bsdtar -xf data.tar.xz
 }
 
-_package() {
+package() {
     cp --parents -a {opt,usr/bin,usr/share} "${pkgdir}"
 
     # install license

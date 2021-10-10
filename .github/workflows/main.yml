@@ -86,4 +86,5 @@ jobs:
         with:
           allowUpdates: true
           tag: "app"
+          artifacts: "*./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
