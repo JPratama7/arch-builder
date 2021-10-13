@@ -12,8 +12,8 @@ jobs:
       - id: makepkg
         uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
