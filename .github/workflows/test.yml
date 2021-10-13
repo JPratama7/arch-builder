@@ -1,4 +1,4 @@
-name: Github Action Build PKGBUILD
+name: test
 on:
   push:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: JPratama7/arch-pkgbuild-builder@master
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
           pkgdir: 'kernel/linux-xanmod'
           makepkgArgs: '--skippgpcheck'
