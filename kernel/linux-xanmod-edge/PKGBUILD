@@ -37,7 +37,7 @@ fi
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=clang
+  _compiler=gcc
 fi
 
 # Compress modules with ZSTD (to save disk space)
@@ -131,6 +131,7 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/${_compiler}/config .config
+
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
