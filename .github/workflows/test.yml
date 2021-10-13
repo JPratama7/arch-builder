@@ -13,7 +13,7 @@ jobs:
         uses: JPratama7/arch-pkgbuild-builder@main
         with:
           target: "pkgbuild"
-          pkgname: "kernel/linux-xanmod"
+          pkgname: "kernel/linux-xanmod-custom"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
