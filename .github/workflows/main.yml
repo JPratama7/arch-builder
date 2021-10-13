@@ -10,14 +10,14 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
-          tag: "kernel"
+          tag: "test"
           artifacts: "kernel/./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -27,10 +27,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod-custom'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod-custom"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
@@ -44,10 +44,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod-lts'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod-lts"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
@@ -61,10 +61,10 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+          uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod-edge'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod-edge"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
@@ -78,10 +78,10 @@ jobs:
       - name: build linux-xanmod-cacule-uksm for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'kernel/linux-xanmod-cacule-uksm-cjktty'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "kernel/linux-xanmod-cacule-uksm-cjktty"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
@@ -95,10 +95,10 @@ jobs:
       - name: build slimjet for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/arch-pkgbuild-builder@main
         with:
-          pkgdir: 'app/slimjet'
-          makepkgArgs: '--skippgpcheck'
+          target: "pkgbuild"
+          pkgname: "app/slimjet"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
