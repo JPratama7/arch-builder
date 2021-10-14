@@ -217,6 +217,11 @@ prepare() {
 }
 
 build() {
+  if [ "${_compiler}" = "gcc" ]; then
+    CFLAGS="-pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -flto -fuse-linker-plugin"
+    CXXFLAGS=${CFLAGS}
+  fi
+
   cd linux-${_major}
   make LLVM=$_LLVM LLVM_IAS=$_LLVM all
 }
