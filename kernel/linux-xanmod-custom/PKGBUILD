@@ -39,7 +39,7 @@ use_tracers=y
 
 ## Compiler
 
-_compiler=clang
+_compiler=gcc
 
 #####################
 # CUSTOM PATCH
@@ -56,6 +56,9 @@ _lrng_enable=y
 
 #Enable Winesync
 _winesync=y
+
+#####Add Flags
+_flags="-pipe -fno-plt -fexceptions -D_FORTIFY_SOURCE=2 -Wformat -fstack-clash-protection -fcf-protection -flto"
 
 #####################
 
@@ -343,15 +346,14 @@ prepare() {
 
 build() {
   cd linux-${_major}
-
+  
   if [ "${_compiler}" = "gcc" ]; then
-    CFLAGS="-pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -flto -fuse-linker-plugin"
-    CXXFLAGS=${CFLAGS}
-    echo ${CFLAGS}
-    echo ${CXXFLAGS}
+    echo "enabling gcc optimization"
+    CFLAGS="${_flags} -fuse-linker-plugin"
+    CXXFLAGS="${CFLAGS} -D_GLIBCXX_ASSERTIONS"
   fi
   
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM -j${_jobs} all
+  make LLVM=$_LLVM LLVM_IAS=$_LLVM -j${_jobs} CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" all
 }
 
 _package() {

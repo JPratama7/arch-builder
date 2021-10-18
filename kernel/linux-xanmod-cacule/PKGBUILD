@@ -41,7 +41,7 @@ fi
 
 # Compress modules with ZSTD (to save disk space)
 if [ -z ${_compress_modules+x} ]; then
-  _compress_modules=n
+  _compress_modules=y
 fi
 
 # Compile ONLY used modules to VASTLY reduce the number of modules built
@@ -161,6 +161,12 @@ prepare() {
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
   fi
+
+  # Enable Os Clang Optimization
+  echo "Enable Os Optimization"
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 
   # Let's user choose microarchitecture optimization in GCC
   sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
