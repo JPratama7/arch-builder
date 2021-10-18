@@ -105,3 +105,20 @@ jobs:
           tag: "app"
           artifacts: "app/./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_xanmod_cacule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build linux-xanmod-cacule
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: edlanglois/pkgbuild-action@v1.1.7
+        with:
+          makepkgArgs: "--skippgpcheck"
+          pkgdir: "kernel/linux-xanmod-cacule"
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          tag: "kernel"
+          artifacts: "kernel/./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
