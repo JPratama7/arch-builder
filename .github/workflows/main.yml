@@ -13,12 +13,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod"
+          pkgdir: "linux-xanmod"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_custom:
@@ -30,12 +30,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod-custom"
+          pkgdir: "linux-xanmod-custom"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_lts:
@@ -47,12 +47,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod-lts"
+          pkgdir: "linux-xanmod-lts"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_edge:
@@ -64,12 +64,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod-edge"
+          pkgdir: "linux-xanmod-edge"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_cacule_uksm_cjktty:
@@ -81,12 +81,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod-cacule-uksm-cjktty"
+          pkgdir: "linux-xanmod-cacule-uksm-cjktty"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_slimjet:
@@ -98,12 +98,12 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "app/slimjet"
+          pkgdir: "slimjet"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "app"
-          artifacts: "app/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_cacule:
@@ -115,10 +115,10 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1.1.7
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "kernel/linux-xanmod-cacule"
+          pkgdir: "linux-xanmod-cacule"
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "kernel"
-          artifacts: "kernel/./*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
