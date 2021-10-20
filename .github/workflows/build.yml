@@ -4,6 +4,18 @@ on:
   workflow_dispatch:
 jobs:
 
+  delete_all_tags:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-xanmod-custom for arch
+        uses: actions/checkout@v2.3.4
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true # default: false
+          tag_name: latest # tag name to delete
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build_xanmod_stable:
     runs-on: ubuntu-latest
     steps:
@@ -21,25 +33,6 @@ jobs:
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-  delete_all_tags:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build linux-xanmod-custom for arch
-        uses: actions/checkout@v2.3.4
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true # default: false
-          tag_name: kernel # tag name to delete
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true # default: false
-          tag_name: app # tag name to delete
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
   build_xanmod_custom:
     runs-on: ubuntu-latest
@@ -113,24 +106,6 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  build_slimjet:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build slimjet for arch
-        uses: actions/checkout@v2.3.4
-      - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
-        with:
-          makepkgArgs: "--skippgpcheck"
-          pkgdir: "slimjet"
-
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "app"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   build_xanmod_cacule:
     runs-on: ubuntu-latest
     steps:
@@ -164,6 +139,24 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
-          tag: "app"
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_slimjet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build slimjet for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: edlanglois/pkgbuild-action@v1.1.7
+        with:
+          makepkgArgs: "--skippgpcheck"
+          pkgdir: "slimjet"
+
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
