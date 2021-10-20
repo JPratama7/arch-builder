@@ -133,7 +133,7 @@ jobs:
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "spotify-adblock-git"
-          aurDeps: "spotify"
+          aurDeps: true
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
