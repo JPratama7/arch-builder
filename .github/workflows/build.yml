@@ -127,7 +127,7 @@ jobs:
   build_spotify_adblock_git:
     runs-on: ubuntu-latest
     steps:
-      - name: build slimjet for arch
+      - name: build spotify-adblock-git for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
