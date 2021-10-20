@@ -129,7 +129,7 @@ jobs:
       - name: build slimjet for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@main
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "spotify-adblock-git"
