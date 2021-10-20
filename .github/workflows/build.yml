@@ -22,6 +22,20 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  delete_all_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-xanmod-custom for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        with:
+          repo: JPratama7/arch-packages # defaults to current repo
+          keep_latest: 0
+          delete_tag_pattern: beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build_xanmod_custom:
     runs-on: ubuntu-latest
     steps:
