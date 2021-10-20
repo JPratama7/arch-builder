@@ -4,17 +4,6 @@ on:
   workflow_dispatch:
 jobs:
 
-  delete_all release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: dev-drprasad/delete-older-releases@v0.2.0
-        with:
-          repo: JPratama7/arch-packages # defaults to current repo
-          keep_latest: 3
-          delete_tag_pattern: beta # defaults to ""
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   build_xanmod_stable:
     runs-on: ubuntu-latest
     steps:
