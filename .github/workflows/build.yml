@@ -7,7 +7,6 @@ jobs:
   delete_all release:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete all release
       - uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
           repo: JPratama7/arch-packages # defaults to current repo
