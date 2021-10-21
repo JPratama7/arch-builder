@@ -229,6 +229,7 @@ jobs:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "cloudflared"
 
+      - run: pwd
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
