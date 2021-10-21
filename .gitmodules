@@ -1,0 +1,12 @@
+[submodule "slimjet"]
+	path = slimjet
+	url = https://aur.archlinux.org/slimjet.git
+[submodule "spotify"]
+	path = spotify
+	url = https://aur.archlinux.org/spotify.git
+[submodule "ungoogled-chromium"]
+	path = ungoogled-chromium
+	url = https://aur.archlinux.org/ungoogled-chromium.git
+[submodule "cloudflared"]
+	path = cloudflared
+	url = https://aur.archlinux.org/cloudflared.git
