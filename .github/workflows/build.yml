@@ -170,7 +170,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "./*/*.zst ./*/*.zst.sig"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_spotify:
