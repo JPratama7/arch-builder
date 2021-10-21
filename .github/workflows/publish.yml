@@ -1,0 +1,43 @@
+name: Release
+on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: [main]
+    types: 
+      - completed
+
+jobs:
+
+  create_aur_repository:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - run:  |
+          whoami
+          pacman -Syu --noconfirm
+          pacman -S git git-lfs --noconfirm --needed
+      - name: Publish Packages
+        uses: actions/checkout@v2.3.5
+      - run: |  
+          rm *
+          ls -al
+      - uses: robinraju/release-downloader@v1.2
+        with:
+          repository: 'JPratama7/arch-builder'
+          latest: true
+          fileName: "*"
+          tarBall: false
+          zipBall: false
+          out-file-path: ""
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+      - name: creating database
+        run:  |
+          repo-add arch-repository-jpratama7.db.tar
+          repo-add arch-repository-jpratama7.db.tar *.pkg.tar.zst
+
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*.tar"
+          token: ${{ secrets.GITHUB_TOKEN }}
