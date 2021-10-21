@@ -191,7 +191,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "./*/*.zst ./*/*.zst.sig"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_ungoogled_chromium:
@@ -212,7 +212,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "./*/*.zst ./*/*.zst.sig"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_cloudflared:
@@ -229,11 +229,10 @@ jobs:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "cloudflared"
 
-      - run: pwd
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "./*/*.zst ./*/*.zst.sig"
           token: ${{ secrets.GITHUB_TOKEN }}
 
