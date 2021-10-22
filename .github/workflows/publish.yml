@@ -19,9 +19,6 @@ jobs:
           pacman -S git git-lfs --noconfirm --needed
       - name: Publish Packages
         uses: actions/checkout@v2.3.5
-      - run: |  
-          rm *
-          ls -al
       - uses: robinraju/release-downloader@v1.2
         with:
           repository: 'JPratama7/arch-builder'
