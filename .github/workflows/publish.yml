@@ -48,12 +48,12 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: ".db"
+          artifacts: "arch-repository-jpratama7.db"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: ".files"
+          artifacts: "arch-repository-jpratama7.files"
           token: ${{ secrets.GITHUB_TOKEN }}
