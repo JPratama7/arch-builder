@@ -17,7 +17,6 @@ jobs:
           whoami
           pacman -Syu --noconfirm
           pacman -S git git-lfs --noconfirm --needed
-      - name: Publish Packages
       - uses: robinraju/release-downloader@v1.2
         with:
           repository: 'JPratama7/arch-builder'
