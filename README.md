@@ -4,6 +4,8 @@
 Directly get from AUR: 
 - slimjet 
 - spotify
+- cloudflared
+- xampp
 
 Add this to /etc/pacman.conf
 - [arch-repository-jpratama7]
