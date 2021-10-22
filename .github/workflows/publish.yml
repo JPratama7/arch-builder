@@ -33,6 +33,7 @@ jobs:
         run:  |
           repo-add arch-repository-jpratama7.db.tar
           repo-add arch-repository-jpratama7.db.tar *.pkg.tar.zst
+          ls
 
       - uses: ncipollo/release-action@v1.8.10
         with:
@@ -46,4 +47,11 @@ jobs:
           allowUpdates: true
           tag: "latest"
           artifacts: ".db"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: ".files"
           token: ${{ secrets.GITHUB_TOKEN }}
