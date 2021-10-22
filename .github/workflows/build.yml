@@ -11,7 +11,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.5
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "linux-xanmod"
@@ -29,7 +29,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.5
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "linux-xanmod-custom"
@@ -47,7 +47,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.5
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "linux-xanmod-lts"
@@ -65,7 +65,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.5
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "linux-xanmod-edge"
@@ -83,7 +83,7 @@ jobs:
       - name: build linux-xanmod-cacule
         uses: actions/checkout@v2.3.5
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "linux-xanmod-cacule"
@@ -130,10 +130,11 @@ jobs:
         with:
           submodules: 'true'
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "slimjet"
+          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
@@ -156,10 +157,11 @@ jobs:
         with:
           submodules: 'true'
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "spotify"
+          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
@@ -182,10 +184,11 @@ jobs:
         with:
           submodules: 'true'
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "cloudflared"
+          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
@@ -208,10 +211,11 @@ jobs:
         with:
           submodules: 'true'
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.7
+        uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "xampp"
+          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
