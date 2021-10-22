@@ -107,11 +107,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_spotify_adblock_git:
-     
     runs-on: ubuntu-latest
     steps:
       - name: build spotify-adblock-git for arch
         uses: actions/checkout@v2.3.5
+        with:
+          submodules: 'true'
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
@@ -119,12 +120,6 @@ jobs:
           pkgdir: "spotify-adblock-git"
           aurDeps: true
 
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
