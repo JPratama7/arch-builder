@@ -45,6 +45,9 @@ if [ -z ${_compress_modules+x} ]; then
   _compress_modules=y
 fi
 
+#####Add Flags
+_flags="-pipe -fno-plt -fexceptions -D_FORTIFY_SOURCE=2 -Wformat -fstack-clash-protection -fcf-protection -flto"
+
 # Compile ONLY used modules to VASTLY reduce the number of modules built
 # and the build time.
 #
@@ -215,8 +218,9 @@ prepare() {
 build() {
 
   if [ "${_compiler}" = "gcc" ]; then
-    CFLAGS="-pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -flto -fuse-linker-plugin"
-    CXXFLAGS=${CFLAGS}
+    echo "enabling gcc optimization"
+    CFLAGS="${_flags} -fuse-linker-plugin"
+    CXXFLAGS="${CFLAGS} -D_GLIBCXX_ASSERTIONS"
   fi
 
   cd linux-${_major}
