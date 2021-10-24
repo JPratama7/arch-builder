@@ -1,7 +1,7 @@
 name: Release
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ["Builder"]
     branches: [main]
     types: 
       - completed
