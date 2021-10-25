@@ -20,7 +20,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_custom:
@@ -38,7 +38,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_lts:
@@ -56,7 +56,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_edge:
@@ -74,7 +74,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_cacule:
@@ -92,7 +92,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ncipollo/release-action@v1.8.10
         with:
@@ -119,7 +119,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_slimjet:
@@ -134,19 +134,12 @@ jobs:
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "slimjet"
-          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_spotify:
@@ -161,19 +154,12 @@ jobs:
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "spotify"
-          aurDeps: true
 
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_cloudflared:
@@ -194,13 +180,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
           
   build_xampp:
@@ -216,17 +196,12 @@ jobs:
         with:
           target: 'pkgbuild'
           pkgname: 'xampp'
+
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   
   build_microsoft-edge-beta-bin:
@@ -242,17 +217,12 @@ jobs:
         with:
           target: 'pkgbuild'
           pkgname: 'microsoft-edge-dev-bin'
+
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_microsoft-edge-dev-bin:
@@ -268,16 +238,11 @@ jobs:
         with:
           target: 'pkgbuild'
           pkgname: 'microsoft-edge-beta-bin'
+
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
