@@ -10,3 +10,9 @@
 [submodule "xampp"]
 	path = xampp
 	url = https://aur.archlinux.org/xampp.git
+[submodule "microsoft-edge-beta-bin"]
+	path = microsoft-edge-beta-bin
+	url = https://aur.archlinux.org/microsoft-edge-beta-bin.git
+[submodule "microsoft-edge-dev-bin"]
+	path = microsoft-edge-dev-bin
+	url = https://aur.archlinux.org/microsoft-edge-dev-bin.git
