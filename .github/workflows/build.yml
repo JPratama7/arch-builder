@@ -19,6 +19,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -37,6 +38,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -55,6 +57,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -73,6 +76,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,6 +95,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -113,11 +118,12 @@ jobs:
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "spotify-adblock-git"
-          aurDeps: true
+          
       - run: ls -lR
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -138,6 +144,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -158,6 +165,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -174,11 +182,12 @@ jobs:
         with:
           makepkgArgs: "--skippgpcheck"
           pkgdir: "cloudflared"
-          aurDeps: true
+          
       - run: ls -lR
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -200,6 +209,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -221,6 +231,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -242,6 +253,7 @@ jobs:
       - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
