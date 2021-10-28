@@ -13,3 +13,6 @@
 [submodule "microsoft-edge-dev-bin"]
 	path = microsoft-edge-dev-bin
 	url = https://aur.archlinux.org/microsoft-edge-dev-bin.git
+[submodule "cloudflared"]
+	path = cloudflared
+	url = https://aur.archlinux.org/cloudflared.git
