@@ -7,7 +7,7 @@ on:
       - completed
   workflow_dispatch:
 jobs: 
-  build_spotify_adblock_git: 
+  uploading_gitlab: 
     runs-on: ubuntu-latest
     steps: 
        
@@ -17,6 +17,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOST }}              
       - run: |
             git clone git@gitlab.com:josepratama080/arch-repository.git
+            rm -rf arch-repository/X86-64
             mkdir arch-repository/X86-64
       - run: ls -lR
       - run: |
