@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build spotify-adblock-git for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - id: makepkg
@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - id: makepkg
@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - id: makepkg
@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - id: makepkg
@@ -190,7 +190,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - run: ls -lR
@@ -212,7 +212,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - run: ls -lR
@@ -234,7 +234,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
       - run: ls -lR
