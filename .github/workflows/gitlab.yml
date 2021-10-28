@@ -34,8 +34,8 @@ jobs:
       - 
         run: |
             cd arch-repository
-            git lfs install
-            git lfs track "*.zst"
+            #git lfs install
+            #git lfs track "*.zst"
             git add .
             git commit -m 'add files'
             git push
