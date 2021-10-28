@@ -108,7 +108,7 @@ jobs:
         with:
           submodules: true
           fetch-depth: '50'
-          token: ${{ secrets.GITHUB_TOKEN }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
