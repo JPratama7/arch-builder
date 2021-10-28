@@ -4,9 +4,6 @@
 [submodule "spotify"]
 	path = spotify
 	url = https://aur.archlinux.org/spotify.git
-[submodule "cloudflared"]
-	path = cloudflared
-	url = https://aur.archlinux.org/cloudflared.git
 [submodule "xampp"]
 	path = xampp
 	url = https://aur.archlinux.org/xampp.git
