@@ -7,10 +7,10 @@ on:
       - completed
   workflow_dispatch:
 jobs: 
+
   uploading_gitlab: 
     runs-on: ubuntu-latest
     steps: 
-       
       - uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH }}
@@ -39,3 +39,16 @@ jobs:
             git add .
             git commit -m 'add files'
             git push
+
+  removing_all_tags:
+    needs: uploading_gitlab
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true # default: false
+          tag_name: v0.1.0 # tag name to delete
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+    
