@@ -1,4 +1,4 @@
-name: Upload to github
+name: Upload to gitlab
 on:
   workflow_run:
     workflows: ["Release"]
