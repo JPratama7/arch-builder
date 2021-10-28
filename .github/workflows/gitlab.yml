@@ -1,7 +1,7 @@
 name: Upload to github
 on:
   workflow_run:
-    workflows: ["Builder"]
+    workflows: ["Release"]
     branches: [main]
     types: 
       - completed
