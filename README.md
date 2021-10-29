@@ -7,12 +7,8 @@ Directly get from AUR:
 - cloudflared
 - xampp
 
-Add this to /etc/pacman.conf
-- [arch-repository-jpratama7]
-- SigLevel = Never
-- Server = https://github.com/JPratama7/arch-builder/releases/download/latest
 
-Mirror: 
+Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
 - SigLevel = Never
 - Server = https://gitlab.com/josepratama080/arch-repository/-/raw/main/
