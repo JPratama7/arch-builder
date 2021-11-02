@@ -109,6 +109,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
@@ -134,6 +135,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
@@ -158,6 +160,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
@@ -182,6 +185,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
         with:
@@ -207,6 +211,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - run: ls -lR
       - id: makepkg
         uses: JPratama7/arch-pkgbuild-builder@main
@@ -232,6 +237,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - run: ls -lR
       - id: makepkg
         uses: JPratama7/arch-pkgbuild-builder@main
@@ -257,6 +263,7 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git submodule update --recursive --remote
       - run: ls -lR
       - id: makepkg
         uses: JPratama7/arch-pkgbuild-builder@main
