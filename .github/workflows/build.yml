@@ -4,8 +4,8 @@ on:
     - cron: "0 5 * * *"
   workflow_dispatch:
 jobs:
+
   removing_all_tags:
-    needs: uploading_gitlab
     runs-on: ubuntu-latest
     steps: 
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0
