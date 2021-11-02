@@ -1,6 +1,3 @@
-[submodule "slimjet"]
-	path = slimjet
-	url = https://aur.archlinux.org/slimjet.git
 [submodule "spotify"]
 	path = spotify
 	url = https://aur.archlinux.org/spotify.git
