@@ -121,7 +121,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -146,7 +146,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -171,7 +171,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -197,7 +197,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -223,7 +223,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -249,7 +249,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -275,7 +275,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          removeArtifacts: true
+          
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
