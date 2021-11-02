@@ -107,7 +107,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
@@ -120,6 +120,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -131,7 +132,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
@@ -143,6 +144,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -154,7 +156,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
@@ -166,6 +168,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -177,7 +180,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@master
@@ -190,6 +193,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -201,7 +205,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: ls -lR
       - id: makepkg
@@ -214,6 +218,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -225,7 +230,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: ls -lR
       - id: makepkg
@@ -238,6 +243,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -249,7 +255,7 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: ls -lR
       - id: makepkg
@@ -262,6 +268,7 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
+          removeArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
