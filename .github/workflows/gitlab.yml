@@ -17,6 +17,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOST }}              
       - run: |
             git clone git@gitlab.com:josepratama080/arch-repository.git
+            cd arch-repository
             git lfs fetch --all
             ls -lR
             rm -rf arch-repository/X86-64
