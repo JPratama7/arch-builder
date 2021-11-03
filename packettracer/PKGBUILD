@@ -15,7 +15,7 @@ options=('!strip' '!emptydirs')
 url="https://www.netacad.com/courses/packet-tracer"
 license=('custom')
 _url=https://gitlab.com/josepratama080/wa-bot-be/-/raw/main
-source=('${_url}/CiscoPacketTracer_801_Ubuntu_64bit.deb'
+source=('https://gitlab.com/josepratama080/wa-bot-be/-/raw/main/CiscoPacketTracer_801_Ubuntu_64bit.deb?inline=false'
 	'packettracer.sh')
 sha512sums=('SKIP'
 	    'SKIP')
