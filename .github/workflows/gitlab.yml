@@ -18,7 +18,7 @@ jobs:
       - run: |
             git clone git@gitlab.com:josepratama080/arch-repository.git
             git lfs fetch --all
-            ls -r
+            ls -lR
             rm -rf arch-repository/X86-64
             mkdir arch-repository/X86-64
       - run: ls -lR
