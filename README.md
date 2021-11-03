@@ -11,7 +11,7 @@ Directly get from AUR:
 Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
 - SigLevel = Never
-- Server = https://gitlab.com/josepratama080/arch-repository/-/raw/main/X86-64
+- Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
 
 
 Request package? Open Issue
