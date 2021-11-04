@@ -5,18 +5,7 @@ on:
   workflow_dispatch:
 jobs:
 
-  removing_all_tags:
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true # default: false
-          tag_name: latest # tag name to delete
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   build_xanmod_stable:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: Build linux-xanmod-custom for arch
@@ -36,7 +25,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_custom:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: Build linux-xanmod-custom for arch
@@ -56,7 +44,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_lts:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: Build linux-xanmod-custom for arch
@@ -76,7 +63,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_edge:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: Build linux-xanmod-custom for arch
@@ -96,7 +82,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_xanmod_cacule:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build linux-xanmod-cacule
@@ -116,7 +101,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_spotify_adblock_git:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build spotify-adblock-git for arch
@@ -141,7 +125,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_slimjet:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -166,7 +149,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_spotify:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -191,7 +173,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_cloudflared:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -216,7 +197,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           
   build_xampp:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -242,7 +222,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   
   build_microsoft-edge-beta-bin:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -268,7 +247,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_microsoft-edge-dev-bin:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
@@ -294,7 +272,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_packet_tracer_cisco:
-    needs: removing_all_tags
     runs-on: ubuntu-latest
     steps:
       - name: build slimjet for arch
