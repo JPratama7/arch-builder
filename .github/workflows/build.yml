@@ -81,7 +81,7 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  build_xanmod_cacule:
+  build_xanmod_tt:
     runs-on: ubuntu-latest
     steps:
       - name: build linux-xanmod-cacule
@@ -90,7 +90,7 @@ jobs:
         uses: JPratama7/pkgbuild-action@master
         with:
           makepkgArgs: "--skippgpcheck"
-          pkgdir: "linux-xanmod-cacule"
+          pkgdir: "linux-xanmod-tt"
 
       - uses: ncipollo/release-action@v1.8.10
         with:
