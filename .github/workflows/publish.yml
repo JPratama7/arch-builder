@@ -27,12 +27,7 @@ jobs:
           out-file-path: ""
           token: ${{ secrets.API_TOKEN_GITHUB }}
       - run: |
-          if [ -e arch-repository-jpratama7.* ]; then
-            rm arch-repository-jpratama7.*
-
-          else
-                echo "File does not exist"
-          fi
+          rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
