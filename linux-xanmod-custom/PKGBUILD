@@ -80,12 +80,12 @@ _makenconfig=
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-custom
-_major=5.14
-pkgver=${_major}.15
+_major=5.15
+pkgver=${_major}.2
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
-pkgdesc='Linux Xanmod. Branch with Cacule scheduler by Hamad Marri'
+pkgdesc='Linux Xanmod. Branch with Task Type CPU Sched'
 _patches_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${_major}"
 _jobs=$(nproc)
 url="http://www.xanmod.org/"
@@ -107,10 +107,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}-cacule/patch-${pkgver}-xanmod${xanmod}-cacule.xz"
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "0002-UKSM.patch::${_patches_url}/uksm-patches-v2/0001-UKSM-for-5.14.patch"
+        "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}/zstd-patches-v2/0001-zstd-patches.patch"
-        "0004-winesync.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-winesync.patch"
-        "0005-v4I2loopback.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-v4l2loopback.patch"
+        "0004-mm.patch::${_patches_url}/mm-patches/0001-mm-protect-mappings-under-memory-pressure.patch"
+        "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
+        "0006-v4I2loopback.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-v4l2loopback.patch"
         )
 
 # Archlinux patches
@@ -141,7 +142,7 @@ prepare() {
   cd linux-${_major}
 
   msg2 "Apply Xanmod patch"
-  xz -d < ../patch-${pkgver}-xanmod${xanmod}-cacule.xz | patch -Np1
+  xz -d < ../patch-${pkgver}-xanmod${xanmod}-tt.xz | patch -Np1
 
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
@@ -155,7 +156,7 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
-    patch -Np1 < "../$src"
+    patch -Np1 -F 3 < "../$src"
   done
 
   # Applying configuration
@@ -175,8 +176,10 @@ prepare() {
                      --disable CONFIG_STACK_TRACER
     fi
   fi
+  
+  scripts/config --disable CONFIG_LTO_NONE
 
-  # enable LTO_CLANG_THIN
+  # enable LTO_CLANG_FULL
   if [ "${_compiler}" = "clang" ]; then
   echo "Enable Clang LTO FULL"
     scripts/config --disable CONFIG_LTO_NONE
@@ -211,31 +214,29 @@ prepare() {
   if [ -n "$_lrng_enable" ]; then
     echo "Enabling Linux Random Number Generator ..."
     scripts/config --enable CONFIG_LRNG
-    scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
-    scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
-    scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 0
+    scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
+    scripts/config --set-val CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
+    scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 128
     scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
     scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
-    scripts/config --disable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
-    scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_32
-    scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
+    scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
+    scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
     scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
     scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
     scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
     scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
     scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
     scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
-    scripts/config --disable CONFIG_LRNG_HEALTH_TESTS
+    scripts/config --enable CONFIG_LRNG_HEALTH_TESTS
     scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
     scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
     scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
     scripts/config --enable CONFIG_LRNG_JENT
     scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
     scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-    scripts/config --disable CONFIG_LRNG_DRNG_SWITCH
-    scripts/config --disable CONFIG_LRNG_DRBG
-    scripts/config --disable CONFIG_LRNG_TESTING_MENU
-    scripts/config --disable CONFIG_LRNG_SELFTEST
+    scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
+    scripts/config --enable CONFIG_LRNG_TESTING_MENU
+    scripts/config --enable CONFIG_LRNG_SELFTEST
   echo "Enabled LRNG"
   fi  
   
@@ -255,23 +256,25 @@ prepare() {
   scripts/config --enable CONFIG_FTRACE
   scripts/config --enable CONFIG_FTRACE_SYSCALLS
   scripts/config --module CONFIG_EXT4_FS
-  scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 3
+  
+  # KERNEL COMPRESSION ZSTD
+  echo "Enable Kernel Compression ZSTD"
+  scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
   scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
   
-  # Enable Os Clang Optimization
+  # Enable Os Optimization
   echo "Enable Os Optimization"
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 
 
-  msg2 "Enable LRU"
-  scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
-  scripts/config --enable CONFIG_LRU_GEN
-  scripts/config --set-val CONFIG_NR_LRU_GENS 7
-  scripts/config --set-val CONFIG_TIERS_PER_GEN 4
-  scripts/config --enable CONFIG_LRU_GEN_ENABLED
-  scripts/config --disable CONFIG_LRU_GEN_STATS
+#  msg2 "Enable LRU"
+#  scripts/config --enable CONFIG_LRU_GEN
+#  scripts/config --set-val CONFIG_NR_LRU_GENS 7
+#  scripts/config --set-val CONFIG_TIERS_PER_GEN 4
+#  scripts/config --enable CONFIG_LRU_GEN_ENABLED
+#  scripts/config --disable CONFIG_LRU_GEN_STATS
 
   msg2 "Enable zram compression to ZSTD"
   scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE
@@ -284,17 +287,35 @@ prepare() {
   msg2 "Change module compression to ZSTD"
   scripts/config --disable CONFIG_MODULE_COMPRESS_NONE
   scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+  scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
   scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
-  scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 3
+  scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
 
 
-  msg2 "Enable NTFS3"
+  msg2 "Enable NTFS + NTFS3"
   scripts/config --module CONFIG_NTFS_FS
   scripts/config --module CONFIG_NTFS3_FS
   scripts/config --enable CONFIG_NTFS3_64BIT_CLUSTER
   scripts/config --enable CONFIG_NTFS3_LZX_XPRESS
   scripts/config --enable CONFIG_NTFS3_FS_POSIX_ACL
 
+  echo "Enabling protect file mappings under memory pressure..."
+  scripts/config --enable CONFIG_UNEVICTABLE_FILE
+  scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
+  scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
+  
+  echo "Enabling protect anonymous mappings under memory pressure..."
+  scripts/config --enable CONFIG_UNEVICTABLE_ANON
+  scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_LOW 65536
+  scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_MIN 32768
+  
+  echo "Enable Anbox"
+  scripts/config --enable CONFIG_ASHMEM
+  scripts/config --enable CONFIG_ANDROID
+  scripts/config --enable CONFIG_ANDROID_BINDER_IPC
+  scripts/config --enable CONFIG_ANDROID_BINDERFS
+  scripts/config --enable CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
+  
 
 
   # Let's user choose microarchitecture optimization in GCC
