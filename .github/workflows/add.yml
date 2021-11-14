@@ -4,6 +4,7 @@ name: Add submodules
 
 # Controls when the workflow will run
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -13,8 +14,7 @@ jobs:
       - name: Build linux-xanmod-custom for arch
         uses: actions/checkout@v2.3.5
       - run: |
-          git submodule add https://aur.archlinux.org/microsoft-edge-beta-bin.git
-          git submodule add https://aur.archlinux.org/microsoft-edge-dev-bin.git
+          git submodule add https://aur.archlinux.org/github-desktop.git
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.12.0
         with:
