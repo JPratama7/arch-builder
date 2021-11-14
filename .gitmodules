@@ -13,3 +13,6 @@
 [submodule "cloudflared"]
 	path = cloudflared
 	url = https://aur.archlinux.org/cloudflared.git
+[submodule "github-desktop"]
+	path = github-desktop
+	url = https://aur.archlinux.org/github-desktop.git
