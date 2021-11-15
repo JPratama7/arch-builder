@@ -86,7 +86,7 @@ _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
 pkgdesc='Linux Xanmod. Branch with Task Type CPU Sched'
-_patches_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${_major}"
+_patches_url="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
 _jobs=$(nproc)
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -108,7 +108,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
-        "0003-zstd.patch::${_patches_url}/zstd-patches-v2/0001-zstd-patches.patch"
+        "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
         "0004-mm.patch::${_patches_url}/mm-patches/0001-mm-protect-mappings-under-memory-pressure.patch"
         "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
         "0006-v4I2loopback.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-v4l2loopback.patch"
