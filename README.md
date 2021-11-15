@@ -1,5 +1,5 @@
 # ARCH PACKAGES BUILDER
-
+[![Builder](https://github.com/JPratama7/arch-builder/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/JPratama7/arch-builder/actions/workflows/build.yml)
 
 Directly get from AUR: 
 - slimjet 
