@@ -1,4 +1,4 @@
-name: Release
+name: Create DB
 on:
   workflow_run:
     workflows: ["Builder"]
@@ -27,7 +27,7 @@ jobs:
           out-file-path: ""
           token: ${{ secrets.API_TOKEN_GITHUB }}
       - run: |
-          rm arch-repository-jpratama7.*
+          # rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
