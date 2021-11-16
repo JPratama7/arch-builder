@@ -49,7 +49,7 @@ _compiler=gcc
 _fsync=y
 
 #futex2
-_futex2=y
+_futex2=n
 
 #enable lrng
 _lrng_enable=y
@@ -57,8 +57,19 @@ _lrng_enable=y
 #Enable Winesync
 _winesync=y
 
-#####Add Flags
-_flags="-pipe -fno-plt -fexceptions -D_FORTIFY_SOURCE=2 -Wformat -fstack-clash-protection -fcf-protection -flto"
+# x86-64v2
+_cpu2=y
+
+# x86-64v3
+_cpu3=
+
+# x86-64v4
+_cpu4=
+
+# CPU FREQ
+_500hz=
+_833hz=y
+_1666hz=
 
 #####################
 
@@ -182,7 +193,7 @@ prepare() {
 
   # enable LTO_CLANG_FULL
   if [ "${_compiler}" = "clang" ]; then
-  echo "Enable Clang LTO FULL"
+  msg2 "Enable Clang LTO FULL"
     scripts/config --disable CONFIG_LTO_NONE
     scripts/config --enable LTO_CLANG_FULL
     scripts/config --disable LTO_CLANG_THIN
@@ -196,24 +207,43 @@ prepare() {
   fi
   
   if [ "$_fsync"  = "n" ]; then
-    echo "Disable Fsync support"
+    msg2 "Disable Fsync support"
     scripts/config --disable CONFIG_FUTEX
     scripts/config --disable CONFIG_FUTEX_PI
   fi
 
   if [ "$_futex2" = "n" ]; then
-    echo "Disable Futex2 support"
+    msg2 "Disable Futex2 support"
     scripts/config --disable CONFIG_FUTEX2
   fi
   
   if [ "$_winesync" = "y" ]; then
-    echo "Enable winesync support"
+    msg2 "Enable winesync support"
     scripts/config --module CONFIG_WINESYNC
+  fi
+
+  ### Build for Freq
+  if [ -n "$_500hz" ]; then
+    msg2 "Setting tick rate to 1k..."
+    scripts/config --disable CONFIG_HZ_1000
+    scripts/config --enable CONFIG_HZ_500
+  fi
+
+  if [ -n "$_833hz" ]; then
+    msg2 "Setting tick rate to 750HZ..."
+    scripts/config --disable CONFIG_HZ_1000
+    scripts/config --enable CONFIG_HZ_833
+  fi
+
+  if [ -n "$_1666hz" ]; then
+    msg2 "Setting tick rate to 600HZ..."
+    scripts/config --disable CONFIG_HZ_1000
+    scripts/config --enable CONFIG_HZ_1666
   fi
   
 ### Enable Linux Random Number Generator
   if [ -n "$_lrng_enable" ]; then
-    echo "Enabling Linux Random Number Generator ..."
+    msg2 "Enabling Linux Random Number Generator ..."
     scripts/config --enable CONFIG_LRNG
     scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
     scripts/config --set-val CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
@@ -238,18 +268,18 @@ prepare() {
     scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
     scripts/config --enable CONFIG_LRNG_TESTING_MENU
     scripts/config --enable CONFIG_LRNG_SELFTEST
-  echo "Enabled LRNG"
+  msg2 "Enabled LRNG"
   fi  
   
   
   #Enable TCP_CONG_BBR2
-  echo "Enabling TCP_CONG_BBR2..."
+  msg2 "Enabling TCP_CONG_BBR2..."
   scripts/config --enable CONFIG_TCP_CONG_BBR2
   scripts/config --enable CONFIG_DEFAULT_BBR2
   scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
   
   
-  echo "Disabling TCP_CONG_CUBIC..."
+  msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC
   scripts/config --disable CONFIG_DEFAULT_CUBIC
 
@@ -259,12 +289,12 @@ prepare() {
   scripts/config --module CONFIG_EXT4_FS
   
   # KERNEL COMPRESSION ZSTD
-  echo "Enable Kernel Compression ZSTD"
+  msg2 "Enable Kernel Compression ZSTD"
   scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
   scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
   
   # Enable Os Optimization
-  echo "Enable Os Optimization"
+  msg2 "Enable Os Optimization"
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
@@ -300,17 +330,17 @@ prepare() {
   scripts/config --enable CONFIG_NTFS3_LZX_XPRESS
   scripts/config --enable CONFIG_NTFS3_FS_POSIX_ACL
 
-  echo "Enabling protect file mappings under memory pressure..."
+  msg2 "Enabling protect file mappings under memory pressure..."
   scripts/config --enable CONFIG_UNEVICTABLE_FILE
   scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
   scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
   
-  echo "Enabling protect anonymous mappings under memory pressure..."
+  msg2 "Enabling protect anonymous mappings under memory pressure..."
   scripts/config --enable CONFIG_UNEVICTABLE_ANON
   scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_LOW 65536
   scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_MIN 32768
   
-  echo "Enable Anbox"
+  msg2 "Enable Anbox"
   scripts/config --enable CONFIG_ASHMEM
   scripts/config --enable CONFIG_ANDROID
   scripts/config --enable CONFIG_ANDROID_BINDER_IPC
@@ -337,7 +367,6 @@ prepare() {
         msg2 "Using user CUSTOM config..."
         cp -f "${_myconfig}" .config
       fi
-      echo
       break
     fi
   done
@@ -370,7 +399,7 @@ build() {
   cd linux-${_major}
   
   if [ "${_compiler}" = "gcc" ]; then
-    echo "enabling gcc optimization"
+    msg2 "enabling gcc optimization"
     CFLAGS="${_flags} -fuse-linker-plugin"
     CXXFLAGS="${CFLAGS} -D_GLIBCXX_ASSERTIONS"
   fi
