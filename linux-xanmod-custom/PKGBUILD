@@ -19,9 +19,67 @@
 ## Default is: 0 => generic
 ## Good option if your package is for one machine: 98 => Intel native
 ##                                                 99 => AMD native
+  #   Available CPU microarchitectures:
+
+  #   1) AMD K6/K6-II/K6-III
+  #   2) AMD Athlon/Duron/K7
+  #   3) AMD Opteron/Athlon64/Hammer/K8
+  #   4) AMD Opteron/Athlon64/Hammer/K8 with SSE3
+  #   5) AMD 61xx/7x50/PhenomX3/X4/II/K10
+  #   6) AMD Family 10h (Barcelona)
+  #   7) AMD Family 14h (Bobcat)
+  #   8) AMD Family 16h (Jaguar)
+  #   9) AMD Family 15h (Bulldozer)
+  #  10) AMD Family 15h (Piledriver)
+  #  11) AMD Family 15h (Steamroller)
+  #  12) AMD Family 15h (Excavator)
+  #  13) AMD Family 17h (Zen)
+  #  14) AMD Family 17h (Zen 2)
+  #  15) AMD Family 19h Zen 3 processors (Zen 3)
+  #  16) Transmeta Crusoe
+  #  17) Transmeta Efficeon
+  #  18) IDT Winchip C6
+  #  19) Winchip-2/Winchip-2A/Winchip-3
+  #  20) AMD Elan
+  #  21) Geode GX1 (Cyrix MediaGX)
+  #  22) AMD Geode GX and LX
+  #  23) Cyrix III or C3
+  #  24) VIA C3 "Nehemiah"
+  #  25) VIA C7
+  #  26) Intel Pentium 4, Pentium D and older Nocona/Dempsey Xeon CPUs with Intel 64bit
+  #  27) Intel Atom
+  #  28) Intel Core 2 and newer Core 2 Xeons (Xeon 51xx and 53xx)
+  #  29) Intel 1st Gen Core i3/i5/i7-family (Nehalem)
+  #  30) Intel 1.5 Gen Core i3/i5/i7-family (Westmere)
+  #  31) Intel Silvermont
+  #  32) Intel Goldmont (Apollo Lake and Denverton)
+  #  33) Intel Goldmont Plus (Gemini Lake)
+  #  34) Intel 2nd Gen Core i3/i5/i7-family (Sandybridge)
+  #  35) Intel 3rd Gen Core i3/i5/i7-family (Ivybridge)
+  #  36) Intel 4th Gen Core i3/i5/i7-family (Haswell)
+  #  37) Intel 5th Gen Core i3/i5/i7-family (Broadwell)
+  #  38) Intel 6th Gen Core i3/i5/i7-family (Skylake)
+  #  39) Intel 6th Gen Core i7/i9-family (Skylake X)
+  #  40) Intel 8th Gen Core i3/i5/i7-family (Cannon Lake)
+  #  41) Intel 8th Gen Core i7/i9-family (Ice Lake)
+  #  42) Xeon processors in the Cascade Lake family
+  #  43) Intel Xeon (Cooper Lake)
+  #  44) Intel 3rd Gen 10nm++ i3/i5/i7/i9-family (Tiger Lake)
+  #  45) Intel Sapphire Rapids
+  #  46) Intel Rocket Lake
+  #  47) Intel Alder Lake
+
+  #  92) Generic-x86-64-v2 (Nehalem and newer)
+  #  93) Generic-x86-64-v3 (Haswell and newer)
+  #  94) Generic-x86-64-v4 (AVX512 CPUs)
+
+  #  98) Intel-Native optimizations autodetected by GCC
+  #  99) AMD-Native optimizations autodetected by GCC
+
+  #   0) Generic (default)
 
 
-_microarchitecture=0
+_microarchitecture=92
 
 ## Disable NUMA since most users do not have multiple processors. Breaks CUDA/NvEnc.
 ## Archlinux and Xanmod enable it by default.
@@ -49,22 +107,13 @@ _compiler=gcc
 _fsync=y
 
 #futex2
-_futex2=n
+_futex2=
 
 #enable lrng
 _lrng_enable=y
 
 #Enable Winesync
 _winesync=y
-
-# x86-64v2
-_cpu2=y
-
-# x86-64v3
-_cpu3=
-
-# x86-64v4
-_cpu4=
 
 # CPU FREQ
 _500hz=
