@@ -8,6 +8,8 @@ Directly get from AUR:
 - xampp
 
 
+This Package Build with jemalloc
+
 Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
 - SigLevel = Never
