@@ -8,7 +8,7 @@ Directly get from AUR:
 - xampp
 
 
-This Package Build with jemalloc
+This Package Build with x86_64v2
 
 Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
