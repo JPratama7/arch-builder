@@ -13,3 +13,6 @@
 [submodule "cloudflared"]
 	path = cloudflared
 	url = https://aur.archlinux.org/cloudflared.git
+[submodule "yay"]
+	path = yay
+	url = https://aur.archlinux.org/yay.git
