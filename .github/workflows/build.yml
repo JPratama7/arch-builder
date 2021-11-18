@@ -8,7 +8,7 @@ jobs:
   builder:
     strategy:
       matrix:
-        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, xampp, spotify, yay]
+        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, xampp, spotify, yay, powerpill]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
