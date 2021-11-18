@@ -6,6 +6,7 @@ Directly get from AUR:
 - spotify
 - cloudflared
 - xampp
+- yay
 
 
 This Package Build with x86_64v2
