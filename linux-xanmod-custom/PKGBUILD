@@ -348,9 +348,9 @@ prepare() {
   scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
   
   # Enable O3 Optimization
-  msg2 "Enable O3 Optimization"
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
-  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  msg2 "Enable Os Optimization"
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 
 
