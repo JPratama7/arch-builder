@@ -172,7 +172,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0004-damon.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-damon.patch"
         "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
         "0006-v4I2loopback.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-v4l2loopback.patch"
-        "0007-arch.patch::${_patches_url}/arch-patches-v2/0001-arch-patches.patch"
         )
 
 # Archlinux patches
