@@ -112,6 +112,9 @@ _futex2=
 #enable lrng
 _lrng_enable=y
 
+#Enable v4l2loopback
+_v4l2=y
+
 #Enable Winesync
 _winesync=y
 
@@ -271,6 +274,11 @@ prepare() {
     scripts/config --module CONFIG_WINESYNC
   fi
 
+  if [ "$_v4l2" = "y" ]; then
+    msg2 "Enable v4l2loopback support"
+    scripts/config --module V4L2_LOOPBACK
+  fi
+
   ### Build for Freq
   if [ -n "$_500hz" ]; then
     msg2 "Setting tick rate to 1k..."
@@ -347,9 +355,9 @@ prepare() {
   
   # Enable O3 Optimization
   msg2 "Enable Os Optimization"
-  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_SIZE
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 
 
  msg2 "Enable LRU"
@@ -447,7 +455,7 @@ _package() {
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
-  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
+  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE V4L2LOOPBACK-MODULE)
   replaces=()
 
   cd linux-${_major}
