@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+    - uses: dev-drprasad/delete-older-releases@v0.2.0
+      with:
+        keep_latest: 2
+        delete_tag_pattern: latest # defaults to ""
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: robinraju/release-downloader@v1.2
         with:
           repository: 'JPratama7/arch-builder'
