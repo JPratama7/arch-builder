@@ -97,7 +97,7 @@ use_tracers=y
 
 ## Compiler
 
-_compiler=gcc
+_compiler=clang
 
 #####################
 # CUSTOM PATCH
