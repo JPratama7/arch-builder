@@ -17,17 +17,21 @@ jobs:
           whoami
           pacman -Syu --noconfirm
           pacman -S git git-lfs --noconfirm --needed
-      - uses: robinraju/release-downloader@v1.2
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.10
         with:
-          repository: 'JPratama7/arch-builder'
-          latest: true
-          fileName: "*"
-          tarBall: false
-          zipBall: false
-          out-file-path: ""
-          token: ${{ secrets.API_TOKEN_GITHUB }}
+          path: .
+      # - uses: robinraju/release-downloader@v1.2
+      #   with:
+      #     repository: 'JPratama7/arch-builder'
+      #     latest: true
+      #     fileName: "*"
+      #     tarBall: false
+      #     zipBall: false
+      #     out-file-path: ""
+      #     token: ${{ secrets.API_TOKEN_GITHUB }}
       - run: |
-          # rm arch-repository-jpratama7.*
+           rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
