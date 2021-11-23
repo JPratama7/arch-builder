@@ -19,8 +19,6 @@ jobs:
           pacman -S git git-lfs --noconfirm --needed
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
-        with:
-          path: .
       # - uses: robinraju/release-downloader@v1.2
       #   with:
       #     repository: 'JPratama7/arch-builder'
