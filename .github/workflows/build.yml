@@ -62,7 +62,7 @@ jobs:
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG }}
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@master
+        uses: JPratama7/pkgbuild-action@gcc
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
