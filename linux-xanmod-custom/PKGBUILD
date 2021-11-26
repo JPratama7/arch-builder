@@ -112,6 +112,9 @@ _futex2=
 #enable lrng
 _lrng_enable=y
 
+#Use DAMON patch
+_damon=y
+
 #Enable v4l2loopback
 _v4l2=y
 
@@ -172,9 +175,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
-        "0004-damon.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-damon.patch"
+        "0004-damon.patch::${_patches_url}/damon-patches-v4/0001-damon-patches.patch"
         "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
-        "0006-v4I2loopback.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-v4l2loopback.patch"
+        "0006-v4I2loopback.patch::${_patches_url}/v4l2loopback-patches/0001-v4l2loopback-5.15-merge-v0.12.5.patch"
         )
 
 # Archlinux patches
@@ -241,8 +244,6 @@ prepare() {
     fi
   fi
 
-  scripts/config --disable CONFIG_LTO_NONE
-
   # enable LTO_CLANG_FULL
   if [ "${_compiler}" = "clang" ]; then
   msg2 "Enable Clang LTO FULL"
@@ -272,6 +273,15 @@ prepare() {
   if [ "$_winesync" = "y" ]; then
     msg2 "Enable winesync support"
     scripts/config --module CONFIG_WINESYNC
+  fi
+
+  if [ "$_damon" = "y" ]; then
+    msg2 "Enabling DAMON Data Access Monitoring "
+    scripts/config --enable CONFIG_DAMON
+    scripts/config --enable CONFIG_DAMON_VADDR
+    scripts/config --enable CONFIG_DAMON_DBGFS
+    scripts/config --enable CONFIG_DAMON_PADDR
+    scripts/config --enable CONFIG_DAMON_RECLAIM
   fi
 
   if [ "$_v4l2" = "y" ]; then
