@@ -337,11 +337,25 @@ prepare() {
     scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
     scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
     scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
+    scripts/config --module CONFIG_LRNG_DRBG
+    scripts/config --module CONFIG_LRNG_KCAPI
     scripts/config --enable CONFIG_LRNG_TESTING_MENU
+    scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_IRQFLAGS_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
+    scripts/config --disable CONFIG_LRNG_RAW_ARRAY
+    scripts/config --disable CONFIG_LRNG_IRQ_PERF
+    scripts/config --disable CONFIG_LRNG_ACVT_HASH
+    scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
+    scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
+    scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
     scripts/config --enable CONFIG_LRNG_SELFTEST
+    scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
     msg2 "Enabled LRNG"
   fi  
-  
   
   #Enable TCP_CONG_BBR2
   msg2 "Enabling TCP_CONG_BBR2..."
@@ -350,25 +364,20 @@ prepare() {
   scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
   
   
-  msg2 "Disabling TCP_CONG_CUBIC..."
-  scripts/config --module CONFIG_TCP_CONG_CUBIC
-  scripts/config --disable CONFIG_DEFAULT_CUBIC
-
-  scripts/config --enable CONFIG_FTRACE
-  scripts/config --enable CONFIG_FTRACE_SYSCALLS
-  scripts/config --module CONFIG_EXT4_FS
+ msg2 "Disabling TCP_CONG_CUBIC..."
+ scripts/config --module CONFIG_TCP_CONG_CUBIC
+ scripts/config --disable CONFIG_DEFAULT_CUBIC
   
   # KERNEL COMPRESSION ZSTD
-  msg2 "Enable Kernel Compression ZSTD"
-  scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
-  scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
+ msg2 "Enable Kernel Compression ZSTD"
+ scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
+ scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
   
-  # Enable O3 Optimization
-  msg2 "Enable Os Optimization"
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
-  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
-
+  # Enable O2 Optimization
+ msg2 "Enable O2 Optimization"
+ scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
+ scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+ scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 
  msg2 "Enable LRU"
  scripts/config --enable CONFIG_LRU_GEN
@@ -398,7 +407,11 @@ prepare() {
   scripts/config --enable CONFIG_NTFS3_64BIT_CLUSTER
   scripts/config --enable CONFIG_NTFS3_LZX_XPRESS
   scripts/config --enable CONFIG_NTFS3_FS_POSIX_ACL
-  
+
+  msg2 "Enable AMD PSTATE v2 driver"
+  scripts/config --enable CONFIG_X86_AMD_PSTATE
+  scripts/config --enable CONFIG_AMD_PTDMA
+
   msg2 "Enable Anbox"
   scripts/config --enable CONFIG_ASHMEM
   scripts/config --enable CONFIG_ANDROID
