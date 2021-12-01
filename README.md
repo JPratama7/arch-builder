@@ -8,6 +8,11 @@ Directly get from AUR:
 - xampp
 - yay
 
+jemalloc app need jemalloc lib:
+- aria2
+- wget
+- wget2
+- git
 
 This Package Build with x86_64v2
 
