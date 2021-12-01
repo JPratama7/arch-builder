@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.4.0
         with:
           submodules: true
           fetch-depth: 0
@@ -33,7 +33,7 @@ jobs:
       - run: |
           cd ${{ matrix.build }}
           gpg --detach-sign *.zst
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           replacesArtifacts: true
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.4.0
         with:
           submodules: true
           fetch-depth: 0
@@ -69,7 +69,7 @@ jobs:
       - run: |
           cd ${{ matrix.build }}
           gpg --detach-sign *.zst
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           replacesArtifacts: true
