@@ -8,7 +8,7 @@ jobs:
   CLANG_LTO:
     strategy:
       matrix:
-        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, powerpill]
+        build: [aria2, git, bash, wget, wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, powerpill]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -76,40 +76,3 @@ jobs:
           tag: "latest"
           artifacts: "*/*.zst, */*.zst.sig"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-  CLANG_LTO_JEMALLOC:
-    strategy:
-      matrix:
-        build: [aria2, git, bash, wget, wget2]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build packages for arch
-        uses: actions/checkout@v2.3.5
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name : update submodule
-        run: git submodule update --recursive --remote
-      - name: Configure GPG Key
-        run: |
-          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
-        env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG }}
-      - id: makepkg
-        uses: JPratama7/pkgbuild-action@cpuv2-je
-        with:
-          pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
-      - run: |
-          cd ${{ matrix.build }}
-          gpg --detach-sign *.zst
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "latest"
-          artifacts: "*/*.zst, */*.zst.sig"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
