@@ -20,19 +20,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name : update submodule
         run: git submodule update --recursive --remote
-      - name: Configure GPG Key
-        run: |
-          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
-        env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@cpuv2
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - run: |
-          cd ${{ matrix.build }}
-          gpg --detach-sign *.zst
       - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
@@ -56,23 +48,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name : update submodule
         run: git submodule update --recursive --remote
-      - name: Configure GPG Key
-        run: |
-          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
-        env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG }}
       - id: makepkg
         uses: JPratama7/pkgbuild-action@gcc
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - run: |
-          cd ${{ matrix.build }}
-          gpg --detach-sign *.zst
       - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "*/*.zst, */*.zst.sig"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
