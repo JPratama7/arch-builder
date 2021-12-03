@@ -25,12 +25,12 @@ jobs:
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.9.0
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
-          replacesArtifacts: true
           tag: "latest"
-          artifacts: "*/*.zst"
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   GCC:
