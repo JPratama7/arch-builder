@@ -22,8 +22,8 @@ jobs:
           zipBall: false
           out-file-path: ""
           token: ${{ secrets.API_TOKEN_GITHUB }}
-      # - run: |
-      #     rm arch-repository-jpratama7.*
+      - run: |
+          rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
@@ -36,27 +36,3 @@ jobs:
           tag: "latest"
           artifacts: "./arch-repository-jpratama7.*"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - uses: ncipollo/release-action@v1.8.10
-      #   with:
-      #     allowUpdates: true
-      #     replacesArtifacts: true
-      #     tag: "latest"
-      #     artifacts: "./*.tar"
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - uses: ncipollo/release-action@v1.8.10
-      #   with:
-      #     allowUpdates: true
-      #     replacesArtifacts: true
-      #     tag: "latest"
-      #     artifacts: "arch-repository-jpratama7.db"
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - uses: ncipollo/release-action@v1.8.10
-      #   with:
-      #     allowUpdates: true
-      #     replacesArtifacts: true
-      #     tag: "latest"
-      #     artifacts: "arch-repository-jpratama7.files"
-      #     token: ${{ secrets.GITHUB_TOKEN }}
