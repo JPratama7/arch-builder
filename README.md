@@ -8,7 +8,7 @@ Directly get from AUR:
 - xampp
 - yay
 
-This Package Build with x86_64v2
+This Package Build with clang and x86_64v2+lto flags
 
 Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
