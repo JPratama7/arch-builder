@@ -286,7 +286,7 @@ prepare() {
 
   if [ "$_v4l2" = "y" ]; then
     msg2 "Enable v4l2loopback support"
-    scripts/config --module V4L2_LOOPBACK
+    scripts/config --enable V4L2_LOOPBACK
   fi
 
   ### Build for Freq
