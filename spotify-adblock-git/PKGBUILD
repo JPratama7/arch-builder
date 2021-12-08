@@ -2,7 +2,7 @@
 
 pkgname=spotify-adblock-git
 _pkgname=${pkgname%-*}
-pkgver=latest-git
+pkgver=latest
 pkgrel=1
 epoch=1
 license=("GPL3")
