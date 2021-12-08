@@ -2,7 +2,7 @@
 
 pkgname=spotify-adblock-git
 _pkgname=${pkgname%-*}
-pkgver=latest
+pkgver=latest-git
 pkgrel=1
 epoch=1
 license=("GPL3")
@@ -25,11 +25,6 @@ sha512sums=(
 	'SKIP'
 	'69f497a0b869e855b7c6c733c73ee3f285000d56543bf5083382fe1957a9be9a27f8e7eff6e3ef5ccaf5c12ee7750c7e8561bef54e688e5b8b738b320f5cf90a'
 )
-
-pkgver() {
-	cd "${srcdir}/${_pkgname}"
-	git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
-}
 
 build() {
 	cd "${srcdir}/${_pkgname}"

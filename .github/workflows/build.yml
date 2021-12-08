@@ -32,6 +32,9 @@ jobs:
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        with:
+          path: "*/*.zst"
 
   GCC:
     strategy:
@@ -60,6 +63,9 @@ jobs:
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        with:
+          path: "*/*.zst"
 
 
   create_db_file:
@@ -68,8 +74,6 @@ jobs:
     container: archlinux:latest
     steps:
       - uses: actions/download-artifact@v2
-        with:
-          name: */*.zst
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
