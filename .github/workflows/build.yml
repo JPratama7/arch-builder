@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v2.3.0
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
