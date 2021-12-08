@@ -5,19 +5,7 @@ on:
   workflow_dispatch:
 jobs:
 
-  remove_older_release:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: dev-drprasad/delete-older-releases@v0.2.0
-      with:
-        keep_latest: 1
-        delete_tag_pattern: latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
   CLANG_LTO:
-    needs: remove_older_release
     strategy:
       matrix:
         build: [aria2, bash, wget, wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay]
@@ -46,7 +34,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   GCC:
-    needs: remove_older_release
     strategy:
       matrix:
         build: [xampp]
@@ -72,4 +59,26 @@ jobs:
           replacesArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  create_db_file:
+  needs: [GCC, CLANG_LTO]
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: */*.zst
+      - name: creating database
+        run:  |
+          repo-add arch-repository-jpratama7.db.tar
+          repo-add arch-repository-jpratama7.db.tar *.pkg.tar.zst
+          ls
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          replacesArtifacts: true
+          tag: "latest"
+          artifacts: "./arch-repository-jpratama7.*"
           token: ${{ secrets.GITHUB_TOKEN }}
