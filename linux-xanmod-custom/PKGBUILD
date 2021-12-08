@@ -170,14 +170,15 @@ options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}-tt/patch-${pkgver}-xanmod${xanmod}-tt.xz"
+        "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
         "0004-damon.patch::${_patches_url}/damon-patches-v5/0001-damon-patches.patch"
-        "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
+        "0005-amd64.patch::${_patches_url}/amd64-patches-v2/0001-amd64-patches.patch"
         "0006-v4I2loopback.patch::${_patches_url}/v4l2loopback-patches/0001-v4l2loopback-5.15-merge-v0.12.5.patch"
+        "0007-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.15/tt-5.15.patch"
         )
 
 # Archlinux patches
