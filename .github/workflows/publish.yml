@@ -22,8 +22,8 @@ jobs:
           zipBall: false
           out-file-path: ""
           token: ${{ secrets.API_TOKEN_GITHUB }}
-      - run: |
-          rm arch-repository-jpratama7.*
+      # - run: |
+      #     rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
