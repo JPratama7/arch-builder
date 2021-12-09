@@ -32,7 +32,7 @@ jobs:
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2.3.0
         with:
           path: "*/*.zst"
 
@@ -63,7 +63,7 @@ jobs:
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2.3.0
         with:
           path: "*/*.zst"
 
