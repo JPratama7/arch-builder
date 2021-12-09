@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+      - run: pacman -Syu
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
         with:
