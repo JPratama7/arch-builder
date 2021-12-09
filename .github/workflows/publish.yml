@@ -19,17 +19,18 @@ jobs:
           zipBall: false
           out-file-path: ""
           token: ${{ secrets.API_TOKEN_GITHUB }}
-      # - run: |
-      #     rm arch-repository-jpratama7.*
+      - run: |
+           rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add arch-repository-jpratama7.db.tar
           repo-add arch-repository-jpratama7.db.tar *.pkg.tar.zst
           ls
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           replacesArtifacts: true
+          re
           tag: "latest"
           artifacts: "./arch-repository-jpratama7.*"
           token: ${{ secrets.GITHUB_TOKEN }}
