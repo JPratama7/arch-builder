@@ -1,10 +1,7 @@
 name: Create DB
 on:
-  workflow_run:
-    workflows: ["Builder"]
-    branches: [main]
-    types: 
-      - completed
+  schedule:
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
