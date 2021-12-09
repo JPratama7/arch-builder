@@ -64,6 +64,7 @@ jobs:
 
   create_db_file:
     needs: [GCC, CLANG_LTO]
+    runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
       - uses: dsaltares/fetch-gh-release-asset@master
