@@ -30,7 +30,6 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          re
           tag: "latest"
           artifacts: "./arch-repository-jpratama7.*"
           token: ${{ secrets.GITHUB_TOKEN }}
