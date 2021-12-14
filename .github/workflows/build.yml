@@ -60,37 +60,3 @@ jobs:
           tag: "latest"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-
-  create_db_file:
-    needs: [GCC, CLANG_LTO]
-    runs-on: ubuntu-latest
-    container: archlinux:latest
-    steps:
-      - uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          file: "*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      # - uses: robinraju/release-downloader@v1.2
-      #   with:
-      #     repository: 'JPratama7/arch-builder'
-      #     latest: true
-      #     fileName: "*"
-      #     tarBall: false
-      #     zipBall: false
-      #     out-file-path: ""
-      #     token: ${{ secrets.API_TOKEN_GITHUB }}
-      # - run: |
-      #      rm arch-repository-jpratama7.*
-      - name: creating database
-        run:  |
-          repo-add arch-repository-jpratama7.db.tar
-          repo-add arch-repository-jpratama7.db.tar *.pkg.tar.zst
-          ls
-      - uses: ncipollo/release-action@v1.9.0
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "latest"
-          artifacts: "./arch-repository-jpratama7.*"
-          token: ${{ secrets.GITHUB_TOKEN }}
