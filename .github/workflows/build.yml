@@ -8,7 +8,7 @@ jobs:
   CLANG_LTO:
     strategy:
       matrix:
-        build: [aria2, bash, wget, wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, pamac-aur]
+        build: [aria2, bash, wget, wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, cloudflared,microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, pamac-aur, libpamac-aur]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

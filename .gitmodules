@@ -19,3 +19,6 @@
 [submodule "pamac-aur"]
 	path = pamac-aur
 	url = https://aur.archlinux.org/pamac-aur.git
+[submodule "libpamac-aur"]
+	path = libpamac-aur
+	url = https://aur.archlinux.org/libpamac-aur.git
