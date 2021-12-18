@@ -16,3 +16,6 @@
 [submodule "yay"]
 	path = yay
 	url = https://aur.archlinux.org/yay.git
+[submodule "pamac-aur"]
+	path = pamac-aur
+	url = https://aur.archlinux.org/pamac-aur.git
