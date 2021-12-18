@@ -175,9 +175,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
-        "0004-damon.patch::${_patches_url}/damon-patches-v5/0001-damon-patches.patch"
-        "0005-amd64.patch::${_patches_url}/amd64-patches/0001-amd64-patches.patch"
-        "0006-v4I2loopback.patch::${_patches_url}/v4l2loopback-patches/0001-v4l2loopback-5.15-merge-v0.12.5.patch"
+        "0004-v4I2loopback.patch::${_patches_url}/v4l2loopback-patches/0001-v4l2loopback-5.15-merge-v0.12.5.patch"
+        "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-5.15.patch"
+        "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
 
 # Archlinux patches
@@ -205,16 +205,15 @@ export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
 export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})}
 
 prepare() {
-
   cd linux-${_major}
 
-  msg2 "Apply Xanmod patch"
-  xz -d < ../patch-${pkgver}-xanmod${xanmod}-tt.xz | patch -Np1
+  # Apply Xanmod patch
+  patch -Np1 -i ../patch-${pkgver}-xanmod${xanmod}
 
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-xanmod}" > localversion
+  echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
 
   # Custom patches
   local src
@@ -286,7 +285,7 @@ prepare() {
 
   if [ "$_v4l2" = "y" ]; then
     msg2 "Enable v4l2loopback support"
-    scripts/config --module V4L2_LOOPBACK
+    scripts/config --enable V4L2_LOOPBACK
   fi
 
   ### Build for Freq
@@ -425,9 +424,9 @@ prepare() {
   sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
 
   # This is intended for the people that want to build this package with their own config
-  # Put the file "myconfig" at the package folder to use this feature
-  # If it's a full config, will be replaced
-  # If not, you should use scripts/config commands, one by line
+  # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
+  # If we detect partial file with scripts/config commands, we execute as a script
+  # If not, it's a full config, will be replaced
   for _myconfig in "${SRCDEST}/myconfig" "${HOME}/.config/linux-xanmod/myconfig" "${XDG_CONFIG_HOME}/linux-xanmod/myconfig" ; do
     if [ -f "${_myconfig}" ] && [ "$(wc -l <"${_myconfig}")" -gt "0" ]; then
       if grep -q 'scripts/config' "${_myconfig}"; then
@@ -439,6 +438,7 @@ prepare() {
         msg2 "Using user CUSTOM config..."
         cp -f "${_myconfig}" .config
       fi
+      echo
       break
     fi
   done
@@ -448,23 +448,22 @@ prepare() {
   if [ "$_localmodcfg" = "y" ]; then
     if [ -f $HOME/.config/modprobed.db ]; then
       msg2 "Running Steven Rostedt's make localmodconfig now"
-      make LSMOD=$HOME/.config/modprobed.db LLVM=$_LLVM LLVM_IAS=$_LLVM localmodconfig
+      make LLVM=$_LLVM LLVM_IAS=$_LLVM LSMOD=$HOME/.config/modprobed.db localmodconfig
     else
       msg2 "No modprobed.db data found"
-      exit
+      exit 1
     fi
   fi
-  
-  msg2 "Applying default config..."
+
   make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
 
-  [[ -z "$_makenconfig" ]] || make nconfig
+  [[ -z "$_makenconfig" ]] || make LLVM=$_LLVM LLVM_IAS=$_LLVM nconfig
 
   # save configuration for later reuse
-  cat .config > "${startdir}/config.last"
+  cat .config > "${SRCDEST}/config.last"
 }
 
 build() {
@@ -474,7 +473,7 @@ build() {
 }
 
 _package() {
-  pkgdesc="The Linux kernel and modules with Xanmod patches"
+  pkgdesc="The Linux kernel and modules Custom with Xanmod patches and Task Type CPU Sched"
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
@@ -501,7 +500,7 @@ _package() {
 }
 
 _package-headers() {
-  pkgdesc="Header files and scripts for building modules for Xanmod Linux kernel"
+  pkgdesc="Header files and scripts for building modules for Xanmod Custom Linux kernel"
 
   cd linux-${_major}
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
