@@ -7,6 +7,7 @@ Directly get from AUR:
 - cloudflared
 - xampp
 - yay
+- pamac-aur
 
 This Package Build with clang and x86_64v2+lto flags
 
