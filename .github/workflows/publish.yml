@@ -1,7 +1,7 @@
 name: Create DB
 on:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: "0 13 * * *"
   workflow_dispatch:
 
 jobs:
