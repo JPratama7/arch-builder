@@ -17,16 +17,16 @@ source=("https://downloads.python.org/pypy/pypy${_pypyver}-v${pkgver}-src.zip")
 sha512sums=('SKIP')
 
 build() {
-  cd pypy3.7-v${pkgver}-src/pypy/goal
+  cd pypy${_pypyver}-v${pkgver}-src/pypy/goal
 
-  pypy ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
+  pypy3 ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
 
   # Compile binary modules
   PYTHONPATH=../.. ./pypy3-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
 }
 
 package() {
-  cd pypy3.7-v${pkgver}-src
+  cd pypy${_pypyver}-v${pkgver}-src
 
   # Prepare installation
   pypy3 pypy/tool/release/package.py --archive-name pypy --targetdir .
