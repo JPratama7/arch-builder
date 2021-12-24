@@ -33,7 +33,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  GCC+LTO:
+  GCC_LTO:
     strategy:
       matrix:
         build: [xampp]
