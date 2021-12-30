@@ -37,7 +37,6 @@ package() {
   cd unpacked
   install -Dm755 pypy/bin/pypy3 "${pkgdir}"/opt/pypy3/bin/pypy3
   install -Dm755 pypy/bin/libpypy3-c.so "${pkgdir}"/opt/pypy3/bin/libpypy3-c.so
-  cp -r pypy/include pypy/lib_pypy pypy/lib-python pypy/site-packages "${pkgdir}"/opt/pypy3
   cd ..
 
   # Install symlinks
