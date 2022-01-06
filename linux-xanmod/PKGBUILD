@@ -37,7 +37,7 @@ fi
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=gcc
+  _compiler=clang
 fi
 
 # Compress modules with ZSTD (to save disk space)
@@ -64,7 +64,7 @@ _makenconfig=
 
 pkgbase=linux-xanmod
 _major=5.15
-pkgver=${_major}.12
+pkgver=${_major}.13
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
