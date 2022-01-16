@@ -19,17 +19,13 @@ sha512sums=('SKIP')
 build() {
   cd pypy${_pypyver}-v${pkgver}-src/pypy/goal
 
-  pypy ../../rpython/bin/rpython -Ojit --shared --cc=clang targetpypystandalone
+  pypy ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
 
   # Compile binary modules
   PYTHONPATH=../.. ./pypy3-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
 }
 
 package() {
-
-  provides=('pypy3')
-  replaces=('pypy3')
-
   cd pypy${_pypyver}-v${pkgver}-src
 
   # Prepare installation
