@@ -176,7 +176,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
         "0004-v4I2loopback.patch::${_patches_url}/v4l2loopback-patches/0001-v4l2loopback-5.16-merge-v0.12.5.patch"
-        "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-5.15.patch"
+        "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
 
