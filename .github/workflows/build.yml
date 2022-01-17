@@ -61,7 +61,7 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  Original_GCC:
+  PYPY:
     strategy:
       matrix:
         build: [pypy38]
