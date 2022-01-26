@@ -23,9 +23,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.12.0
         with:
           commit_nessage: Add Submodules
-      - name: build for MPC TEMP
-        uses: JPratama7/pkgbuild-action@cpuv2
-        with:
-          pkgdir: "mpc-qt-git"
-          makepkgArgs: "--skippgpcheck"
-
