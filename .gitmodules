@@ -22,3 +22,6 @@
 [submodule "libpamac-aur"]
 	path = libpamac-aur
 	url = https://aur.archlinux.org/libpamac-aur.git
+[submodule "mpc-qt-git"]
+	path = mpc-qt-git
+	url = https://aur.archlinux.org/mpc-qt-git.git
