@@ -8,7 +8,7 @@ pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
 depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'ncurses')
-makedepends=('pypy' 'sqlite' 'tk' 'clang' 'llvm')
+makedepends=('pypy' 'sqlite' 'tk')
 optdepends=('sqlite: sqlite module'
             'tk: tk module')
 options=(!buildflags)
