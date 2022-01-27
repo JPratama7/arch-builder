@@ -8,6 +8,7 @@ Directly get from AUR:
 - xampp
 - yay
 - pamac-aur
+- mpc-qt-git
 
 This Package Build with clang and x86_64v2+lto flags
 
