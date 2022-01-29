@@ -180,6 +180,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-fortify.patch"
         "https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/misc/0004-mm-set-8-megabytes-for-address_space-level-file-read.patch"
         "https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.16/misc/0001-blake2.patch"
+        "https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.16/misc/0010-ELF.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
 
@@ -203,7 +204,7 @@ b2sums=('SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
-        # 'SKIP'
+        'SKIP'
         )
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
