@@ -182,8 +182,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr_url}misc/0001-blake2.patch"
         "${_ptr_url}misc/0010-ELF.patch"
         # "${_ptr_url}0001-boot.patch"
-        "${_ptr_url}misc/1000-tune-vm-mm-and-vfs-settings.patch"
-        "${_ptr_url}misc/0003-sched-core-nr_migrate-256-increases-number-of-tasks-.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
 
@@ -196,8 +194,6 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=('SKIP'
-        'SKIP'
-        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
