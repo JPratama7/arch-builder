@@ -26,7 +26,7 @@ makedepends=('git' 'cmake' 'ninja' 'libffi' 'libedit' 'ncurses' 'libxml2' 'pytho
              'python-sphinx' 'python-recommonmark' 'swig' 'python' 'python-six' 'lua53'
              'ocl-icd' 'opencl-headers' 'z3' 'jsoncpp')
 checkdepends=("python-psutil")
-source=("llvm-project::git+https://github.com/llvm/llvm-project.git#tag=llvmorg-14.0.0-rc1"
+source=("llvm-project::git+https://github.com/llvm/llvm-project.git"
         "llvm-config.h")
 
 md5sums=('SKIP'
