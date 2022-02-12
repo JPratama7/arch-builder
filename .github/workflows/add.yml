@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          git submodule add https://aur.archlinux.org/mpc-qt-git.git
+          git submodule add https://aur.archlinux.org/llvm-git.git
           git submodule update --recursive --remote    
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.12.0
