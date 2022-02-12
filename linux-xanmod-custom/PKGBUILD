@@ -181,6 +181,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr_url}misc/0004-mm-set-8-megabytes-for-address_space-level-file-read.patch"
         "${_ptr_url}misc/0001-blake2.patch"
         "${_ptr_url}misc/0010-ELF.patch"
+        "${_ptr_url}0001-zen-patches.patch"
+        "${_ptr_url}0001-bitmap.patch"
+        "${_ptr_url}0001-pf-patches.patch"
         # "${_ptr_url}0001-boot.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
@@ -194,6 +197,9 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=('SKIP'
+        'SKIP'
+        'SKIP'
+        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
