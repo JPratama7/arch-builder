@@ -1,6 +1,6 @@
 # Maintainer: Grigory Vasilyev <echo "h0tc0d3(-*A*-)g-m*a-i-l(-d#t-)c#m" | sed -e 's/-//ig;s/*//ig;s/(A)/@/i;s/#/o/ig;s/(dot)/./i'>
 
-pkgname=llvm+clang
+pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
 pkgver=13.0.1
 pkgrel=16
@@ -39,6 +39,12 @@ sha256sums=('SKIP'
   '531d1deb5d37f1f24b3936d88b2c9ed90e8670705d7251c130d924c2c4c05a12')
 
 options=('staticlibs')
+
+#answer for toolchain
+_use_clang_toolchain=y
+_skip_build_test=y
+_skip_documentation=y
+_skip_ocaml_go=n
 
 _extra_build_flags=""
 _build_documentation=0
@@ -91,13 +97,11 @@ build() {
     exit 1
   )
 
-  local yn=0
   while true; do
-    echo -ne "\n\E[1;33mBuild with clang and llvm toolchain? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
+    case ${_use_clang_toolchain} in
     [Yy] | "")
-      if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]"; then
+      echo -ne "\n\E[1;33mBuilding With Clang ToolChain \E[0m"
+      if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-13]"; then
         export CC=clang
         export CXX=clang++
         export AR=llvm-ar
@@ -116,12 +120,12 @@ build() {
         echo -e "\E[1;31mClang not found. Will use default system compiler! \E[0m"
       fi
 
-      if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
+      if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-13]"; then
         export LD=ld.lld
         export CC_LD=lld
         export CXX_LD=lld
         export HOSTLD=ld.lld
-        _extra_build_flags="-DLLVM_USE_LINKER=lld"
+        _extra_build_flags="${_extra_build_flags} -DLLVM_USE_LINKER=lld"
       fi
 
       break
@@ -132,10 +136,10 @@ build() {
   done
 
   while true; do
-    echo -ne "\n\E[1;33mSkip build tests? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
+    case ${_skip_build_test} in
     [Yy] | "")
+      echo -ne "\n\E[1;33mSkipping build test \E[0m"
+
       _build_tests=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_BUILD_TESTS=OFF"
       break
@@ -150,10 +154,10 @@ build() {
   done
 
   while true; do
-    echo -ne "\n\E[1;33mSkip build documentation? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
+    case ${_skip_documentation} in
     [Yy] | "")
+      echo -ne "\n\E[1;33mSkipping Docs \E[0m"
+
       _build_documentation=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_BUILD_DOCS=OFF"
       break
@@ -168,10 +172,10 @@ build() {
   done
 
   while true; do
-    echo -ne "\n\E[1;33mSkip build OCaml and Go bindings? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
+    case ${_skip_ocaml_go} in
     [Yy] | "")
+      echo -ne "\n\E[1;33mSkipping build OCaml and Go bindings \E[0m"
+
       _build_bindings=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_ENABLE_BINDINGS=OFF"
       break
