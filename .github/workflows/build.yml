@@ -92,7 +92,7 @@ jobs:
   TEMPORARYY:
     strategy:
       matrix:
-        build: [llvm-git]
+        build: [llvm]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -105,7 +105,7 @@ jobs:
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@temp
+        uses: JPratama7/pkgbuild-action@master
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
