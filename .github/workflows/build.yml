@@ -42,10 +42,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -70,10 +66,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
