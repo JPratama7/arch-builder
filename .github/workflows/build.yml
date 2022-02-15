@@ -89,7 +89,7 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  TEMPORARYY:
+  TOOLCHAIN:
     strategy:
       matrix:
         build: [llvm]

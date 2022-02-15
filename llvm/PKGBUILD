@@ -13,7 +13,7 @@ conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer' 'clang-tools
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
 _ocaml_ver=4.13.1
 makedepends=(
-  'git' 'ninja' 'cmake'
+  'git' 'ninja' 'cmake' 'clang' 'llvm'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark'
@@ -46,7 +46,7 @@ _skip_build_test=y
 _skip_documentation=y
 _skip_ocaml_go=n
 
-_extra_build_flags=""
+_extra_build_flags="-DLLVM_ENABLE_LTO=Thin"
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
