@@ -76,7 +76,7 @@ makedepends=(
   bc cpio kmod libelf perl tar xz
 )
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(clang llvm lld python)
+  makedepends+=(llvm-all python)
 fi
 options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"

@@ -163,7 +163,7 @@ makedepends=(
 )
 
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(clang llvm lld python)
+  makedepends+=(llvm-all python)
   _LLVM=1
 fi
 
