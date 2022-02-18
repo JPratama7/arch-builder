@@ -215,7 +215,11 @@ _package() {
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
-
+  provides=(VIRTUALBOX-GUEST-MODULES
+            WIREGUARD-MODULE
+            KSMBD-MODULE
+            NTFS3-MODULE)
+            
   cd linux-${_major}
   local kernver="$(<version)"
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
@@ -252,9 +256,6 @@ _package-headers() {
   # add objtool for external module building and enabled VALIDATION_STACK option
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
-  # add xfs and shmem for aufs building
-  mkdir -p "$builddir"/{fs/xfs,mm}
-
   msg2 "Installing headers..."
   cp -t "$builddir" -a include
   cp -t "$builddir/arch/x86" -a arch/x86/include
@@ -270,6 +271,9 @@ _package-headers() {
   install -Dt "$builddir/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
   install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
   install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
+
+  # https://bugs.archlinux.org/task/71392
+  install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
 
   msg2 "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
