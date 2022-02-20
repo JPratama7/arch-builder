@@ -61,30 +61,6 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  non-CPUv2:
-    strategy:
-      matrix:
-        build: [llvm]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
-      - name : update submodule
-        run: git submodule update --recursive --remote
-      - id: makepkg
-        uses: JPratama7/pkgbuild-action@non-cpuv2
-        with:
-          pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.9.0
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "latest"
-          artifacts: "*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   Original:
     strategy:
       matrix:
