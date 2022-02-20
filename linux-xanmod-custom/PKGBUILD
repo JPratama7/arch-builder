@@ -520,6 +520,7 @@ _package() {
 
 _package-headers() {
   pkgdesc="Header files and scripts for building modules for Xanmod Custom Linux kernel"
+  depends=(pahole)
 
   cd linux-${_major}
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
