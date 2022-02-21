@@ -175,7 +175,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
-        "0003-zstd.patch::${_patches_url}/zstd-patches/0001-zstd-patches.patch"
+        "0003-zstd.patch::${_patches_url}/zstd-patches-v2/0001-zstd-patches.patch"
         "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
         "0006-v4l2loopback.patch::${_patches_url}/v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
         "${_ptr_url}0001-fortify-gcc-fix.patch"
