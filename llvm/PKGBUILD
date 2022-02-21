@@ -97,43 +97,43 @@ build() {
     exit 1
   )
 
-  while true; do
-    case ${_use_clang_toolchain} in
-    [Yy] | "")
-      echo -ne "\n\E[1;33mBuilding With Clang ToolChain \E[0m"
-      if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-13]"; then
-        export CC=clang
-        export CXX=clang++
-        export AR=llvm-ar
-        export AS=llvm-as
-        export NM=llvm-nm
-        export STRIP=llvm-strip
-        export OBJCOPY=llvm-objcopy
-        export OBJDUMP=llvm-objdump
-        export READELF=llvm-readelf
-        export HOSTCC=clang
-        export HOSTCXX=clang++
-        export HOSTAR=llvm-ar
-        export DEBUG_CFLAGS="-g"
-        export DEBUG_CXXFLAGS="-g"
-      else
-        echo -e "\E[1;31mClang not found. Will use default system compiler! \E[0m"
-      fi
+  # while true; do
+  #   case ${_use_clang_toolchain} in
+  #   [Yy] | "")
+  #     echo -ne "\n\E[1;33mBuilding With Clang ToolChain \E[0m"
+  #     if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-13]"; then
+  #       export CC=clang
+  #       export CXX=clang++
+  #       export AR=llvm-ar
+  #       export AS=llvm-as
+  #       export NM=llvm-nm
+  #       export STRIP=llvm-strip
+  #       export OBJCOPY=llvm-objcopy
+  #       export OBJDUMP=llvm-objdump
+  #       export READELF=llvm-readelf
+  #       export HOSTCC=clang
+  #       export HOSTCXX=clang++
+  #       export HOSTAR=llvm-ar
+  #       export DEBUG_CFLAGS="-g"
+  #       export DEBUG_CXXFLAGS="-g"
+  #     else
+  #       echo -e "\E[1;31mClang not found. Will use default system compiler! \E[0m"
+  #     fi
 
-      if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-13]"; then
-        export LD=ld.lld
-        export CC_LD=lld
-        export CXX_LD=lld
-        export HOSTLD=ld.lld
-        _extra_build_flags="${_extra_build_flags} -DLLVM_USE_LINKER=lld"
-      fi
+  #     if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-13]"; then
+  #       export LD=ld.lld
+  #       export CC_LD=lld
+  #       export CXX_LD=lld
+  #       export HOSTLD=ld.lld
+  #       _extra_build_flags="${_extra_build_flags} -DLLVM_USE_LINKER=lld"
+  #     fi
 
-      break
-      ;;
-    [Nn]) break ;;
-    *) echo -e "\E[1;31mPlease answer Y or N! \E[0m" ;;
-    esac
-  done
+  #     break
+  #     ;;
+  #   [Nn]) break ;;
+  #   *) echo -e "\E[1;31mPlease answer Y or N! \E[0m" ;;
+  #   esac
+  # done
 
   while true; do
     case ${_skip_build_test} in
