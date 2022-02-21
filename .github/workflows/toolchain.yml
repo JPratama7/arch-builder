@@ -4,14 +4,13 @@ on:
     - cron: "0 0 * * 0"
   workflow_dispatch:
 jobs:
-
   LLVM:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@non-cpuv2
+        uses: JPratama7/pkgbuild-action@toolchain
         with:
           pkgdir: "llvm"
           makepkgArgs: "--skippgpcheck"

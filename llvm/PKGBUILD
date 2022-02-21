@@ -46,7 +46,7 @@ _skip_build_test=y
 _skip_documentation=y
 _skip_ocaml_go=n
 
-_extra_build_flags="-DLLVM_ENABLE_LTO=Thin"
+_extra_build_flags="-DLLVM_ENABLE_LTO=Full"
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
@@ -189,6 +189,11 @@ build() {
   done
 
   cmake -S llvm -B build -G Ninja \
+    -DCMAKE_C_FLAGS:STRING="${CFLAGS} ${CPPFLAGS}" \
+    -DCMAKE_CXX_FLAGS:STRING="${CXXFLAGS} ${CPPFLAGS}" \
+    -DCMAKE_EXE_LINKER_FLAGS:STRING="${LDFLAGS}" \
+    -DCMAKE_SHARED_LINKER_FLAGS:STRING="${LDFLAGS}" \
+    -DLLVM_USE_LINKER=lld \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
