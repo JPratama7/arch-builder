@@ -13,7 +13,7 @@ conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer' 'clang-tools
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
 _ocaml_ver=4.13.1
 makedepends=(
-  'git' 'ninja' 'cmake'
+  'git' 'ninja' 'cmake' 'llvm-all'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark'
@@ -189,8 +189,8 @@ build() {
   done
 
   cmake -S llvm -B build -G Ninja \
-    -DCMAKE_C_FLAGS:STRING="-march=x86-64 -O2 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine" \
-    -DCMAKE_CXX_FLAGS:STRING="-march=x86-64 -O2 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine -Wp,-D_GLIBCXX_ASSERTIONS" \
+    -DCMAKE_C_FLAGS:STRING="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine" \
+    -DCMAKE_CXX_FLAGS:STRING="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine -Wp,-D_GLIBCXX_ASSERTIONS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
