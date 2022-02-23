@@ -189,8 +189,8 @@ build() {
   done
 
   cmake -S llvm -B build -G Ninja \
-    -DCMAKE_C_FLAGS:STRING="-march=x86-64 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine" \
-    -DCMAKE_CXX_FLAGS:STRING="-march=x86-64 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine -Wp,-D_GLIBCXX_ASSERTIONS" \
+    -DCMAKE_C_FLAGS:STRING="-march=x86-64 -O2 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine" \
+    -DCMAKE_CXX_FLAGS:STRING="-march=x86-64 -O2 -mtune=generic -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine -Wp,-D_GLIBCXX_ASSERTIONS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
