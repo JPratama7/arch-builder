@@ -13,7 +13,7 @@ conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer' 'clang-tools
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
 _ocaml_ver=4.13.1
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm-all'
+  'git' 'ninja' 'cmake'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark'
@@ -40,12 +40,10 @@ sha256sums=('SKIP'
 
 options=('staticlibs')
 
-#answer for toolchain
 _use_clang_toolchain=y
 _skip_build_test=y
 _skip_documentation=y
 _skip_ocaml_go=n
-
 _extra_build_flags="-DLLVM_ENABLE_LTO=Full"
 _build_documentation=0
 _build_tests=0
@@ -97,10 +95,11 @@ build() {
     exit 1
   )
 
+  local yn=0
   while true; do
     case ${_use_clang_toolchain} in
     [Yy] | "")
-      echo -ne "\n\E[1;33mBuilding With Clang ToolChain \E[0m"
+      echo -ne "\n\E[1;33mBuilding with clang and llvm toolchain \E[0m"
       if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-13]"; then
         export CC=clang
         export CXX=clang++
@@ -138,8 +137,7 @@ build() {
   while true; do
     case ${_skip_build_test} in
     [Yy] | "")
-      echo -ne "\n\E[1;33mSkipping build test \E[0m"
-
+      echo -ne "\n\E[1;33mSkipping build tests\E[0m"
       _build_tests=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_BUILD_TESTS=OFF"
       break
@@ -156,8 +154,7 @@ build() {
   while true; do
     case ${_skip_documentation} in
     [Yy] | "")
-      echo -ne "\n\E[1;33mSkipping Docs \E[0m"
-
+      echo -ne "\n\E[1;33mSkipping build documentation\E[0m"
       _build_documentation=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_BUILD_DOCS=OFF"
       break
@@ -174,8 +171,7 @@ build() {
   while true; do
     case ${_skip_ocaml_go} in
     [Yy] | "")
-      echo -ne "\n\E[1;33mSkipping build OCaml and Go bindings \E[0m"
-
+      echo -ne "\n\E[1;33mSkipping build OCaml and Go bindings\E[0m"
       _build_bindings=0
       _extra_build_flags="${_extra_build_flags} -DLLVM_ENABLE_BINDINGS=OFF"
       break
@@ -189,8 +185,6 @@ build() {
   done
 
   cmake -S llvm -B build -G Ninja \
-    -DCMAKE_C_FLAGS:STRING="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine" \
-    -DCMAKE_CXX_FLAGS:STRING="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -mllvm -polly -mllvm -polly-omp-backend=LLVM -mllvm -polly-vectorizer=stripmine -Wp,-D_GLIBCXX_ASSERTIONS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
