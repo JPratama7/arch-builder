@@ -106,9 +106,6 @@ _compiler=clang
 #fsync
 _fsync=y
 
-#futex2
-_futex2=
-
 #enable lrng
 _lrng_enable=y
 
@@ -123,8 +120,8 @@ _winesync=y
 
 # CPU FREQ
 _500hz=
-_833hz=y
-_1666hz=
+_750hz=y
+_1000hz=
 
 #####################
 
@@ -178,13 +175,14 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0003-zstd.patch::${_patches_url}/zstd-patches-v2/0001-zstd-patches.patch"
         "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
         "0006-v4l2loopback.patch::${_patches_url}/v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
-        "${_ptr_url}0001-fortify.patch"
+        "${_ptr_url}0001-cpu.patch"
         "${_ptr_url}misc/0004-mm-set-8-megabytes-for-address_space-level-file-read.patch"
         "${_ptr_url}misc/0001-blake2.patch"
         "${_ptr_url}misc/0010-ELF.patch"
         "${_ptr_url}0001-zen-patches.patch"
         "${_ptr_url}0001-bitmap.patch"
         "${_ptr_url}0001-pf-patches.patch"
+        "${_ptr_url}0001-misc.patch"
         # "${_ptr_url}0001-boot.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
@@ -198,6 +196,7 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=('SKIP'
+        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
@@ -278,11 +277,6 @@ prepare() {
     scripts/config --disable CONFIG_FUTEX
     scripts/config --disable CONFIG_FUTEX_PI
   fi
-
-  if [ "$_futex2" = "n" ]; then
-    msg2 "Disable Futex2 support"
-    scripts/config --disable CONFIG_FUTEX2
-  fi
   
   if [ "$_winesync" = "y" ]; then
     msg2 "Enable winesync support"
@@ -311,19 +305,19 @@ prepare() {
     scripts/config --set-val CONFIG_HZ 500
   fi
 
-  if [ -n "$_833hz" ]; then
+  if [ -n "$_750hz" ]; then
     msg2 "Setting tick rate to 750HZ..."
     scripts/config --disable CONFIG_HZ_1000
-    scripts/config --enable CONFIG_HZ_833
-    scripts/config --set-val CONFIG_HZ 833
+    scripts/config --enable CONFIG_HZ_750
+    scripts/config --set-val CONFIG_HZ 750
 
   fi
 
   if [ -n "$_1666hz" ]; then
     msg2 "Setting tick rate to 600HZ..."
-    scripts/config --disable CONFIG_HZ_1000
-    scripts/config --enable CONFIG_HZ_1666
-    scripts/config --set-val CONFIG_HZ 1666
+    scripts/config --enable CONFIG_HZ_1000
+    scripts/config --disable CONFIG_HZ_500
+    scripts/config --set-val CONFIG_HZ 1000
   fi
   
 ### Enable Linux Random Number Generator
