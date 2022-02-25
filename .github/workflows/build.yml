@@ -5,19 +5,15 @@ on:
   workflow_dispatch:
 jobs:
 
-  CLANG_LTO:
+  CPUV2:
     strategy:
       matrix:
-        build: [wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git, microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, pamac-aur, libpamac-aur]
+        build: [wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -33,7 +29,32 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  GCC_LTO:
+  AUR_CPUV2:
+    strategy:
+      matrix:
+        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, pamac-aur, libpamac-aur]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v2.4.0
+      - name : update submodule
+        run: git submodule update --recursive --remote
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@aur-cpuv2
+        with:
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  AUR_GCC:
     strategy:
       matrix:
         build: [mpc-qt-git, cloudflared, xampp]
@@ -49,7 +70,7 @@ jobs:
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@gcc
+        uses: JPratama7/pkgbuild-action@aur-gcc
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
