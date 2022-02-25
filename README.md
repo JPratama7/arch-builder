@@ -3,14 +3,13 @@
 [![Toolchain](https://github.com/JPratama7/arch-builder/actions/workflows/toolchain.yml/badge.svg)](https://github.com/JPratama7/arch-builder/actions/workflows/toolchain.yml)
 
 Directly get from AUR: 
-- slimjet 
 - spotify
 - cloudflared
 - xampp
 - yay
+- libpamac-aur
 - pamac-aur
 - mpc-qt-git
-- llvm-git
 
 This Package Build with clang and x86_64v2+lto flags
 
