@@ -10,6 +10,10 @@ Directly get from AUR:
 - libpamac-aur
 - pamac-aur
 - mpc-qt-git
+- microsoft-edge-beta-bin
+- microsoft-edge-dev-bin
+- spotify
+- yay
 
 This Package Build with clang and x86_64v2+lto flags
 
