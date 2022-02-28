@@ -28,6 +28,7 @@ source=(
   llvm-fix-scan-build-py-executable-lookup-path.patch
   llvm-don-t-accept-nullptr-as-GEP-element-type.patch
   llvm-Hoist-LOAD-without-sinking-the-STORE.patch
+  https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/clang/trunk/strip-exception-specifications-in-CFI-type-names.patch
 )
 
 sha256sums=('SKIP'
