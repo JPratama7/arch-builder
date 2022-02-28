@@ -32,7 +32,7 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, pamac-aur, libpamac-aur]
+        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +57,7 @@ jobs:
   AUR_GCC:
     strategy:
       matrix:
-        build: [mpc-qt-git, cloudflared, xampp]
+        build: [mpc-qt-git, cloudflared, xampp, pamac-aur, libpamac-aur, pamac-nosnap, libpamac-nosnap]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
