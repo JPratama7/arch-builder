@@ -20,7 +20,10 @@ This Package Build with clang and x86_64v2+lto flags
 Add this to /etc/pacman.conf: 
 - [arch-repository-jpratama7]
 - SigLevel = Never
+- Server = https://r.zhullyb.top/JPratama7/arch-builder/releases/download/latest/
 - Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
+- Server = https://https://git.aya1.top/JPratama7/arch-builder/releases/download/latest/
+- Server = https://hub.fastgit.xyz/JPratama7/arch-builder/releases/download/latest/
 
 
 Request package? Open Issue
