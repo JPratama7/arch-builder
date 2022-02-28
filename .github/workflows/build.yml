@@ -8,7 +8,7 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet, spotify-adblock-git]
+        build: [wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-lts,linux-xanmod-tt, packettracer, slimjet]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +85,7 @@ jobs:
   Original:
     strategy:
       matrix:
-        build: [pypy38]
+        build: [pypy38, spotify-adblock-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
