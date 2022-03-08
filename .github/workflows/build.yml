@@ -8,7 +8,7 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [wget2, linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet]
+        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, whatsdesk-git]
+        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, yay, wget2-git, aria2-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +57,7 @@ jobs:
   AUR_GCC:
     strategy:
       matrix:
-        build: [mpc-qt-git, cloudflared, xampp, pamac-aur, libpamac-aur, pamac-nosnap, libpamac-nosnap]
+        build: [mpc-qt-git, cloudflared, xampp, pamac-aur, libpamac-aur, pamac-nosnap, libpamac-nosnap, whatsdesk-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
