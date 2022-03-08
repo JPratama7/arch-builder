@@ -85,7 +85,7 @@ jobs:
   GCC:
     strategy:
       matrix:
-        build: [linux-xanmod-lts]
+        build: [linux-xanmod-lts, github-desktop]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
