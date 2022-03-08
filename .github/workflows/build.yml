@@ -8,7 +8,7 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet]
+        build: [linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, python]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
