@@ -1,4 +1,5 @@
-# Maintainer: Joan Figueras <ffigue at gmail dot com>
+# Maintainer : JPratama7 <josepratama080@gmail.com>
+# Contributor: Joan Figueras <ffigue at gmail dot com>
 # Contributor: Torge Matthies <openglfreak at googlemail dot com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
@@ -62,7 +63,7 @@ fi
 
 pkgbase=linux-xanmod-edge
 _major=5.16
-pkgver=${_major}.12
+pkgver=${_major}.13
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
