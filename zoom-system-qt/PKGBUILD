@@ -31,7 +31,7 @@ optdepends=('qt5-webengine: SSO login support'
             'pulseaudio-alsa: output sound via pulseaudio' )
 options=(!strip)
 source=("$pkgname-$pkgver-orig-$arch.pkg.tar.xz::$url/client/latest/${_basename}_$arch.pkg.tar.xz")
-sha512sums=('c543a805130255bec1ad7fc7ccc6dd9a37711d73bd9f2fac62a57913210e1ea54a679ea4627c7166b2c6168e42d1b41f457fc2f6989f57296df4933b0e49f2a1')
+sha512sums=('a4f73d3f46c2c5f7c3732fa982d3728a668687cd319162d565301faca0f13b8d4aadbbbc98a5932d5897da8b48a8c1396797a0a759da2ec80b0e6b145a7d2f3b')
 
 _syslib() {
     rm -f $1{,.*}
