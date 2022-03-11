@@ -57,7 +57,7 @@ jobs:
   AUR_GCC:
     strategy:
       matrix:
-        build: [mpc-qt-git, cloudflared, xampp, pamac-aur, libpamac-aur, pamac-nosnap, libpamac-nosnap, whatsdesk-git]
+        build: [mpc-qt-git, cloudflared, xampp, visual-studio-code-bin, whatsdesk-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
