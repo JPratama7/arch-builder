@@ -82,6 +82,30 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  arch_packages:
+    strategy:
+      matrix:
+        build: [mesa, libva-vdpau-driver, libva, libvdpau, xf86-video-amdgpu]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v2.4.0
+      - name : update submodule
+        run: git submodule update --recursive --remote
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@archclub
+        with:
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
   GCC:
     strategy:
       matrix:
