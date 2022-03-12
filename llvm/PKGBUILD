@@ -46,7 +46,7 @@ _use_clang_toolchain=y
 _skip_build_test=y
 _skip_documentation=y
 _skip_ocaml_go=n
-_extra_build_flags="-DLLVM_ENABLE_LTO=Thin"
+_extra_build_flags="-DLLVM_ENABLE_LTO=Thin -DCMAKE_SKIP_RPATH=ON"
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
