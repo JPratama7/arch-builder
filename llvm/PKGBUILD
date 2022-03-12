@@ -84,7 +84,7 @@ prepare() {
   # Performance optimization https://bugs.llvm.org/show_bug.cgi?id=51193
   _patch llvm-Hoist-LOAD-without-sinking-the-STORE.patch
 
-  patch -Np2 -i ../strip-exception-specifications-in-CFI-type-names.patch
+  _patch strip-exception-specifications-in-CFI-type-names.patch
 
   # Attempt to convert script to Python 3
   2to3 -wn --no-diffs \
