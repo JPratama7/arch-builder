@@ -12,12 +12,13 @@ jobs:
     steps:
       - name: "Downloading"
         run: |
+          pacman -Syu --needed aria2 base-devel
           urls=$(curl https://github.com/JPratama7/arch-builder/releases/tag/latest -s|grep "/JPratama7/arch-builder/releases/download/latest/"|awk -F '"|"' '{print$2}')
 
           for i in ${urls[*]}; do 
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
-              wget -q https://github.com/$i -P kernels/
+              aria2c -x 16 -s 16 https://github.com/$i
           done
       - run: |
            rm arch-repository-jpratama7.*
