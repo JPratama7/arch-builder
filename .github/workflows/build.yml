@@ -8,7 +8,7 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet]
+        build: [zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify]
+        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, xampp]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +57,7 @@ jobs:
   AUR_GCC:
     strategy:
       matrix:
-        build: [mpc-qt-git, cloudflared, xampp, visual-studio-code-bin, wget2-git, aria2-git]
+        build: [mpc-qt-git, cloudflared, visual-studio-code-bin, wget2-git, aria2-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +85,7 @@ jobs:
   arch_packages:
     strategy:
       matrix:
-        build: [mesa, libva-vdpau-driver, libva, libvdpau, xf86-video-amdgpu]
+        build: [libva-vdpau-driver, libva, libvdpau, xf86-video-amdgpu]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
