@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
-      - uses: robinraju/release-downloader@v1.2
+      - uses: robinraju/release-downloader@v1.3
         with:
           repository: 'JPratama7/arch-builder'
           latest: true
