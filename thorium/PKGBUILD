@@ -17,7 +17,7 @@ optdepends=(
 	'gnome-keyring: for storing passwords in GNOME keyring'
 	'kwallet: for storing passwords in KWallet'
     'org.freedesktop.secrets: password storage backend on GNOME / Xfce'
-    'kwallet: support for storing passwords in KWallet on Plasma')
+    'kwallet: support for storing passwords in KWallet on Plasma'
 )
 provides=('chromium')
 options=('!strip' '!emptydirs')
