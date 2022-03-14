@@ -8,7 +8,7 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa]
+        build: [zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, wget2-git, aria2-git]
+        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, wget2-git, aria2-git, zoom]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
