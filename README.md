@@ -6,14 +6,15 @@ Directly get from AUR:
 - spotify
 - cloudflared
 - xampp
-- yay
-- libpamac-aur
-- pamac-aur
 - mpc-qt-git
 - microsoft-edge-beta-bin
 - microsoft-edge-dev-bin
 - spotify
 - yay
+- zoom
+- aria2-git
+- wget2-git
+- visual-studio-code-bin
 
 This Package Build with clang and x86_64v2+lto flags
 
