@@ -10,7 +10,7 @@ jobs:
       - name: Build packages for arch
         uses: actions/checkout@v2.4.0
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@test
+        uses: JPratama7/pkgbuild-action@toolchain
         with:
           pkgdir: "llvm"
           makepkgArgs: "--skippgpcheck"

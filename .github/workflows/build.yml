@@ -17,7 +17,7 @@ jobs:
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@test
+        uses: JPratama7/pkgbuild-action@cpuv2
         with:
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
@@ -97,7 +97,7 @@ jobs:
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@test
+        uses: JPratama7/pkgbuild-action@cpuv2
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
