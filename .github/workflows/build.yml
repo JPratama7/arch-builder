@@ -33,7 +33,7 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,microsoft-edge-beta-bin, spotify, wget2-git, aria2-git, zoom]
+        build: [microsoft-edge-dev-bin,postman-bin, spotify, wget2-git, aria2-git, zoom]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
