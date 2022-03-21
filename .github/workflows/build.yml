@@ -96,6 +96,9 @@ jobs:
           repository: h0tc0d3/arch-packages
       - name : update submodule
         run: git submodule update --recursive --remote
+      - name: remove +clang
+        run: |
+          cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
         uses: JPratama7/pkgbuild-action@cpuv2
         with:
