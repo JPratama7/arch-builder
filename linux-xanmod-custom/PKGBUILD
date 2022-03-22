@@ -173,8 +173,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}uksm-patches/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}zstd-patches/0001-zstd-patches.patch"
-        # "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
-        "0006-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
+        "0004-tt-sched.patch::${_ptr_url}sched/tt-${_major}.patch"
+        "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_ptr_url}0001-fast-headers.patch"
         "${_ptr_url}0001-zen-patches.patch"
         "${_ptr_url}0001-pf-patches.patch"
@@ -191,6 +191,7 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=(
+        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
