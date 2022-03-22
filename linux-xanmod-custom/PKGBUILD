@@ -149,7 +149,7 @@ _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
 pkgdesc='Linux Xanmod with More Patches. Branch with Task Type CPU Sched'
-_patches_url="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
+_patches_url="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
 _ptr_url="https://raw.githubusercontent.com/ptr1337/kernel-patches/master//${_major}/"
 _jobs=$(nproc)
 url="http://www.xanmod.org/"
@@ -171,16 +171,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "0002-UKSM.patch::${_patches_url}/uksm-patches/0001-UKSM-for-${_major}.patch"
-        "0003-zstd.patch::${_patches_url}/zstd-patches-v4/0001-zstd-patches.patch"
-        "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
-        "0006-v4l2loopback.patch::${_patches_url}/v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
-        "${_ptr_url}misc/0004-mm-set-8-megabytes-for-address_space-level-file-read.patch"
-        "${_ptr_url}misc/0001-blake2.patch"
-        "${_ptr_url}misc/0010-ELF.patch"
+        "0002-UKSM.patch::${_patches_url}uksm-patches/0001-UKSM-for-${_major}.patch"
+        "0003-zstd.patch::${_patches_url}zstd-patches/0001-zstd-patches.patch"
+        # "0005-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/${_major}/tt-${_major}.patch"
+        "0006-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
+        "${_ptr_url}0001-fast-headers.patch"
         "${_ptr_url}0001-zen-patches.patch"
-        "${_ptr_url}0001-bitmap.patch"
-        "${_patches_url}/pf-patches-v3/0001-pf-patches.patch"
+        "${_ptr_url}0001-pf-patches.patch"
         # "${_ptr_url}0001-boot.patch"
         # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
         )
@@ -193,10 +190,7 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-b2sums=('SKIP'
-        'SKIP'
-        'SKIP'
-        'SKIP'
+b2sums=(
         'SKIP'
         'SKIP'
         'SKIP'
