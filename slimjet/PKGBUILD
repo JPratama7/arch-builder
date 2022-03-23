@@ -13,12 +13,14 @@ optdepends=('kdialog: needed for file dialogs in KDE' 'ttf-liberation: fix fonts
 options=('!emptydirs' '!strip')
 _channel=beta
 _url=https://www.slimjetbrowser.com
-source_i686=("${pkgname}-${pkgver}_i386.deb::${_url}/${_channel}/${pkgname}_i386.deb")
-source_x86_64=("${pkgname}-${pkgver}_amd64.deb::${_url}/${_channel}/${pkgname}_amd64.deb")
-source=('LICENSE')
-md5sums=('SKIP')
-md5sums_i686=('SKIP')
-md5sums_x86_64=('SKIP')
+source=(
+    "${pkgname}-${pkgver}_amd64.deb::${_url}/${_channel}/${pkgname}_amd64.deb"
+    'LICENSE'
+    )
+md5sums=(
+    'SKIP'
+    'SKIP'
+    )
 
 prepare() {
     bsdtar -xf data.tar.xz
