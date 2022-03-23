@@ -171,11 +171,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "0002-UKSM.patch::${_patches_url}uksm-patches/0001-UKSM-for-${_major}.patch"
+        "0002-UKSM.patch::${_patches_url}uksm-patches-v2/0001-UKSM-for-${_major}.patch"
         "0003-zstd.patch::${_patches_url}zstd-patches/0001-zstd-patches.patch"
         "0004-tt-sched.patch::${_ptr_url}sched/0001-tt-${_major}.patch"
         "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-5.17-merge-v0.12.5.patch"
-        "${_ptr_url}0001-fast-headers.patch"
         "${_ptr_url}0001-zen-patches.patch"
         "${_ptr_url}0001-pf-patches.patch"
         # "${_ptr_url}0001-boot.patch"
