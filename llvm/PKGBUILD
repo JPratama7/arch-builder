@@ -1,7 +1,7 @@
 pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
 pkgver=14.0.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -41,7 +41,6 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_skip_ocaml_go=n
 _extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_SKIP_RPATH=ON)
 _build_documentation=0
 _build_tests=0
@@ -149,22 +148,6 @@ build() {
     esac
   done
 
-  while true; do
-    case ${_skip_ocaml_go} in
-    [Yy] | "")
-      echo -ne "\n\E[1;33mSkipping build OCaml and Go bindings\E[0m"
-      _build_bindings=0
-      _extra_build_flags+=(-DLLVM_ENABLE_BINDINGS=OFF)
-      break
-      ;;
-    [Nn])
-      _build_bindings=1
-      break
-      ;;
-    *) echo -e "\E[1;31mPlease answer Y or N! \E[0m" ;;
-    esac
-  done
-  
   cmake -S llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -178,7 +161,7 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;openmp;polly;lld;lldb" \
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;openmp;polly;pstl" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
