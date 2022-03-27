@@ -1,4 +1,4 @@
-pkgname=mesa+clang
+pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=22.0.0
 _pkgver=${pkgver//_/-}
