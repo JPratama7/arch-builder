@@ -177,9 +177,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-5.17-merge-v0.12.5.patch"
         "${_ptr_url}0001-zen-patches.patch"
         "${_ptr_url}0001-pf-patches.patch"
-        # "${_ptr_url}0001-boot.patch"
-        # "0006-clang.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/${_major}/0001-clang.patch"
-        )
+        "${_ptr_url}0001-ksm.patch"
+        "${_ptr_url}0001-fortify.patch"
+         )
 
 # Archlinux patches
 _commit="ec9e9a4219fe221dec93fa16fddbe44a34933d8d"
@@ -190,6 +190,8 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=(
+        'SKIP'
+        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
@@ -230,7 +232,8 @@ prepare() {
   done
 
   # Applying configuration
-  cp -vf CONFIGS/xanmod/${_compiler}/config .config
+  # cp -vf CONFIGS/xanmod/${_compiler}/config .config
+  cp -vf CONFIGS/xanmod/gcc/config .config
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   scripts/config --enable CONFIG_STACK_VALIDATION
@@ -247,13 +250,13 @@ prepare() {
     fi
   fi
 
-  # enable LTO_CLANG_FULL
+  # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
   msg2 "Enable Clang LTO FULL"
     scripts/config --disable CONFIG_LTO_NONE
-    scripts/config --enable LTO_CLANG_FULL
-    scripts/config --disable LTO_CLANG_THIN
-    scripts/config --disable CONFIG_LTO_CLANG_THIN
+    scripts/config --disable LTO_CLANG_FULL
+    scripts/config --enable LTO_CLANG_THIN
+    scripts/config --enable CONFIG_LTO_CLANG_THIN
     _LLVM=1
   fi
 
@@ -415,11 +418,11 @@ prepare() {
   scripts/config --enable CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
   
 
-  # Let's user choose microarchitecture optimization in GCC
-  sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
   # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
   # https://github.com/xanmod/linux/issues/240
-  [ "$_microarchitecture" = "0" ] || scripts/config --disable CONFIG_GENERIC_CPU2
+  scripts/config --disable CONFIG_GENERIC_CPU2
+  # Let's user choose microarchitecture optimization in GCC
+  sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
 
   # This is intended for the people that want to build this package with their own config
   # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
