@@ -88,7 +88,7 @@ jobs:
       matrix:
         build: [
         libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, libinput, xf86-input-libinput, libxcrypt, pulseaudio, 
-        alsa-lib, alsa-plugins
+        alsa-lib, alsa-plugins, libclc
         ]
       fail-fast: false
     runs-on: ubuntu-latest
