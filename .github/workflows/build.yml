@@ -8,7 +8,9 @@ jobs:
   CPUV2:
     strategy:
       matrix:
-        build: [zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium]
+        build: [
+          zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg
+          ]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +35,9 @@ jobs:
   AUR_CPUV2:
     strategy:
       matrix:
-        build: [microsoft-edge-dev-bin,postman-bin, spotify, wget2-git, aria2-git, zoom]
+        build: [
+          microsoft-edge-dev-bin,postman-bin, spotify, wget2-git, aria2-git, zoom
+          ]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -58,7 +62,9 @@ jobs:
   AUR_GCC:
     strategy:
       matrix:
-        build: [mpc-qt-git, cloudflared, visual-studio-code-bin, xampp]
+        build: [
+          mpc-qt-git, cloudflared, visual-studio-code-bin, xampp
+          ]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -87,8 +93,7 @@ jobs:
     strategy:
       matrix:
         build: [
-        libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, libinput, xf86-input-libinput, libxcrypt, pulseaudio, 
-        alsa-lib, alsa-plugins, libclc
+        libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, libinput, xf86-input-libinput, libxcrypt, alsa-lib, alsa-plugins
         ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -121,7 +126,9 @@ jobs:
   GCC:
     strategy:
       matrix:
-        build: [linux-xanmod-lts, github-desktop]
+        build: [
+          linux-xanmod-lts, github-desktop
+          ]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
