@@ -66,7 +66,6 @@ depends=(
 makedepends=(
   amf-headers
   avisynthplus
-  clang
   ffnvcodec-headers
   git
   ladspa
