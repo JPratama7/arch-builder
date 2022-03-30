@@ -129,7 +129,8 @@ prepare() {
   done
 
   # Applying configuration
-  cp -vf CONFIGS/xanmod/${_compiler}/config .config
+  #cp -vf CONFIGS/xanmod/${_compiler}/config .config
+  cp -vf CONFIGS/xanmod/gcc/config .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
@@ -163,11 +164,11 @@ prepare() {
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
   fi
 
-  # Let's user choose microarchitecture optimization in GCC
-  sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
   # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
   # https://github.com/xanmod/linux/issues/240
   [ "$_microarchitecture" = "0" ] || scripts/config --disable CONFIG_GENERIC_CPU2
+  # Let's user choose microarchitecture optimization in GCC
+  sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
 
   # This is intended for the people that want to build this package with their own config
   # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
