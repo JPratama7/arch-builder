@@ -144,7 +144,7 @@ _makenconfig=
 
 pkgbase=linux-xanmod-custom
 _major=5.17
-pkgver=${_major}.0
+pkgver=${_major}.1
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -175,8 +175,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0003-zstd.patch::${_patches_url}zstd-patches/0001-zstd-patches.patch"
         "0004-tt-sched.patch::${_ptr_url}sched/0001-tt.patch"
         "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-5.17-merge-v0.12.5.patch"
+        "0006-pf-fixes.patch::${_patches_url}pf-fixes-v6/0001-pf-fixes.patch"
         "${_ptr_url}0001-zen-patches.patch"
-        "${_ptr_url}0001-pf-patches.patch"
         "${_ptr_url}0001-ksm.patch"
         "${_ptr_url}0001-fortify.patch"
          )
@@ -539,7 +539,7 @@ _package-headers() {
   install -Dt "$builddir/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
   install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
   install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
-
+pf-fixes-v6/0001-pf-fixes.patch
   # https://bugs.archlinux.org/task/71392
   install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
 

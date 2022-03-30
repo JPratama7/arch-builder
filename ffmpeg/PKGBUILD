@@ -1,8 +1,8 @@
-pkgname=ffmpeg+clang
+pkgname=ffmpeg
 pkgver=5.0
 pkgrel=5
 epoch=2
-pkgdesc='Complete solution to record, convert and stream audio and video'
+pkgdesc='Complete solution to record, convert and stream audio and video with Vulkan'
 arch=(x86_64)
 url=https://ffmpeg.org/
 license=(GPL3)
