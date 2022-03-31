@@ -177,7 +177,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-5.17-merge-v0.12.5.patch"
         "0006-pf-fixes.patch::${_patches_url}pf-fixes-v5/0001-pf-fixes.patch"
         "${_ptr_url}0001-zen-patches.patch"
-        "${_ptr_url}0001-ksm.patch"
+        # "${_ptr_url}0001-ksm.patch"
         "${_ptr_url}0001-fortify.patch"
          )
 
@@ -202,7 +202,7 @@ b2sums=(
         'SKIP'
         'SKIP'
         'SKIP'
-        'SKIP'
+        # 'SKIP'
         )
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
