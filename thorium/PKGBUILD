@@ -2,7 +2,7 @@
 
 pkgbase=thorium-browser-unstable
 pkgname=${pkgbase}-bin
-pkgver=101.0.4949.0
+pkgver=102.0.4976.0
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
@@ -27,11 +27,8 @@ sha512sums_x86_64=('SKIP')
 package(){
 	# Extract package data
 	tar xf data.tar.xz -C "${pkgdir}"
-
-    chmod 4755 "$pkgdir/opt/chromium.org/thorium-unstable/chrome-sandbox"
-
-    rm -r "$pkgdir"/etc
-
+	chmod 4755 "$pkgdir/opt/chromium.org/thorium-unstable/chrome-sandbox"
+	rm -r "$pkgdir"/etc
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
         install -Dm644 "${pkgdir}"/opt/chromium.org/thorium-unstable/product_logo_${i/x*}.png \
