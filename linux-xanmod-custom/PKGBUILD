@@ -178,7 +178,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "0006-pf-fixes.patch::${_patches_url}pf-fixes-v5/0001-pf-fixes.patch"
         "${_ptr_url}0001-zen-patches.patch"
         # "${_ptr_url}0001-ksm.patch"
-        "${_ptr_url}0001-fortify.patch"
          )
 
 # Archlinux patches
@@ -190,7 +189,6 @@ for _patch in ${_patches[@]}; do
 done
 
 b2sums=(
-        'SKIP'
         'SKIP'
         'SKIP'
         'SKIP'
