@@ -143,8 +143,8 @@ _makenconfig=
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-custom
-_major=5.17
-pkgver=${_major}.1
+_major=5.16
+pkgver=${_major}.16
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -172,11 +172,16 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-cjktty.patch::https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "0002-UKSM.patch::${_patches_url}uksm-patches-v2/0001-UKSM-for-${_major}.patch"
-        "0003-zstd.patch::${_patches_url}zstd-patches/0001-zstd-patches.patch"
-        "0004-tt-sched.patch::${_ptr_url}sched/0001-tt.patch"
-        "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches/0001-v4l2loopback-5.17-merge-v0.12.5.patch"
-        "0006-pf-fixes.patch::${_patches_url}pf-fixes-v5/0001-pf-fixes.patch"
+        "0003-zstd.patch::${_patches_url}zstd-patches-v4/0001-zstd-patches.patch"
+        "0004-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-${_major}.patch"
+        # "0004-tt-sched.patch::${_ptr_url}sched/0001-tt.patch"
+        "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
+        "0006-pf-patches.patch::${_patches_url}pf-patches-v3/0001-pf-patches.patch"
         "${_ptr_url}0001-zen-patches.patch"
+        "${_ptr_url}misc/0004-mm-set-8-megabytes-for-address_space-level-file-read.patch"
+        "${_ptr_url}misc/0001-blake2.patch"
+        "${_ptr_url}misc/0010-ELF.patch"
+        "${_ptr_url}0001-page-table-check.patch"
         # "${_ptr_url}0001-ksm.patch"
          )
 
@@ -229,8 +234,7 @@ prepare() {
   done
 
   # Applying configuration
-  # cp -vf CONFIGS/xanmod/${_compiler}/config .config
-  cp -vf CONFIGS/xanmod/gcc/config .config
+  cp -vf CONFIGS/xanmod/${_compiler}/config .config
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   scripts/config --enable CONFIG_STACK_VALIDATION
