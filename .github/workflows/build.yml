@@ -9,7 +9,8 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg
+          zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg,
+          libclc
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -36,7 +37,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin,postman-bin, spotify, wget2-git, aria2-git, zoom
+          microsoft-edge-dev-bin,postman-bin, spotify, aria2-git, zoom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -63,7 +64,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          mpc-qt-git, cloudflared, visual-studio-code-bin, xampp, zramd
+          mpc-qt-git, cloudflared, visual-studio-code-bin, xampp, zramd, wget2-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
