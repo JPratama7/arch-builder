@@ -19,7 +19,7 @@ Directly get from AUR:
 This Package Build with clang and x86_64v2+lto flags
 
 Add this to /etc/pacman.conf: 
-- [arch-repository-jpratama7]
+- [jp7-arch]
 - SigLevel = Never
 - Server = https://r.zhullyb.top/https://github.com/JPratama7/arch-builder/releases/download/latest/
 - Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
