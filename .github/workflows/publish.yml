@@ -24,8 +24,6 @@ jobs:
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
           done
-      - run: |
-           rm arch-repository-jpratama7.*
       - name: creating database
         run:  |
           repo-add jp7-arch.db.tar
