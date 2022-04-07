@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod, linux-xanmod-custom,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg,
+          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg,
           libclc
           ]
       fail-fast: false
@@ -129,7 +129,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          linux-xanmod-lts, github-desktop
+          linux-xanmod-lts, github-desktop, linux-xanmod-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
