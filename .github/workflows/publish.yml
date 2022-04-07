@@ -24,8 +24,7 @@ jobs:
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
           done
-      - run: |
-           rm jp7-arch.*
+
       - name: creating database
         run:  |
           repo-add jp7-arch.db.tar
@@ -36,5 +35,5 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "./arch-repository-jpratama7.*"
+          artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
