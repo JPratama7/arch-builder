@@ -9,8 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, mesa, thorium, ffmpeg,
-          libclc
+          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -95,7 +94,7 @@ jobs:
       matrix:
         build: [
         libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, xf86-input-libinput, libxcrypt, alsa-lib, alsa-plugins,
-        libx11, mpv, libgcrypt
+        libx11, mpv, libgcrypt, mesa, libclc
         ]
       fail-fast: false
     runs-on: ubuntu-latest
