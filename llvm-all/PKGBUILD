@@ -28,7 +28,7 @@ makedepends=(
   'python-recommonmark'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=ec13fed5867f674bb96ab5502629ec209ef5a73a
+_commit=c62053979489ccb002efe411c3af059addcb5d7d
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
   'llvm-config.h'
