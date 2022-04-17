@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          llvm-all. llvm
+          llvm-all, llvm
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -27,6 +27,7 @@ jobs:
           tag: "latest"
           artifacts: '*/*.zst'
           token: ${{ secrets.GITHUB_TOKEN }}
+  
   aur-helper:
       runs-on: ubuntu-latest
       steps:
