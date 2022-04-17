@@ -25,7 +25,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "*/*.zst"
+          artifacts: '*/*.zst'
           token: ${{ secrets.GITHUB_TOKEN }}
   aur-helper:
       runs-on: ubuntu-latest
@@ -42,5 +42,5 @@ jobs:
           with:
             allowUpdates: true
             tag: "latest"
-            artifacts: "*/*.zst"
+            artifacts: '*/*.zst'
             token: ${{ secrets.GITHUB_TOKEN }}
