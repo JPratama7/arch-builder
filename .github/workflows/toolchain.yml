@@ -5,6 +5,12 @@ on:
   workflow_dispatch:
 jobs:
   LLVM:
+    strategy:
+      matrix:
+        build: [
+          llvm-all. llvm
+          ]
+      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
@@ -12,7 +18,7 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@toolchain
         with:
-          pkgdir: "llvm-all"
+          pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.10.0

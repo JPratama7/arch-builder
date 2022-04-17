@@ -91,9 +91,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         # "0004-tt-sched.patch::https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-${_major}.patch"
         "0004-tt-sched.patch::${_ptr_url}sched/0001-tt.patch"
         "0005-v4l2loopback.patch::${_patches_url}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
-        "0006-pf-patches.patch::${_patches_url}pf-fixes-v7/0001-pf-fixes.patch"
-        "${_ptr_url}0001-zen-patches.patch"
-        # "${_ptr_url}0001-ksm.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
