@@ -15,7 +15,7 @@ jobs:
           pkgdir: "llvm-all"
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.9.0
+        uses: ncipollo/release-action@v1.10.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -32,7 +32,7 @@ jobs:
             pkgdir: "yay"
             makepkgArgs: "--skippgpcheck"
         - name: Upload Artifact
-          uses: ncipollo/release-action@v1.9.0
+          uses: ncipollo/release-action@v1.10.0
           with:
             allowUpdates: true
             tag: "latest"
