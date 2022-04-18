@@ -53,7 +53,7 @@ build() {
     -DLLVM_BUILD_TESTS=ON \
     -DLLVM_BUILD_DOCS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_LTO=Thin -DLLVM_USE_LINKER=lld -DLLVM_ENABLE_LLD=ON
+    -DLLVM_ENABLE_LTO=Thin -DLLVM_USE_LINKER=lld
   ninja all ocaml_doc
 }
 
