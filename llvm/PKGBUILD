@@ -25,11 +25,7 @@ source=($_source_base/$pkgname-$pkgver.src.tar.xz{,.sig}
         https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/llvm/trunk/llvm-config.h)
 sha256sums=('ec6b80d82c384acad2dc192903a6cf2cdbaffb889b84bfb98da9d71e630fc834'
             'SKIP'
-            'a7e902a7612d0fdabe436a917468b043cc296bc89d8954bfc3126f737beb9ac4'
-            'f7d69f84241416398fdb3df8bb44f9fae3c49d89889c7ffa3b37aa2e9d78f708'
-            'd1eff24508e35aae6c26a943dbaa3ef5acb60a145b008fd1ef9ac6f6c4faa662'
-            'af163392fbc19d65d11ab4b1510a2eae39b417d6228023b3ba5395b138bb41f5'
-            '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
+            )
 validpgpkeys+=('B6C8F98282B944E3B0D5C2530FC3042E345AD05D') # Hans Wennborg <hans@chromium.org>
 validpgpkeys+=('474E22316ABF4785A88C6E8EA2C794A986419D8A') # Tom Stellard <tstellar@redhat.com>
 
