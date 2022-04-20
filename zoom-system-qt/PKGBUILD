@@ -6,7 +6,7 @@
 
 _basename=zoom
 pkgname=$_basename-system-qt
-pkgver=5.10.0
+pkgver=5.10.3
 pkgrel=1
 pkgdesc='Video Conferencing and Web Conferencing Service - system Qt libraries'
 arch=('x86_64')
