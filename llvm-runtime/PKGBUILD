@@ -81,7 +81,7 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_BUILD_TESTS=ON \
+    -DLLVM_BUILD_TESTS=OFF \
     -DLLVM_BUILD_DOCS=ON \
     -DLLVM_ENABLE_SPHINX=ON \
     -DLLVM_ENABLE_DOXYGEN=OFF \
@@ -103,11 +103,6 @@ check() {
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project/build directory! Check Failed! \E[0m"
     exit 1
   )
-
-
-  ninja -C build check-llvm
-
-
 }
 
 _python_optimize() {
