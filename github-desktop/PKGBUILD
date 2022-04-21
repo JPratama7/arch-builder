@@ -6,7 +6,7 @@
 
 pkgname=github-desktop
 pkgver=2.9.14
-pkgrel=4
+pkgrel=2
 _gitname="release-$pkgver-linux$pkgrel"
 pkgdesc='GUI for managing Git and GitHub'
 arch=(x86_64)
