@@ -34,7 +34,7 @@ fi
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=gcc
+  _compiler=clang
 fi
 
 # Compress modules with ZSTD (to save disk space)
@@ -63,7 +63,7 @@ fi
 
 pkgbase=linux-xanmod-edge
 _major=5.17
-pkgver=${_major}.3
+pkgver=${_major}.4
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -120,6 +120,7 @@ export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
 export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})}
 
 prepare() {
+  cp config linux-${_major}/CONFIGS/xanmod/clang/config
   cd linux-${_major}
 
   # Apply Xanmod patch

@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg
+          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg, linux-xanmod-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -128,7 +128,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          linux-xanmod-lts, github-desktop, linux-xanmod-custom, spotify-adblock-git
+          linux-xanmod-lts, github-desktop, spotify-adblock-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
