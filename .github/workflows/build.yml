@@ -94,7 +94,7 @@ jobs:
       matrix:
         build: [
         libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, xf86-input-libinput, libxcrypt, alsa-lib, alsa-plugins,
-        libx11, mpv, libgcrypt, mesa, libclc
+        libx11, mpv, libgcrypt, mesa, libclc, vulkan-tools, vulkan-headers, vulkan-icd-loader
         ]
       fail-fast: false
     runs-on: ubuntu-latest
