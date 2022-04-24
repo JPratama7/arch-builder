@@ -132,6 +132,10 @@ prepare() {
   msg2 "Enabling SPECULATIVE_PAGE_FAULT LRU..."
   scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 
+  msg2 "Enabling KBUILD_CFLAGS -O3..."
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC
   scripts/config --disable CONFIG_DEFAULT_CUBIC
