@@ -63,7 +63,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          mpc-qt-git, cloudflared, visual-studio-code-bin, xampp, zramd, wget2-git
+          cloudflared, visual-studio-code-bin, xampp, zramd, wget2-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
