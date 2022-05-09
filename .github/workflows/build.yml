@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -63,13 +63,13 @@ jobs:
     strategy:
       matrix:
         build: [
-          cloudflared, visual-studio-code-bin, xampp, zramd, wget2-git
+          cloudflared, visual-studio-code-bin, xampp, zramd, wget2-git, whatsapp-for-linux
           ]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
         with:
           submodules: true
           fetch-depth: 0
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
         with:
           repository: h0tc0d3/arch-packages
       - name : update submodule
@@ -134,7 +134,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
         with:
           submodules: true
           fetch-depth: 0
