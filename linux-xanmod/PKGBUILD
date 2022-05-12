@@ -129,7 +129,7 @@ prepare() {
   done
 
   # Applying configuration
-  cp -vf CONFIGS/xanmod/${_compiler}/config .config
+  cp -vf CONFIGS/xanmod/${_compiler}/config_x86-64-v2 .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
