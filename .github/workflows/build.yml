@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg, linux-xanmod-custom
+          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg, linux-xanmod-custom, geany-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
