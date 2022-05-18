@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg, linux-xanmod-custom, geany-git
+          zoom-system-qt,linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, packettracer, slimjet, thorium, ffmpeg, linux-xanmod-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin,postman-bin, spotify, aria2-git, zoom, whatsapp-for-linux
+          microsoft-edge-dev-bin,postman-bin, spotify, aria2-git, zoom, whatsapp-for-linux, geany-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
