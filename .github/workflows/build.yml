@@ -125,7 +125,7 @@ jobs:
         ]
       fail-fast: false
     runs-on: ubuntu-latest
-    needs: [CPUV2]
+    needs: [CPUV2, GCC]
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.0.2
