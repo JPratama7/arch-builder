@@ -41,8 +41,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}sched/0001-tt.patch"
         "${_ptr}0012-spf-lru.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
-        "${_lucjan}uksm-speculative-patches-v2/0001-UKSM-for-5.17.patch"
+        "${_lucjan}uksm-speculative-patches-v3/0001-UKSM-for-5.17.patch"
         "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
+        "${_ptr}0001-latency_nice.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
