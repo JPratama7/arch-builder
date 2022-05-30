@@ -1,5 +1,5 @@
 pkgname=llvm-runtime
-pkgver=14.0.3
+pkgver=14.0.4
 pkgrel=1
 _ocaml_ver=4.13.1
 arch=('x86_64')
@@ -25,7 +25,7 @@ makedepends=(
   'python-recommonmark'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=1f9140064dfbfb0bbda8e51306ea51080b2f7aac
+_commit=29f1039a7285a5c3a9c353d054140bf2556d4c4d
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
   'llvm-config.h'
