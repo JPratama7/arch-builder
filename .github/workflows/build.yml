@@ -141,6 +141,9 @@ jobs:
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
+      - name: Wait
+        run: sleep 15m
+        shell: bash
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.10.0
         with:
