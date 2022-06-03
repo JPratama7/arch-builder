@@ -38,6 +38,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
+        "${_sirlucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
@@ -148,6 +149,16 @@ prepare() {
   msg2 "Enable v4l2loopback support"
   scripts/config --enable V4L2_LOOPBACK
 
+  msg2 "Enable ZRAM_ENTROPY"
+	scripts/config --enable ZRAM_ENTROPY
+
+  msg2 "Enable WINE FASTSYNC"
+  scripts/config --enable WINESYNC
+
+  msg2 "Enabling FULLCONENAT..."
+  scripts/config --module IP_NF_TARGET_FULLCONENAT \
+                 --module NETFILTER_XT_TARGET_FULLCONENAT
+
   msg2 "Enabling SPECULATIVE_PAGE_FAULT LRU..."
   scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 
@@ -192,13 +203,6 @@ prepare() {
                  --enable CONFIG_NTFS3_64BIT_CLUSTER \ 
                  --enable CONFIG_NTFS3_LZX_XPRESS \ 
                  --enable CONFIG_NTFS3_FS_POSIX_ACL
-
-  msg2 "Enable ZRAM_ENTROPY"
-	scripts/config --enable ZRAM_ENTROPY
-
-  msg2 "Enabling FULLCONENAT..."
-  scripts/config --module IP_NF_TARGET_FULLCONENAT \
-                 --module NETFILTER_XT_TARGET_FULLCONENAT
 
   # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
   # https://github.com/xanmod/linux/issues/240
@@ -264,7 +268,8 @@ _package() {
   provides=(VIRTUALBOX-GUEST-MODULES
             WIREGUARD-MODULE
             KSMBD-MODULE
-            NTFS3-MODULE)
+            NTFS3-MODULE
+            v4l2loopback-dkms)
 
   cd linux-${_major}
   local kernver="$(<version)"
