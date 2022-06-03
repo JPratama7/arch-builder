@@ -41,10 +41,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
-        "${_lucjan}mm-lru-pf-spf-patches/0001-mm-5.18-introduce-to-the-combined-patch-MGLRU-PF-SPF.patch"
-        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
+        "${_ptr}0001-kbuild.patch"
         "${_ptr}0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}0001-latency_nice.patch"
+        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
