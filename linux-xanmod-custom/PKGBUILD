@@ -178,8 +178,9 @@ prepare() {
 
   msg2 "Enabling DAMON Data Access Monitoring "
   scripts/config --enable CONFIG_DAMON \
-                 --enable CONFIG_DAMON_VADDR--enable CONFIG_DAMON_DBGFS \
-                 --enable CONFIG_DAMON_PADDR \ 
+                 --enable CONFIG_DAMON_VADDR \
+                 --enable CONFIG_DAMON_DBGFS \
+                 --enable CONFIG_DAMON_PADDR \
                  --enable CONFIG_DAMON_RECLAIM
 
   msg2 "Change zram zswap compression to ZSTD"
