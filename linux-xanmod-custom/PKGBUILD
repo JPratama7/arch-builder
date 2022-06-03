@@ -37,7 +37,6 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
@@ -47,6 +46,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}0001-latency_nice.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
+        "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -204,6 +204,51 @@ prepare() {
                  --enable CONFIG_NTFS3_64BIT_CLUSTER \
                  --enable CONFIG_NTFS3_LZX_XPRESS \
                  --enable CONFIG_NTFS3_FS_POSIX_ACL
+
+  msg2 "Enabling Linux Random Number Generator ..."
+  scripts/config --disable RANDOM_DEFAULT_IMPL \
+                 --enable LRNG \
+                 --enable LRNG_OVERSAMPLE_ENTROPY_SOURCES \
+                 --set-val LRNG_OVERSAMPLE_ES_BITS 64 \
+                 --set-val LRNG_SEED_BUFFER_INIT_ADD_BITS 128 \
+                 --enable LRNG_IRQ \
+                 --enable LRNG_CONTINUOUS_COMPRESSION_ENABLED \
+                 --disable LRNG_CONTINUOUS_COMPRESSION_DISABLED \
+                 --enable LRNG_ENABLE_CONTINUOUS_COMPRESSION \
+                 --enable LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
+                 --disable LRNG_COLLECTION_SIZE_512 \
+                 --enable LRNG_COLLECTION_SIZE_1024 \
+                 --disable LRNG_COLLECTION_SIZE_2048 \
+                 --disable LRNG_COLLECTION_SIZE_4096 \
+                 --disable LRNG_COLLECTION_SIZE_8192 \
+                 --set-val LRNG_COLLECTION_SIZE 1024 \
+                 --enable LRNG_HEALTH_TESTS \
+                 --set-val LRNG_RCT_CUTOFF 31 \
+                 --set-val LRNG_APT_CUTOFF 325 \
+                 --set-val LRNG_IRQ_ENTROPY_RATE 256 \
+                 --enable LRNG_JENT \
+                 --set-val LRNG_JENT_ENTROPY_RATE 16 \
+                 --enable LRNG_CPU \
+                 --set-val LRNG_CPU_ENTROPY_RATE 8 \
+                 --enable LRNG_DRNG_SWITCH \
+                 --enable LRNG_KCAPI_HASH \
+                 --module LRNG_DRBG \
+                 --module LRNG_KCAPI \
+                 --enable LRNG_TESTING_MENU \
+                 --disable LRNG_RAW_HIRES_ENTROPY \
+                 --disable LRNG_RAW_JIFFIES_ENTROPY \
+                 --disable LRNG_RAW_IRQ_ENTROPY \
+                 --disable LRNG_RAW_IRQFLAGS_ENTROPY \
+                 --disable LRNG_RAW_RETIP_ENTROPY \
+                 --disable LRNG_RAW_REGS_ENTROPY \
+                 --disable LRNG_RAW_ARRAY \
+                 --disable LRNG_IRQ_PERF \
+                 --disable LRNG_ACVT_HASH \
+                 --enable LRNG_RUNTIME_ES_CONFIG \
+                 --disable LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
+                 --disable LRNG_TEST_CPU_ES_COMPRESSION \
+                 --enable LRNG_SELFTEST \
+                 --disable LRNG_SELFTEST_PANIC
 
   # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
   # https://github.com/xanmod/linux/issues/240
