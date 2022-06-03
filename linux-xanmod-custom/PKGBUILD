@@ -38,7 +38,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "${_sirlucjan}lrng-patches-v4/0001-lrng-patches.patch"
+        "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
