@@ -184,25 +184,25 @@ prepare() {
                  --enable CONFIG_DAMON_RECLAIM
 
   msg2 "Change zram zswap compression to ZSTD"
-  scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE \ 
-                 --enable CONFIG_ZRAM_DEF_COMP_ZSTD \ 
-                 --set-str CONFIG_ZRAM_DEF_COMP zstd \ 
-                 --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \ 
-                 --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \ 
+  scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE \
+                 --enable CONFIG_ZRAM_DEF_COMP_ZSTD \
+                 --set-str CONFIG_ZRAM_DEF_COMP zstd \
+                 --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
+                 --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \
                  --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
 
   msg2 "Enable Anbox"
-  scripts/config --enable CONFIG_ASHMEM \ 
-                 --enable CONFIG_ANDROID \ 
-                 --enable CONFIG_ANDROID_BINDER_IPC \ 
-                 --enable CONFIG_ANDROID_BINDERFS \ 
+  scripts/config --enable CONFIG_ASHMEM \
+                 --enable CONFIG_ANDROID \
+                 --enable CONFIG_ANDROID_BINDER_IPC \
+                 --enable CONFIG_ANDROID_BINDERFS \
                  --enable CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
 
   msg2 "Enable NTFS + NTFS3"
-  scripts/config --module CONFIG_NTFS_FS \ 
-                 --module CONFIG_NTFS3_FS \ 
-                 --enable CONFIG_NTFS3_64BIT_CLUSTER \ 
-                 --enable CONFIG_NTFS3_LZX_XPRESS \ 
+  scripts/config --module CONFIG_NTFS_FS \
+                 --module CONFIG_NTFS3_FS \
+                 --enable CONFIG_NTFS3_64BIT_CLUSTER \
+                 --enable CONFIG_NTFS3_LZX_XPRESS \
                  --enable CONFIG_NTFS3_FS_POSIX_ACL
 
   # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
