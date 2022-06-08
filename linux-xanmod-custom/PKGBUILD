@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.18
-pkgver=${_major}.1
+pkgver=${_major}.2
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -46,6 +46,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}0001-latency_nice.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
+        "${_ptr}0001-PCI-Allow-BAR-movement-during-boot-and-hotplug.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
