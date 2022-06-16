@@ -39,7 +39,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "${_lucjan}lrng-patches-v7/0001-lrng-patches.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
-        "${_ptr}dev/0001-ksm.patch"
+        "${_ptr}0001-ksm.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
         "${_ptr}0001-kbuild.patch"
