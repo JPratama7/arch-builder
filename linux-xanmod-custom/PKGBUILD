@@ -37,7 +37,7 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
+        "${_lucjan}lrng-patches-v7/0001-lrng-patches.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_ptr}dev/0001-ksm.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
@@ -47,7 +47,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}0001-latency_nice.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
-        "${_ptr}0001-PCI-Allow-BAR-movement-during-boot-and-hotplug.patch"
+        "${_ptr}misc/0001-PCI-Allow-BAR-movement-during-boot-and-hotplug.patch"
+        "${_ptr}misc/0001-Enable-resizable-BAR-support.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
