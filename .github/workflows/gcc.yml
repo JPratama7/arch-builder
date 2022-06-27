@@ -13,7 +13,7 @@ jobs:
         with:
           repository: h0tc0d3/arch-packages
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@bootstrap
+        uses: JPratama7/pkgbuild-action@toolchain
         with:
           pkgdir: gcc
           makepkgArgs: "--skipinteg"
