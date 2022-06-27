@@ -1,0 +1,26 @@
+name: GCC
+on:
+  schedule:
+    - cron: "0 12 * * 0"
+  workflow_dispatch:
+jobs:
+  GCC:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v3
+        with:
+          repository: h0tc0d3/arch-packages
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@bootstrap
+        with:
+          pkgdir: gcc
+          makepkgArgs: "--skippgpcheck"
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: '*/*.zst'
+          token: ${{ secrets.GITHUB_TOKEN }}
