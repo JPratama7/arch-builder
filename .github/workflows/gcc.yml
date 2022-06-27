@@ -15,7 +15,7 @@ jobs:
         uses: JPratama7/pkgbuild-action@bootstrap
         with:
           pkgdir: gcc
-          makepkgArgs: "--skippgpcheck"
+          makepkgArgs: "--skipinteg"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.10.0
         with:
