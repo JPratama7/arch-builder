@@ -42,7 +42,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
-        "${_ptr}0001-kbuild.patch"
+        "${_lucjan}kbuild-patches-v8/0001-kbuild-5.18-merge-changes-from-dev-tree.patch"
         "${_ptr}0001-kbuild-modules.patch"
         "${_ptr}0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}misc/0001-latency_nice.patch"
