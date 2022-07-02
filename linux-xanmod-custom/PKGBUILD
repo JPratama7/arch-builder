@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.18
-pkgver=${_major}.6
+pkgver=${_major}.8
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -37,9 +37,9 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_lucjan}lrng-patches-v10/0001-lrng-patches.patch"
+        "${_lucjan}lrng-patches-v13/0001-lrng-patches.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
-        "${_lucjan}ksm-patches/0001-ksm-patches.patch"
+        "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
         "${_ptr}0001-kbuild.patch"
