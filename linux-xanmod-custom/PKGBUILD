@@ -43,6 +43,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
         "${_lucjan}kbuild-patches-v8/0001-kbuild-5.18-merge-changes-from-dev-tree.patch"
+        "${_lucjan}cachyos-patches-v4/0001-cachyos-patches.patch"
         "${_ptr}0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}misc/0001-latency_nice.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
