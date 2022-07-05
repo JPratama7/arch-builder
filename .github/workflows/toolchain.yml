@@ -34,7 +34,7 @@ jobs:
         - name: Build packages for arch
           uses: actions/checkout@v2.4.0
         - id: makepkg
-          uses: JPratama7/pkgbuild-action@aur-cpuv2
+          uses: JPratama7/pkgbuild-action@aur-gcc
           with:
             pkgdir: "yay"
             makepkgArgs: "--skippgpcheck"
