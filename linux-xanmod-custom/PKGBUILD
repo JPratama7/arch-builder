@@ -344,7 +344,7 @@ _package() {
             WIREGUARD-MODULE
             KSMBD-MODULE
             NTFS3-MODULE
-            v4l2loopback-dkms)
+            V4L2LOOPBACK-MODULE)
 
   cd linux-${_major}
   local kernver="$(<version)"
