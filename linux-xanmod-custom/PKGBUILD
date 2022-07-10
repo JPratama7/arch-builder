@@ -165,9 +165,9 @@ prepare() {
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
 
-  msg2 "Enabling KBUILD_CFLAGS -O3..."
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
-                 --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  # msg2 "Enabling KBUILD_CFLAGS -O3..."
+  # scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
+  #                --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC \
