@@ -21,7 +21,9 @@ optdepends=(
 )
 provides=('chromium')
 options=('!strip' '!emptydirs')
-source_x86_64=("https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/thorium-browser_${pkgver}-${pkgrel}_amd64.deb")
+source_x86_64=(
+	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/thorium-browser_${pkgver}_amd64.deb"
+)
 sha512sums_x86_64=('SKIP')
 
 package(){
