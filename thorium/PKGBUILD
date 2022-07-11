@@ -34,6 +34,6 @@ package(){
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
         install -Dm644 "${pkgdir}"/opt/chromium.org/${pkgbase}/product_logo_${i/x*}.png \
-                       "${pkgdir}"/usr/share/icons/hicolor/${i}/apps/${pkgbase}.png
+                       "${pkgdir}"/usr/share/icons/hicolor/${i}/apps/thorium-browser-unstable.png
     done
 }
