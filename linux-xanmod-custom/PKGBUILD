@@ -48,7 +48,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}v4l2loopback-patches-v2/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
         "${_ptr}misc/0001-PCI-Allow-BAR-movement-during-boot-and-hotplug.patch"
-        "${_lucjan}highmem-patches/0001-highmem-patches.patch"
+        "${_lucjan}highmem-patches-v3/0001-highmem-patches.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
