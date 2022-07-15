@@ -40,6 +40,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}lrng-patches-v14/0001-lrng-patches.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
+        "${_lucjan}damon-patches-v4/0001-damon-patches.patch"
+        "${_lucjan}fixes-miscellaneous-v31/0001-fixes-miscellaneous.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
         "${_lucjan}zstd-patches/0001-zstd-patches.patch"
         "${_lucjan}kbuild-patches-v8/0001-kbuild-5.18-merge-changes-from-dev-tree.patch"
