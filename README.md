@@ -3,18 +3,21 @@
 [![Toolchain](https://github.com/JPratama7/arch-builder/actions/workflows/toolchain.yml/badge.svg)](https://github.com/JPratama7/arch-builder/actions/workflows/toolchain.yml)
 
 Directly get from AUR: 
-- spotify
-- cloudflared
-- xampp
-- mpc-qt-git
-- microsoft-edge-beta-bin
 - microsoft-edge-dev-bin
+- postman-bin
 - spotify
-- yay
-- zoom
 - aria2-git
+- zoom
+- whatsapp-for-linux
+- geany-git
+- tor-browser
 - wget2-git
+- cloudflared
 - visual-studio-code-bin
+- xampp, zramd
+- peazip-qt5
+- 7-zip
+- gtkcord4-git
 
 This Package Build with clang and x86_64v2+lto flags
 
