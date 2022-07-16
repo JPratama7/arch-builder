@@ -92,7 +92,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          cloudflared, visual-studio-code-bin, xampp, zramd, whatsapp-for-linux, peazip-qt5, 7-zip
+          cloudflared, visual-studio-code-bin, xampp, zramd, whatsapp-for-linux, peazip-qt5, 7-zip, gtkcord4-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
