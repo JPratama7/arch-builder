@@ -38,7 +38,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "${_lucjan}lrng-patches-v14/0001-lrng-patches.patch"
-	"${_lucjan}damon-patches-v6/0001-damon-patches.patch"
+	      "${_lucjan}damon-patches-v7/0001-damon-patches.patch"
         "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_ptr}sched/0001-tt-5.18.patch"
