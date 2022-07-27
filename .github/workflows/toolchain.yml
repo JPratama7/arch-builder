@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          llvm-all, llvm-runtime
+          llvm-all, llvm-runtime, python38, python39
           ]
       fail-fast: false
     runs-on: ubuntu-latest
