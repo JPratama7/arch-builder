@@ -19,7 +19,7 @@ Directly get from AUR:
 - 7-zip
 - gtkcord4-git
 
-This Package Build with clang and x86_64v2+lto flags
+This Package Build with clang/gcc and x86_64v2+lto flags
 
 Add this to /etc/pacman.conf: 
 - [jp7-arch]
