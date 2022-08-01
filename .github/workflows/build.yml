@@ -63,7 +63,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          spotify-adblock-git, mpc-qt-git
+          spotify-adblock-git, mpc-qt-git, github-desktop
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -122,7 +122,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          cloudflared, visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, github-desktop
+          cloudflared, visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
