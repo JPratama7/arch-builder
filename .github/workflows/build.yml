@@ -152,9 +152,7 @@ jobs:
         build: [
         libva-vdpau-driver, libva, libvdpau,xf86-video-amdgpu, xf86-input-libinput, libxcrypt, alsa-lib, alsa-plugins,
         mpv, libgcrypt, mesa, libclc, vulkan-tools, vulkan-headers, vulkan-icd-loader, neovim, wayland, wayland-protocols,
-        pipewire, libx11, libxau, libxaw, libxcb, libxcomposite, libxcursor, libxcvt, libxdamage, libxext, libxfixes, libxfont2,
-        libxft, libxi, libxinerama, libxkbcommon, libxkbfile, libxml2, libxmu, libxpm, libxrandr, libxrender, libxres, libxshmfence,
-        libxslt, libxt, libxtst, libxv, libxxf86vm, libusb, libgcrypt
+        pipewire, libx11, libusb
         ]
       fail-fast: false
     runs-on: ubuntu-latest
