@@ -7,7 +7,7 @@ url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
-  'clang=13.0.1' 'clang-analyzer' 'clang-tools-extra' 'openmp' 'polly' 'compiler-rt'
+  'clang-analyzer' 'clang-tools-extra' 'openmp' 'polly' 'compiler-rt'
   'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental')
 
 replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
@@ -269,21 +269,21 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
   # Fallback for llvm 13
-  _llvm_libs=(libLLVM-13.so libLTO.so.13 libRemarks.so.13 libclang.so.13.0.1 libclang-cpp.so.13)
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exist"
-    fi
-  done
+  # _llvm_libs=(libLLVM-13.so libLTO.so.13 libRemarks.so.13 libclang.so.13.0.1 libclang-cpp.so.13)
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exist"
+  #   fi
+  # done
 
-  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
-    echo "- Copy libLLVM-13.0.1.so"
-    ln -s /usr/lib/libLLVM-13.so "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so"
-  else
-    echo "- libLLVM-13.0.1.so exist"
-  fi
+  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
+  #   echo "- Copy libLLVM-13.0.1.so"
+  #   ln -s /usr/lib/libLLVM-13.so "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so"
+  # else
+  #   echo "- libLLVM-13.0.1.so exist"
+  # fi
 
 }
