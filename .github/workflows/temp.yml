@@ -63,7 +63,7 @@ libxxf86vm,
         uses: ncipollo/release-action@v1.10.0
         with:
           allowUpdates: true
-          tag: "latest"
+          tag: "lib"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
