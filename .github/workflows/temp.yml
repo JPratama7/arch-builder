@@ -1,4 +1,4 @@
-name: Toolchain
+name: AUR
 on:
   schedule:
     - cron: "0 0 * * 0"
