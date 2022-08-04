@@ -1,0 +1,23 @@
+name: Toolchain
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+jobs:
+  aur-helper:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Build packages for arch
+          uses: actions/checkout@v2.4.0
+        - id: makepkg
+          uses: JPratama7/pkgbuild-action@helper
+          with:
+            pkgdir: "yay"
+            makepkgArgs: "--skippgpcheck"
+        - name: Upload Artifact
+          uses: ncipollo/release-action@v1.10.0
+          with:
+            allowUpdates: true
+            tag: "latest"
+            artifacts: '*/*.zst'
+            token: ${{ secrets.GITHUB_TOKEN }}
