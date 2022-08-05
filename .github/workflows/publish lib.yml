@@ -34,6 +34,6 @@ jobs:
         with:
           allowUpdates: true
           replacesArtifacts: true
-          tag: "latest"
-          artifacts: "./jp7-arch.*"
+          tag: "lib"
+          artifacts: "./jp7-arch-lib.*"
           token: ${{ secrets.GITHUB_TOKEN }}
