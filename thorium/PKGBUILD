@@ -2,7 +2,7 @@
 
 pkgbase=thorium
 pkgname=${pkgbase}-browser-bin
-pkgver=106.0.5197.0
+pkgver=106.0.5212.0
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
@@ -29,6 +29,12 @@ sha512sums_x86_64=('SKIP')
 package(){
 	# Extract package data
 	tar xf data.tar.xz -C "${pkgdir}"
+	rm -r \
+		"$pkgdir"/etc \
+		"$pkgdir"/opt/chromium.org/thorium/cron/ \
+		"$pkgdir"/opt/chromium.org/thorium/product_logo_*.{png,xpm} \
+		"$pkgdir"/usr/share/menu/
+		
 	chmod 4755 "$pkgdir/opt/chromium.org/${pkgbase}/chrome-sandbox"
 	rm -r "$pkgdir"/etc
 	# install icons
