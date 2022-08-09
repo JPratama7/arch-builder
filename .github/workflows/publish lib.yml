@@ -1,12 +1,8 @@
-name: Create DB
+name: Create DB Lib
 on:
   schedule:
     - cron: "0 13 * * *"
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Builder"]
-    types:
-      - completed
 
 jobs:
 
