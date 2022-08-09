@@ -31,9 +31,7 @@ package(){
 	tar xf data.tar.xz -C "${pkgdir}"
 	rm -r \
 		"$pkgdir"/etc \
-		"$pkgdir"/opt/chromium.org/thorium/cron/ \
-		"$pkgdir"/opt/chromium.org/thorium/product_logo_*.{png,xpm} \
-		"$pkgdir"/usr/share/menu/
+		"$pkgdir"/opt/chromium.org/thorium/cron/
 		
 	chmod 4755 "$pkgdir/opt/chromium.org/${pkgbase}/chrome-sandbox"
 	# install icons
