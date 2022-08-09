@@ -36,7 +36,6 @@ package(){
 		"$pkgdir"/usr/share/menu/
 		
 	chmod 4755 "$pkgdir/opt/chromium.org/${pkgbase}/chrome-sandbox"
-	rm -r "$pkgdir"/etc
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
         install -Dm644 "${pkgdir}"/opt/chromium.org/${pkgbase}/product_logo_${i/x*}.png \
