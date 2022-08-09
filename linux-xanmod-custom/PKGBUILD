@@ -13,8 +13,8 @@ _localmodcfg=n
 _makenconfig=n
 
 pkgbase=linux-xanmod-custom
-_major=5.18
-pkgver=${_major}.15
+_major=5.19
+pkgver=${_major}.0
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -37,22 +37,15 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_lucjan}lrng-patches-v14/0001-lrng-patches.patch"
-	      "${_lucjan}damon-patches-v7/0001-damon-patches.patch"
-        "${_lucjan}speculative-lru-pf-patches/0001-spf-5.18-introduce-SPECULATIVE-PAGE-FAULT.patch"
-        "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
-        "${_ptr}sched/0001-tt-5.18.patch"
-        "${_lucjan}zstd-patches/0001-zstd-patches.patch"
-        "${_lucjan}kbuild-patches-v8/0001-kbuild-5.18-merge-changes-from-dev-tree.patch"
-        "${_ptr}misc/0001-latency_nice.patch"
-        "${_lucjan}v4l2loopback-patches-v2/0001-media-v4l2-core-add-v4l2loopback.patch"
-        "${_lucjan}zram-patches/0001-zram-${_major}-introduce-ZRAM-entropy-calculation.patch"
-        "${_ptr}misc/0001-PCI-Allow-BAR-movement-during-boot-and-hotplug.patch"
-        "${_lucjan}highmem-patches-v3/0001-highmem-patches.patch"
-        "${_lucjan}uml-patches/0001-um-Add-missing-apply_returns.patch"
-        "${_lucjan}btrfs-patches-v15/0001-btrfs-patches.patch"
+        "${_lucjan}lrng-patches-v2/0001-lrng-patches.patch"
+        "${_lucjan}lru-cachyos-patches/0001-lru-cachyos-patches.patch"
+        "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
+        "${_ptr}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
+        "${_ptr}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
+        "${_lucjan}0003-sched.patch"
+        "${_ptr}sched/0001-tt.patch"
+        "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "https://raw.githubusercontent.com/xanmod/linux/5.16.16-xanmod1/CONFIGS/xanmod/clang/config"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -96,7 +89,8 @@ prepare() {
 
   # Applying configuration
   # cp -vf CONFIGS/xanmod/${_compiler}/config .config
-  cp -vf ../config .config
+  cp -vf CONFIGS/xanmod/gcc/config .config
+  # cp -vf ../config .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_NONE \
@@ -167,9 +161,9 @@ prepare() {
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
 
-  # msg2 "Enabling KBUILD_CFLAGS -O3..."
-  # scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
-  #                --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  msg2 "Enabling KBUILD_CFLAGS -O3..."
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
+                 --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC \
