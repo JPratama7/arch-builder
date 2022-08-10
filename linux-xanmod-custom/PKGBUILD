@@ -42,7 +42,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_ptr}sched/0001-tt.patch"
         "${_lucjan}fixes-miscellaneous/0001-fixes-miscellaneous.patch"
-        "${_lucjan}lru-cachyos-patches-sep/0001-Add-Hz-min_ttl_ms-for-thrashing-prevention.patch"
+        "${_lucjan}modules-patches/0001-modules-patches.patch"
         "${_ptr}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
