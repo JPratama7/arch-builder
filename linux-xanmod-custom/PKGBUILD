@@ -43,7 +43,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "${_ptr}sched/0001-tt.patch"
-        "${_ptr}0013-lru.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
