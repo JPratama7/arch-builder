@@ -1,7 +1,7 @@
 pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
 pkgver=14.0.6
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -20,12 +20,12 @@ conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'libc++abi' 'libc++experimental')
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
-_ocaml_ver=4.13.1
+_ocaml_ver=4.14.0
 makedepends=(
   'git' 'ninja' 'cmake'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
-  'python-recommonmark'
+  'python-recommonmark' 'ocaml-stdlib-shims'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=f28c006a5895fc0e329fe15fead81e37457cb1d1
@@ -41,7 +41,7 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin)
+_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCLANG_DEFAULT_LINKER='ld.lld')
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
