@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.19
-pkgver=${_major}.1
+pkgver=${_major}.2
 _branch=5.x
 xanmod=1
 pkgrel=4
@@ -39,12 +39,14 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
         "${_lucjan}bitmap-patches/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
+        "${_lucjan}damon-patches/0001-damon-patches.patch"
+        "${_lucjan}bitmap-patches-next-v2/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_ptr}sched/0001-tt.patch"
-        "${_lucjan}fixes-miscellaneous-v3/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v4/0001-fixes-miscellaneous.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_lucjan}x86-patches/0001-x86-patches.patch"
         "${_ptr}0015-perf.patch"
