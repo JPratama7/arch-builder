@@ -45,7 +45,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_ptr}sched/0001-tt.patch"
-        "${_lucjan}fixes-miscellaneous-v4/0001-fixes-miscellaneous.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_lucjan}x86-patches/0001-x86-patches.patch"
         "${_ptr}0015-perf.patch"
