@@ -47,7 +47,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_ptr}sched/0001-tt.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_ptr}misc/0001-ck-hrtimer.patch"
-        "${_ptr}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
+        # "${_ptr}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_ptr}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
