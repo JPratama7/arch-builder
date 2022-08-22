@@ -37,6 +37,7 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
+        "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}fixes-miscellaneous-v6/0001-fixes-miscellaneous.patch"
         "${_cachy}0010-kbuild-module.patch"
         "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
@@ -48,7 +49,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_cachy}misc/0001-ck-hrtimer.patch"
-        "${_cachy}0004-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
