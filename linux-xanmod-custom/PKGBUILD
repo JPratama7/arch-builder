@@ -43,7 +43,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}damon-cachyos-patches-v3/0001-damon-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}bitmap-patches-next-v2/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
         "${_cachy}sched/0001-tt.patch"
