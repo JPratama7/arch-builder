@@ -155,6 +155,7 @@ prepare() {
                    --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19 \
                    --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
                    --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
+    msg2 "Done Compress Modules"
   fi
 
   msg2 "Enable v4l2loopback support"
