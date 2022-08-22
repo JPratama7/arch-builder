@@ -96,6 +96,8 @@ prepare() {
   # cp -vf CONFIGS/xanmod/${_compiler}/config .config
   cp -vf CONFIGS/xanmod/gcc/config_x86-64-v2 .config
   # cp -vf ../config .config
+
+  msg2 "Enabling Configuration......"
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_NONE \
