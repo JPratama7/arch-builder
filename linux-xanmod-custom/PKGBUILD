@@ -160,12 +160,6 @@ prepare() {
   msg2 "Enable v4l2loopback support"
   scripts/config --enable CONFIG_V4L2_LOOPBACK
 
-  # msg2 "Enable ZRAM_ENTROPY"
-	# scripts/config --enable CONFIG_ZRAM_ENTROPY
-
-  msg2 "Enabling SPECULATIVE_PAGE_FAULT LRU..."
-  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
-
   msg2 "Enable WINE FASTSYNC"
   scripts/config --enable WINESYNC
 
