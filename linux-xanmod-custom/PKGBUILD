@@ -156,6 +156,9 @@ prepare() {
     msg2 "Done Compress Modules"
   fi
 
+  msg2 "Set HOSTNAME"
+  script/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V2"
+
   msg2 "Enable v4l2loopback support"
   scripts/config --enable CONFIG_V4L2_LOOPBACK
 
