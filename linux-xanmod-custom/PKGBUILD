@@ -51,6 +51,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_cachy}misc/0001-ck-hrtimer.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
+        "https://github.com/owl4ce/hikari-x86_64/blob/hikari-x86_64/linux/.config_hikari"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -94,12 +95,12 @@ prepare() {
 
   # Applying configuration
   # cp -vf CONFIGS/xanmod/${_compiler}/config .config
-  cp -vf CONFIGS/xanmod/gcc/config_x86-64-v2 .config
+  cp -vf ../.config_hikari .config
   # cp -vf ../config .config
 
-  msg2 "Enabling Configuration......"
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
+    msg2 "Enabling LTO CLANG"
     scripts/config --disable LTO_NONE \
                    --enable LTO \
                    --enable LTO_CLANG \
