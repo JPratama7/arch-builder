@@ -101,14 +101,14 @@ prepare() {
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enabling LTO CLANG"
-    scripts/config --disable LTO_NONE \
-                   --enable LTO \
-                   --enable LTO_CLANG \
-                   --enable ARCH_SUPPORTS_LTO_CLANG \
-                   --enable ARCH_SUPPORTS_LTO_CLANG_THIN \
-                   --enable HAS_LTO_CLANG \
-                   --enable LTO_CLANG_THIN \
-                   --enable HAVE_GCC_PLUGINS
+    scripts/config --disable CONFIG_LTO_NONE \
+                   --enable CONFIG_LTO \
+                   --enable CONFIG_LTO_CLANG \
+                   --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG \
+                   --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN \
+                   --enable CONFIG_HAS_LTO_CLANG \
+                   --enable CONFIG_LTO_CLANG_THIN \
+                   --enable CONFIG_HAVE_GCC_PLUGINS
     _LLVM=1
   fi
 
