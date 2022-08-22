@@ -37,6 +37,7 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
+        "${_lucjan}fixes-miscellaneous-v6/0001-fixes-miscellaneous.patch"
         "${_cachy}0010-kbuild-module.patch"
         "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
         "${_lucjan}damon-cachyos-patches-v3/0001-damon-5.19-merge-changes-from-dev-tree.patch"
@@ -144,6 +145,7 @@ prepare() {
   # Compress modules by default (following Arch's kernel)
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --disable CONFIG_MODULE_COMPRESS_NONE \
+                   --set-val CONFIG_ZSTD_COMP_VAL=22
                    --enable CONFIG_MODULE_COMPRESS_ZSTD \
                    --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19 \
                    --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
