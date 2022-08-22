@@ -51,7 +51,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_cachy}misc/0001-ck-hrtimer.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "https://github.com/owl4ce/hikari-x86_64/blob/hikari-x86_64/linux/.config_hikari"
+        "https://raw.githubusercontent.com/owl4ce/hikari-x86_64/hikari-x86_64/linux/.config_hikari"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
