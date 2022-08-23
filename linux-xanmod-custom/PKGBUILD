@@ -38,10 +38,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v6/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
         "${_cachy}0010-kbuild-module.patch"
+        "${_cachy}ntfs3-patches-v3/0001-ntfs3-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
-        "${_lucjan}damon-cachyos-patches-v3/0001-damon-5.19-merge-changes-from-dev-tree.patch"
+        "${_lucjan}damon-cachyos-patches-v4/0001-damon-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}bitmap-patches-next-v2/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
