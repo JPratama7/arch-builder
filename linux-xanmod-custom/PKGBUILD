@@ -78,7 +78,7 @@ prepare() {
   cd linux-${_major}
 
   # Apply Xanmod patch
-  patch -Np1 -F3 -i ../patch-${pkgver}-xanmod${xanmod}
+  patch -N -p1 -F3 -i ../patch-${pkgver}-xanmod${xanmod}
 
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
@@ -92,7 +92,7 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
-    patch -Np1 -F3 < "../$src"
+    patch -N -p1 -F3 < "../$src"
   done
 
   # Applying configuration
