@@ -37,6 +37,7 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
+        "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
         "${_lucjan}damon-cachyos-patches-v4/0001-damon-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}bitmap-patches-next-v2/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
