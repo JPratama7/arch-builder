@@ -94,7 +94,7 @@ jobs:
       matrix:
         build: [
           microsoft-edge-dev-bin,postman-bin, spotify, aria2-git, zoom, whatsapp-for-linux, geany-git, tor-browser, wget2-git,
-          appimagelauncher, earlyoom-git, ttf-ms-win11-auto
+          appimagelauncher, earlyoom-git, ttf-ms-win11-auto, ttf-ms-win10-auto
           ]
       fail-fast: false
     runs-on: ubuntu-latest
