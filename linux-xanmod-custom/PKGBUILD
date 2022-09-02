@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.19
-pkgver=${_major}.3
+pkgver=${_major}.6
 _branch=5.x
 xanmod=1
 pkgrel=4
@@ -37,17 +37,18 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_cachy}sched/0001-tt.patch"
-        "${_lucjan}kbuild-patches-v7/0001-kbuild-patches.patch"
-        "${_lucjan}modules-patches-v2/0001-modules-patches.patch"
-        "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
+        "${_lucjan}prjc-cachyos-patches-v3/0001-PRJC-CachyOS-for-5.19.2-and-newer.patch"
         "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
-        "${_lucjan}damon-patches-v3/0001-damon-patches.patch"
-        "${_lucjan}bitmap-patches-next-v2/0001-bitmap-patches.patch"
+        "${_lucjan}bfq-paolo-patches/0001-bfq-paolo-patches.patch"
+        "${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
+        "${_cachy}0010-kbuild-module.patch"
+        "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
+        "${_lucjan}fixes-miscellaneous-v14/0001-fixes-miscellaneous.patch"
+        "${_lucjan}damon-cachyos-patches-v5/0001-damon-5.19-merge-changes-from-dev-tree.patch"
+        "${_lucjan}bitmap-patches-next-v4/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
-        "${_lucjan}ksm-patches-v2/0001-ksm-patches.patch"
+        "${_lucjan}ksm-patches-v5/0001-ksm-patches.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_cachy}misc/0001-ck-hrtimer.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
