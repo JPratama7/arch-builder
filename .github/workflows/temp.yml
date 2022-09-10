@@ -1,62 +1,31 @@
-name: AUR
+name: Bootstrap
 on:
   workflow_dispatch:
 jobs:
   arch_packages:
     strategy:
       matrix:
-        build: [
-libx11,
-libxau,
-libxaw,
-libxcb,
-libxcomposite,
-libxcrypt,
-libxcursor,
-libxcvt,
-libxdamage,
-libxext,
-libxfixes,
-libxfont2,
-libxft,
-libxi,
-libxinerama,
-libxkbcommon,
-libxkbfile,
-libxml2,
-libxmu,
-libxpm,
-libxrandr,
-libxrender,
-libxres,
-libxshmfence
-libxslt,
-libxt,
-libxtst,
-libxv,
-libxxf86vm,
-
-        ]
+        build: [llvm-all]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.0.2
-        with:
-          repository: h0tc0d3/arch-packages
-      - name : update submodule
-        run: git submodule update --recursive --remote
-      - name: remove +clang
-        run: |
-          cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
+        # with:
+          # repository: h0tc0d3/arch-packages
+      # - name : update submodule
+        # run: git submodule update --recursive --remote
+      # - name: remove +clang
+        # run: |
+          # cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@lib
+        uses: JPratama7/pkgbuild-action@bootstrap
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - name: Wait
-        run: sleep 5m
-        shell: bash
+      # - name: Wait
+      #   run: sleep 5m
+      #   shell: bash
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.10.0
         with:
