@@ -45,6 +45,11 @@ build() {
   cd "${srcdir}/Python-${pkgver}"
 
   CFLAGS="${CFLAGS/-O2/-O3} -DOPENSSL_NO_SSL2"
+
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+
   ./configure --prefix=/usr \
               --enable-shared \
               --with-threads \
@@ -58,9 +63,6 @@ build() {
               --enable-loadable-sqlite-extensions \
               --without-ensurepip
 
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
   LC_CTYPE=en_US.UTF-8 make regen-all EXTRA_CFLAGS="${CFLAGS}"
   LC_CTYPE=en_US.UTF-8 make EXTRA_CFLAGS="${CFLAGS}"
 }
