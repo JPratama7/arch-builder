@@ -44,7 +44,7 @@ prepare() {
 build() {
   cd "${srcdir}/Python-${pkgver}"
 
-  CFLAGS="${CFLAGS/-O2/-O3} -DOPENSSL_NO_SSL2"
+  CFLAGS="-DOPENSSL_NO_SSL2"
 
   ./configure --prefix=/usr \
               --enable-shared \
