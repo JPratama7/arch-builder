@@ -46,10 +46,6 @@ build() {
 
   CFLAGS="${CFLAGS/-O2/-O3} -DOPENSSL_NO_SSL2"
 
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
-
   ./configure --prefix=/usr \
               --enable-shared \
               --with-threads \

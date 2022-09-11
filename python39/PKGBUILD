@@ -46,10 +46,6 @@ prepare() {
 build() {
   cd "${srcdir}/Python-${pkgver}"
   CFLAGS="${CFLAGS/-O2/-O3} -fno-semantic-interposition"
-
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
   
   export ax_cv_c_float_words_bigendian=no
   ./configure --prefix=/usr \
