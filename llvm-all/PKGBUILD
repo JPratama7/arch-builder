@@ -41,7 +41,7 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCLANG_DEFAULT_LINKER='ld.lld')
+_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin)
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
