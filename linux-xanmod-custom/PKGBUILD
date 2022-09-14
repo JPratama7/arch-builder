@@ -7,18 +7,18 @@
 _microarchitecture=92
 use_numa=y
 use_tracers=y
-_compiler=clang
+_compiler=gcc
 _compress_modules=y
 _localmodcfg=n
 _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.19
-pkgver=${_major}.6
+pkgver=${_major}.8
 _branch=5.x
 xanmod=1
-pkgrel=4
-pkgdesc='Linux Xanmod - Latest Mainline (EDGE) with Extra Patch'
+pkgrel=${xanmod}
+pkgdesc='Linux Xanmod - Latest Mainline (EDGE)'
 url="http://www.xanmod.org/"
 arch=(x86_64)
 _lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
@@ -37,24 +37,26 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_lucjan}prjc-cachyos-patches-v3/0001-PRJC-CachyOS-for-5.19.2-and-newer.patch"
-        "${_lucjan}lrng-patches-v3/0001-lrng-patches.patch"
-        "${_lucjan}bfq-paolo-patches/0001-bfq-paolo-patches.patch"
-        "${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
-        "${_cachy}0010-kbuild-module.patch"
+        "${_cachy}sched/0001-tt.patch"
+        # "${_lucjan}x86-patches/0001-x86-patches.patch"
         "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v14/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v18/0001-fixes-miscellaneous.patch"
+        "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_lucjan}damon-cachyos-patches-v5/0001-damon-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}bitmap-patches-next-v4/0001-bitmap-patches.patch"
+        "${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
         "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_lucjan}ksm-patches-v5/0001-ksm-patches.patch"
+        "${_lucjan}bfq-paolo-patches/0001-bfq-paolo-patches.patch"
+        "${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
-        "${_cachy}misc/0001-ck-hrtimer.patch"
+        "${_lucjan}pf-fixes/0001-Bluetooth-fix-deadlock-for-RFCOMM-sk-state-change.patch"
+        #"${_cachy}misc/0001-ck-hrtimer.patch"
+        # "${_cachy}misc/0001-Add-latency-nice-prio.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "${_lucjan}uml-patches/0001-Revert-um-Add-missing-apply_returns.patch"
+        "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        "https://raw.githubusercontent.com/owl4ce/hikari-x86_64/hikari-x86_64/linux/.config_hikari"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -78,8 +80,8 @@ export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_
 prepare() {
   cd linux-${_major}
 
-  # Apply Xanmod patch
-  patch -N -p1 -F3 -i ../patch-${pkgver}-xanmod${xanmod}
+  msg2 "Apply Xanmod patch"
+  patch -Np1 -i ../patch-${pkgver}-xanmod${xanmod}
 
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
@@ -93,13 +95,11 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
-    OUT="$(patch -N -p1 -F3 < ../$src)" || echo "${OUT}" | grep "Skipping patch" -q || (echo "$OUT" && false);
+    patch -N -p1 < ../$src
   done
 
   # Applying configuration
-  # cp -vf CONFIGS/xanmod/${_compiler}/config .config
-  cp -vf ../.config_hikari .config
-  # cp -vf ../config .config
+  cp -vf CONFIGS/xanmod/${_compiler}/config_x86-64-v2 .config
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
@@ -172,9 +172,9 @@ prepare() {
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
 
-  msg2 "Enabling KBUILD_CFLAGS -O3..."
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
-                 --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  # msg2 "Enabling KBUILD_CFLAGS -O3..."
+  # scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
+  #                --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC \
