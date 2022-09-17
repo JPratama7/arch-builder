@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.19
-pkgver=${_major}.8
+pkgver=${_major}.9
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -38,7 +38,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "${_cachy}sched/0001-tt.patch"
-        # "${_lucjan}x86-patches/0001-x86-patches.patch"
+        "${_lucjan}x86-patches/0001-x86-patches.patch"
         "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}fixes-miscellaneous-v18/0001-fixes-miscellaneous.patch"
         "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
@@ -51,7 +51,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_lucjan}pf-fixes/0001-Bluetooth-fix-deadlock-for-RFCOMM-sk-state-change.patch"
-        #"${_cachy}misc/0001-ck-hrtimer.patch"
+        "${_lucjan}zram-entropy-cachyos-patches/0001-zram-5.19-introduce-ZRAM-entropy-calculation.patch"
         # "${_cachy}misc/0001-Add-latency-nice-prio.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "${_lucjan}uml-patches/0001-Revert-um-Add-missing-apply_returns.patch"
@@ -171,6 +171,12 @@ prepare() {
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
+  
+
+  msg2 "ZRAM Entropy Calculation"
+  scripts/config  --enable ZRAM_ENTROPY \
+                  --enable ZRAM_ENTROPY_THRESHOLD
+  
 
   # msg2 "Enabling KBUILD_CFLAGS -O3..."
   # scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
