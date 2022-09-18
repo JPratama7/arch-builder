@@ -1,5 +1,5 @@
 pkgname=python311
-pkgver=3.11.0rc1
+pkgver=3.11.0rc2
 pkgrel=1
 _pyver=3.11.0
 _pybasever=3.11
@@ -36,7 +36,7 @@ prepare() {
 build() {
   cd "${srcdir}/Python-${pkgver}"
 
-  CFLAGS="-fno-semantic-interposition"
+  CFLAGS="${_flags} -fno-semantic-interposition"
 
   ./configure --prefix=/usr \
               --enable-shared \

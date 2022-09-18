@@ -45,7 +45,7 @@ prepare() {
 
 build() {
   cd "${srcdir}/Python-${pkgver}"
-  CFLAGS="-fno-semantic-interposition"
+  CFLAGS="${_flags} -fno-semantic-interposition"
   
   export ax_cv_c_float_words_bigendian=no
   ./configure --prefix=/usr \
