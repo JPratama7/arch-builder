@@ -29,6 +29,7 @@ jobs:
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.10.0
         with:
+          allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
           artifacts: "./*/*.zst"
