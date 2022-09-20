@@ -33,7 +33,7 @@ jobs:
       - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
-          removeArtifacts: true
+          replacesArtifacts: true
           tag: "latest"
           artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
