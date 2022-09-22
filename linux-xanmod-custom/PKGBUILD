@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=5.19
-pkgver=${_major}.9
+pkgver=${_major}.10
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -39,7 +39,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v18/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v19/0001-fixes-miscellaneous.patch"
         "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_lucjan}damon-cachyos-patches-v5/0001-damon-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
@@ -51,7 +51,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_lucjan}pf-fixes/0001-Bluetooth-fix-deadlock-for-RFCOMM-sk-state-change.patch"
         "${_lucjan}zram-entropy-cachyos-patches/0001-zram-5.19-introduce-ZRAM-entropy-calculation.patch"
-        # "${_cachy}misc/0001-Add-latency-nice-prio.patch"
+        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "${_lucjan}uml-patches/0001-Revert-um-Add-missing-apply_returns.patch"
         "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
