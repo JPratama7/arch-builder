@@ -39,7 +39,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v22/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v24/0001-fixes-miscellaneous.patch"
         "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
         "${_lucjan}damon-cachyos-patches-v5/0001-damon-5.19-merge-changes-from-dev-tree.patch"
         "${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
