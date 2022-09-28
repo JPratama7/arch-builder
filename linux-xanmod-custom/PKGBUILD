@@ -51,7 +51,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
         "${_lucjan}pf-fixes/0001-Bluetooth-fix-deadlock-for-RFCOMM-sk-state-change.patch"
         "${_lucjan}zram-entropy-cachyos-patches/0001-zram-5.19-introduce-ZRAM-entropy-calculation.patch"
-        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
+        "${_lucjan}vmlinuz-cachyos-patches-v2/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
         "${_lucjan}uml-patches/0001-Revert-um-Add-missing-apply_returns.patch"
         "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
