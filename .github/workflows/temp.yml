@@ -5,7 +5,7 @@ jobs:
   arch_packages:
     strategy:
       matrix:
-        build: [wayland, wayland-protocols]
+        build: [llvm]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -15,11 +15,11 @@ jobs:
           repository: h0tc0d3/arch-packages
       # - name : update submodule
         # run: git submodule update --recursive --remote
-      # - name: remove +clang
-        # run: |
-          # cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
+      - name: remove +clang
+        run: |
+          cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@bootstrapclang
+        uses: JPratama7/pkgbuild-action@toolchain
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
