@@ -5,7 +5,7 @@ jobs:
   arch_packages:
     strategy:
       matrix:
-        build: [llvm]
+        build: [llvm-all, llvm-runtime]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
