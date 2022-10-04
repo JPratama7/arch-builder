@@ -37,7 +37,8 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "${_cachy}sched/0001-tt.patch"
+        # "${_cachy}sched/0001-tt.patch"https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/6.0/tt-6.0.patch
+        "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/6.0/tt-6.0.patch"
         "${_lucjan}bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
         "${_lucjan}fixes-miscellaneous/0001-fixes-miscellaneous.patch"
