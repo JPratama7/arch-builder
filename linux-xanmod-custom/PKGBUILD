@@ -13,8 +13,8 @@ _localmodcfg=n
 _makenconfig=n
 
 pkgbase=linux-xanmod-custom
-_major=5.19
-pkgver=${_major}.12
+_major=6.0
+pkgver=${_major}.0
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
@@ -38,23 +38,26 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         "${_cachy}sched/0001-tt.patch"
-        "${_lucjan}bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}fixes-miscellaneous-v24/0001-fixes-miscellaneous.patch"
-        "${_lucjan}lrng-patches-v4/0001-lrng-patches.patch"
-        "${_lucjan}damon-cachyos-patches-v5/0001-damon-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
-        "${_lucjan}folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
-        "${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
-        "${_lucjan}ksm-patches-v5/0001-ksm-patches.patch"
-        "${_lucjan}bfq-paolo-patches/0001-bfq-paolo-patches.patch"
-        "${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
-        "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
-        "${_lucjan}pf-fixes/0001-Bluetooth-fix-deadlock-for-RFCOMM-sk-state-change.patch"
-        "${_lucjan}zram-entropy-cachyos-patches/0001-zram-5.19-introduce-ZRAM-entropy-calculation.patch"
-        "${_lucjan}vmlinuz-cachyos-patches-v2/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
-        "${_cachy}misc/0001-mm-remove-the-per-task-RSS-counter-cache.patch"
-        "${_lucjan}uml-patches/0001-Revert-um-Add-missing-apply_returns.patch"
-        "${_lucjan}zstd-patches/0001-kbuild-5.19-allow-setting-zstd-compression-level-for.patch"
+        "${_lucjan}bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
+        "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
+        "${_lucjan}fixes-miscellaneous/0001-fixes-miscellaneous.patch"
+        "${_lucjan}lrng-cachyos-patches/0001-lrng-cachyos-patches.patch"
+        "${_lucjan}damon-cachyos-patches/0001-damon-6.0-merge-changes-from-dev-tree.patch"
+        #"${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"mm-maple-cachyos-patches/0001-mm-maple-cachyos-patches.patch
+        "${_lucjan}mm-maple-cachyos-patches/0001-mm-maple-cachyos-patches.patch"
+        "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
+        #"${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"maple-lru-cachyos-patches-v2-all/0001-maple-lru-cachyos-patches.patch
+        "${_lucjan}maple-lru-cachyos-patches-v2-all/0001-maple-lru-cachyos-patches.patch"
+        "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
+        "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
+        #"${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
+        "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
+        "${_lucjan}v4l2loopback-cachyos-patches/0001-media-introduce-v4l2loopback.patch"
+        "${_lucjan}pf-fixes/0001-mm-huge_memory-don-t-clear-active-swapcache-entry-fr.patch"
+        "${_lucjan}zram-entropy-cachyos-patches/0001-zram-6.0-introduce-ZRAM-entropy-calculation.patch"
+        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
+        "${_cachy}0009-THP-Shrinker.patch"
+        "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
