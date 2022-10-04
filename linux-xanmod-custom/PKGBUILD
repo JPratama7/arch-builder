@@ -44,10 +44,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}fixes-miscellaneous/0001-fixes-miscellaneous.patch"
         "${_lucjan}lrng-cachyos-patches/0001-lrng-cachyos-patches.patch"
         "${_lucjan}damon-cachyos-patches/0001-damon-6.0-merge-changes-from-dev-tree.patch"
-        #"${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"mm-maple-cachyos-patches/0001-mm-maple-cachyos-patches.patch
-        "${_lucjan}mm-maple-cachyos-patches/0001-mm-maple-cachyos-patches.patch"
+        #"${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
+        "${_lucjan}arch-x86-trunk-patches-all/0001-arch-x86-trunk-patches.patch"
         "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
-        #"${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"maple-lru-cachyos-patches-v2-all/0001-maple-lru-cachyos-patches.patch
+        #"${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
         "${_lucjan}maple-lru-cachyos-patches-v2-all/0001-maple-lru-cachyos-patches.patch"
         "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
         "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
