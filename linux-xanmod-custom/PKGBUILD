@@ -47,7 +47,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}damon-cachyos-patches/0001-damon-6.0-merge-changes-from-dev-tree.patch"
         "${_cachy}misc/0001-Add-latency-priority-for-CFS-class.patch"
         "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
-        "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
+        # "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
         "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
         "${_lucjan}v4l2loopback-cachyos-patches/0001-media-introduce-v4l2loopback.patch"
@@ -97,7 +97,7 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
-    patch -N -p1 < ../$src
+    patch -N -p1 -F3 < ../$src
   done
 
   # Applying configuration
