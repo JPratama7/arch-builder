@@ -23,6 +23,7 @@ url="http://www.xanmod.org/"
 arch=(x86_64)
 _lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
 _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
+_tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
 
 license=(GPL2)
 makedepends=(
@@ -37,30 +38,26 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        # "${_cachy}sched/0001-tt.patch"
-        "${_cachy}sched/0001-bore.patch"
+        "https://raw.githubusercontent.com/hedmo/stuff/main/patches/xanmod-fair-revert.patch"
+        "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
         "${_lucjan}fixes-miscellaneous-v2/0001-fixes-miscellaneous.patch"
-        "${_lucjan}lrng-cachyos-patches/0001-lrng-cachyos-patches.patch"
+        "${_lucjan}lrng-cachyos-patches-v7/0001-lrng-cachyos-patches.patch"
         "${_lucjan}damon-cachyos-patches/0001-damon-6.0-merge-changes-from-dev-tree.patch"
         "${_cachy}misc/0001-Add-latency-priority-for-CFS-class.patch"
         "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
-        # "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
+        "${_lucjan}ksm-cachyos-patches/0001-ksm-cachyos-patches.patch"
         "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
         "${_lucjan}v4l2loopback-cachyos-patches/0001-media-introduce-v4l2loopback.patch"
         "${_lucjan}pf-fixes/0001-mm-huge_memory-don-t-clear-active-swapcache-entry-fr.patch"
         "${_lucjan}zram-entropy-cachyos-patches/0001-zram-6.0-introduce-ZRAM-entropy-calculation.patch"
         "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
-        "${_cachy}misc/0001-random-implement-getrandom-in-vDSO.patch"
-        #"${_lucjan}bfq-misc-patches/0001-bfq-misc-patches.patch"
-        #"${_lucjan}mm-patches/0001-mm-vmscan-fix-extreme-overreclaim-and-swap-floods.patch"
-        # "${_lucjan}maple-lru-cachyos-patches-v2-all/0001-maple-lru-cachyos-patches.patch"
-        #"${_lucjan}bitmap-patches-next-v5/0001-bitmap-patches.patch"
-        # "${_lucjan}vma-cachyos-patches-all/0001-vma-cachyos-patches.patch"
-        #"${_cachy}0009-THP-Shrinker.patch"
-        #"${_lucjan}arch-x86-trunk-patches/0001-arch-x86-6.0-Shadowstacks-for-userspace.patch"
+        "${_lucjan}mm-cleanup-cachyos-patches-all/0001-mm-cleanup-cachyos-patches.patch"
+        "${_lucjan}amd-pstate-epp-patches/0001-amd-pstate-eep-patches.patch"
+        "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
+        "${_lucjan}pm-patches/0001-pm-6.0-merge-changes-from-dev-tree.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -167,6 +164,9 @@ prepare() {
   msg2 "Set HOSTNAME"
   scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V2"
 
+  msg2 "ZRAM Entropy Calculation"
+  scripts/config  --enable ZRAM_ENTROPY
+
   msg2 "Enable v4l2loopback support"
   scripts/config --enable CONFIG_V4L2_LOOPBACK
 
@@ -176,11 +176,6 @@ prepare() {
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
-  
-
-  msg2 "ZRAM Entropy Calculation"
-  scripts/config  --enable ZRAM_ENTROPY \
-                  --enable ZRAM_ENTROPY_THRESHOLD
   
 
   # msg2 "Enabling KBUILD_CFLAGS -O3..."
