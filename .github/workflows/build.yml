@@ -123,7 +123,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin, resp-app
+          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin, resp-app, wine-ge-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
