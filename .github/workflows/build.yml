@@ -157,7 +157,7 @@ jobs:
         ]
       fail-fast: false
     runs-on: ubuntu-latest
-    needs: [clang, GCC, AUR_CLANG, AUR_GCC]
+    needs: [clang, GCC, AUR_CLANG]
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.0.2
