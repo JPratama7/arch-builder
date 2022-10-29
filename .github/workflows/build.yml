@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          linux-xanmod-lts, linux-xanmod,linux-xanmod-edge,linux-xanmod-tt, linux-xanmod-custom
+          linux-xanmod-lts, linux-xanmod,linux-xanmod-tt, linux-xanmod-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
