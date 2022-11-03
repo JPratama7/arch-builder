@@ -52,7 +52,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}ksm-maple-patches-v2/0001-ksm-maple-patches.patch"
         "${_lucjan}bfq-cachyos-patches-v4/0001-bfq-cachyos-patches.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
-        "${_lucjan}v4l2loopback-cachyos-patches-v2/0001-media-introduce-v4l2loopback.patch"
+        "${_lucjan}v4l2loopback-cachyos-patches-v2/0001-v4l2loopback-cachyos-patches.patch"
         "${_lucjan}pf-fixes-v2/0001-pf-fixes.patch"
         "${_lucjan}zram-entropy-cachyos-patches/0001-zram-6.0-introduce-ZRAM-entropy-calculation.patch"
         "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
