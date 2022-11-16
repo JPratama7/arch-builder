@@ -1,8 +1,8 @@
-pkgname=mesa+clang
+pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=22.2.1
+pkgver=22.2.3
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('python-mako' 'xorgproto'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
@@ -16,6 +16,8 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
+  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch"
+  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0002-intel-fs-always-mask-the-bottom-bits-of-the-sampler-.patch"
   'LICENSE'
 )
 
@@ -46,6 +48,16 @@ prepare() {
   if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]" && ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     _extra_lto_flag='-D b_lto_mode=thin'
   fi
+
+  local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    [[ $src = *.patch ]] || continue
+    msg2 "Applying patch $src..."
+    _patch $src
+  done
+  
 
 }
 

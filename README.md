@@ -19,7 +19,7 @@ Directly get from AUR:
 - 7-zip
 - gtkcord4-git
 
-This Package Build with clang/gcc and x86_64v2+lto flags
+This Package Build with clang/gcc and x86_64v3+lto flags
 
 Add this to /etc/pacman.conf: 
 - [jp7-arch]
@@ -28,8 +28,3 @@ Add this to /etc/pacman.conf:
 - Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
 - Server = https://git.aya1.top/JPratama7/arch-builder/releases/download/latest/
 - Server = https://hub.fastgit.xyz/JPratama7/arch-builder/releases/download/latest/
-
-
-Request package? Open Issue
-
-Alternative (rarely update :v) : https://build.opensuse.org/project/show/home:jpratama7

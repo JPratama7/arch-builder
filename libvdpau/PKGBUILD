@@ -1,4 +1,4 @@
-pkgname=libvdpau+clang
+pkgname=libvdpau
 pkgver=1.5
 pkgrel=1
 pkgdesc="Nvidia VDPAU library"
