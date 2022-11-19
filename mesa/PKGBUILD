@@ -39,7 +39,7 @@ _extra_lto_flag=""
 _patch() {
 
   echo -e "\E[1;33m Apply patch: ${1}\E[0m"
-  patch -p1 -i "${srcdir:?}/${1}"
+  patch -Np1 -i "${srcdir:?}/${1}"
 
 }
 
@@ -100,6 +100,7 @@ build() {
     -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
+    -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
     -D valgrind=disabled
 
   meson compile -C build
