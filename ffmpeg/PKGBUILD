@@ -62,6 +62,8 @@ depends=(
   speex
   srt
   svt-av1
+  svt-hevc 
+  svt-vp9
   v4l-utils
   vmaf
   xz
@@ -97,15 +99,29 @@ provides=(
   libswscale.so
 )
 conflicts=('ffmpeg')
+_svt_hevc_ver='b62f72e752243cee4104cfb41dc7ee409d3ac3e9'
+_svt_vp9_ver='d9ef3cc13159143b9afc776c04f67cdfa6284046'
 _commit=1326fe9d4c85cca1ee774b072ef4fa337694f2e7
 source=(
   "git+https://git.ffmpeg.org/ffmpeg.git#commit=${_commit}"
-  add-av_stream_get_first_dts-for-chromium.patch
+  "https://aur.archlinux.org/cgit/aur.git/plain/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch?h=ffmpeg-amd-full"
+  "070-ffmpeg-fix-v4l2-memory-leak.patch'::'https://git.ffmpeg.org/gitweb/ffmpeg.git/patch/30aa0c3f4873a92c5e3da8ba8cf030de56bf4cf7"
+  "010-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-HEVC/${_svt_hevc_ver}/ffmpeg_plugin/master-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
+  "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-VP9/${_svt_vp9_ver}/ffmpeg_plugin/master-0001-Add-ability-for-ffmpeg-to-run-svt-vp9.patch"
+  "https://aur.archlinux.org/cgit/aur.git/plain/060-ffmpeg-fix-segfault-with-avisynthplus.patch?h=ffmpeg-git"
+
 )
 sha256sums=('SKIP'
   '57e26caced5a1382cb639235f9555fc50e45e7bf8333f7c9ae3d49b3241d3f77')
 
 _llvm=0
+
+_patch() {
+
+  echo -e "\E[1;33m Apply patch: ${1}\E[0m"
+  patch -Np1 -i "${srcdir:?}/${1}"
+
+}
 
 prepare() {
 
@@ -118,7 +134,14 @@ prepare() {
     exit 1
   )
 
-  patch -Np1 -i "${srcdir:?}/add-av_stream_get_first_dts-for-chromium.patch" # https://crbug.com/1251779
+  local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    [[ $src = *.patch ]] || continue
+    msg2 "Applying patch $src..."
+    _patch $src
+  done
 
 }
 
@@ -129,140 +152,81 @@ build() {
     exit 1
   )
 
-  if [[ ${_llvm} -eq 1 ]]; then
+  CFLAGS="${CFLAGS} -flto=thin"
+  CXXFLAGS="${CXXFLAGS} -flto=thin"
+  LDFLAGS="${LDFLAGS} -fuse-ld=lld"
 
-    CFLAGS="${CFLAGS} -flto=thin"
-    CXXFLAGS="${CXXFLAGS} -flto=thin"
-    LDFLAGS="${LDFLAGS} -fuse-ld=lld"
-
-    ./configure \
-      --prefix=/usr \
-      --cc=/usr/bin/clang \
-      --cxx=/usr/bin/clang++ \
-      --host-cc=/usr/bin/clang \
-      --disable-debug \
-      --disable-static \
-      --disable-stripping \
-      --enable-amf \
-      --enable-avisynth \
-      --enable-cuda-llvm \
-      --enable-lto \
-      --enable-fontconfig \
-      --enable-gmp \
-      --enable-gnutls \
-      --enable-gpl \
-      --enable-ladspa \
-      --enable-libaom \
-      --enable-libass \
-      --enable-libbluray \
-      --enable-libbs2b \
-      --enable-libdav1d \
-      --enable-libdrm \
-      --enable-libfreetype \
-      --enable-libfribidi \
-      --enable-libgsm \
-      --enable-libiec61883 \
-      --enable-libjack \
-      --enable-libmfx \
-      --enable-libmodplug \
-      --enable-libmp3lame \
-      --enable-libopencore_amrnb \
-      --enable-libopencore_amrwb \
-      --enable-libopenjpeg \
-      --enable-libopus \
-      --enable-libpulse \
-      --enable-librav1e \
-      --enable-librsvg \
-      --enable-libsoxr \
-      --enable-libspeex \
-      --enable-libsrt \
-      --enable-libssh \
-      --enable-libsvtav1 \
-      --enable-libtheora \
-      --enable-libv4l2 \
-      --enable-libvidstab \
-      --enable-libvmaf \
-      --enable-libvorbis \
-      --enable-libvpx \
-      --enable-libwebp \
-      --enable-libx264 \
-      --enable-libx265 \
-      --enable-libxcb \
-      --enable-libxml2 \
-      --enable-libxvid \
-      --enable-libzimg \
-      --enable-nvdec \
-      --enable-nvenc \
-      --enable-opencl \
-      --enable-opengl \
-      --enable-shared \
-      --enable-version3 \
-      --enable-vulkan
-
-  else
-
-    ./configure \
-      --prefix=/usr \
-      --disable-debug \
-      --disable-static \
-      --disable-stripping \
-      --enable-amf \
-      --enable-avisynth \
-      --enable-cuda-llvm \
-      --enable-lto \
-      --enable-fontconfig \
-      --enable-gmp \
-      --enable-gnutls \
-      --enable-gpl \
-      --enable-ladspa \
-      --enable-libaom \
-      --enable-libass \
-      --enable-libbluray \
-      --enable-libbs2b \
-      --enable-libdav1d \
-      --enable-libdrm \
-      --enable-libfreetype \
-      --enable-libfribidi \
-      --enable-libgsm \
-      --enable-libiec61883 \
-      --enable-libjack \
-      --enable-libmfx \
-      --enable-libmodplug \
-      --enable-libmp3lame \
-      --enable-libopencore_amrnb \
-      --enable-libopencore_amrwb \
-      --enable-libopenjpeg \
-      --enable-libopus \
-      --enable-libpulse \
-      --enable-librav1e \
-      --enable-librsvg \
-      --enable-libsoxr \
-      --enable-libspeex \
-      --enable-libsrt \
-      --enable-libssh \
-      --enable-libsvtav1 \
-      --enable-libtheora \
-      --enable-libv4l2 \
-      --enable-libvidstab \
-      --enable-libvmaf \
-      --enable-libvorbis \
-      --enable-libvpx \
-      --enable-libwebp \
-      --enable-libx264 \
-      --enable-libx265 \
-      --enable-libxcb \
-      --enable-libxml2 \
-      --enable-libxvid \
-      --enable-libzimg \
-      --enable-nvdec \
-      --enable-nvenc \
-      --enable-opencl \
-      --enable-opengl \
-      --enable-shared \
-      --enable-version3 \
-      --enable-vulkan
-
-  fi
+  ./configure \
+    --prefix=/usr \
+    --cc=/usr/bin/clang \
+    --cxx=/usr/bin/clang++ \
+    --host-cc=/usr/bin/clang \
+    --disable-debug \
+    --disable-static \
+    --disable-stripping \
+    --enable-amf \
+    --enable-avisynth \
+    --enable-cuda-llvm \
+    --enable-lto \
+    --enable-fontconfig \
+    --enable-gmp \
+    --enable-gnutls \
+    --enable-gpl \
+    --enable-ladspa \
+    --enable-libaom \
+    --enable-libass \
+    --enable-libbluray \
+    --enable-libbs2b \
+    --enable-libdav1d \
+    --enable-libdrm \
+    --enable-libfreetype \
+    --enable-libfribidi \
+    --enable-libgsm \
+    --enable-libiec61883 \
+    --enable-libjack \
+    --enable-libmfx \
+    --enable-libmodplug \
+    --enable-libmp3lame \
+    --enable-libopencore_amrnb \
+    --enable-libopencore_amrwb \
+    --enable-libopenjpeg \
+    --enable-libopus \
+    --enable-libpulse \
+    --enable-librav1e \
+    --enable-librsvg \
+    --enable-libsoxr \
+    --enable-libspeex \
+    --enable-libsrt \
+    --enable-libssh \
+    --enable-libsvtav1 \
+    --enable-libtheora \
+    --enable-libv4l2 \
+    --enable-libvidstab \
+    --enable-libvmaf \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libwebp \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libxcb \
+    --enable-libxml2 \
+    --enable-libxvid \
+    --enable-libzimg \
+    --enable-nvdec \
+    --enable-nvenc \
+    --enable-opencl \
+    --enable-opengl \
+    --enable-shared \
+    --enable-version3 \
+    --enable-vulkan \
+    \
+    --enable-vaapi \
+    --enable-vdpau \
+    --enable-v4l2-m2m \
+    --enable-libsvthevc \
+    --enable-libsvtvp9 \
+    --enable-nonfree \
+    --enable-gray \
 
   make
   make tools/qt-faststart

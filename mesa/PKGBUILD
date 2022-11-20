@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=22.2.3
+pkgver=22.2.4
 _pkgver=${pkgver//_/-}
 pkgrel=2
 arch=('x86_64')
@@ -44,6 +44,8 @@ _patch() {
 }
 
 prepare() {
+
+  cd mesa-$_pkgver
 
   if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]" && ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     _extra_lto_flag='-D b_lto_mode=thin'
@@ -100,8 +102,14 @@ build() {
     -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
-    -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
-    -D valgrind=disabled
+    -D opengl=true \
+    -D zstd=auto \
+    -D valgrind=disabled \
+    -D c_args="$CFLAGS" \
+    -D c_link_args="$LDFLAGS" \
+    -D cpp_args="$CXXFLAGS" \
+    -D cpp_link_args="$LDFLAGS" \
+    --strip
 
   meson compile -C build
 
