@@ -25,6 +25,11 @@ jobs:
               aria2c -x 16 -s 16 https://github.com/$i
           done
 
+      - name: delete old database
+        run:  |
+          rm -f jp7-arch.*
+          ls
+
       - name: creating database
         run:  |
           repo-add jp7-arch.db.tar
