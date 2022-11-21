@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt, packettracer, thorium, libva-vdpau-driver, ffmpeg, libva, libvdpau, mesa, spotify
+          zoom-system-qt, packettracer, thorium, libva-vdpau-driver, ffmpeg, libva, libvdpau, mesa, spotify, aria2
           ]
       fail-fast: false
     runs-on: ubuntu-latest
