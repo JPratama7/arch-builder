@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=6.0
-pkgver=${_major}.9
+pkgver=${_major}.10
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
