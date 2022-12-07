@@ -1,7 +1,6 @@
 pkgname=python311
-pkgver=3.11.0rc2
+pkgver=3.11.1
 pkgrel=1
-_pyver=3.11.0
 _pybasever=3.11
 _pymajver=3
 pkgdesc="Major release 3.11 of the Python high-level programming language"
@@ -11,13 +10,13 @@ url="https://www.python.org/"
 depends=('bzip2' 'expat' 'gdbm' 'libffi' 'libnsl' 'libxcrypt' 'openssl' 'zlib')
 makedepends=('bluez-libs' 'mpdecimal' 'gdb')
 optdepends=('sqlite' 'mpdecimal: for decimal' 'xz: for lzma' 'tk: for tkinter')
-source=(https://www.python.org/ftp/python/${_pyver}/Python-${pkgver}.tar.xz)
-sha256sums=('53a5377c37a8a2c6da075b14eb9d63374579f7f3c718fa20f0a1fbb0e94a922b')
+source=(https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz)
+sha256sums=('85879192f2cffd56cb16c092905949ebf3e5e394b7f764723529637901dfb58f')
 validpgpkeys=(
     '0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'  # Ned Deily (Python release signing key) <nad@python.org>
     'E3FF2839C048B25C084DEBE9B26995E310250568'  # Łukasz Langa (GPG langa.pl) <lukasz@langa.pl>
 )
-provides=("python=$_pyver")
+provides=("python=$pkgver")
 
 prepare() {
   cd "${srcdir}/Python-${pkgver}"
@@ -36,23 +35,21 @@ prepare() {
 build() {
   cd "${srcdir}/Python-${pkgver}"
 
-  CFLAGS="${_flags} -fno-semantic-interposition"
-
+  CFLAGS="${CFLAGS} -fno-semantic-interposition"
   ./configure --prefix=/usr \
               --enable-shared \
-              --with-threads \
-              --with-lto \
-              --enable-optimizations \
               --with-computed-gotos \
+              --with-lto \
               --enable-ipv6 \
               --with-system-expat \
               --with-dbmliborder=gdbm:ndbm \
+              --with-system-ffi \
               --with-system-libmpdec \
               --enable-loadable-sqlite-extensions \
-              --without-ensurepip
-              
-  LC_CTYPE=en_US.UTF-8 make regen-all EXTRA_CFLAGS="${CFLAGS}"
-  LC_CTYPE=en_US.UTF-8 make EXTRA_CFLAGS="${CFLAGS}"
+              --without-ensurepip \
+              --with-tzpath=/usr/share/zoneinfo
+
+  make EXTRA_CFLAGS="$CFLAGS"
 }
 
 package() {

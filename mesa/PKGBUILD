@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=22.2.4
+pkgver=22.3.0
 _pkgver=${pkgver//_/-}
 pkgrel=2
 arch=('x86_64')
@@ -65,7 +65,7 @@ prepare() {
 
 build() {
 
-  meson setup mesa-${_pkgver} build \
+  meson setup mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
