@@ -41,6 +41,8 @@ build() {
     --prefix=/usr \
     --with-openssl \
     --without-gnutls \
+    --without-wintls \
+    --without-appletls \
     --enable-libaria2 \
     --with-libssh2 \
     --with-sqlite3 \

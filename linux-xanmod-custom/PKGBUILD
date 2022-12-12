@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=6.0
-pkgver=${_major}.11
+pkgver=${_major}.12
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -45,23 +45,24 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-patches-v5-all/0001-kbuild-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}fixes-miscellaneous-v11/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v12/0001-fixes-miscellaneous.patch"
         "${_lucjan}lrng-cachyos-patches-v11/0001-lrng-cachyos-patches.patch"
         "${_lucjan}damon-cachyos-patches-v2/0001-damon-6.0-merge-changes-from-dev-tree.patch"
         "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
         "${_lucjan}ksm-maple-patches-v2/0001-ksm-maple-patches.patch"
-        "${_lucjan}bfq-cachyos-patches-v9/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}bfq-cachyos-patches-v14/0001-bfq-cachyos-patches.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
         "${_lucjan}v4l2loopback-cachyos-patches-v2/0001-v4l2loopback-cachyos-patches.patch"
         # "${_lucjan}pf-fixes-v2/0001-pf-fixes.patch"
         "${_lucjan}zram-entropy-cachyos-patches/0001-zram-6.0-introduce-ZRAM-entropy-calculation.patch"
-        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
+        "${_lucjan}vmlinuz-cachyos-patches-v2/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}mm-cleanup-cachyos-patches-all/0001-mm-cleanup-cachyos-patches.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
         "${_lucjan}compiler-patches/0001-Remove-Intel-compiler-support.patch"
         "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
         "${_lucjan}btrfs-cachyos-patches-v9/0001-btrfs-cachyos-patches.patch"
         "${_lucjan}objtool-patches/0001-objtool-Optimize-elf_dirty_reloc_sym.patch"
+        "${_lucjan}lto-patches/0001-lto-patches.patch"
         "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
         "${_lucjan}zblock-patches-v2/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
