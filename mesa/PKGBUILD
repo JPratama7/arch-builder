@@ -2,11 +2,19 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=22.3.0
 _pkgver=${pkgver//_/-}
-pkgrel=2
+pkgrel=1
 arch=('x86_64')
 makedepends=('python-mako' 'xorgproto'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
   'wayland-protocols' 'meson' 'ninja' 'glslang' 'libclc')
+  
+makedepends+=('rust' 'rust-bindgen' 'spirv-tools' 'spirv-llvm-translator') # rusticl dependencies
+
+DLAGENTS=(
+  'http::/usr/bin/wget -q --show-progress -t 3 --waitretry=3 -O %o %u'
+  'https::/usr/bin/wget -q --show-progress -t 3 --waitretry=3 -O %o %u'
+)
+
 depends=('libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'systemd' 'systemd-libs'
   'libomxil-bellagio' 'libunwind' 'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat')
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
@@ -18,6 +26,7 @@ source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
   "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch"
   "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0002-intel-fs-always-mask-the-bottom-bits-of-the-sampler-.patch"
+  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0003-d3d12-Don-t-crash-when-libd3d12.so-can-t-be-found.patch"
   'LICENSE'
 )
 
@@ -65,11 +74,6 @@ prepare() {
 
 build() {
 
-  # xvmc toggle for legacy trees
-  if ( cd "$srcdir/$_mesa_srcdir" && ! git merge-base --is-ancestor 8cc766d8f7eac26b7c029a2fac1bdfdba4776c29 HEAD ); then
-    _xvmc="-D gallium-xvmc=${_disabled_}"
-  fi
-
   meson setup mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
@@ -95,7 +99,8 @@ build() {
     -D gallium-va=enabled \
     -D gallium-vdpau=enabled \
     -D gallium-xa=enabled \
-    $_xvmc \
+	  -D gallium-rusticl=true \
+    -D rust_std=2021 \
     -D gbm=enabled \
     -D gles1=disabled \
     -D gles2=enabled \
@@ -116,13 +121,13 @@ build() {
     -D cpp_link_args="$LDFLAGS" \
     --strip
 
-  meson compile -C build
+  meson compile -C build-clang
 
 }
 
 package() {
 
-  DESTDIR="${pkgdir:?}" meson install -C build
+  DESTDIR="${pkgdir:?}" meson install -C build-clang
 
   ln -s /usr/lib/libGLX_mesa.so.0 "${pkgdir:?}/usr/lib/libGLX_indirect.so.0"
 
