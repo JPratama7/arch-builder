@@ -38,7 +38,9 @@ prepare() {
 	git config submodule."gemoji".url "$srcdir/gemoji"
 	git config submodule."app/static/common/gitignore".url "$srcdir/gitignore"
 	git config submodule."app/static/common/choosealicense.com".url "$srcdir/choosealicense.com"
-	git submodule update
+	git -c protocol.file.allow=always submodule update
+	# https://github.com/shiftkey/desktop/issues/809#issuecomment-1348815685
+	sed -e '/compile:prod/s/4096/4096 --openssl-legacy-provider/' -i package.json
 }
 
 build() {
