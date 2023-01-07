@@ -4,7 +4,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 
-_microarchitecture=92
+_microarchitecture=93
 use_numa=y
 use_tracers=y
 _compiler=clang
@@ -14,11 +14,11 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=6.1
-pkgver=${_major}.1
+pkgver=${_major}.3
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
-pkgdesc='Linux Xanmod - Latest Mainline with Custom Patches'
+pkgdesc='Linux Xanmod - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
 _lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
@@ -26,13 +26,12 @@ _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major
 _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
 _commit_ck=fdbdf7e0ec56cd59e11d024c473e766429271a5c
 
-
 license=(GPL2)
 makedepends=(
   bc cpio kmod libelf perl tar xz
 )
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(llvm-all)
+  makedepends+=(llvm-all python)
 fi
 options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
@@ -45,18 +44,17 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}bitmap-patches/0001-bitmap-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-patches-v2-all/0001-kbuild-patches.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
-        "${_lucjan}lrng-cachyos-patches-v3/0001-lrng-cachyos-patches.patch"
-        "${_lucjan}folios-cachyos-patches-v2/0001-folio-6.1-merge-changes-from-dev-tree.patch"
+        "${_lucjan}fixes-miscellaneous-v19/0001-fixes-miscellaneous.patch"
+        "${_lucjan}lrng-cachyos-patches-v5/0001-lrng-cachyos-patches.patch"
+        "${_lucjan}folios-cachyos-patches-v4/0001-folio-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}ksm-cleanup-patches/0001-ksm-6.1-break_ksm-cleanups-and-fixes.patch"
-        "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
+        "${_lucjan}vdso-patches-v3/0001-vdso-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}uksmd-vdso-cachyos-patches/0001-mm-6.1-add-UKSMD-support-for-vdso-branch.patch"
-        "${_lucjan}zram-cachyos-patches/0001-zram-cachyos-patches.patch"
+        "${_lucjan}zram-cachyos-patches-v2/0001-zram-cachyos-patches.patch"
         "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}mm-kconfig-patches/0001-mm-kconfig-6.1-Introduce-CONFIG_SLUB_TINY-and-deprec.patch"
-        "${_lucjan}vdso-patches-v2/0001-vdso-6.1-merge-changes-from-dev-tree.patch"
         ##### Misc Patch
         "${_lucjan}ext4-patches/0001-ext4-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}xfs-patches-v2/0001-xfs-6.1-merge-changes-from-dev-tree.patch"
@@ -64,12 +62,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
         "${_lucjan}zstd-modules-cachyos-patches/0001-zstd-modules-cachyos-patches.patch"
         "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
-        "${_lucjan}btrfs-cachyos-patches-v3/0001-btrfs-cachyos-patches.patch"
-        "${_lucjan}objtool-patches/0001-objtool-Optimize-elf_dirty_reloc_sym.patch"
+        "${_lucjan}btrfs-cachyos-patches-v4/0001-btrfs-cachyos-patches.patch"
         "${_lucjan}lto-patches/0001-lto-patches.patch"
         "${_lucjan}zswap-patches/0001-zswap-6.1-Implement-writeback-for-zsmalloc.patch"
         "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
-        "${_lucjan}zblock-patches-v2/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -177,489 +173,7 @@ prepare() {
   fi
 
   msg2 "Set HOSTNAME"
-  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V2"
-
-  msg2 "ZRAM Entropy Calculation"
-  scripts/config  --enable ZRAM_ENTROPY
-
-  msg2 "Enable v4l2loopback support"
-  scripts/config --enable CONFIG_V4L2_LOOPBACK
-
-  msg2 "Enable WINE FASTSYNC"
-  scripts/config --enable WINESYNC
-
-  msg2 "Enabling FULLCONENAT..."
-  scripts/config --module IP_NF_TARGET_FULLCONENAT \
-                 --module NETFILTER_XT_TARGET_FULLCONENAT
-  
-
-  # msg2 "Enabling KBUILD_CFLAGS -O3..."
-  # scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
-  #                --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
-
-  msg2 "Disabling TCP_CONG_CUBIC..."
-  scripts/config --module CONFIG_TCP_CONG_CUBIC \
-                 --disable CONFIG_DEFAULT_CUBIC
-
-  msg2 "Enabling multigenerational LRU..."
-  scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG \
-                 --enable CONFIG_LRU_GEN \
-                 --enable CONFIG_LRU_GEN_ENABLED \
-                 --disable CONFIG_LRU_GEN_STATS
-
-  msg2 "Enabling DAMON Data Access Monitoring "
-  scripts/config --enable DAMON \
-                 --enable DAMON_VADDR \
-                 --enable DAMON_DBGFS \
-                 --enable DAMON_SYSFS \
-                 --enable DAMON_PADDR \
-                 --enable DAMON_RECLAIM \
-                 --enable DAMON_LRU_SORT
-
-  msg2 "Change zram zswap compression to ZSTD"
-  scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE \
-                 --enable CONFIG_ZRAM_DEF_COMP_ZSTD \
-                 --set-str CONFIG_ZRAM_DEF_COMP zstd \
-                 --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
-                 --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \
-                 --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
-
-  msg2 "Enable Anbox"
-  scripts/config --enable CONFIG_ASHMEM \
-                 --enable CONFIG_ANDROID \
-                 --enable CONFIG_ANDROID_BINDER_IPC \
-                 --enable CONFIG_ANDROID_BINDERFS \
-                 --enable CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
-
-  msg2 "Enable NTFS + NTFS3"
-  scripts/config --module CONFIG_NTFS_FS \
-                 --module CONFIG_NTFS3_FS \
-                 --enable CONFIG_NTFS3_64BIT_CLUSTER \
-                 --enable CONFIG_NTFS3_LZX_XPRESS \
-                 --enable CONFIG_NTFS3_FS_POSIX_ACL
-
-  msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config \
-            --disable RANDOM_DEFAULT_IMPL \
-            --enable LRNG \
-            --enable LRNG_SHA256 \
-            --enable LRNG_COMMON_DEV_IF \
-            --enable LRNG_DRNG_ATOMIC \
-            --enable LRNG_SYSCTL \
-            --enable LRNG_RANDOM_IF \
-            --enable LRNG_AIS2031_NTG1_SEEDING_STRATEGY \
-            --module LRNG_KCAPI_IF \
-            --module LRNG_HWRAND_IF \
-            --enable LRNG_DEV_IF \
-            --enable LRNG_RUNTIME_ES_CONFIG \
-            --enable LRNG_IRQ_DFLT_TIMER_ES \
-            --disable LRNG_SCHED_DFLT_TIMER_ES \
-            --enable LRNG_TIMER_COMMON \
-            --disable LRNG_COLLECTION_SIZE_256 \
-            --disable LRNG_COLLECTION_SIZE_512 \
-            --enable LRNG_COLLECTION_SIZE_1024 \
-            --disable LRNG_COLLECTION_SIZE_2048 \
-            --disable LRNG_COLLECTION_SIZE_4096 \
-            --disable LRNG_COLLECTION_SIZE_8192 \
-            --set-val LRNG_COLLECTION_SIZE 1024 \
-            --enable LRNG_HEALTH_TESTS \
-            --set-val LRNG_RCT_CUTOFF 31 \
-            --set-val LRNG_APT_CUTOFF 325 \
-            --enable LRNG_IRQ \
-            --enable LRNG_CONTINUOUS_COMPRESSION_ENABLED \
-            --disable LRNG_CONTINUOUS_COMPRESSION_DISABLED \
-            --enable LRNG_ENABLE_CONTINUOUS_COMPRESSION \
-            --enable LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
-            --set-val LRNG_IRQ_ENTROPY_RATE 256 \
-            --enable LRNG_JENT \
-            --set-val LRNG_JENT_ENTROPY_RATE 16 \
-            --enable LRNG_CPU \
-            --set-val LRNG_CPU_FULL_ENT_MULTIPLIER 1 \
-            --set-val LRNG_CPU_ENTROPY_RATE 8 \
-            --enable LRNG_SCHED \
-            --set-val LRNG_SCHED_ENTROPY_RATE 4294967295 \
-            --enable LRNG_DRNG_CHACHA20 \
-            --module LRNG_DRBG \
-            --module LRNG_DRNG_KCAPI \
-            --enable LRNG_SWITCH \
-            --enable LRNG_SWITCH_HASH \
-            --module LRNG_HASH_KCAPI \
-            --enable LRNG_SWITCH_DRNG \
-            --module LRNG_SWITCH_DRBG \
-            --module LRNG_SWITCH_DRNG_KCAPI \
-            --enable LRNG_DFLT_DRNG_CHACHA20 \
-            --disable LRNG_DFLT_DRNG_DRBG \
-            --disable LRNG_DFLT_DRNG_KCAPI \
-            --enable LRNG_TESTING_MENU \
-            --disable LRNG_RAW_HIRES_ENTROPY \
-            --disable LRNG_RAW_JIFFIES_ENTROPY \
-            --disable LRNG_RAW_IRQ_ENTROPY \
-            --disable LRNG_RAW_RETIP_ENTROPY \
-            --disable LRNG_RAW_REGS_ENTROPY \
-            --disable LRNG_RAW_ARRAY \
-            --disable LRNG_IRQ_PERF \
-            --disable LRNG_RAW_SCHED_HIRES_ENTROPY \
-            --disable LRNG_RAW_SCHED_PID_ENTROPY \
-            --disable LRNG_RAW_SCHED_START_TIME_ENTROPY \
-            --disable LRNG_RAW_SCHED_NVCSW_ENTROPY \
-            --disable LRNG_SCHED_PERF \
-            --disable LRNG_ACVT_HASH \
-            --disable LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
-            --disable LRNG_TEST_CPU_ES_COMPRESSION \
-            --enable LRNG_SELFTEST \
-            --disable LRNG_SELFTEST_PANIC \
-            --disable LRNG_RUNTIME_FORCE_SEEDING_DISABLE
-
-  # Disable CONFIG_GENERIC_CPU2 if we have choosen another microarchitecture
-  # https://github.com/xanmod/linux/issues/240
-  [ "$_microarchitecture" = "0" ] || scripts/config --disable CONFIG_GENERIC_CPU2
-  # Let's user choose microarchitecture optimization in GCC
-  sh ${srcdir}/choose-gcc-optimization.sh $_microarchitecture
-
-  # This is intended for the people that want to build this package with their own config
-  # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
-  # If we detect partial file with scripts/config commands, we execute as a script
-  # If not, it's a full config, will be replaced
-  for _myconfig in "${SRCDEST}/myconfig" "${HOME}/.config/linux-xanmod/myconfig" "${XDG_CONFIG_HOME}/linux-xanmod/myconfig" ; do
-    if [ -f "${_myconfig}" ] && [ "$(wc -l <"${_myconfig}")" -gt "0" ]; then
-      if grep -q 'scripts/config' "${_myconfig}"; then
-        # myconfig is a partial file. Executing as a script
-        msg2 "Applying myconfig..."
-        bash -x "${_myconfig}"
-      else
-        # myconfig is a full config file. Replacing default .config
-        msg2 "Using user CUSTOM config..."
-        cp -f "${_myconfig}" .config
-      fi
-      echo
-      break
-    fi
-  done
-
-  ### Optionally load needed modules for the make localmodconfig
-  # See https://aur.archlinux.org/packages/modprobed-db
-  if [ "$_localmodcfg" = "y" ]; then
-    if [ -f $HOME/.config/modprobed.db ]; then
-      msg2 "Running Steven Rostedt's make localmodconfig now"
-      make ${_compiler_flags} LSMOD=$HOME/.config/modprobed.db localmodconfig
-    else
-      msg2 "No modprobed.db data found"
-      exit 1
-    fi
-  fi
-
-  make ${_compiler_flags} olddefconfig
-
-  make -s kernelrelease > version
-  msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
-
-  if [ "$_makenconfig" = "y" ]; then
-    make ${_compiler_flags} nconfig
-  fi
-
-  # save configuration for later reuse
-  cat .config > "${SRCDEST}/config.last"
-}
-
-build() {
-  cd linux-${_major}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
-}
-
-_package() {
-  pkgdesc="The Linux kernel and modules with Xanmod patches"
-  depends=(coreutils kmod initramfs)
-  optdepends=('crda: to set the correct wireless channels of your country'
-              'linux-firmware: firmware images needed for some devices')
-  provides=(VIRTUALBOX-GUEST-MODULES
-            WIREGUARD-MODULE
-            KSMBD-MODULE
-            NTFS3-MODULE
-            V4L2LOOPBACK-MODULE)
-
-  cd linux-${_major}
-  local kernver="$(<version)"
-  local modulesdir="$pkgdir/usr/lib/modules/$kernver"
-
-  msg2 "Installing boot image..."
-  # systemd expects to find the kernel here to allow hibernation
-  # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
-  install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
-
-  # Used by mkinitcpio to name the kernel
-  echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
-
-  msg2 "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
-
-  # remove build and source links
-  rm "$modulesdir"/{source,build}
-}
-
-_package-headers() {
-  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
-  depends=(pahole)
-
-  cd linux-${_major}
-  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
-
-  msg2 "Installing build files..."
-  install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
-    localversion.* version vmlinux
-  install -Dt "$builddir/kernel" -m644 kernel/Makefile
-  install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
-  cp -t "$builddir" -a scripts
-
-  # required when STACK_VALIDATION is enabled
-  install -Dt "$builddir/tools/objtool" tools/objtool/objtool
-
-  # required when DEBUG_INFO_BTF_MODULES is enabled
-  if [ -f "$builddir/tools/bpf/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
-
-  msg2 "Installing headers..."
-  cp -t "$builddir" -a include
-  cp -t "$builddir/arch/x86" -a arch/x86/include
-  install -Dt "$builddir/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
-
-  install -Dt "$builddir/drivers/md" -m644 drivers/md/*.h
-  install -Dt "$builddir/net/mac80211" -m644 net/mac80211/*.h
-
-  # https://bugs.archlinux.org/task/13146
-  install -Dt "$builddir/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
-
-  # https://bugs.archlinux.org/task/20402
-  install -Dt "$builddir/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
-  install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
-  install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
-
-  # https://bugs.archlinux.org/task/71392
-  install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
-
-  echo "Installing KConfig files..."
-  find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
-
-  msg2 "Removing unneeded architectures..."
-  local arch
-  for arch in "$builddir"/arch/*/; do
-    [[ $arch = */x86/ ]] && continue
-    echo "Removing $(basename "$arch")"
-    rm -r "$arch"
-  done
-
-  msg2 "Removing documentation..."
-  rm -r "$builddir/Documentation"
-
-  msg2 "Removing broken symlinks..."
-  find -L "$builddir" -type l -printf 'Removing %P\n' -delete
-
-  msg2 "Removing loose objects..."
-  find "$builddir" -type f -name '*.o' -printf 'Removing %P\n' -delete
-
-  msg2 "Stripping build tools..."
-  local file
-  while read -rd '' file; do
-    case "$(file -bi "$file")" in
-      application/x-sharedlib\;*)      # Libraries (.so)
-        strip -v $STRIP_SHARED "$file" ;;
-      application/x-archive\;*)        # Libraries (.a)
-        strip -v $STRIP_STATIC "$file" ;;
-      application/x-executable\;*)     # Binaries
-        strip -v $STRIP_BINARIES "$file" ;;
-      application/x-pie-executable\;*) # Relocatable binaries
-        strip -v $STRIP_SHARED "$file" ;;
-    esac
-  done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
-
-  msg2 "Stripping vmlinux..."
-  strip -v $STRIP_STATIC "$builddir/vmlinux"
-  
-  msg2 "Adding symlink..."
-  mkdir -p "$pkgdir/usr/src"
-  ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
-}
-
-pkgname=("${pkgbase}" "${pkgbase}-headers")
-for _p in "${pkgname[@]}"; do
-  eval "package_$_p() {
-    $(declare -f "_package${_p#$pkgbase}")
-    _package${_p#$pkgbase}
-  }"
-done
-
-# vim:set ts=8 sts=2 sw=2 et:# Maintainer : JPratama7 <josepratama080@gmail.com>
-# Contributor: Joan Figueras <ffigue at gmail dot com>
-# Contributor: Torge Matthies <openglfreak at googlemail dot com>
-# Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
-
-
-_microarchitecture=92
-use_numa=y
-use_tracers=y
-_compiler=clang
-_compress_modules=y
-_localmodcfg=n
-_makenconfig=n
-
-pkgbase=linux-xanmod-custom
-_major=6.0
-pkgver=${_major}.9
-_branch=6.x
-xanmod=1
-pkgrel=${xanmod}
-pkgdesc='Linux Xanmod - Latest Mainline with Custom Patches'
-url="http://www.xanmod.org/"
-arch=(x86_64)
-_lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
-_cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
-_tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
-_commit_ck=5be918e798e2c2cc94fa7dd0f6f031921a4f7598
-
-
-license=(GPL2)
-makedepends=(
-  bc cpio kmod libelf perl tar xz
-)
-if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(llvm-all)
-fi
-options=('!strip')
-_srcname="linux-${pkgver}-xanmod${xanmod}"
-
-source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
-        choose-gcc-optimization.sh
-        "https://raw.githubusercontent.com/hedmo/stuff/main/patches/xanmod-fair-revert.patch"
-        "${_cachy}sched/0001-tt.patch"
-        "${_lucjan}bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
-        "${_lucjan}kbuild-patches-v5-all/0001-kbuild-patches.patch"
-        "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
-        "${_lucjan}lrng-cachyos-patches-v11/0001-lrng-cachyos-patches.patch"
-        "${_lucjan}damon-cachyos-patches-v2/0001-damon-6.0-merge-changes-from-dev-tree.patch"
-        "${_lucjan}folio-cachyos-patches-all/0001-folio-cachyos-patches.patch"
-        "${_lucjan}ksm-maple-patches-v2/0001-ksm-maple-patches.patch"
-        "${_lucjan}bfq-cachyos-patches-v9/0001-bfq-cachyos-patches.patch"
-        "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-cachyos-patches.patch"
-        "${_lucjan}v4l2loopback-cachyos-patches-v2/0001-v4l2loopback-cachyos-patches.patch"
-        # "${_lucjan}pf-fixes-v2/0001-pf-fixes.patch"
-        "${_lucjan}zram-entropy-cachyos-patches/0001-zram-6.0-introduce-ZRAM-entropy-calculation.patch"
-        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
-        "${_lucjan}mm-cleanup-cachyos-patches-all/0001-mm-cleanup-cachyos-patches.patch"
-        "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
-        "${_lucjan}compiler-patches/0001-Remove-Intel-compiler-support.patch"
-        "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
-        "${_lucjan}btrfs-cachyos-patches-v8/0001-btrfs-cachyos-patches.patch"
-        "${_lucjan}objtool-patches/0001-objtool-Optimize-elf_dirty_reloc_sym.patch"
-        "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
-        "${_lucjan}zblock-patches-v2/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
-        "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
-        )
-        #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
-
-# Archlinux patches
-_commit="ec9e9a4219fe221dec93fa16fddbe44a34933d8d"
-_patches=()
-for _patch in ${_patches[@]}; do
-    #source+=("${_patch}::https://git.archlinux.org/svntogit/packages.git/plain/trunk/${_patch}?h=packages/linux&id=${_commit}")
-    source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
-done
-
-sha256sums=('57b2cf6991910e3b67a1b3490022e8a0674b6965c74c12da1e99d138d1991ee8'
-            'SKIP'
-            'SKIP'
-            '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee')
-
-export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
-export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
-export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})}
-
-prepare() {
-  cd linux-${_major}
-
-  msg2 "Apply Xanmod patch"
-  patch -Np1 -i ../patch-${pkgver}-xanmod${xanmod}
-
-  msg2 "Setting version..."
-  scripts/setlocalversion --save-scmversion
-  echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-xanmod-edge}" > localversion.20-pkgname
-
-  # Archlinux patches
-  local src
-  for src in "${source[@]}"; do
-    src="${src%%::*}"
-    src="${src##*/}"
-    [[ $src = *.patch ]] || continue
-    msg2 "Applying patch $src..."
-    patch -N -p1 -F3 < ../$src
-  done
-
-  # Applying configuration
-  # cp -vf CONFIGS/xanmod/${_compiler}/config_x86-64-v2 .config
-  cp -vf CONFIGS/xanmod/gcc/config_x86-64-v2 .config
-
-  # enable LTO_CLANG_THIN
-  if [ "${_compiler}" = "clang" ]; then
-    msg2 "Enabling LTO CLANG"
-    scripts/config \
-            --enable LTO \
-            --enable LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG_THIN \
-            --disable LTO_NONE \
-            --enable HAS_LTO_CLANG \
-            --disable LTO_CLANG_FULL \
-            --enable LTO_CLANG_THIN \
-            --enable HAVE_GCC_PLUGINS
-    _LLVM=1
-  fi
-
-  # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
-  msg2 "Enable STACK VALIDATION"
-  scripts/config --enable CONFIG_STACK_VALIDATION
-
-  # Enable IKCONFIG following Arch's philosophy
-  msg2 "Enable IKCONFIG"
-  scripts/config --enable CONFIG_IKCONFIG \
-                 --enable CONFIG_IKCONFIG_PROC
-
-  # User set. See at the top of this file
-  if [ "$use_tracers" = "n" ]; then
-    msg2 "Disabling FUNCTION_TRACER/GRAPH_TRACER only if we are not compiling with clang..."
-    if [ "${_compiler}" = "gcc" ]; then
-      scripts/config --disable CONFIG_FUNCTION_TRACER \
-                     --disable CONFIG_STACK_TRACER
-    fi
-  fi
-
-  if [ "$use_numa" = "n" ]; then
-    msg2 "Disabling NUMA..."
-    scripts/config --disable NUMA \
-                   --disable AMD_NUMA \
-                   --disable X86_64_ACPI_NUMA \
-                   --disable NODES_SPAN_OTHER_NODES \
-                   --disable NUMA_EMU \
-                   --disable NEED_MULTIPLE_NODES \
-                   --disable USE_PERCPU_NUMA_NODE_ID \
-                   --disable ACPI_NUMA \
-                   --disable ARCH_SUPPORTS_NUMA_BALANCING \
-                   --disable NODES_SHIFT \
-                   --undefine NODES_SHIFT \
-                   --disable NEED_MULTIPLE_NODES
-  fi
-
-  # Compress modules by default (following Arch's kernel)
-  if [ "$_compress_modules" = "y" ]; then
-    msg2 "Compress Modules"
-    scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19 \
-                   --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
-                   --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22 \
-                   --set-val CONFIG_ZSTD_COMP_VAL 22
-    msg2 "Done Compress Modules"
-  fi
-
-  msg2 "Set HOSTNAME"
-  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V2"
+  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V3"
 
   msg2 "ZRAM Entropy Calculation"
   scripts/config  --enable ZRAM_ENTROPY
