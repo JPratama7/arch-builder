@@ -35,7 +35,7 @@ fi
 
 if [ -z ${_compiler+x} ]; then
   _compiler=clang
-
+fi
 # Unique compiler supported upstream is GCC
 ## Choose between GCC and CLANG config (default is GCC)
 ## Use the environment variable "_compiler=clang"
