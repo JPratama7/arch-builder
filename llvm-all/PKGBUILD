@@ -80,29 +80,11 @@ build() {
     exit 1
   )
 
-  if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]"; then
-    export CC=clang
-    export CXX=clang++
-    export AR=llvm-ar
-    export AS=llvm-as
-    export NM=llvm-nm
-    export STRIP=llvm-strip
-    export OBJCOPY=llvm-objcopy
-    export OBJDUMP=llvm-objdump
-    export READELF=llvm-readelf
-    export HOSTCC=clang
-    export HOSTCXX=clang++
-    export HOSTAR=llvm-ar
-    export DEBUG_CFLAGS="-g"
-    export DEBUG_CXXFLAGS="-g"
-    _extra_build_flags+=(
-      -DCMAKE_C_COMPILER=clang
-      -DCMAKE_CXX_COMPILER=clang++
-    )
-  else
-    echo -e "\E[1;31mClang not found. Will use default system compiler! \E[0m"
-  fi
-
+  _extra_build_flags+=(
+    -DCMAKE_C_COMPILER=CC
+    -DCMAKE_CXX_COMPILER=CXX
+  )
+  
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     export LD=ld.lld
     export CC_LD=lld
