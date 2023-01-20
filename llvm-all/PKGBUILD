@@ -81,10 +81,10 @@ build() {
   )
 
   _extra_build_flags+=(
-    -DCMAKE_C_COMPILER=CC
-    -DCMAKE_CXX_COMPILER=CXX
+    -DCMAKE_C_COMPILER="$CC"
+    -DCMAKE_CXX_COMPILER="$CXX"
   )
-  
+
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     export LD=ld.lld
     export CC_LD=lld
