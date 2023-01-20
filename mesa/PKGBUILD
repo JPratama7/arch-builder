@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=22.3.2
+pkgver=22.3.3
 _pkgver=${pkgver//_/-}
 pkgrel=1
 arch=('x86_64')
@@ -25,6 +25,8 @@ license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
   "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/repos/extra-x86_64/0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch"
+  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0003-Revert-iris-Avoid-abort-if-kernel-can-t-allocate-mem.patch"
+  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0002-iris-Retry-DRM_IOCTL_I915_GEM_EXECBUFFER2-on-ENOMEM.patch"
   'LICENSE'
 )
 
