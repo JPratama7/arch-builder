@@ -34,7 +34,7 @@ sha256sums=('SKIP'
   '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
 
 options=('staticlibs')
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_C_COMPILER=CC -DCMAKE_CXX_COMPILER=CXX -DLLVM_USE_LINKER=lld)
+_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_C_COMPILER="$CC" -DCMAKE_CXX_COMPILER="$CXX" -DLLVM_USE_LINKER=lld)
 
 _rpatch() {
 
