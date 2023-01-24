@@ -92,7 +92,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin,postman-bin, aria2-git, zoom, whatsapp-for-linux, geany-git, tor-browser, wget2-git,
+          microsoft-edge-dev-bin,postman-bin, zoom, whatsapp-for-linux, geany-git, tor-browser, wget2-git,
           appimagelauncher, earlyoom-git, slimjet
           ]
       fail-fast: false
