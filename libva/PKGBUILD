@@ -1,5 +1,5 @@
 pkgname=libva
-pkgver=2.16.0
+pkgver=2.17.0
 pkgrel=1
 pkgdesc='Video Acceleration (VA) API for Linux'
 arch=(x86_64)
@@ -15,7 +15,7 @@ optdepends=(
   'libva-mesa-driver: backend for AMD and Nvidia GPUs'
 )
 backup=(etc/libva.conf)
-_commit=1333034d7ec6e4f8bcb340d8f7b81b8d32835c49
+_commit=df3c584bb79d1a1e521372d62fa62e8b1c52ce6c
 source=("git+https://github.com/intel/libva.git#commit=${_commit}")
 sha256sums=('SKIP')
 

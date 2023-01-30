@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt, packettracer, thorium, libva-vdpau-driver, ffmpeg, libva, libvdpau, mesa, spotify, aria2
+          zoom-system-qt, packettracer, thorium, ffmpeg, spotify
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -57,6 +57,36 @@ jobs:
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  INTERNAL:
+    needs: [CLANG, GCC, AUR_CLANG]
+    strategy:
+      matrix:
+        build: [
+          libva-vdpau-driver, libva, libvdpau, mesa, aria2
+          ]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v3.0.2
+      - name : update submodule
+        run: git submodule update --recursive --remote
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@clang
+        with:
+          namcapDisable: true
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
   GCC:
     strategy:
