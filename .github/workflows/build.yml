@@ -58,9 +58,36 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  CLMUL:
+    needs: [resp-app]
+    strategy:
+      matrix:
+        build: [
+          libva-vdpau-driver, libva, libvdpau, mesa, aria2
+          ]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v3.0.2
+      - name : update submodule
+        run: git submodule update --recursive --remote
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@clang
+        with:
+          namcapDisable: true
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   INTERNAL:
-    needs: [CLANG, GCC, AUR_CLANG]
+    needs: [CLANG, GCC, AUR_CLANG, CLMUL]
     strategy:
       matrix:
         build: [
@@ -122,7 +149,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin,postman-bin, zoom, whatsapp-for-linux, geany-git, tor-browser, wget2-git,
+          microsoft-edge-dev-bin,postman-bin, zoom, geany-git, tor-browser, wget2-git,
           appimagelauncher, earlyoom-git, slimjet
           ]
       fail-fast: false
