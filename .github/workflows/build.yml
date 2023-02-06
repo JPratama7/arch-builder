@@ -59,11 +59,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   CLMUL:
-    needs: [resp-app]
     strategy:
       matrix:
         build: [
-          libva-vdpau-driver, libva, libvdpau, mesa, aria2
+          resp-app
           ]
       fail-fast: false
     runs-on: ubuntu-latest
