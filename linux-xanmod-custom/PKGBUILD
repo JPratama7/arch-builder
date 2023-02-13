@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=6.1
-pkgver=${_major}.9
+pkgver=${_major}.11
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -44,24 +44,26 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}bitmap-patches/0001-bitmap-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-patches-v2-all/0001-kbuild-patches.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}lrng-cachyos-patches-v5/0001-lrng-cachyos-patches.patch"
+        "${_lucjan}lrng-cachyos-patches-v9/0001-lrng-cachyos-patches.patch"
         "${_lucjan}folios-cachyos-patches-v4/0001-folio-6.1-merge-changes-from-dev-tree.patch"
+        "${_lucjan}mm-dmapool-patches-v2-all/0001-mm-dmapool-patches.patch"
         "${_lucjan}drm-patches-v2/0001-drm-6.1-Add-HDR-patches.patch"
         "${_lucjan}kvx-patches-all/0001-kvx-patches.patch"
-        "${_lucjan}bfq-cachyos-patches-v10/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}bfq-cachyos-patches-v11/0001-bfq-cachyos-patches.patch"
         "${_lucjan}ksm-cleanup-patches/0001-ksm-6.1-break_ksm-cleanups-and-fixes.patch"
         "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-6.1-merge-changes-from-dev-tree.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-6.1-add-UKSMD-support.patch"
         "${_lucjan}zram-cachyos-patches-v2/0001-zram-cachyos-patches.patch"
+        ##### Misc Patch
         "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}mm-kconfig-patches/0001-mm-kconfig-6.1-Introduce-CONFIG_SLUB_TINY-and-deprec.patch"
-        ##### Misc Patch
+        # "${_lucjan}cmpxchg-patches-all/0001-cmpxchg-patches.patch"
         "${_lucjan}um-patches/0001-um-Support-LTO.patch"
-        "${_lucjan}crypto-patches/0001-crypto-x86-ghash-cleanups.patch"
         "${_lucjan}zstd-cachyos-patches-v2-all/0001-zstd-cachyos-patches.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
         "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
+        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
         "${_lucjan}btrfs-cachyos-patches-v8/0001-btrfs-cachyos-patches.patch"
         "${_lucjan}zswap-patches/0001-zswap-6.1-Implement-writeback-for-zsmalloc.patch"
         "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
@@ -109,7 +111,8 @@ prepare() {
 
   # Applying configuration
   # cp -vf CONFIGS/xanmod/${_compiler}/config_x86-64-v2 .config
-  cp -vf CONFIGS/xanmod/gcc/config_x86-64-v2 .config
+  msg2 "Copy configuration"
+  cp -vf CONFIGS/xanmod/gcc/config_x86-64-v3 .config
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
