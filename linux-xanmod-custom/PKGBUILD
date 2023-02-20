@@ -14,7 +14,7 @@ _makenconfig=n
 
 pkgbase=linux-xanmod-custom
 _major=6.1
-pkgver=${_major}.11
+pkgver=${_major}.12
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -41,7 +41,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "https://raw.githubusercontent.com/hedmo/stuff/main/patches/xanmod-fair-revert.patch"
         "${_cachy}sched/0001-tt.patch"
-        "${_lucjan}bitmap-patches/0001-bitmap-6.1-merge-changes-from-dev-tree.patch"
+        "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
         "${_lucjan}kbuild-patches-v2-all/0001-kbuild-patches.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
         "${_lucjan}lrng-cachyos-patches-v9/0001-lrng-cachyos-patches.patch"
@@ -58,7 +58,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         ##### Misc Patch
         "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}mm-kconfig-patches/0001-mm-kconfig-6.1-Introduce-CONFIG_SLUB_TINY-and-deprec.patch"
-        # "${_lucjan}cmpxchg-patches-all/0001-cmpxchg-patches.patch"
+        "${_lucjan}cmpxchg-patches/0001-cmpxchg-6.1-fold-per-CPU-vmstats-remotely.patch"
         "${_lucjan}um-patches/0001-um-Support-LTO.patch"
         "${_lucjan}zstd-cachyos-patches-v2-all/0001-zstd-cachyos-patches.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
