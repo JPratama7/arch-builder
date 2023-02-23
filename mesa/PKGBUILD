@@ -2,7 +2,7 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=22.3.6
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('python-mako' 'xorgproto'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
@@ -115,6 +115,7 @@ build() {
     -D opengl=true \
     -D zstd=auto \
     -D valgrind=disabled \
+    -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
     -D c_args="$CFLAGS" \
     -D c_link_args="$LDFLAGS" \
     -D cpp_args="$CXXFLAGS" \
