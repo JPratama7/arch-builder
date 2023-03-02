@@ -13,8 +13,8 @@ _localmodcfg=n
 _makenconfig=n
 
 pkgbase=linux-xanmod-custom
-_major=6.1
-pkgver=${_major}.12
+_major=6.2
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -24,7 +24,7 @@ arch=(x86_64)
 _lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
 _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
 _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
-_commit_ck=fdbdf7e0ec56cd59e11d024c473e766429271a5c
+_commit_ck=f6a7d5ea0cbb04b6a00caee62ece1d76270ea922
 
 license=(GPL2)
 makedepends=(
@@ -39,33 +39,27 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        "https://raw.githubusercontent.com/hedmo/stuff/main/patches/xanmod-fair-revert.patch"
+        "0001-Revert-XANMOD-fair-Remove-all-energy-efficiency-func.patch"
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
-        "${_lucjan}kbuild-patches-v2-all/0001-kbuild-patches.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}lrng-cachyos-patches-v9/0001-lrng-cachyos-patches.patch"
-        "${_lucjan}folios-cachyos-patches-v4/0001-folio-6.1-merge-changes-from-dev-tree.patch"
-        "${_lucjan}mm-dmapool-patches-v2-all/0001-mm-dmapool-patches.patch"
-        "${_lucjan}drm-patches-v2/0001-drm-6.1-Add-HDR-patches.patch"
-        "${_lucjan}kvx-patches-all/0001-kvx-patches.patch"
-        "${_lucjan}bfq-cachyos-patches-v11/0001-bfq-cachyos-patches.patch"
-        "${_lucjan}ksm-cleanup-patches/0001-ksm-6.1-break_ksm-cleanups-and-fixes.patch"
-        "${_lucjan}kallsyms-cachyos-patches/0001-kallsyms-6.1-merge-changes-from-dev-tree.patch"
+        "${_lucjan}lrng-cachyos-patches-v3/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
+        "${_lucjan}drm-patches/0001-drm-6.2-Add-HDR-patches.patch"
+        "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}ksm-patches/0001-ksm-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.2-merge-changes-from-dev-tree.patch"
+        "${_lucjan}zstd-cachyos-patches/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
-        "${_lucjan}uksmd-cachyos-patches/0001-mm-6.1-add-UKSMD-support.patch"
-        "${_lucjan}zram-cachyos-patches-v2/0001-zram-cachyos-patches.patch"
+        "${_lucjan}uksmd-cachyos-patches/0001-mm-6.2-add-UKSMD-support.patch"
+        "${_lucjan}objtool-patches-all/0001-objtool-patches.patch"
+        "${_lucjan}clang-patches-all/0001-clang-patches.patch"
+        "${_lucjan}zram-cachyos-patches/0001-zram-cachyos-patches.patch"
         ##### Misc Patch
-        "${_cachy}misc/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
-        "${_lucjan}vmlinuz-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
-        "${_lucjan}mm-kconfig-patches/0001-mm-kconfig-6.1-Introduce-CONFIG_SLUB_TINY-and-deprec.patch"
+        "${_cachy}0008-Implement-amd-pstate-epp-and-amd-pstate-guided-drive.patch"
         "${_lucjan}um-patches/0001-um-Support-LTO.patch"
-        "${_lucjan}zstd-cachyos-patches-v2-all/0001-zstd-cachyos-patches.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
         "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
-        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
-        "${_lucjan}btrfs-cachyos-patches-v9/0001-btrfs-cachyos-patches.patch"
-        "${_lucjan}zswap-patches/0001-zswap-6.1-Implement-writeback-for-zsmalloc.patch"
         "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
@@ -106,7 +100,8 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
-    patch -N -p1 -F2 -r - < ../$src
+    OUT="$(patch --reverse --unified -p1 -F2 --input="../$src" -r -)" || echo "${OUT}" | grep "Skipping patch" -q || (echo "$OUT" && false);
+
   done
 
   # Applying configuration
@@ -177,8 +172,8 @@ prepare() {
   msg2 "Set HOSTNAME"
   scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V3"
 
-  msg2 "ZRAM Entropy Calculation"
-  scripts/config  --enable ZRAM_ENTROPY
+  msg2 "AMD PSTATE"
+  scripts/config  --enable CONFIG_X86_AMD_PSTATE
 
   msg2 "Enable v4l2loopback support"
   scripts/config --enable CONFIG_V4L2_LOOPBACK
