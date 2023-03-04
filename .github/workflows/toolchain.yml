@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         build: [
-              python38, python39, python311, python2
+              python39, python311
            ]
       fail-fast: false
     runs-on: ubuntu-latest

@@ -1,6 +1,3 @@
-# Maintainer: Tobias Kunze <r@rixx.de>
-# Maintained at https://github.com/rixx/pkgbuilds, feel free to submit patches
-
 pkgname=python39
 pkgver=3.9.16
 pkgrel=1

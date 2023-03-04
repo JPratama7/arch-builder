@@ -1,7 +1,7 @@
 name: Builder
 on:
   schedule:
-    - cron: "0 0 */4 * *"
+    - cron: "0 0 */5 * *"
   workflow_dispatch:
 jobs:
   Kernel:
@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          zoom-system-qt, packettracer, thorium, spotify
+          packettracer, thorium, spotify, mimalloc
           ]
       fail-fast: false
     runs-on: ubuntu-latest
