@@ -25,7 +25,7 @@ makedepends=(
   'git' 'ninja' 'cmake'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
-  'python-recommonmark' 'ocaml-stdlib-shims'
+  'python-recommonmark' 'ocaml-stdlib-shims' 'mimalloc'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
@@ -41,7 +41,7 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin)
+_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state)
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
