@@ -2,7 +2,7 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=23.0.0
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('python-mako' 'xorgproto'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
@@ -39,8 +39,8 @@ validpgpkeys=(
   '71C4B75620BC75708B4BDB254C95FAAB3EB073EC' # Dylan Baker <dylan@pnwbakers.com>
 )
 
-GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,iris,zink,crocus"
-VULKAN_DRIVERS="amd,intel,swrast"
+GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink,d3d12"
+VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio-experimental"
 VULKAN_LAYERS="device-select,intel-nullhw,overlay"
 
 _extra_lto_flag=""
