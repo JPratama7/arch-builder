@@ -5,9 +5,9 @@
 # Contributor: Eothred <yngve.levinsen@gmail.com>
 
 pkgname=spotify
-pkgver=1.1.84.716
+pkgver=1.1.99.878
 epoch=1
-_commit=gc5f8b819
+_commit=g1e4ccc6e
 pkgrel=2
 pkgdesc='A proprietary music streaming service'
 arch=('x86_64')

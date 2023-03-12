@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.2
-pkgver=${_major}.2
+pkgver=${_major}.3
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -48,21 +48,22 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}lrng-cachyos-patches-v4/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-cachyos-patches-v3/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}lrng-cachyos-patches-v5/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
+        "${_lucjan}maple-lru-cachyos-patches-v4/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}drm-patches/0001-drm-6.2-Add-HDR-patches.patch"
-        "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
-        "${_lucjan}ksm-patches/0001-ksm-patches.patch"
+        "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}ksm-patches-v4/0001-ksm-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.2-merge-changes-from-dev-tree.patch"
-        "${_lucjan}zstd-cachyos-patches/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
+        "${_lucjan}zstd-cachyos-patches-v2/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-6.2-add-UKSMD-support.patch"
         "${_lucjan}objtool-patches-all/0001-objtool-patches.patch"
-        "${_lucjan}clang-patches-all/0001-clang-patches.patch"
+        "${_lucjan}clang-patches-v2-all/0001-clang-patches.patch"
+        "${_lucjan}ext4-patches-v4-all/0001-ext4-patches.patch"
         ##### Misc Patch
-        "${_lucjan}hwmon-patches-v2/0001-hwmon-6.2-merge-changes-from-dev-tree.patch"
+        "${_lucjan}hwmon-patches-v3/0001-hwmon-6.2-merge-changes-from-dev-tree.patch"
         "${_cachy}0008-Implement-amd-pstate-epp-and-amd-pstate-guided-drive.patch"
         "${_lucjan}um-patches/0001-um-Support-LTO.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
@@ -129,7 +130,6 @@ prepare() {
             --disable LTO_CLANG_FULL \
             --enable CONFIG_LTO_CLANG_FULL \
             --enable HAVE_GCC_PLUGINS
-    _LLVM=1
   fi
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
@@ -363,7 +363,7 @@ prepare() {
 
 build() {
   cd linux-${_major}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
+  make ${_compiler_flags} all
 }
 
 _package() {
@@ -414,7 +414,7 @@ _package-headers() {
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
   # required when DEBUG_INFO_BTF_MODULES is enabled
-  if [ -f "$builddir/tools/bpf/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
+  if [ -f "tools/bpf/resolve_btfids/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
 
   msg2 "Installing headers..."
   cp -t "$builddir" -a include
