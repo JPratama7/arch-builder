@@ -14,6 +14,7 @@ arch=('x86_64')
 license=('custom')
 url='https://www.spotify.com'
 depends=('alsa-lib>=1.0.14' 'gtk3' 'libxss' 'desktop-file-utils' 'openssl' 'nss' 'at-spi2-atk' 'libcurl-gnutls' 'libsm')
+makedepends=('zstd')
 optdepends=('ffmpeg4.4: Adds support for playback of local files'
             'zenity: Adds support for importing local files'
             'libnotify: Desktop notifications')
@@ -28,7 +29,7 @@ options=('!strip')
 source=('spotify.protocol::https://aur.archlinux.org/cgit/aur.git/plain/spotify.protocol?h=spotify-edge'
         'LICENSE::https://aur.archlinux.org/cgit/aur.git/plain/LICENSE?h=spotify-edge'
         # "${pkgname}-${pkgver}-x86_64.deb::http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${pkgver}.${_commit}_amd64.deb"
-        "${pkgname}.deb::https://github.com/ThePoorPilot/Unofficial-Spotify/releases/download/${pkgver}.${_commit}/spotify-unofficial-edge_${pkgver}.${_commit}_amd64.deb"
+        "${pkgname}.deb::https://github.com/ThePoorPilot/Unofficial-Spotify/releases/download/${pkgver}.${_commit}-edge/spotify-unofficial-edge_${pkgver}.${_commit}_amd64.deb"
         )
 sha512sums=(
     '999abe46766a4101e27477f5c9f69394a4bb5c097e2e048ec2c6cb93dfa1743eb436bde3768af6ba1b90eaac78ea8589d82e621f9cbe7d9ab3f41acee6e8ca20'
@@ -39,7 +40,7 @@ sha512sums=(
 package() {
     cd "${srcdir}"
 
-    tar -xf data.tar.xz -C "${pkgdir}"
+    tar --use-compress-program=unzstd -xvf data.tar.zst --no-same-owner -C "${pkgdir}"
 
     # Enable spotify to open URLs from the webapp
     sed -i 's/^Exec=.*/Exec=spotify --uri=%U/' "${pkgdir}"/usr/share/spotify/spotify.desktop
