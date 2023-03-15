@@ -28,7 +28,7 @@ options=('!strip')
 source=('spotify.protocol::https://aur.archlinux.org/cgit/aur.git/plain/spotify.protocol?h=spotify-edge'
         'LICENSE::https://aur.archlinux.org/cgit/aur.git/plain/LICENSE?h=spotify-edge'
         # "${pkgname}-${pkgver}-x86_64.deb::http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_${pkgver}.${_commit}_amd64.deb"
-        "${pkgname}.deb::https://github.com/ThePoorPilot/Unofficial-Spotify/releases/download/${pkgver}.${_commit}/spotify-unofficial_${pkgver}.${_commit}_amd64.deb"
+        "${pkgname}.deb::https://github.com/ThePoorPilot/Unofficial-Spotify/releases/download/${pkgver}.${_commit}/spotify-unofficial-edge_${pkgver}.${_commit}_amd64.deb"
         )
 sha512sums=(
     '999abe46766a4101e27477f5c9f69394a4bb5c097e2e048ec2c6cb93dfa1743eb436bde3768af6ba1b90eaac78ea8589d82e621f9cbe7d9ab3f41acee6e8ca20'
