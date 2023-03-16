@@ -2,7 +2,7 @@
 
 pkgbase=thorium
 pkgname=${pkgbase}-browser-bin
-pkgver=109.0.5414.120
+pkgver=110.0.5481.178
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
@@ -33,7 +33,8 @@ package(){
 	rm -r \
 		"$pkgdir"/etc \
 		"$pkgdir"/opt/chromium.org/thorium/cron/
-		
+	
+	install -m755 $_pkgname.sh "$pkgdir"/usr/bin/$_pkgname
 	chmod 4755 "$pkgdir/opt/chromium.org/${pkgbase}/chrome-sandbox"
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
