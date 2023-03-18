@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.2
-pkgver=${_major}.3
+pkgver=${_major}.7
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -48,8 +48,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_cachy}sched/0001-tt.patch"
         "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
         "${_lucjan}kbuild-cachyos-patches-v2/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}lrng-cachyos-patches-v5/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-cachyos-patches-v4/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}lrng-cachyos-patches-v6/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
+        "${_lucjan}maple-lru-cachyos-patches-v5/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}drm-patches/0001-drm-6.2-Add-HDR-patches.patch"
         "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
@@ -61,7 +61,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}uksmd-cachyos-patches/0001-mm-6.2-add-UKSMD-support.patch"
         "${_lucjan}objtool-patches-all/0001-objtool-patches.patch"
         "${_lucjan}clang-patches-v2-all/0001-clang-patches.patch"
-        "${_lucjan}ext4-patches-v4-all/0001-ext4-patches.patch"
+        "${_lucjan}ext4-patches-v6-all/0001-ext4-patches.patch"
+        "${_lucjan}fixes-miscellaneous-v16/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
         "${_lucjan}hwmon-patches-v3/0001-hwmon-6.2-merge-changes-from-dev-tree.patch"
         "${_cachy}0008-Implement-amd-pstate-epp-and-amd-pstate-guided-drive.patch"
