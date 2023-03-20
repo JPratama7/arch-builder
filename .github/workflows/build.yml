@@ -45,7 +45,7 @@ jobs:
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@aur-clang
+        uses: JPratama7/pkgbuild-action@aur-gcc
         with:
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
