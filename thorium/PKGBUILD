@@ -1,7 +1,7 @@
 # Maintainer: JPratama7 <josepratama080@gmail.com>
 
-pkgbase=thorium-browser
-pkgname=${pkgbase}-bin
+pkgbase=thorium
+pkgname=${pkgbase}-browser-bin
 pkgver=110.0.5481.178
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
@@ -15,7 +15,6 @@ optdepends=(
 	"pipewire: WebRTC desktop sharing under Wayland"
 	"kdialog: for file dialogs in KDE"
 	"gnome-keyring: for storing passwords in GNOME keyring"
-	"kwallet: for storing passwords in KWallet"
     "org.freedesktop.secrets: password storage backend on GNOME / Xfce"
     "kwallet: support for storing passwords in KWallet on Plasma"
 )
@@ -24,6 +23,7 @@ provides=('chromium')
 options=('!strip' '!emptydirs')
 source_x86_64=(
 	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/thorium-browser_${pkgver}_amd64.deb"
+    $pkgbase.sh
 )
 sha512sums_x86_64=('SKIP')
 
