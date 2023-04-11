@@ -35,6 +35,8 @@ package(){
 		"$pkgdir"/opt/chromium.org/thorium/cron/
 	
 	install -m755 $pkgbase.sh "$pkgdir"/usr/bin/$pkgbase
+	install -Dm644 "$pkgdir/opt/chromium.org/thorium/thorium_shell.png" -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
+	
 	chmod 4755 "$pkgdir/opt/chromium.org/${pkgbase}/chrome-sandbox"
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
