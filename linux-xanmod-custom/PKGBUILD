@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.2
-pkgver=${_major}.9
+pkgver=${_major}.11
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -49,19 +49,21 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
         "${_lucjan}kbuild-cachyos-patches-v3/0001-kbuild-cachyos-patches.patch"
         "${_lucjan}lrng-cachyos-patches-v6/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-cachyos-patches-v5/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}maple-lru-cachyos-patches-v16/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
-        "${_lucjan}bfq-cachyos-patches-v2/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}hwmon-patches-v5-all/0001-hwmon-patches.patch"
+        "${_lucjan}bfq-cachyos-patches-v3/0001-bfq-cachyos-patches.patch"
         "${_lucjan}ksm-patches-v5/0001-ksm-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.2-merge-changes-from-dev-tree.patch"
-        "${_lucjan}zstd-cachyos-patches-v4/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
-        "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
+        "${_lucjan}zstd-cachyos-patches-v5/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
+        "${_lucjan}v4l2loopback-patches-v4/0001-v4l2loopback-patches.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-6.2-add-UKSMD-support.patch"
         "${_lucjan}objtool-patches-all/0001-objtool-patches.patch"
         "${_lucjan}clang-patches-v2-all/0001-clang-patches.patch"
         "${_lucjan}ext4-patches-v7-all/0001-ext4-patches.patch"
-        "${_lucjan}fixes-miscellaneous-v19/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v24/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
         "${_cachy}0008-Implement-amd-pstate-epp-and-amd-pstate-guided-drive.patch"
         "${_lucjan}um-patches/0001-um-Support-LTO.patch"
