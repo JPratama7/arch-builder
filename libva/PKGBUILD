@@ -1,5 +1,5 @@
 pkgname=libva
-pkgver=2.17.0
+pkgver=2.18.0
 pkgrel=1
 pkgdesc='Video Acceleration (VA) API for Linux'
 arch=(x86_64)
