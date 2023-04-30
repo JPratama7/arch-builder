@@ -17,8 +17,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-xanmod-custom
-_major=6.2
-pkgver=${_major}.12
+_major=6.3
+pkgver=${_major}.0
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -46,30 +46,28 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-Revert-XANMOD-fair-Remove-all-energy-efficiency-func.patch"
         "${_cachy}sched/0001-tt-cachy.patch"
-        "${_lucjan}bitmap-patches/0001-bitmap-switch-from-inline-to-__always_inline.patch"
-        "${_lucjan}kbuild-cachyos-patches-v3/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}lrng-cachyos-patches-v6/0001-lrng-6.2-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-cachyos-patches-v20/0001-mm-6.2-add-maple-tree-and-mglru-fixes.patch"
-        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
-        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}vma-patches-v3/0001-vma-6.3-per-VMA-locks-proposal.patch"
+        "${_lucjan}kbuild-patches/0001-kbuild-6.3-merge-changes-from-dev-tree.patch"
+        "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
+        "${_lucjan}btrfs-patches/0001-btrfs-6.3-merge-changes-from-dev-tree.patch"
+        "${_lucjan}lrng-cachyos-patches/0001-lrng-6.3-introduce-Linux-Random-Number-Generator.patch"
+        "${_lucjan}maple-lru-cachyos-patches-v2/0001-mm-6.3-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}x86-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
-        "${_lucjan}bfq-cachyos-patches-v3/0001-bfq-cachyos-patches.patch"
-        "${_lucjan}ksm-patches-v5/0001-ksm-patches.patch"
-        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
-        "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.2-merge-changes-from-dev-tree.patch"
-        "${_lucjan}zstd-cachyos-patches-v5/0001-zstd-6.2-merge-changes-from-dev-tree.patch"
-        "${_lucjan}v4l2loopback-patches-v4/0001-v4l2loopback-patches.patch"
-        "${_lucjan}uksmd-cachyos-patches/0001-mm-6.2-add-UKSMD-support.patch"
-        "${_lucjan}objtool-patches-all/0001-objtool-patches.patch"
-        "${_lucjan}clang-patches-v2-all/0001-clang-patches.patch"
-        "${_lucjan}ext4-patches-v7-all/0001-ext4-patches.patch"
-        "${_lucjan}fixes-miscellaneous-v25/0001-fixes-miscellaneous.patch"
+        "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
+        "${_lucjan}ksm-patches/0001-ksm-patches.patch"
+        "${_lucjan}drm-patches/0001-drm-6.3-Add-HDR-patches.patch"
+        "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.3-merge-changes-from-dev-tree.patch"
+        "${_lucjan}zstd-cachyos-patches/0001-zstd-6.3-merge-changes-from-dev-tree.patch"
+        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
+        "${_lucjan}uksmd-cachyos-patches/0001-mm-6.3-add-UKSMD-support.patch"
+        "${_lucjan}clang-patches-all/0001-clang-patches.patch"
+        "${_lucjan}fixes-miscellaneous-v2/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
-        "${_cachy}0008-Implement-amd-pstate-epp-and-amd-pstate-guided-drive.patch"
-        "${_lucjan}um-patches/0001-um-Support-LTO.patch"
+        "${_cachy}0006-Implement-amd-pstate-guided-driver.patch"
+        "${_lucjan}block-cachyos-patches/0001-block-set-rq_affinity-to-force-full-multithreading-I.patch"
+        "${_lucjan}ext4-patches/0001-ext4-6.3-merge-changes-from-dev-tree.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
-        "${_lucjan}tar-patches/0001-package-add-tar-development-package-for-3rd-party-mo.patch"
-        "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
+        # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -98,7 +96,6 @@ prepare() {
   patch -Np1 -i ../patch-${pkgver}-xanmod${xanmod}
 
   msg2 "Setting version..."
-  scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
 
