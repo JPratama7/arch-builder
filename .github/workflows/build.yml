@@ -114,7 +114,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   INTERNAL:
-    needs: [CLANG, GCC, AUR_CLANG, CLMUL]
+    needs: [CLANG, GCC, CLMUL]
     strategy:
       matrix:
         build: [
