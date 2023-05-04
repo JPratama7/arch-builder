@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.3
-pkgver=${_major}.0
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
