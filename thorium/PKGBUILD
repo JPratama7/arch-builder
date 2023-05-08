@@ -1,7 +1,8 @@
 # Maintainer: JPratama7 <josepratama080@gmail.com>
 
 pkgbase=thorium
-pkgname=${pkgbase}-browser-bin
+_name=${pkgbase}-browser
+pkgname=${_name}-bin
 pkgver=112.0.5615.166
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
@@ -22,7 +23,7 @@ optdepends=(
 provides=('chromium')
 options=('!strip' '!emptydirs')
 source_x86_64=(
-	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/thorium-browser_${pkgver}-${pkgrel}_amd64.deb"
+	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/${_name}_${pkgver}-${pkgrel}_amd64.deb"
     $pkgbase.sh
 )
 sha512sums_x86_64=('SKIP')
@@ -41,6 +42,6 @@ package(){
 	# install icons
     for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
         install -Dm644 "${pkgdir}"/opt/chromium.org/${pkgbase}/product_logo_${i/x*}.png \
-                       "${pkgdir}"/usr/share/icons/hicolor/${i}/apps/thorium-browser-unstable.png
+                       "${pkgdir}"/usr/share/icons/hicolor/${i}/apps/${_name}.png
     done
 }

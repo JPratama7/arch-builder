@@ -41,7 +41,7 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state)
+_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state -DCMAKE_CXX_STANDARD=17)
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
