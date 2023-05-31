@@ -1,5 +1,5 @@
 pkgname=llvm-all
-pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
+pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, polly, lldb, lld"
 pkgver=15.0.7
 pkgrel=3
 arch=('x86_64')
@@ -7,15 +7,15 @@ url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
-  'clang-analyzer' 'clang-tools-extra' 'openmp' 'polly' 'compiler-rt'
+  'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt'
   'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental')
 
 replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'openmp' 'polly' 'compiler-rt' 'lld' 'lldb'
+  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb'
   'libc++' 'libc++abi' 'libc++experimental')
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'openmp' 'polly' 'compiler-rt' 'lld' 'lldb'
+  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
   'libc++abi' 'libc++experimental')
 
@@ -86,7 +86,7 @@ build() {
   )
 
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer"
-  export CXXFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer"
+  export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer"
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     export LD=ld.lld
@@ -137,7 +137,6 @@ build() {
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_HOST_TRIPLE="${CHOST:?}" \
     -DLLVM_BUILD_RUNTIME=ON \
     -DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
@@ -146,7 +145,7 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;openmp;polly;pstl" \
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly;pstl" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
