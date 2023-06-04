@@ -24,10 +24,6 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
-  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0001-intel-fs-fix-scheduling-of-HALT-instructions.patch"
-  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch"
-  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch"
-  "https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/mesa/trunk/0004-rusticl-Fix-bindgen-invocation.patch"
   'LICENSE'
 )
 
