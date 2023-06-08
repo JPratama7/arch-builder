@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.3
-pkgver=${_major}.4
+pkgver=${_major}.5
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -49,21 +49,20 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}vma-patches-v4/0001-vma-6.3-per-VMA-locks-proposal.patch"
         "${_lucjan}kbuild-patches/0001-kbuild-6.3-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}btrfs-patches-v7/0001-btrfs-6.3-merge-changes-from-dev-tree.patch"
+        "${_lucjan}btrfs-patches-v8/0001-btrfs-6.3-merge-changes-from-dev-tree.patch"
         "${_lucjan}lrng-cachyos-patches/0001-lrng-6.3-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-patches-v18/0001-mm-6.3-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}maple-lru-patches-v20/0001-mm-6.3-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}x86-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}bfq-cachyos-patches-v4/0001-bfq-cachyos-patches.patch"
         "${_lucjan}ksm-patches/0001-ksm-patches.patch"
         "${_lucjan}drm-patches/0001-drm-6.3-Add-HDR-patches.patch"
-        "${_lucjan}zsmalloc-patches-v2/0001-zsmalloc-6.3-merge-changes-from-dev-tree.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-6.3-merge-changes-from-dev-tree.patch"
         "${_lucjan}v4l2loopback-patches-v6/0001-v4l2loopback-patches.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-6.3-add-UKSMD-support.patch"
         "${_lucjan}clang-patches-all/0001-clang-patches.patch"
         "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
-        "${_cachy}0006-Implement-amd-pstate-guided-driver.patch"
+        "${_lucjan}amd-pstate-patches-v3-all/0001-amd-pstate-patches.patch"
         "${_lucjan}block-cachyos-patches/0001-block-set-rq_affinity-to-force-full-multithreading-I.patch"
         "${_lucjan}ext4-patches-v6/0001-ext4-6.3-merge-changes-from-dev-tree.patch"
         "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
