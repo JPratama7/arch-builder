@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -24,7 +24,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -51,7 +51,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -79,7 +79,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -106,7 +106,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
       - name : update submodule
         run: git submodule update --recursive --remote
       - id: makepkg
@@ -134,7 +134,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
         with:
           submodules: true
           fetch-depth: 0
@@ -164,7 +164,7 @@ jobs:
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           replacesArtifacts: true
@@ -183,7 +183,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
         with:
           repository: sarcasticadmin/empty-repo
       - name : update submodule
@@ -194,7 +194,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "latest"
@@ -212,7 +212,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.5.3
         with:
           repository: sarcasticadmin/empty-repo
       - name : update submodule
@@ -222,7 +222,7 @@ jobs:
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           replacesArtifacts: true
