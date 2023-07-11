@@ -23,7 +23,7 @@ optdepends=(
 provides=('chromium')
 options=('!strip' '!emptydirs')
 source_x86_64=(
-	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/${_name}_${pkgver}-${pkgrel}_amd64.deb"
+	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/${_name}_${pkgver}_amd64.deb"
     $pkgbase.sh
 )
 sha512sums_x86_64=('SKIP')
