@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.4
-pkgver=${_major}.2
+pkgver=${_major}.3
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -46,21 +46,21 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-Revert-XANMOD-fair-Remove-all-energy-efficiency-func.patch"
         "${_cachy}sched/0001-tt-cachy.patch"
-        "${_lucjan}vma-patches-v8/0001-vma-6.4-merge-changes-from-dev-tree.patch"
+        "${_lucjan}vma-patches-v17/0001-vma-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-patches-v2/0001-kbuild-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}btrfs-patches-v2/0001-btrfs-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}lrng-patches/0001-lrng-6.4-introduce-Linux-Random-Number-Generator.patch"
-        "${_lucjan}maple-lru-patches-v3/0001-mm-6.4-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}btrfs-patches-v3/0001-btrfs-6.4-merge-changes-from-dev-tree.patch"
+        "${_lucjan}lrng-ddcci-patches-all/0001-lrng-ddcci-patches.patch"
+        "${_lucjan}maple-lru-patches-v6/0001-mm-6.4-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}x86-cachyos-patches/0001-x86-Avoid-relocation-information-in-final-vmlinux.patch"
         "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
         "${_lucjan}ksm-patches/0001-ksm-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}drm-patches/0001-drm-6.4-Add-HDR-patches.patch"
+        "${_lucjan}drm-patches-v2/0001-drm-6.4-Add-HDR-patches.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-6.4-import-v1.5.5.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}clang-patches/0001-clang-6.4-add-miscellaneous-fixes-for-clang.patch"
-        "${_lucjan}fixes-miscellaneous-v3/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v5/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
         "${_lucjan}amd-pstate-patches-v2/0001-amd-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}cpupower-patches/0001-cpupower-6.4-Add-various-feature-control-support-for.patch"
@@ -236,77 +236,77 @@ prepare() {
                  --enable CONFIG_NTFS3_LZX_XPRESS \
                  --enable CONFIG_NTFS3_FS_POSIX_ACL
 
-  msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config \
-            --disable RANDOM_DEFAULT_IMPL \
-            --enable CONFIG_LRNG \
-            --enable CONFIG_LRNG_SHA256 \
-            --enable CONFIG_LRNG_COMMON_DEV_IF \
-            --enable CONFIG_LRNG_DRNG_ATOMIC \
-            --enable CONFIG_LRNG_SYSCTL \
-            --enable CONFIG_LRNG_RANDOM_IF \
-            --enable CONFIG_LRNG_AIS2031_NTG1_SEEDING_STRATEGY \
-            --module CONFIG_LRNG_KCAPI_IF \
-            --module CONFIG_LRNG_HWRAND_IF \
-            --enable CONFIG_LRNG_DEV_IF \
-            --enable CONFIG_LRNG_RUNTIME_ES_CONFIG \
-            --enable CONFIG_LRNG_IRQ_DFLT_TIMER_ES \
-            --disable CONFIG_LRNG_SCHED_DFLT_TIMER_ES \
-            --enable CONFIG_LRNG_TIMER_COMMON \
-            --disable CONFIG_LRNG_COLLECTION_SIZE_256 \
-            --disable CONFIG_LRNG_COLLECTION_SIZE_512 \
-            --enable CONFIG_LRNG_COLLECTION_SIZE_1024 \
-            --disable CONFIG_LRNG_COLLECTION_SIZE_2048 \
-            --disable CONFIG_LRNG_COLLECTION_SIZE_4096 \
-            --disable CONFIG_LRNG_COLLECTION_SIZE_8192 \
-            --set-val CONFIG_LRNG_COLLECTION_SIZE 1024 \
-            --enable CONFIG_LRNG_HEALTH_TESTS \
-            --set-val CONFIG_LRNG_RCT_CUTOFF 31 \
-            --set-val CONFIG_LRNG_APT_CUTOFF 325 \
-            --enable CONFIG_LRNG_IRQ \
-            --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED \
-            --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED \
-            --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION \
-            --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
-            --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256 \
-            --enable CONFIG_LRNG_JENT \
-            --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16 \
-            --enable CONFIG_LRNG_CPU \
-            --set-val CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER 1 \
-            --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8 \
-            --enable CONFIG_LRNG_SCHED \
-            --set-val CONFIG_LRNG_SCHED_ENTROPY_RATE 4294967295 \
-            --enable CONFIG_LRNG_DRNG_CHACHA20 \
-            --module CONFIG_LRNG_DRBG \
-            --module CONFIG_LRNG_DRNG_KCAPI \
-            --enable CONFIG_LRNG_SWITCH \
-            --enable CONFIG_LRNG_SWITCH_HASH \
-            --module CONFIG_LRNG_HASH_KCAPI \
-            --enable CONFIG_LRNG_SWITCH_DRNG \
-            --module CONFIG_LRNG_SWITCH_DRBG \
-            --module CONFIG_LRNG_SWITCH_DRNG_KCAPI \
-            --enable CONFIG_LRNG_DFLT_DRNG_CHACHA20 \
-            --disable CONFIG_LRNG_DFLT_DRNG_DRBG \
-            --disable CONFIG_LRNG_DFLT_DRNG_KCAPI \
-            --enable CONFIG_LRNG_TESTING_MENU \
-            --disable CONFIG_LRNG_RAW_HIRES_ENTROPY \
-            --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY \
-            --disable CONFIG_LRNG_RAW_IRQ_ENTROPY \
-            --disable CONFIG_LRNG_RAW_RETIP_ENTROPY \
-            --disable CONFIG_LRNG_RAW_REGS_ENTROPY \
-            --disable CONFIG_LRNG_RAW_ARRAY \
-            --disable CONFIG_LRNG_IRQ_PERF \
-            --disable CONFIG_LRNG_RAW_SCHED_HIRES_ENTROPY \
-            --disable CONFIG_LRNG_RAW_SCHED_PID_ENTROPY \
-            --disable CONFIG_LRNG_RAW_SCHED_START_TIME_ENTROPY \
-            --disable CONFIG_LRNG_RAW_SCHED_NVCSW_ENTROPY \
-            --disable CONFIG_LRNG_SCHED_PERF \
-            --disable CONFIG_LRNG_ACVT_HASH \
-            --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
-            --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION \
-            --enable CONFIG_LRNG_SELFTEST \
-            --disable CONFIG_LRNG_SELFTEST_PANIC \
-            --disable CONFIG_LRNG_RUNTIME_FORCE_SEEDING_DISABLE
+  # msg2 "Enabling Linux Random Number Generator ..."
+  # scripts/config \
+  #           --disable RANDOM_DEFAULT_IMPL \
+  #           --enable CONFIG_LRNG \
+  #           --enable CONFIG_LRNG_SHA256 \
+  #           --enable CONFIG_LRNG_COMMON_DEV_IF \
+  #           --enable CONFIG_LRNG_DRNG_ATOMIC \
+  #           --enable CONFIG_LRNG_SYSCTL \
+  #           --enable CONFIG_LRNG_RANDOM_IF \
+  #           --enable CONFIG_LRNG_AIS2031_NTG1_SEEDING_STRATEGY \
+  #           --module CONFIG_LRNG_KCAPI_IF \
+  #           --module CONFIG_LRNG_HWRAND_IF \
+  #           --enable CONFIG_LRNG_DEV_IF \
+  #           --enable CONFIG_LRNG_RUNTIME_ES_CONFIG \
+  #           --enable CONFIG_LRNG_IRQ_DFLT_TIMER_ES \
+  #           --disable CONFIG_LRNG_SCHED_DFLT_TIMER_ES \
+  #           --enable CONFIG_LRNG_TIMER_COMMON \
+  #           --disable CONFIG_LRNG_COLLECTION_SIZE_256 \
+  #           --disable CONFIG_LRNG_COLLECTION_SIZE_512 \
+  #           --enable CONFIG_LRNG_COLLECTION_SIZE_1024 \
+  #           --disable CONFIG_LRNG_COLLECTION_SIZE_2048 \
+  #           --disable CONFIG_LRNG_COLLECTION_SIZE_4096 \
+  #           --disable CONFIG_LRNG_COLLECTION_SIZE_8192 \
+  #           --set-val CONFIG_LRNG_COLLECTION_SIZE 1024 \
+  #           --enable CONFIG_LRNG_HEALTH_TESTS \
+  #           --set-val CONFIG_LRNG_RCT_CUTOFF 31 \
+  #           --set-val CONFIG_LRNG_APT_CUTOFF 325 \
+  #           --enable CONFIG_LRNG_IRQ \
+  #           --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED \
+  #           --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED \
+  #           --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION \
+  #           --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
+  #           --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256 \
+  #           --enable CONFIG_LRNG_JENT \
+  #           --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16 \
+  #           --enable CONFIG_LRNG_CPU \
+  #           --set-val CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER 1 \
+  #           --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8 \
+  #           --enable CONFIG_LRNG_SCHED \
+  #           --set-val CONFIG_LRNG_SCHED_ENTROPY_RATE 4294967295 \
+  #           --enable CONFIG_LRNG_DRNG_CHACHA20 \
+  #           --module CONFIG_LRNG_DRBG \
+  #           --module CONFIG_LRNG_DRNG_KCAPI \
+  #           --enable CONFIG_LRNG_SWITCH \
+  #           --enable CONFIG_LRNG_SWITCH_HASH \
+  #           --module CONFIG_LRNG_HASH_KCAPI \
+  #           --enable CONFIG_LRNG_SWITCH_DRNG \
+  #           --module CONFIG_LRNG_SWITCH_DRBG \
+  #           --module CONFIG_LRNG_SWITCH_DRNG_KCAPI \
+  #           --enable CONFIG_LRNG_DFLT_DRNG_CHACHA20 \
+  #           --disable CONFIG_LRNG_DFLT_DRNG_DRBG \
+  #           --disable CONFIG_LRNG_DFLT_DRNG_KCAPI \
+  #           --enable CONFIG_LRNG_TESTING_MENU \
+  #           --disable CONFIG_LRNG_RAW_HIRES_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_IRQ_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_RETIP_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_REGS_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_ARRAY \
+  #           --disable CONFIG_LRNG_IRQ_PERF \
+  #           --disable CONFIG_LRNG_RAW_SCHED_HIRES_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_SCHED_PID_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_SCHED_START_TIME_ENTROPY \
+  #           --disable CONFIG_LRNG_RAW_SCHED_NVCSW_ENTROPY \
+  #           --disable CONFIG_LRNG_SCHED_PERF \
+  #           --disable CONFIG_LRNG_ACVT_HASH \
+  #           --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
+  #           --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION \
+  #           --enable CONFIG_LRNG_SELFTEST \
+  #           --disable CONFIG_LRNG_SELFTEST_PANIC \
+  #           --disable CONFIG_LRNG_RUNTIME_FORCE_SEEDING_DISABLE
 
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
