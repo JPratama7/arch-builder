@@ -35,7 +35,7 @@ jobs:
           repo-add jp7-arch.db.tar
           repo-add jp7-arch.db.tar *.pkg.tar.zst
           ls
-      - uses: ncipollo/release-action@v1.9.0
+      - uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           replacesArtifacts: true
