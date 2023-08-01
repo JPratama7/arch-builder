@@ -7,15 +7,15 @@ url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
-  'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt'
+  'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt' 'openmp'
   'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental')
 
 replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb'
+  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'libc++' 'libc++abi' 'libc++experimental')
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb'
+  'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
   'libc++abi' 'libc++experimental')
 
@@ -41,7 +41,11 @@ options=('staticlibs')
 
 _skip_build_test=y
 _skip_documentation=y
-_extra_build_flags=(-DLLVM_ENABLE_LTO=Thin -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state -DCMAKE_CXX_STANDARD=17)
+_extra_build_flags=(
+  -DLLVM_ENABLE_LTO=Thin 
+  -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state -DCMAKE_CXX_STANDARD=17
+  -DLLVM_ENABLE_LIBCXX=ON
+  )
 _build_documentation=0
 _build_tests=0
 _build_bindings=0
@@ -138,6 +142,7 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
     -DLLVM_BUILD_RUNTIME=ON \
+    -DLLVM_HOST_TRIPLE="${CHOST:?}" \
     -DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON \
