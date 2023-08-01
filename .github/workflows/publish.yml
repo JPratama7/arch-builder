@@ -1,7 +1,7 @@
 name: Create DB
 on:
   schedule:
-    - cron: "0 13 * * *"
+    - cron: "0 13 */3 * *"
   workflow_dispatch:
   workflow_run:
     workflows: ["Builder"]
