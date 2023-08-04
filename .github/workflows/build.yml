@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@clang
         with:
@@ -42,8 +40,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@aur-gcc
         with:
@@ -70,8 +66,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@clang
         with:
@@ -97,8 +91,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@mpclmul
         with:
@@ -125,8 +117,6 @@ jobs:
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@clang
         with:
@@ -157,8 +147,6 @@ jobs:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@gcc
         with:
@@ -186,8 +174,6 @@ jobs:
         uses: actions/checkout@v3.5.3
         with:
           repository: sarcasticadmin/empty-repo
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@aur-clang
         with:
@@ -215,8 +201,6 @@ jobs:
         uses: actions/checkout@v3.5.3
         with:
           repository: sarcasticadmin/empty-repo
-      - name : update submodule
-        run: git submodule update --recursive --remote
       - id: makepkg
         uses: JPratama7/pkgbuild-action@aur-gcc
         with:
