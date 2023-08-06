@@ -227,6 +227,11 @@ package() {
   mkdir -p "${pkgdir:?}/usr/lib/bfd-plugins"
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
 
+  # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
+  pushd ${pkgdir:?}/usr/lib/
+  ln -s x86_64-pc-linux-gnu/* .
+  popd
+
   # Clang
   site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -d "${pkgdir:?}/${site_packages}"
