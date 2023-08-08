@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.4
-pkgver=${_major}.5
+pkgver=${_major}.8
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -46,12 +46,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         choose-gcc-optimization.sh
         "0001-Revert-XANMOD-fair-Remove-all-energy-efficiency-func.patch"
         "${_cachy}sched/0001-tt-cachy.patch"
-        "${_lucjan}vma-patches-v20/0001-vma-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-patches-v5/0001-kbuild-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}btrfs-patches-v3/0001-btrfs-6.4-merge-changes-from-dev-tree.patch"
+        "${_lucjan}btrfs-patches-v5/0001-btrfs-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}lrng-ddcci-patches-all/0001-lrng-ddcci-patches.patch"
-        "${_lucjan}maple-lru-patches-v8/0001-mm-6.4-add-maple-tree-and-mglru-fixes.patch"
+        "${_lucjan}maple-lru-patches-v10/0001-mm-6.4-add-maple-tree-and-mglru-fixes.patch"
         "${_lucjan}x86-cachyos-patches-v2/0001-x86-build-Avoid-relocation-information-in-final-vmli.patch"
         "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
         "${_lucjan}ksm-patches/0001-ksm-6.4-merge-changes-from-dev-tree.patch"
@@ -60,7 +59,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
         "${_lucjan}uksmd-cachyos-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}clang-patches/0001-clang-6.4-add-miscellaneous-fixes-for-clang.patch"
-        "${_lucjan}fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
+        "${_lucjan}fixes-miscellaneous-v9/0001-fixes-miscellaneous.patch"
         ##### Misc Patch
         "${_lucjan}amd-pstate-patches-v2/0001-amd-6.4-merge-changes-from-dev-tree.patch"
         "${_lucjan}cpupower-patches/0001-cpupower-6.4-Add-various-feature-control-support-for.patch"
