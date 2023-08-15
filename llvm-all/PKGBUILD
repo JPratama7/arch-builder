@@ -30,14 +30,14 @@ makedepends=(
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
 source=(
-  "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
+  "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-${pkgver}.zip"
   'llvm-config.h'
 )
 
 sha256sums=('SKIP'
   '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
 
-options=('staticlibs')
+options=('staticlibs' '!lto' '!debug')
 
 _skip_build_test=y
 _skip_documentation=y
@@ -66,6 +66,11 @@ _patch() {
 
 prepare() {
 
+  mv "${srcdir:?}/llvm-project-llvmorg-${pkgver}" llvm-project || (
+    echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
+    exit 1
+  )
+
   cd "${srcdir:?}/llvm-project" || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
     exit 1
@@ -89,8 +94,10 @@ build() {
     -DCMAKE_CXX_COMPILER="$CXX"
   )
 
-  export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer"
-  export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer"
+  export CFLAGS="$CFLAGS -fno-semantic-interposition -fomit-frame-pointer"
+  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -fomit-frame-pointer"
+  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
+
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     export LD=ld.lld
@@ -279,5 +286,4 @@ package() {
   # else
   #   echo "- libLLVM-13.0.1.so exist"
   # fi
-
 }
