@@ -45,6 +45,8 @@ _extra_build_flags=(
   -DLLVM_ENABLE_LTO=Thin 
   -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state -DCMAKE_CXX_STANDARD=17
   -DLLVM_ENABLE_LIBCXX=ON
+  -DCMAKE_SKIP_RPATH=ON
+  -DENABLE_LINKER_BUILD_ID=ON
   )
 _build_documentation=0
 _build_tests=0
