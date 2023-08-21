@@ -272,15 +272,15 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
   # Fallback for llvm 15
-  _llvm_libs=(libLLVM-15.so libLTO.so.15 libRemarks.so.15 libclang.so.15.0.1 libclang-cpp.so.15)
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exist"
-    fi
-  done
+  # _llvm_libs=(libLLVM-15.so libLTO.so.15 libRemarks.so.15 libclang.so.15.0.1 libclang-cpp.so.15)
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exist"
+  #   fi
+  # done
 
   # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
   #   echo "- Copy libLLVM-13.0.1.so"
