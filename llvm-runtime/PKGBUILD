@@ -147,16 +147,16 @@ package() {
   # Licenses
   install -Dm644 "${srcdir:?}/llvm-project/llvm/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/llvm-LICENSE"
 
-  # Fallback for llvm 13
-  # _llvm_libs=(libLLVM-13.so libLTO.so.13 libRemarks.so.13 libclang.so.13.0.1 libclang-cpp.so.13)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
+  # Fallback for llvm 15
+  _llvm_libs=(libLLVM-15.so libLTO.so.15 libRemarks.so.15 libclang.so.15.0.1 libclang-cpp.so.15)
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exist"
+    fi
+  done
 
   # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
   #   echo "- Copy libLLVM-13.0.1.so"
