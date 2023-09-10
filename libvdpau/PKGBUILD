@@ -1,17 +1,30 @@
 pkgname=libvdpau
 pkgver=1.5
-pkgrel=1
-pkgdesc="Nvidia VDPAU library"
+pkgrel=2
+pkgdesc='Nvidia VDPAU library'
 arch=(x86_64)
-url='https://www.freedesktop.org/wiki/Software/VDPAU/'
-provides=(libvdpau "libvdpau=${pkgver}")
-conflicts=(libvdpau)
-depends=('libxext')
-license=('custom')
-_commit=79f1506a3307d3275b0fdfb2e110c173f68e6f78 # 1.5
-source=("git+https://gitlab.freedesktop.org/vdpau/libvdpau.git#tag=${_commit}")
-makedepends=('xorgproto' 'git' 'meson')
-sha256sums=('SKIP')
+url=https://www.freedesktop.org/wiki/Software/VDPAU/
+license=(custom)
+depends=(
+  libxext
+)
+makedepends=(
+  git
+  meson
+  xorgproto
+)
+optdepends=(
+  'libvdpau-va-gl: driver using VAAPI'
+  'mesa-vdpau: driver for Mesa'
+  'nvidia-utils: driver for NVIDIA'
+)
+provides=(
+  libvdpau.so
+)
+_tag=b40ac3c8f6cac061ddd5ed70c8305238f97a1b25
+source=(git+https://gitlab.freedesktop.org/vdpau/libvdpau.git#tag=${_tag})
+b2sums=('SKIP')
+
 
 _extra_lto_flag=""
 
@@ -30,7 +43,7 @@ pkgver() {
     exit 1
   )
 
-  git describe --tags | sed 's/-/+/g'
+  git describe --tags | sed 's/[^-]*-g/r&/;s/-/+/g'
 }
 
 build() {
@@ -38,6 +51,7 @@ build() {
   CFLAGS=${CFLAGS/-fstack-protector-strong/}
   CXXFLAGS=${CXXFLAGS/-fstack-protector-strong/}
   LDFLAGS=${LDFLAGS/,-z,now/}
+  
   meson setup libvdpau build \
     --prefix /usr \
     --libexecdir lib \
