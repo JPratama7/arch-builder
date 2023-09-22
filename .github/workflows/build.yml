@@ -166,7 +166,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin, jdk-lts, zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin
+          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin, jdk-lts, zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
