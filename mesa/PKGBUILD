@@ -2,12 +2,14 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=23.2.1
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 epoch=1
 arch=('x86_64')
-makedepends=('python-mako' 'xorgproto' 'cmake' 'pkgconf' 'directx-headers'
+makedepends=(
+  'python-mako' 'xorgproto' 'cmake' 'pkgconf' 'directx-headers'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
-  'wayland-protocols' 'meson' 'ninja' 'glslang' 'libclc')
+  'wayland-protocols' 'meson' 'ninja' 'glslang' 'libclc'
+  )
   
 makedepends+=('rust' 'rust-bindgen' 'spirv-tools' 'spirv-llvm-translator') # rusticl dependencies
 
@@ -16,7 +18,7 @@ DLAGENTS=(
   'https::/usr/bin/wget -q --show-progress -t 3 --waitretry=3 -O %o %u'
 )
 
-depends=('libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'systemd' 'systemd-libs'
+depends=('libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'systemd' 'systemd-libs' 'xcb-util-keysyms'
   'libomxil-bellagio' 'libunwind' 'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat')
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
 provides=('mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl')
@@ -25,6 +27,7 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
+  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-radeonsi-prefix-function-with-si_-to-prevent-name-co.patch"
   'LICENSE'
 )
 
@@ -67,11 +70,13 @@ prepare() {
     _patch $src
   done
 
+  echo "$pkgver-arch$epoch.$pkgrel" >VERSION
+
 }
 
 build() {
 
-  meson setup mesa-${_pkgver} build-clang \
+  arch-meson mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
@@ -119,6 +124,8 @@ build() {
     -D cpp_args="$CXXFLAGS" \
     -D cpp_link_args="$LDFLAGS" \
     --strip
+
+  meson configure build-clang
 
   meson compile -C build-clang
 
