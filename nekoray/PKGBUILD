@@ -1,5 +1,5 @@
 pkgname='nekoray'
-pkgver=3.21
+pkgver=3.23
 pkgrel=1
 pkgdesc='Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)'
 arch=('x86_64')
