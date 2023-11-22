@@ -138,8 +138,8 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin,postman-bin, zoom, geany-git, tor-browser, wget2-git,
-          earlyoom-git, slimjet, mpc-qt-git
+          microsoft-edge-dev-bin, postman-bin, zoom, geany-git, tor-browser, wget2-git,
+          earlyoom-git, slimjet, mpc-qt-git, insomnium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
