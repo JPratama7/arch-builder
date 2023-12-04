@@ -5,7 +5,7 @@ jobs:
   arch_packages:
     strategy:
       matrix:
-        build: [llvm-all]
+        build: [llvm-bootstrap]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
       #   run: |
       #     cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@bootstraptool
+        uses: JPratama7/pkgbuild-action@gcc
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
@@ -33,4 +33,5 @@ jobs:
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
 
