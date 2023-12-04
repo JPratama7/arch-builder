@@ -27,11 +27,14 @@ jobs:
       #   run: sleep 5m
       #   shell: bash
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.10.0
+        uses: ncipollo/release-action@v1.13.0
         with:
           allowUpdates: true
           tag: "latest"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1.2.2
+        with:
+          workflow: Create DB
 
