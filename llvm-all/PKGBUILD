@@ -244,8 +244,6 @@ package() {
   site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -d "${pkgdir:?}/${site_packages}"
   mv "${pkgdir:?}/usr/lib/"{libear,libscanbuild} "${pkgdir:?}/${site_packages}/"
-  cp -a llvm/bindings/python/llvm "${pkgdir:?}/${site_packages}/"
-  cp -a clang/bindings/python/clang "${pkgdir:?}/${site_packages}/"
 
   mv "${pkgdir:?}"/usr/libexec/* "${pkgdir:?}/usr/lib/clang/"
   rm -fr "${pkgdir:?}/usr/libexec"
@@ -270,21 +268,21 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # Fallback for llvm 15
-  # _llvm_libs=(libLLVM-15.so libLTO.so.15 libRemarks.so.15 libclang.so.15.0.1 libclang-cpp.so.15)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
+  # Fallback for llvm 16
+  _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exist"
+    fi
+  done
 
-  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
-  #   echo "- Copy libLLVM-13.0.1.so"
-  #   ln -s /usr/lib/libLLVM-13.so "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so"
-  # else
-  #   echo "- libLLVM-13.0.1.so exist"
-  # fi
+  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so" ]]; then
+    echo "- Copy libLLVM-16.0.1.so"
+    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so"
+  else
+    echo "- libLLVM-16.0.1.so exist"
+  fi
 }
