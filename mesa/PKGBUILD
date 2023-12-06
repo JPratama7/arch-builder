@@ -27,7 +27,6 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-radeonsi-prefix-function-with-si_-to-prevent-name-co.patch"
   'LICENSE'
 )
 
