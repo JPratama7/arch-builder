@@ -1,18 +1,18 @@
 pkgname=llvm-runtime
-pkgver=16.0.6
+pkgver=17.0.6
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
-provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental')
+provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'libc++' 'openmp' 'libc++abi' 'libc++experimental')
 
-replaces=('llvm' 'llvm-libs' 'llvm-ocaml'
+replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'openmp'
   'libc++' 'libc++abi' 'libc++experimental')
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml'
-  'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
+  'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++' 'openmp'
   'libc++abi' 'libc++experimental')
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
@@ -24,7 +24,7 @@ makedepends=(
   'python-recommonmark' 'ocaml-stdlib-shims'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=7cbf1a2591520c2491aa35339f227775f4d3adf6
+_commit=6009708b4367171ccdbf4b5905cb6a803753fe18
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
   'llvm-config.h'
@@ -90,7 +90,7 @@ build() {
     -DLLVM_ENABLE_DOXYGEN=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS="libclc" \
+    -DLLVM_ENABLE_PROJECTS="libclc;openmp" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
     "${_extra_build_flags[@]}"
     ninja -C build
@@ -154,22 +154,21 @@ package() {
   # Licenses
   install -Dm644 "${srcdir:?}/llvm-project/llvm/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/llvm-LICENSE"
 
-  # Fallback for llvm 15
-  # _llvm_libs=(libLLVM-15.so libLTO.so.15 libRemarks.so.15 libclang.so.15.0.1 libclang-cpp.so.15)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
+  # Fallback for llvm 16
+  _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exist"
+    fi
+  done
 
-  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so" ]]; then
-  #   echo "- Copy libLLVM-13.0.1.so"
-  #   ln -s /usr/lib/libLLVM-13.so "${pkgdir:?}/usr/lib/libLLVM-13.0.1.so"
-  # else
-  #   echo "- libLLVM-13.0.1.so exist"
-  # fi
-
+  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so" ]]; then
+    echo "- Copy libLLVM-16.0.1.so"
+    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so"
+  else
+    echo "- libLLVM-16.0.1.so exist"
+  fi
 }
