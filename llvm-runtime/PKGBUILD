@@ -6,13 +6,13 @@ url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
-provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'libc++' 'openmp' 'libc++abi' 'libc++experimental')
+provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental')
 
-replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'openmp'
+replaces=('llvm' 'llvm-libs' 'llvm-ocaml'
   'libc++' 'libc++abi' 'libc++experimental')
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml'
-  'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++' 'openmp'
+  'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
   'libc++abi' 'libc++experimental')
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
@@ -90,7 +90,7 @@ build() {
     -DLLVM_ENABLE_DOXYGEN=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS="libclc;openmp" \
+    -DLLVM_ENABLE_PROJECTS="libclc" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
     "${_extra_build_flags[@]}"
     ninja -C build
