@@ -165,10 +165,10 @@ package() {
     fi
   done
 
-  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so" ]]; then
+  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
     echo "- Copy libLLVM-16.0.1.so"
-    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.1.so"
+    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
   else
-    echo "- libLLVM-16.0.1.so exist"
+    echo "- libLLVM-16.0.6.so exist"
   fi
 }
