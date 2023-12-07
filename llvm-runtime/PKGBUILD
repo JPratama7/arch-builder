@@ -1,5 +1,5 @@
 pkgname=llvm-runtime
-pkgver=17.0.6
+pkgver=16.0.6
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
@@ -143,6 +143,8 @@ package() {
   # https://bugs.archlinux.org/task/28479
   mkdir -p "${pkgdir:?}/usr/lib/bfd-plugins"
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
+  cp -a llvm/bindings/python/llvm "${pkgdir:?}/${site_packages}/"
+  cp -a clang/bindings/python/clang "${pkgdir:?}/${site_packages}/"
 
   # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
   pushd ${pkgdir:?}/usr/lib/
@@ -155,20 +157,20 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/llvm/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/llvm-LICENSE"
 
   # Fallback for llvm 16
-  _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exist"
-    fi
-  done
+  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exist"
+  #   fi
+  # done
 
-  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
-    echo "- Copy libLLVM-16.0.1.so"
-    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
-  else
-    echo "- libLLVM-16.0.6.so exist"
-  fi
+  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
+  #   echo "- Copy libLLVM-16.0.1.so"
+  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
+  # else
+  #   echo "- libLLVM-16.0.6.so exist"
+  # fi
 }
