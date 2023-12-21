@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          packettracer, thorium, spotify, mimalloc
+          packettracer, thorium,  mimalloc
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -139,7 +139,7 @@ jobs:
       matrix:
         build: [
           microsoft-edge-dev-bin, postman-bin, zoom, geany-git, tor-browser, wget2-git,
-          earlyoom-git, slimjet, mpc-qt-git, insomnium
+          earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
