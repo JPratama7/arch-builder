@@ -24,7 +24,7 @@ makedepends=(
   'python-recommonmark' 'ocaml-stdlib-shims'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=6009708b4367171ccdbf4b5905cb6a803753fe18
+_commit=7cbf1a2591520c2491aa35339f227775f4d3adf6
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
   'llvm-config.h'
