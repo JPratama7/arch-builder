@@ -6,7 +6,6 @@ Directly get from AUR:
 - microsoft-edge-dev-bin
 - postman-bin
 - spotify
-- zoom
 - geany-git
 - tor-browser
 - visual-studio-code-bin
