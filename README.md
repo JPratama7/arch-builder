@@ -7,7 +7,7 @@ Directly get from AUR:
 - postman-bin
 - spotify
 - geany-git
-- tor-browser
+- tor-browser-bin
 - visual-studio-code-bin
 - xampp, zramd
 - peazip-qt5

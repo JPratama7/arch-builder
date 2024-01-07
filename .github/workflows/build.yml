@@ -138,7 +138,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser, wget2-git,
+          microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, wget2-git,
           earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, noisetorch
           ]
       fail-fast: false
@@ -166,7 +166,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin, jdk-lts, zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop
+          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin-electron, jdk-lts, zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop
           ]
       fail-fast: false
     runs-on: ubuntu-latest
