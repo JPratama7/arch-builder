@@ -50,7 +50,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          aircrack-mg
+          aircrack-ng
           ]
       fail-fast: false
     runs-on: ubuntu-latest
