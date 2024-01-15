@@ -95,8 +95,8 @@ build() {
     -DCMAKE_CXX_COMPILER="$CXX"
   )
 
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -fomit-frame-pointer"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -fomit-frame-pointer"
+  export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
+  export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   # export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
 
 

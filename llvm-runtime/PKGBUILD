@@ -72,8 +72,8 @@ build() {
     exit 1
   )
 
-  export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer"
-  export CXXFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer"
+  export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
+  export CXXFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
 
   cmake -S llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
