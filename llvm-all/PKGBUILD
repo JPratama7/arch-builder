@@ -97,7 +97,7 @@ build() {
 
   export CFLAGS="$CFLAGS -fno-semantic-interposition -fomit-frame-pointer"
   export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -fomit-frame-pointer"
-  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
+  # export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
 
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
