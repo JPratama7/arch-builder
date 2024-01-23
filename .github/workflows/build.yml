@@ -167,7 +167,7 @@ jobs:
       matrix:
         build: [
           visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, gtkcord4-git, joplin-electron, jdk-lts, 
-          zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop, noisetorch
+          zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop, noisetorch, podman-desktop
           ]
       fail-fast: false
     runs-on: ubuntu-latest
