@@ -3,6 +3,12 @@ on:
   schedule:
     - cron: "0 0 */5 * *"
   workflow_dispatch:
+  push:
+
+concurrency: 
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   Kernel:
     strategy:
