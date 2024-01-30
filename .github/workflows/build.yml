@@ -1,9 +1,11 @@
 name: Builder
 on:
+  push:
   schedule:
     - cron: "0 0 */5 * *"
   workflow_dispatch:
-  push:
+
+
 
 concurrency: 
   group: ${{ github.head_ref }}
