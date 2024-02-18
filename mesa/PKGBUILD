@@ -117,7 +117,7 @@ build() {
     -D zstd=auto \
     -D valgrind=disabled \
     -D android-libbacktrace=disabled \
-    -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
+    -D video-codecs=all \
     -D c_args="$CFLAGS" \
     -D c_link_args="$LDFLAGS" \
     -D cpp_args="$CXXFLAGS" \
