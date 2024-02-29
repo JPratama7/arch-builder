@@ -118,7 +118,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          spotify-adblock-git
+          spotify-adblock-git, zing
           ]
       fail-fast: false
     runs-on: ubuntu-latest
