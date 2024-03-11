@@ -262,20 +262,20 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
   # Fallback for llvm 16
-  _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exist"
-    fi
-  done
+  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exist"
+  #   fi
+  # done
 
-  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
-    echo "- Copy libLLVM-16.0.6.so"
-    ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
-  else
-    echo "- libLLVM-16.0.6.so exist"
-  fi
+  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
+  #   echo "- Copy libLLVM-16.0.6.so"
+  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
+  # else
+  #   echo "- libLLVM-16.0.6.so exist"
+  # fi
 }
