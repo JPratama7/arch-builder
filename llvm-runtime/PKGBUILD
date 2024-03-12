@@ -143,7 +143,6 @@ package() {
   # https://bugs.archlinux.org/task/28479
   mkdir -p "${pkgdir:?}/usr/lib/bfd-plugins"
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
-  cp -a llvm/bindings/python/llvm "${pkgdir:?}/${site_packages}/"
   cp -a clang/bindings/python/clang "${pkgdir:?}/${site_packages}/"
 
   # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
