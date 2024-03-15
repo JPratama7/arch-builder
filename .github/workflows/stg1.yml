@@ -1,0 +1,39 @@
+name: Bootstrap
+on:
+  workflow_dispatch:
+jobs:
+  bootstrap1:
+    strategy:
+      matrix:
+        build: [llvm-bootstrap]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build packages for arch
+        uses: actions/checkout@v3.0.2
+        # with:
+        #   repository: h0tc0d3/arch-packages
+      # - name : update submodule
+        # run: git submodule update --recursive --remote
+      # - name: remove +clang
+      #   run: |
+      #     cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
+      - id: makepkg
+        uses: JPratama7/pkgbuild-action@bootstrapper
+        with:
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
+      # - name: Wait
+      #   run: sleep 5m
+      #   shell: bash
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1.2.2
+        with:
+          workflow: Create DB
