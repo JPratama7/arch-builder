@@ -19,7 +19,7 @@ jobs:
       #   run: |
       #     cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@bootstrapper
+        uses: JPratama7/pkgbuild-action@bootstraptool
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
