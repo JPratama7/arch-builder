@@ -5,7 +5,7 @@ jobs:
   bootstrap2:
     strategy:
       matrix:
-        build: [llvm-all]
+        build: [aria2]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
