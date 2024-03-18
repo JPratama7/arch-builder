@@ -5,7 +5,7 @@ jobs:
   bootstrap1:
     strategy:
       matrix:
-        build: [llvm-bootstrap]
+        build: [mimalloc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
