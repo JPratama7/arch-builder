@@ -20,7 +20,7 @@ source=(
   "git+https://github.com/intel/libva.git#commit=${_commit}"
   "fix-lld-17.patch"
   )
-sha256sums=('SKIP')
+sha256sums=('SKIP' 'SKIP')
 
 _extra_lto_flag=""
 
@@ -33,11 +33,16 @@ _patch() {
 
 prepare() {
 
+  cd "${srcdir:?}/libva" || (
+    echo -e "\E[1;31mCan't cd to ${srcdir:?}/libva directory! PkgVer Failed! \E[0m"
+    exit 1
+  )
+
   if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]" && ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     _extra_lto_flag='-D b_lto_mode=thin'
   fi
 
-  _patch 758.patch
+  _patch fix-lld-17.patch
 
 }
 
