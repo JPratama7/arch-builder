@@ -18,7 +18,7 @@ backup=(etc/libva.conf)
 _commit=0b01aed44ef1a6ad660261284ff266fa812829ef
 source=(
   "git+https://github.com/intel/libva.git#commit=${_commit}"
-  "lld-17.patch"
+  "https://patch-diff.githubusercontent.com/raw/intel/libva/pull/758.patch"
   )
 sha256sums=('SKIP')
 
@@ -37,7 +37,7 @@ prepare() {
     _extra_lto_flag='-D b_lto_mode=thin'
   fi
 
-  _patch lld-17.patch
+  _patch 758.patch
 
 }
 
