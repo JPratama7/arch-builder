@@ -16,16 +16,28 @@ optdepends=(
 )
 backup=(etc/libva.conf)
 _commit=0b01aed44ef1a6ad660261284ff266fa812829ef
-source=("git+https://github.com/intel/libva.git#commit=${_commit}")
+source=(
+  "git+https://github.com/intel/libva.git#commit=${_commit}"
+  "lld-17.patch"
+  )
 sha256sums=('SKIP')
 
 _extra_lto_flag=""
+
+_patch() {
+
+  echo -e "\E[1;33m Apply patch: ${1}\E[0m"
+  patch -Np1 -i "${srcdir:?}/${1}"
+
+}
 
 prepare() {
 
   if clang --version 2>/dev/null | grep -iq "clang\s*version\s*[0-9]" && ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     _extra_lto_flag='-D b_lto_mode=thin'
   fi
+
+  _patch lld-17.patch
 
 }
 

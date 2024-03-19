@@ -1,0 +1,23 @@
+commit 67df101aa448672ae1917f8a560ebd7347ee812f
+Author: Dimitry Andric <dim@FreeBSD.org>
+Date:   2023-09-25T20:59:15+02:00
+
+    devel/libva: fix build with lld 17
+
+diff --git a/multimedia/libva/files/patch-va_meson.build b/multimedia/libva/files/patch-va_meson.build
+new file mode 100644
+index 000000000000..81bfaee4662b
+--- /dev/null
++++ b/multimedia/libva/files/patch-va_meson.build
+@@ -0,0 +1,11 @@
++--- va/meson.build.orig	2023-09-14 08:04:13 UTC
+++++ va/meson.build
++@@ -60,7 +60,7 @@ libva_link_depends = []
++ 
++ libva_link_args = []
++ libva_link_depends = []
++-if cc.links('', name: '-Wl,--version-script', args: ['-shared', libva_sym_arg])
+++if cc.links('void vaCreateSurfaces_0_32_0(void) {} void vaCreateSurfaces() {}', name: '-Wl,--version-script', args: ['-shared', libva_sym_arg])
++   libva_link_args = libva_sym_arg
++   libva_link_depends = libva_sym
++ endif
