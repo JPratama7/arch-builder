@@ -1,23 +1,23 @@
 pkgname=llvm-bootstrap
-pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, compiler-rt, polly, lldb, lld"
-pkgver=17.0.6
+pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, polly, lld"
+pkgver=18.1.2
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
-  'clang-analyzer' 'clang-tools-extra' 'polly' 'openmp' 'compiler-rt'
-  'lld' 'libc++' 'libc++abi' 'libc++experimental')
+  'clang-analyzer' 'clang-tools-extra' 'polly' 'openmp'
+  'lld')
 
 replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'openmp' 'compiler-rt' 'lld'
-  'libc++' 'libc++abi' 'libc++experimental')
+  'clang-tools-extra' 'polly' 'openmp' 'lld'
+)
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'compiler-rt' 'openmp' 'lld'
+  'clang-tools-extra' 'polly' 'openmp' 'lld'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git'
-  'libc++' 'libc++abi' 'libc++experimental')
+)
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'compiler-rt')
 _ocaml_ver=4.14.0
@@ -47,7 +47,7 @@ _extra_build_flags=(
 )
 _build_documentation=0
 _build_tests=0
-_build_bindings=0
+_build_bindings=1
 
 _rpatch() {
 
@@ -261,21 +261,21 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # Fallback for llvm 16
-  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
+  # Fallback for llvm 17
+  _llvm_libs=(libLLVM-17.so libLTO.so.17 libRemarks.so.17 libclang.so.17.0.6 libclang-cpp.so.17)
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exist"
+    fi
+  done
 
-  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
-  #   echo "- Copy libLLVM-16.0.6.so"
-  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
-  # else
-  #   echo "- libLLVM-16.0.6.so exist"
-  # fi
+  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-17.0.6.so" ]]; then
+    echo "- Copy libLLVM-17.0.6.so"
+    ln -s /usr/lib/libLLVM-17.so "${pkgdir:?}/usr/lib/libLLVM-17.0.6.so"
+  else
+    echo "- libLLVM-16.0.6.so exist"
+  fi
 }
