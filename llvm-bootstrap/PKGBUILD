@@ -1,5 +1,5 @@
 pkgname=llvm-bootstrap
-pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, polly, lld"
+pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, compiler-rt, polly, lldb, lld"
 pkgver=18.1.2
 pkgrel=1
 arch=('x86_64')
@@ -39,7 +39,7 @@ sha256sums=('SKIP'
 
 options=('staticlibs' '!lto' '!debug')
 
-_skip_build_test=y
+_skip_build_test=n
 _skip_documentation=y
 _extra_build_flags=(
   -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state 
@@ -85,11 +85,9 @@ build() {
     exit 1
   )
 
-  _extra_build_flags+=(
-  )
+  _extra_build_flags+=()
 
-  export LD_LIBRARY_PATH=/usr/lib/x86_64-pc-linux-gnu/:$LD_LIBRARY_PATH
-  export LIBRARY_PATH=/usr/lib/x86_64-pc-linux-gnu/:$LIBRARY_PATH
+
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
 
@@ -150,7 +148,8 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;openmp;polly" \
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;polly" \
+    -DLLVM_ENABLE_RUNTIMES="openmp"\
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
@@ -179,9 +178,7 @@ check() {
     ninja -C build check-llvm
     ninja -C build check-clang
     ninja -C build check-clang-tools
-    ninja -C build check-openmp
     ninja -C build check-polly
-    ninja -C build check-lldb
     ninja -C build check-lld
   fi
 
@@ -255,27 +252,25 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/llvm/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/llvm-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/clang/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/clang-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/clang-tools-extra/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/clang-tools-extra-LICENSE"
-  install -Dm644 "${srcdir:?}/llvm-project/compiler-rt/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/compiler-rt-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/lld/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/lld-LICENSE"
-  install -Dm644 "${srcdir:?}/llvm-project/lldb/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/lldb-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # Fallback for llvm 17
-  _llvm_libs=(libLLVM-17.so libLTO.so.17 libRemarks.so.17 libclang.so.17.0.6 libclang-cpp.so.17)
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exist"
-    fi
-  done
+  # Fallback for llvm 16
+  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exist"
+  #   fi
+  # done
 
-  if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-17.0.6.so" ]]; then
-    echo "- Copy libLLVM-17.0.6.so"
-    ln -s /usr/lib/libLLVM-17.so "${pkgdir:?}/usr/lib/libLLVM-17.0.6.so"
-  else
-    echo "- libLLVM-16.0.6.so exist"
-  fi
+  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
+  #   echo "- Copy libLLVM-16.0.6.so"
+  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
+  # else
+  #   echo "- libLLVM-16.0.6.so exist"
+  # fi
 }
