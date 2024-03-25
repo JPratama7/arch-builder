@@ -148,8 +148,7 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;polly" \
-    -DLLVM_ENABLE_RUNTIMES="openmp"\
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;openmp;polly" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
