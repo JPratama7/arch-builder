@@ -1,8 +1,8 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=24.0.3
+pkgver=24.0.4
 _pkgver=${pkgver//_/-}
-pkgrel=2
+pkgrel=1
 epoch=1
 arch=('x86_64')
 makedepends=(
