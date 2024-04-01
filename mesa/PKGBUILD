@@ -27,7 +27,6 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
-  "radeon_bo_can_reclaim_slab.patch"
   'LICENSE'
 )
 
