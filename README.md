@@ -12,7 +12,8 @@ Directly get from AUR:
 - xampp, zramd
 - peazip-qt5
 - 7-zip
-- gtkcord4-git
+- paru
+- wlogout
 
 This Package Build with clang/gcc and x86_64v3+lto flags
 

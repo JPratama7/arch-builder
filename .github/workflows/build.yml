@@ -147,7 +147,7 @@ jobs:
       matrix:
         build: [
           microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, wget2-git,
-          earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings
+          earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru, wlogout
           ]
       fail-fast: false
     runs-on: ubuntu-latest
