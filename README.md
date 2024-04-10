@@ -17,9 +17,11 @@ Directly get from AUR:
 This Package Build with clang/gcc and x86_64v3+lto flags
 
 Add this to /etc/pacman.conf: 
-- [jp7-arch]
-- SigLevel = Never
-- Server = https://r.zhullyb.top/https://github.com/JPratama7/arch-builder/releases/download/latest/
-- Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
-- Server = https://git.aya1.top/JPratama7/arch-builder/releases/download/latest/
-- Server = https://hub.fastgit.xyz/JPratama7/arch-builder/releases/download/latest/
+```bash
+[jp7-arch]
+SigLevel = Never
+Server = https://r.zhullyb.top/https://github.com/JPratama7/arch-builder/releases/download/latest/
+Server = https://github.com/JPratama7/arch-builder/releases/download/latest/
+Server = https://git.aya1.top/JPratama7/arch-builder/releases/download/latest/
+Server = https://hub.fastgit.xyz/JPratama7/arch-builder/releases/download/latest/
+```
