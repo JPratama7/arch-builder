@@ -150,7 +150,7 @@ jobs:
           earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru,
           wlogout, trizen, swww, sweet-theme-git, swaylock-effects, rofi-lbonn-wayland,
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
-          wf-config
+          wf-config, mercury-browser-bin
           ]
       fail-fast: false
     runs-on: ubuntu-latest

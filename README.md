@@ -25,6 +25,7 @@ Directly get from AUR:
 - pacseek
 - emote
 - bibata-cursor-theme
+- mercury-browser-bin
           
 
 This Package Build with clang/gcc and x86_64v3+lto flags
