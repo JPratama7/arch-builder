@@ -14,6 +14,18 @@ Directly get from AUR:
 - 7-zip
 - paru
 - wlogout
+- trizen
+- swww
+- sweet-theme-git
+- swaylock-effects
+- rofi-lbonn-wayland
+- python-manimpango
+- python-clickgen
+- pfetch
+- pacseek
+- emote
+- bibata-cursor-theme
+          
 
 This Package Build with clang/gcc and x86_64v3+lto flags
 
