@@ -86,6 +86,7 @@ build() {
     -D b_ndebug=true \
     -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true \
+    -D b_lundef=false \
     -D sysconfdir=/etc \
     -D platforms=x11,wayland \
     -D gallium-drivers="${GALLIUM_DRIVERS}" \
@@ -119,9 +120,9 @@ build() {
     -D android-libbacktrace=disabled \
     -D video-codecs=all \
     -D c_args="$CFLAGS" \
-    -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
+    -D c_link_args="$LDFLAGS" \
     -D cpp_args="$CXXFLAGS" \
-    -D cpp_link_args="$LDFLAGS -Wl,--undefined-version" \
+    -D cpp_link_args="$LDFLAGS" \
     --strip
 
   meson configure build-clang
