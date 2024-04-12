@@ -150,7 +150,7 @@ jobs:
           earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru,
           wlogout, trizen, swww, sweet-theme-git, swaylock-effects, rofi-lbonn-wayland,
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
-          wf-config, mercury-browser-bin, jamesdsp
+          wf-config, mercury-browser-bin
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -178,7 +178,8 @@ jobs:
       matrix:
         build: [
           visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, jdk-lts, jdk21-graalvm-ee-bin,
-          zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop, podman-desktop
+          zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop, podman-desktop,
+          jamesdsp
           ]
       fail-fast: false
     runs-on: ubuntu-latest
