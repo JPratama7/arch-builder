@@ -11,28 +11,34 @@ license=('MIT')
 provides=('waybar')
 conflicts=('waybar')
 depends=(
-    'gtkmm3'
-    'libjsoncpp.so'
-    'libsigc++'
+    'atkmm'
+    'cairomm'
     'fmt'
-    'jack' 'libjack.so'
-    'wayland'
-    'libdate-tz.so'
-    'libspdlog.so'
+    'gcc-libs'
+    'glib2'
+    'glibc'
+    'glibmm'
     'gtk-layer-shell'
-    'libupower-glib.so'
-    'upower'
+    'gtk3'
+    'gtkmm3'
+    'jack'
+    'jsoncpp'
+    'libdbusmenu-gtk3'
     'libevdev'
     'libinput'
-    'libpulse'
-    'libnl'
-    'libappindicator-gtk3'
-    'libdbusmenu-gtk3'
     'libmpdclient'
-    'libsndio.so'
-    'libxkbcommon'
+    'libnl'
+    'libpipewire'
+    'libpulse'
+    'libsigc++'
     'libwireplumber'
+    'libxkbcommon'
     'playerctl'
+    'sndio'
+    'spdlog'
+    'systemd-libs'
+    'upower'
+    'wayland'
 )
 makedepends=(
     'git'
@@ -67,7 +73,8 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}"
     rm -rf "${srcdir}/build"
-    meson --prefix=/usr \
+    
+    arch-meson --prefix=/usr \
           --buildtype=plain \
           --auto-features=enabled \
           -Dcpp_std=c++20 \
@@ -75,12 +82,13 @@ build() {
           -Dcava=disabled \
           -Dtests=enabled \
           "${srcdir}/build"
+
     ninja -C "${srcdir}/build"
 }
 
 check() {
-    cd "${srcdir}/${pkgname}"
-    meson test -C build --print-errorlogs --no-rebuild --suite waybar
+    cd "${srcdir}/build"
+    meson test --print-errorlogs --no-rebuild --suite waybar
 }
 
 package() {
