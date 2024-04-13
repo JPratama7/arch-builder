@@ -36,9 +36,10 @@ depends=(
 )
 makedepends=(
     'git'
-    'cmake'
     'catch2'
+    'cmake'
     'meson'
+    'python-packaging' # gdbus-codegen
     'scdoc' # For generating manpages
     'wayland-protocols'
 )
@@ -75,6 +76,11 @@ build() {
           -Dtests=enabled \
           "${srcdir}/build"
     ninja -C "${srcdir}/build"
+}
+
+check() {
+    cd "${srcdir}/${pkgname}"
+    meson test -C build --print-errorlogs --no-rebuild --suite waybar
 }
 
 package() {
