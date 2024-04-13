@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          packettracer, thorium,  mimalloc, wayfire
+          packettracer, thorium,  mimalloc, wayfire, waybar-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
