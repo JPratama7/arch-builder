@@ -2,24 +2,28 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=24.0.5
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 epoch=1
 arch=('x86_64')
 makedepends=(
   'python-mako' 'xorgproto' 'cmake' 'pkgconf' 'directx-headers'
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
-  'wayland-protocols' 'meson' 'ninja' 'glslang' 'libclc'
+  'wayland-protocols' 'meson' 'ninja' 'glslang'
   )
   
-makedepends+=('rust' 'rust-bindgen' 'spirv-tools' 'spirv-llvm-translator') # rusticl dependencies
+makedepends+=('rust' 'rust-bindgen') # rusticl dependencies
 
 DLAGENTS=(
   'http::/usr/bin/wget -q --show-progress -t 3 --waitretry=3 -O %o %u'
   'https::/usr/bin/wget -q --show-progress -t 3 --waitretry=3 -O %o %u'
 )
 
-depends=('libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'systemd' 'systemd-libs' 'xcb-util-keysyms'
-  'libomxil-bellagio' 'libunwind' 'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat')
+depends=(
+  'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 
+  'systemd' 'systemd-libs' 'xcb-util-keysyms' 'libomxil-bellagio' 
+  'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat'
+  'spirv-llvm-translator' 'spirv-tools' 'python'
+)
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
 provides=('mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl')
 conflicts=('mesa' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
@@ -27,20 +31,38 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
-  'LICENSE'
 )
 
 sha256sums=('0079beac0a33f45e7e0aec59e6913eafbc4268a3f1e2e330017440494f91b13c'
   'SKIP'
-  '7fdc119cf53c8ca65396ea73f6d10af641ba41ea1dd2bd44a824726e01c8b3f2')
+  '39278fbbf5fb4f646ce651690877f89d1c5811a3d4acb27700c1cb3cdb78fd3b'
+  '3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b'
+  '5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae'
+  '23e78b90f2fcf45d3e842032ce32e3f2d1545ba6636271dcbf24fa306d87be7a'
+
+  )
 
 validpgpkeys=(
   '57551DE15B968F6341C248F68D8E31AFC32428A6' # Keith Packard <keithp@keithp.com>
   '71C4B75620BC75708B4BDB254C95FAAB3EB073EC' # Dylan Baker <dylan@pnwbakers.com>
 )
 
+
+# Rust crates for NVK, used as Meson subprojects
+declare -A _crates=(
+   proc-macro2    1.0.70
+   quote          1.0.33
+   syn            2.0.39
+   unicode-ident  1.0.12
+)
+
+for _crate in "${!_crates[@]}"; do
+  source+=($_crate-${_crates[$_crate]}.tar.gz::https://crates.io/api/v1/crates/$_crate/${_crates[$_crate]}/download)
+done
+
+
 GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink,d3d12"
-VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio"
+VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio,nouveau-experimental"
 VULKAN_LAYERS="device-select,intel-nullhw,overlay"
 
 _extra_lto_flag=""
@@ -75,6 +97,9 @@ prepare() {
 
 build() {
 
+  # Inject subproject packages
+  export MESON_PACKAGE_CACHE_DIR="$srcdir"
+
   arch-meson mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
@@ -86,14 +111,18 @@ build() {
     -D b_ndebug=true \
     -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true \
-    -D b_lundef=false \
+    -D b_lundef=true \
     -D sysconfdir=/etc \
+    \
     -D platforms=x11,wayland \
+    \
     -D gallium-drivers="${GALLIUM_DRIVERS}" \
     -D vulkan-drivers="${VULKAN_DRIVERS}" \
     -D vulkan-layers="${VULKAN_LAYERS}" \
+    \
     -D dri3=enabled \
     -D egl=enabled \
+    \
     -D gallium-extra-hud=true \
     -D gallium-nine=true \
     -D gallium-omx=bellagio \
@@ -102,10 +131,13 @@ build() {
     -D gallium-vdpau=enabled \
     -D gallium-xa=enabled \
 	  -D gallium-rusticl=true \
+    \
     -D rust_std=2021 \
     -D gbm=enabled \
+    \
     -D gles1=disabled \
     -D gles2=enabled \
+    \
     -D glvnd=true \
     -D glx=dri \
     -D libunwind=disabled \
@@ -119,6 +151,7 @@ build() {
     -D valgrind=disabled \
     -D android-libbacktrace=disabled \
     -D video-codecs=all \
+    \
     -D c_args="$CFLAGS" \
     -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
     -D cpp_args="$CXXFLAGS" \
@@ -137,6 +170,5 @@ package() {
 
   ln -s /usr/lib/libGLX_mesa.so.0 "${pkgdir:?}/usr/lib/libGLX_indirect.so.0"
 
-  install -Dm644 "${srcdir:?}/LICENSE" "${pkgdir:?}/usr/share/licenses/${pkgbase:?}/LICENSE"
-
+  install -Dm644 mesa-$pkgver/docs/license.rst -t "$pkgdir/usr/share/licenses/$pkgname"
 }
