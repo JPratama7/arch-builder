@@ -15,18 +15,13 @@ jobs:
       - name: "Downloading"
         run: |
           pacman -Syu --needed aria2 base-devel --noconfirm
-          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s|grep "/JPratama7/arch-builder/releases/download/latest/"|awk -F '"|"' '{print$2}')
+          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s|grep "/JPratama7/arch-builder/releases/download/temp/"|awk -F '"|"' '{print$2}')
 
           for i in ${urls[*]}; do 
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
           done
-
-      - name: delete old database
-        run:  |
-          rm -f jp7-arch.*
-          ls
 
       - name: creating database
         run:  |
@@ -40,3 +35,16 @@ jobs:
           tag: "latest"
           artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          replacesArtifacts: true
+          tag: "latest"
+          artifacts: "*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: temp #(required) - The name of the tag to delete. This is expected to be solely the tag name, not the name of a git reference.
+          delete_release: true #(optional) default: true - also delete all releases and their assets that are associated to the tag name
+          github_token: ${{ secrets.GITHUB_TOKEN }}
