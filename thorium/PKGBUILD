@@ -3,7 +3,7 @@
 pkgbase=thorium
 _name=${pkgbase}-browser
 pkgname=${_name}-bin
-pkgver=122.0.6261.132
+pkgver=123.0.6312.133
 pkgrel=1
 pkgdesc="The web browser from Chromiumorg and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
