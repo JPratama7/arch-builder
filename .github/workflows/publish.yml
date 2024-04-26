@@ -23,6 +23,17 @@ jobs:
               aria2c -x 16 -s 16 https://github.com/$i
           done
 
+      - name: "Download Older database"
+        run: |
+          pacman -Syu --needed aria2 base-devel --noconfirm
+          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s | grep "/JPratama7/arch-builder/releases/download/temp/" | grep jp7-arch | awk -F '"|"' '{print$2}')
+
+          for i in ${urls[*]}; do 
+              pkg=$(echo $i|awk -F '/' '{print$7}')
+              echo Downloading $pkg
+              aria2c -x 16 -s 16 https://github.com/$i
+          done
+
       - name: creating database
         run:  |
           repo-add jp7-arch.db.tar *.pkg.tar.zst
