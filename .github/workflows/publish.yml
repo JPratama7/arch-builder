@@ -29,6 +29,7 @@ jobs:
           ls
       - uses: ncipollo/release-action@v1.14.0
         with:
+          allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
           artifacts: "./jp7-arch.*"
@@ -36,6 +37,7 @@ jobs:
 
       - uses: ncipollo/release-action@v1.14.0
         with:
+          allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
           artifacts: "*/*.zst"
