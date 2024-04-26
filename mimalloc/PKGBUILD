@@ -1,5 +1,5 @@
 pkgname=mimalloc
-pkgver=2.1.2
+pkgver=2.1.4
 pkgrel=1
 pkgdesc='General-purpose allocator with excellent performance characteristics'
 arch=('x86_64')
@@ -8,7 +8,7 @@ license=('MIT')
 depends=('glibc')
 makedepends=('git' 'cmake')
 options=('!lto' 'staticlibs')
-_commit='43ce4bd7fd34bcc730c1c7471c99995597415488'
+_commit='1b3cb0258fc475460ed19cdb78feaebd69cef0c6'
 source=("$pkgname::git+$url#commit=$_commit")
 b2sums=('SKIP')
 
@@ -23,6 +23,7 @@ build() {
     -B build \
     -S "$pkgname" \
     -D CMAKE_INSTALL_PREFIX=/usr \
+    -D MI_USE_CXX=ON \
     -D MI_BUILD_OBJECT=OFF \
     -D MI_INSTALL_TOPLEVEL=ON
 

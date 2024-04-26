@@ -26,21 +26,23 @@ jobs:
       - name: creating database
         run:  |
           repo-add jp7-arch.db.tar *.pkg.tar.zst
-          ls
-      - uses: ncipollo/release-action@v1.14.0
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "latest"
-          artifacts: "./jp7-arch.*"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: ncipollo/release-action@v1.14.0
+          
+      - name: upload files
+        uses: ncipollo/release-action@v1.14.0
         with:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
           artifacts: "*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: upload database
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          replacesArtifacts: true
+          tag: "latest"
+          artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: dev-drprasad/delete-tag-and-release@v1.1
