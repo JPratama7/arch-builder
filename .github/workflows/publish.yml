@@ -40,7 +40,7 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "*/*.zst"
+          artifacts: "*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: dev-drprasad/delete-tag-and-release@v1.1
