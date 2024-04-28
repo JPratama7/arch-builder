@@ -23,7 +23,6 @@ build() {
     -B build \
     -S "$pkgname" \
     -D CMAKE_INSTALL_PREFIX=/usr \
-    -D MI_USE_CXX=ON \
     -D MI_BUILD_OBJECT=OFF \
     -D MI_INSTALL_TOPLEVEL=ON
 
