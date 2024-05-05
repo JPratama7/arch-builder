@@ -148,7 +148,7 @@ jobs:
         build: [
           microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, wget2-git,
           earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru,
-          wlogout, trizen, swww, sweet-theme-git, swaylock-effects, rofi-lbonn-wayland,
+          wlogout, trizen, swww, sweet-theme-git, swaylock-effects, eww,
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
           wf-config, mercury-browser-bin
           ]
