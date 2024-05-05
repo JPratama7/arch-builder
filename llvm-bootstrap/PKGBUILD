@@ -1,6 +1,6 @@
 pkgname=llvm-bootstrap
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, compiler-rt, polly, lldb, lld"
-pkgver=18.1.2
+pkgver=18.1.5
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
