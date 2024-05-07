@@ -54,9 +54,3 @@ jobs:
           tag: "latest"
           artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: dev-drprasad/delete-tag-and-release@v1.1
-        with:
-          tag_name: temp #(required) - The name of the tag to delete. This is expected to be solely the tag name, not the name of a git reference.
-          delete_release: true #(optional) default: true - also delete all releases and their assets that are associated to the tag name
-          github_token: ${{ secrets.GITHUB_TOKEN }}
