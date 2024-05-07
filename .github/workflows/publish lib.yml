@@ -22,6 +22,7 @@ jobs:
       - name: creating database
         run:  |
           rm -f jp7-arch.*
+          repo-add jp7-arch.db.tar
           repo-add jp7-arch.db.tar *.pkg.tar.zst
 
       - uses: ncipollo/release-action@v1.9.0
