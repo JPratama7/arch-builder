@@ -48,7 +48,7 @@ jobs:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@clang
+        uses: JPratama7/pkgbuild-action@test-clang
         with:
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
@@ -99,7 +99,7 @@ jobs:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.3
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@clang
+        uses: JPratama7/pkgbuild-action@test-clang
         with:
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
@@ -159,7 +159,7 @@ jobs:
         with:
           repository: sarcasticadmin/empty-repo
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@aur-clang
+        uses: JPratama7/pkgbuild-action@test-aur-clang
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
