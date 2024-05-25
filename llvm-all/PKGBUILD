@@ -30,7 +30,7 @@ makedepends=(
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
 source=(
-  "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-${pkgver}.zip"
+  "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
   'llvm-config.h'
 )
 
@@ -67,7 +67,7 @@ _patch() {
 
 prepare() {
 
-  mv "${srcdir:?}/llvm-project-llvmorg-${pkgver}" llvm-project || (
+  mv "${srcdir:?}/llvm-project-${pkgver}.src" llvm-project || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
     exit 1
   )
@@ -97,7 +97,7 @@ build() {
 
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
-  # export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
+  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
 
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
