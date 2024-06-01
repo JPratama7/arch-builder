@@ -51,6 +51,7 @@ validpgpkeys=(
 
 # Rust crates for NVK, used as Meson subprojects
 declare -A _crates=(
+   paste          1.0.14
    proc-macro2    1.0.70
    quote          1.0.33
    syn            2.0.39
