@@ -1,4 +1,4 @@
-name: Toolchain
+name: Weekly Build
 on:
   schedule:
     - cron: "0 0 * * 0"

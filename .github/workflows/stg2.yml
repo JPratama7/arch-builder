@@ -1,4 +1,4 @@
-name: Bootstrap
+name: Bootstrap Stage 2
 on:
   workflow_dispatch:
 jobs:
