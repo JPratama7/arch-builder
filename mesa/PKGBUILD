@@ -23,7 +23,7 @@ depends=(
   'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 
   'systemd' 'systemd-libs' 'xcb-util-keysyms' 'libomxil-bellagio' 
   'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat'
-  'spirv-llvm-translator' 'spirv-tools' 'python'
+  'spirv-llvm-translator' 'spirv-tools' 'python' 'cbindgen'
 )
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
 provides=('mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl')
