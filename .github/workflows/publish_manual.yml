@@ -1,11 +1,7 @@
 name: Create DB Manual
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Builder"]
-    types:
-      - completed
-
+  
 jobs:
 
   create_aur_repository:

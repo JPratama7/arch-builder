@@ -139,3 +139,12 @@ jobs:
           tag: "temp"
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  TRIGGER_PUBLISH:
+    needs: [EXPERIMENTAL, GCC, INTERNAL, CLANG, CLMUL]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1.2.2
+        with:
+          workflow: Create DB
