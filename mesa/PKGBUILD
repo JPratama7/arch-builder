@@ -64,7 +64,7 @@ done
 
 
 GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink,d3d12"
-VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio,nouveau-experimental"
+VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio,nouveau"
 VULKAN_LAYERS="device-select,intel-nullhw,overlay"
 
 _extra_lto_flag=""
