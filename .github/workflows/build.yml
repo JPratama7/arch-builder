@@ -1,4 +1,4 @@
-name: Builder
+name: Builder Manual Sync
 on:
   workflow_dispatch:
 

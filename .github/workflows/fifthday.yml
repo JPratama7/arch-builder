@@ -1,4 +1,4 @@
-name: Builder
+name: Builder AUR
 on:
   schedule:
     - cron: "0 0 */5 * *"
