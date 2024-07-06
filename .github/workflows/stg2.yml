@@ -6,17 +6,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          thorium, mimalloc, wayfire,
-          libva-vdpau-driver, libva, libvdpau, mesa, aria2,
-          zing, waybar-git,
-          microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, wget2-git,
-          earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru,
-          wlogout, trizen, swww, sweet-theme-git, swaylock-effects, eww,
-          python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
-          wf-config, mercury-browser-bin, 
-          visual-studio-code-bin, xampp, zramd, peazip-qt5, 7-zip, jdk-lts, jdk21-graalvm-ee-bin,
-          zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, premid-git, github-desktop, podman-desktop,
-          jamesdsp
+            llvm-all
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -31,7 +21,7 @@ jobs:
       #   run: |
       #     cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@bootstrap-package
+        uses: JPratama7/pkgbuild-action@bootstraptool
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
