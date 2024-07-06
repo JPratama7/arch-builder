@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   
   TRIGGER_PUBLISH:
-    needs: [aur-helper, LLVM]
+    needs: [LLVM]
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
