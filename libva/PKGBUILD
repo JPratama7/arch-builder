@@ -1,5 +1,5 @@
 pkgname=libva
-pkgver=2.21.0
+pkgver=2.22.0
 pkgrel=1
 pkgdesc='Video Acceleration (VA) API for Linux'
 arch=(x86_64)
@@ -15,10 +15,9 @@ optdepends=(
   'libva-mesa-driver: backend for AMD and Nvidia GPUs'
 )
 backup=(etc/libva.conf)
-_commit=0b01aed44ef1a6ad660261284ff266fa812829ef
+_commit=86cd48f42bcf57d69789ca7a7ba257b80ebea50b
 source=(
   "git+https://github.com/intel/libva.git#commit=${_commit}"
-  "fix-lld-17.patch"
   )
 sha256sums=('SKIP' 'SKIP')
 
@@ -68,7 +67,7 @@ build() {
     --auto-features enabled \
     --wrap-mode nodownload \
     -D debug=false \
-    -D optimization=2 \
+    -D optimization=3 \
     -D b_ndebug=true \
     -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true
