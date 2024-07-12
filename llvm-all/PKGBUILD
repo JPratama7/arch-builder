@@ -93,10 +93,10 @@ build() {
     exit 1
   )
 
-  _extra_build_flags+=(
-    -DCMAKE_C_COMPILER="$CC"
-    -DCMAKE_CXX_COMPILER="$CXX"
-  )
+  # _extra_build_flags+=(
+  #   -DCMAKE_C_COMPILER="$CC"
+  #   -DCMAKE_CXX_COMPILER="$CXX"
+  # )
 
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"

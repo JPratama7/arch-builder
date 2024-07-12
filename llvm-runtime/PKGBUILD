@@ -24,9 +24,8 @@ makedepends=(
   'python-recommonmark' 'ocaml-stdlib-shims'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=6009708b4367171ccdbf4b5905cb6a803753fe18
 source=(
-  "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit}"
+  "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
   'llvm-config.h'
 )
 
@@ -57,6 +56,11 @@ _patch() {
 }
 
 prepare() {
+
+  mv "${srcdir:?}/llvm-project-${pkgver}.src" llvm-project || (
+    echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
+    exit 1
+  )
 
   cd "${srcdir:?}/llvm-project" || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
