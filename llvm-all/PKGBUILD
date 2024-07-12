@@ -8,18 +8,21 @@ license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
   'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt' 'openmp' 'libunwind'
-  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental')
+  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental'
+  )
 
 replaces=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
-  'libc++' 'libc++abi' 'libc++experimental' 'libunwind')
+  'libc++' 'libc++abi' 'libc++experimental' 'libunwind'
+  )
 
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++' 'libunwind'
-  'libc++abi' 'libc++experimental')
+  'libc++abi' 'libc++experimental'
+  )
 
-depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib')
+depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
 _ocaml_ver=4.14.0
 makedepends=(
   'git' 'ninja' 'cmake'
@@ -41,8 +44,9 @@ options=('staticlibs' '!lto' '!debug')
 _skip_build_test=y
 _skip_documentation=y
 _extra_build_flags=(
-  -DLLVM_ENABLE_LTO=Thin 
-  -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state -DCMAKE_CXX_STANDARD=17
+  -DLLVM_ENABLE_LTO=Full
+  -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state 
+  -DCMAKE_CXX_STANDARD=17
   -DCMAKE_SKIP_RPATH=ON
   -DENABLE_LINKER_BUILD_ID=ON
   )
@@ -96,7 +100,6 @@ build() {
 
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
-  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions"
 
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
