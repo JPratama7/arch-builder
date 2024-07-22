@@ -7,13 +7,13 @@ license=('custom:Apache 2.0 with LLVM Exception')
 pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
 provides=(
-  'llvm' "llvm=${pkgver}" 'llvm-libs' 'libclc'
+  'llvm' "llvm=${pkgver}" 'llvm-libs' 'libclc' 'clang' 'clang-tools-extra'
   'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental'
 )
 
 replaces=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'libclc'
-  'libc++' 'libc++abi' 'libc++experimental'
+  'libc++' 'libc++abi' 'libc++experimental' 'clang' 'clang-tools-extra'
 )
 
 conflicts=(
@@ -25,7 +25,7 @@ conflicts=(
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
 _ocaml_ver=4.14.0
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm-libs'
+  'git' 'ninja' 'cmake' 'llvm-libs' 'clang'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark' 'ocaml-stdlib-shims'
