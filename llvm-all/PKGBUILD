@@ -54,17 +54,13 @@ _build_tests=0
 _build_bindings=0
 
 _rpatch() {
-
-  echo -e "\E[1;33m Revert patch: ${1}\E[0m"
-  patch --forward --reverse --strip=1 --input="${srcdir:?}/${1}"
-
+    echo -e "\E[1;33m Revert patch: ${1}\E[0m"
+    patch --forward --reverse --strip=1 --input="${srcdir:?}/${1}"
 }
 
 _patch() {
-
-  echo -e "\E[1;33m Apply patch: ${1}\E[0m"
-  patch --forward --strip=1 --input="${srcdir:?}/${1}"
-
+    echo -e "\E[1;33m Apply patch: ${1}\E[0m"
+    patch --forward --strip=1 --input="${srcdir:?}/${1}"
 }
 
 prepare() {
@@ -79,11 +75,13 @@ prepare() {
     exit 1
   )
 
+  # https://github.com/clangd/clangd/issues/1559
+  sed 's|clang-tools-extra|clang/tools/extra|' \
+    clangd-handle-missing-ending-brace.patch | patch -Np2
+
   # Attempt to convert script to Python 3
   2to3 -wn --no-diffs \
-    clang-tools-extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
-
-  if 
+    tools/extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
 
   if [ -n "$CC" ] && [ -n "$CXX" ]; then
     _extra_build_flags+=(
@@ -162,12 +160,15 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
+    -DLLVM_ENABLE_PIC=ON \
+    -DLIBCXX_INSTALL_MODULES=ON \
     -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly;pstl" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;openmp;libunwind" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
+    -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF \
     -DPOLLY_ENABLE_GPGPU_CODEGEN=ON \
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON \

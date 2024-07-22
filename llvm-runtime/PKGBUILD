@@ -17,7 +17,7 @@ replaces=(
 )
 
 conflicts=(
-  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind'
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'clang' 'clang-tools-extra'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
   'libc++abi' 'libc++experimental'
 )
@@ -73,6 +73,16 @@ prepare() {
     exit 1
   )
 
+
+  # https://github.com/clangd/clangd/issues/1559
+  sed 's|clang-tools-extra|clang/tools/extra|' \
+    clangd-handle-missing-ending-brace.patch | patch -Np2
+
+  # Attempt to convert script to Python 3
+  2to3 -wn --no-diffs \
+    tools/extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
+
+
   if [ -n "$CC" ] && [ -n "$CXX" ]; then
     _extra_build_flags+=(
       -DCMAKE_C_COMPILER="$CC"
@@ -105,10 +115,14 @@ build() {
     -DLLVM_BUILD_DOCS=OFF \
     -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_SPHINX=OFF \
+    -DLLVM_ENABLE_PIC=ON \
+    -DLIBCXX_INSTALL_MODULES=ON \
     -DLLVM_ENABLE_DOXYGEN=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS="libclc;libcxx;libcxxabi;libunwind" \
+    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' \
+    -DLLVM_ENABLE_RUNTIMES="compiler-rt;libcxx;libcxxabi;libunwind;openmp" \
+    -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
     "${_extra_build_flags[@]}"
     ninja -C build
     
