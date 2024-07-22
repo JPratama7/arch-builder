@@ -25,7 +25,7 @@ conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
 _ocaml_ver=4.14.0
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm-libs'
+  'git' 'ninja' 'cmake' 'clang' 'llvm'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark' 'ocaml-stdlib-shims' 'mimalloc'
@@ -44,9 +44,8 @@ options=('staticlibs' '!lto' '!debug')
 _skip_build_test=y
 _skip_documentation=y
 _extra_build_flags=(
-  -DLLVM_ENABLE_LTO=On
-  -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state 
-  -DCMAKE_CXX_STANDARD=17
+  -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state
+  -DCMAKE_CXX_STANDARD=17 
   -DCMAKE_SKIP_RPATH=ON
   -DENABLE_LINKER_BUILD_ID=ON
   )
@@ -84,6 +83,15 @@ prepare() {
   2to3 -wn --no-diffs \
     clang-tools-extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
 
+  if 
+
+  if [ -n "$CC" ] && [ -n "$CXX" ]; then
+    _extra_build_flags+=(
+      -DCMAKE_C_COMPILER="$CC"
+      -DCMAKE_CXX_COMPILER="$CXX"
+    )
+  fi
+
 }
 
 build() {
@@ -93,14 +101,8 @@ build() {
     exit 1
   )
 
-  # _extra_build_flags+=(
-  #   -DCMAKE_C_COMPILER="$CC"
-  #   -DCMAKE_CXX_COMPILER="$CXX"
-  # )
-
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
-
 
   if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
     export LD=ld.lld
@@ -160,6 +162,7 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
+    -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly;pstl" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;openmp;libunwind" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
@@ -170,7 +173,7 @@ build() {
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
     "${_extra_build_flags[@]}"
 
-  ninja -C build
+  LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/src/llvm-project/build" ninja -C build
 
   if [[ _build_documentation -eq 1 && _build_bindings -ne 0 ]]; then
     ninja -C build ocaml_doc

@@ -1,21 +1,28 @@
 pkgname=llvm-runtime
 pkgver=18.1.8
-pkgrel=3
+pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
-provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental')
+provides=(
+  'llvm' "llvm=${pkgver}" 'llvm-libs' 'libclc'
+  'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental'
+)
 
-replaces=('llvm' 'llvm-libs' 'llvm-ocaml'
-  'libc++' 'libc++abi' 'libc++experimental')
+replaces=(
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'libclc'
+  'libc++' 'libc++abi' 'libc++experimental'
+)
 
-conflicts=('llvm' 'llvm-libs' 'llvm-ocaml'
+conflicts=(
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
-  'libc++abi' 'libc++experimental')
+  'libc++abi' 'libc++experimental'
+)
 
-depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
+depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
 _ocaml_ver=4.14.0
 makedepends=(
   'git' 'ninja' 'cmake' 'llvm-libs'
@@ -35,11 +42,10 @@ sha256sums=('SKIP'
 options=('staticlibs' '!lto' '!debug')
 
 _extra_build_flags=(
-  -DLLVM_ENABLE_LTO=On 
-  # -DCMAKE_C_COMPILER="$CC" 
-  # -DCMAKE_CXX_COMPILER="$CXX" 
+  -DCMAKE_CXX_STANDARD=17 
   -DCMAKE_SKIP_RPATH=ON
-  )
+  -DENABLE_LINKER_BUILD_ID=ON
+)
 
 _rpatch() {
 
@@ -66,6 +72,14 @@ prepare() {
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
     exit 1
   )
+
+  if [ -n "$CC" ] && [ -n "$CXX" ]; then
+    _extra_build_flags+=(
+      -DCMAKE_C_COMPILER="$CC"
+      -DCMAKE_CXX_COMPILER="$CXX"
+    )
+  fi
+
 }
 
 build() {
@@ -89,12 +103,12 @@ build() {
     -DLLVM_ENABLE_FFI=ON \
     -DLLVM_BUILD_TESTS=OFF \
     -DLLVM_BUILD_DOCS=OFF \
+    -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_SPHINX=OFF \
     -DLLVM_ENABLE_DOXYGEN=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS="libclc" \
-    -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
+    -DLLVM_ENABLE_PROJECTS="libclc;libcxx;libcxxabi;libunwind" \
     "${_extra_build_flags[@]}"
     ninja -C build
     
@@ -109,6 +123,10 @@ check() {
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project/build directory! Check Failed! \E[0m"
     exit 1
   )
+
+  if [[ _build_tests -eq 1 ]]; then
+    ninja -C build check-llvm
+  fi
 }
 
 _python_optimize() {
