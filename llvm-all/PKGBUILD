@@ -169,7 +169,6 @@ build() {
     -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly;pstl" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;openmp;libunwind" \
-    -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
