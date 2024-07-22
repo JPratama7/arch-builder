@@ -34,10 +34,14 @@ makedepends_x86_64=('lib32-gcc-libs')
 source=(
   "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
   'llvm-config.h'
+  clangd-handle-missing-ending-brace.patch::https://github.com/llvm/llvm-project/commit/9d1dada57741.patch
 )
 
-sha256sums=('SKIP'
-  '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
+sha256sums=(
+  'SKIP'
+  '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48'
+  '0d4dc477f5a28f9f16639dc094b6d9bc14228d5de771547394799d2d5f8cd1df'
+)
 
 options=('staticlibs' '!lto' '!debug')
 
@@ -80,8 +84,7 @@ prepare() {
 
   # Attempt to convert script to Python 3
   2to3 -wn --no-diffs \
-    tools/extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
-
+    clang-tools-extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
 
   if [ -n "$CC" ] && [ -n "$CXX" ]; then
     _extra_build_flags+=(
