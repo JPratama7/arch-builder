@@ -27,7 +27,7 @@ jobs:
         with:
           repository: sarcasticadmin/empty-repo
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@aur-clang
+        uses: JPratama7/pkgbuild-action@clanged
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
@@ -56,7 +56,7 @@ jobs:
         with:
           repository: sarcasticadmin/empty-repo
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@aur-gcc
+        uses: JPratama7/pkgbuild-action@gcced
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
