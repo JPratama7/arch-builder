@@ -2,10 +2,6 @@ name: Builder Manual Sync
 on:
   workflow_dispatch:
 
-concurrency: 
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   CLANG:
     strategy:
