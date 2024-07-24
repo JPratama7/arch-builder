@@ -1,4 +1,5 @@
- Maintainer: Jeremy Gust <jeremy AT plasticsoup DOT net>
+# Maintainer : JPratama7 <josepratama080 AT gmail DOT com>
+# Contributor: Jeremy Gust <jeremy AT plasticsoup DOT net>
 pkgname=hyprpicker
 pkgver=0.3.0
 pkgrel=1
