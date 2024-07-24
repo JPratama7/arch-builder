@@ -12,9 +12,9 @@ jobs:
         build: [
           microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, wget2-git,
           earlyoom-git, slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru,
-          wlogout, trizen, swww, sweet-theme-git, swaylock-effects, eww, mission-center
+          wlogout, trizen, swww, sweet-theme-git, swaylock-effects, eww, mission-center,
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
-          wf-config, mercury-browser-bin, aylurs-gtk-shell, hyprpicker, vesktop
+          wf-config, mercury-browser-bin, aylurs-gtk-shell, vesktop
           ]
       fail-fast: false
     runs-on: ubuntu-latest
