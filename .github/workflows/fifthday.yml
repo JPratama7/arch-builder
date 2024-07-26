@@ -66,6 +66,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   TRIGGER_PUBLISH:
+    if: ${{ always() }}
     needs: [AUR_CLANG, AUR_GCC]
     runs-on: ubuntu-latest
     steps:

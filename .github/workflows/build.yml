@@ -136,6 +136,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   TRIGGER_PUBLISH:
+    if: ${{ always() }}
     needs: [EXPERIMENTAL, GCC, INTERNAL, CLANG, CLMUL]
     runs-on: ubuntu-latest
     steps:
