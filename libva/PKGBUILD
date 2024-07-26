@@ -15,7 +15,7 @@ optdepends=(
   'libva-mesa-driver: backend for AMD and Nvidia GPUs'
 )
 backup=(etc/libva.conf)
-_commit=86cd48f42bcf57d69789ca7a7ba257b80ebea50b
+_commit=217da1c28336d6a7e9c0c4cb8f1c303968a675f1
 source=(
   "git+https://github.com/intel/libva.git#commit=${_commit}"
   )
