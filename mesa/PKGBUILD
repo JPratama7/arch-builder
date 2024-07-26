@@ -157,9 +157,9 @@ build() {
     -D android-libbacktrace=disabled \
     -D video-codecs=all \
     \
-    -D c_args="$CFLAGS" \
+    -D c_args="$CFLAGS -Wno-format-truncation" \
     -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
-    -D cpp_args="$CXXFLAGS" \
+    -D cpp_args="$CXXFLAGS -Wno-format-truncation" \
     -D cpp_link_args="$LDFLAGS -Wl,--undefined-version" \
     --strip
 
