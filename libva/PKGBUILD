@@ -18,7 +18,6 @@ backup=(etc/libva.conf)
 _commit=86cd48f42bcf57d69789ca7a7ba257b80ebea50b
 source=(
   "git+https://github.com/intel/libva.git#commit=${_commit}"
-  "fix-lld-17.patch"
   )
 sha256sums=('SKIP' 'SKIP')
 
@@ -42,6 +41,14 @@ prepare() {
     _extra_lto_flag='-D b_lto_mode=thin'
   fi
 
+  local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    [[ $src = *.patch ]] || continue
+    msg2 "Applying patch $src..."
+    _patch $src
+  done
 
 }
 
