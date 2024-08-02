@@ -4,7 +4,8 @@
 
 Rebuild AUR Package every five days
 
-Directly get from AUR: 
+## Directly get from AUR Build 
+With Clang: 
 ```
 microsoft-edge-dev-bin postman-bin geany-git tor-browser-bin wget2-git
 earlyoom-git slimjet mpc-qt-git spotify insomnium lightdm-settings paru
@@ -13,11 +14,15 @@ python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme
 wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen asusctl
 grimblast, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit,
 wl-clip-persist-git, libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper
-
+wallust-git
+```
+With GCC:
+```
 visual-studio-code-bin xampp zramd peazip-qt5 7-zip jdk-lts jdk21-graalvm-ee-bin
 zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin premid-git github-desktop podman-desktop
 jamesdsp yay hyprpicker aws-cli-v2
 ```
+
 
 This Package Build with clang/gcc and x86_64v3+lto flags
 

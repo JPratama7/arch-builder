@@ -16,7 +16,7 @@ jobs:
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
           wf-config, mercury-browser-bin, aylurs-gtk-shell, vesktop, matugen-bin, asusctl,
           grimblast-git, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit-git,
-          libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper
+          libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
