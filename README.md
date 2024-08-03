@@ -14,7 +14,7 @@ python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme
 wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen asusctl
 grimblast, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit,
 wl-clip-persist-git, libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper
-wallust-git
+wallust-git wlogout 
 ```
 With GCC:
 ```
