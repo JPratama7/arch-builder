@@ -17,7 +17,7 @@ optdepends=(
 backup=(etc/libva.conf)
 _commit=217da1c28336d6a7e9c0c4cb8f1c303968a675f1
 source=(
-  "git+https://github.com/intel/libva.git#commit=${_commit}"
+  "git+https://github.com/intel/libva.git#tag=${_commit}"
   )
 sha256sums=('SKIP' 'SKIP')
 
@@ -67,7 +67,7 @@ build() {
 
   CFLAGS+=" -DENABLE_VA_MESSAGING" # Option missing
 
-  meson setup libva build \
+  arch-meson setup libva build \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
