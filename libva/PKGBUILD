@@ -67,21 +67,19 @@ build() {
 
   CFLAGS+=" -DENABLE_VA_MESSAGING" # Option missing
 
-  arch-meson setup libva build \
+  arch-meson libva build \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
-    --auto-features enabled \
+    --auto-features yes \
     --wrap-mode nodownload \
     -D debug=false \
     -D optimization=3 \
     -D b_ndebug=true \
     -D b_lto=true ${_extra_lto_flag} \
-    -D b_pie=true
+    -D b_pie=true 
 
-  cd build
-
-  meson compile
+  meson compile -C build
 
 }
 
