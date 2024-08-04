@@ -71,7 +71,7 @@ build() {
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
-    --auto-features yes \
+    --auto-features enabled \
     --wrap-mode nodownload \
     -D debug=false \
     -D optimization=3 \
