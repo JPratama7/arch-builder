@@ -76,6 +76,11 @@ build() {
     -D debug=false \
     -D optimization=3 \
     -D b_ndebug=true \
+    -D c_args="$CFLAGS -Wno-format-truncation" \
+    -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
+    -D cpp_args="$CXXFLAGS -Wno-format-truncation" \
+    -D cpp_link_args="$LDFLAGS -Wl,--undefined-version" \
+    --strip \
     -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true 
 
