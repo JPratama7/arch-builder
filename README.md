@@ -20,7 +20,7 @@ With GCC:
 ```
 visual-studio-code-bin xampp zramd peazip-qt5 7-zip jdk-lts jdk21-graalvm-ee-bin
 zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin premid-git github-desktop podman-desktop
-jamesdsp yay hyprpicker aws-cli-v2
+jamesdsp yay hyprpicker aws-cli-v2 zed-git
 ```
 
 
