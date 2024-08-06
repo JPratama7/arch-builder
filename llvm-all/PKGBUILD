@@ -174,8 +174,8 @@ build() {
     -DLLVM_ENABLE_PIC=ON \
     -DLIBCXX_INSTALL_MODULES=ON \
     -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
-    -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;cross-project-tests;libclc;lld;lldb;mlir;polly" \
-    -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp" \
+    -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;cross-project-tests;libclc;lld;lldb;mlir;openmp;polly" \
+    -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt" \
     -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
