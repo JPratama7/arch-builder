@@ -172,6 +172,7 @@ build() {
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
     -DLLVM_ENABLE_PIC=ON \
+    -DLIBCXXABI_USE_LLVM_UNWINDER=OFF \
     -DLIBCXX_INSTALL_MODULES=ON \
     -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
     -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;cross-project-tests;libclc;lld;lldb;compiler-rt;mlir;polly" \
