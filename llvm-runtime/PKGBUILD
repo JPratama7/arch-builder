@@ -1,6 +1,6 @@
 pkgname=llvm-runtime
 pkgver=18.1.8
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -130,6 +130,7 @@ build() {
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
     -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;libclc' \
+    -DLIBCLC_TARGETS_TO_BUILD="all" \
     -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp" \
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
     "${_extra_build_flags[@]}"
@@ -198,7 +199,11 @@ package() {
 
   # Licenses
   install -Dm644 "${srcdir:?}/llvm-project/llvm/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/llvm-LICENSE"
-
+  install -Dm644 "${srcdir:?}/llvm-project/clang/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/clang-LICENSE"
+  install -Dm644 "${srcdir:?}/llvm-project/clang-tools-extra/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/clang-tools-extra-LICENSE"
+  install -Dm644 "${srcdir:?}/llvm-project/compiler-rt/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/compiler-rt-LICENSE"
+  install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
+  install -Dm644 "$srcdir"/llvm-project/libclc/LICENSE.TXT "${pkgdir:?}/usr/share/licenses/${pkgname}/libclc-LICENSE"
   # Fallback for llvm 16
   # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
   # for lib in "${_llvm_libs[@]}"; do
