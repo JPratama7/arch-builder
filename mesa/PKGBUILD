@@ -2,7 +2,7 @@ pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
 pkgver=24.1.5
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 epoch=1
 arch=('x86_64')
 makedepends=(
@@ -32,6 +32,7 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
+  "0001-radeonsi-vcn-Add-decode-DPB-buffers-as-CS-dependency.patch"::"https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-radeonsi-vcn-Add-decode-DPB-buffers-as-CS-dependency.patch?ref_type=heads&inline=false"
 )
 
 sha256sums=('0079beac0a33f45e7e0aec59e6913eafbc4268a3f1e2e330017440494f91b13c'
@@ -93,7 +94,7 @@ prepare() {
     _patch $src
   done
 
-  echo "$pkgver-arch$epoch.$pkgrel" >VERSION
+  echo "$pkgver-arch$epoch.$pkgrel" > VERSION
 
 }
 
@@ -115,7 +116,7 @@ build() {
     -D b_ndebug=true \
     -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true \
-    -D b_lundef=true \
+    -D b_lundef=false \
     -D sysconfdir=/etc \
     \
     -D platforms=x11,wayland \
@@ -157,9 +158,9 @@ build() {
     -D video-codecs=all \
     \
     -D c_args="$CFLAGS -Wno-format-truncation" \
-    -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
+    -D c_link_args="$LDFLAGS" \
     -D cpp_args="$CXXFLAGS -Wno-format-truncation" \
-    -D cpp_link_args="$LDFLAGS -Wl,--undefined-version" \
+    -D cpp_link_args="$LDFLAGS" \
     --strip
 
   meson configure build-clang
