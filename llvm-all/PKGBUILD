@@ -1,7 +1,7 @@
 pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, polly, lldb, lld"
 pkgver=18.1.8
-pkgrel=7
+pkgrel=8
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -9,17 +9,17 @@ license=('custom:Apache 2.0 with LLVM Exception')
 provides=(
   'llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
   'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt' 'openmp'
-  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental' 'bolt' 'libclc' 'mlir'
+  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental' 'bolt' 'mlir'
   )
 
 replaces=(
-  'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer' 'libclc'
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp' 'mlir'
   'libc++' 'libc++abi' 'libc++experimental' 'bolt'
   )
 
 conflicts=(
-  'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer' 'libclc'
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
   'libc++abi' 'libc++experimental' 'bolt' 'mlir'

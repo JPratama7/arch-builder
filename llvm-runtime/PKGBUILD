@@ -7,19 +7,19 @@ license=('custom:Apache 2.0 with LLVM Exception')
 pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
 provides=(
-  'llvm' "llvm=${pkgver}" 'llvm-libs' 'libclc' 'clang' 'clang-tools-extra'
+  'llvm' "llvm=${pkgver}" 'llvm-libs' 'clang' 'clang-tools-extra'
   'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental'
 )
 
 replaces=(
-  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'libclc'
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind'
   'libc++' 'libc++abi' 'libc++experimental' 'clang' 'clang-tools-extra'
 )
 
 conflicts=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'clang' 'clang-tools-extra'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
-  'libc++abi' 'libc++experimental' 'libclc'
+  'libc++abi' 'libc++experimental'
 )
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
@@ -129,7 +129,7 @@ build() {
     -DLLVM_ENABLE_DOXYGEN=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
     -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;libclc' \
+    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' \
     -DLIBCLC_TARGETS_TO_BUILD="all" \
     -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp" \
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
