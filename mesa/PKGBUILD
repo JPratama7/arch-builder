@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=24.2.0
+pkgver=24.2.1
 _pkgver=${pkgver//_/-}
 pkgrel=2
 epoch=1
@@ -10,8 +10,9 @@ makedepends=(
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
   'wayland-protocols' 'meson' 'ninja' 'glslang' 'python-ply'
   'python-setuptools' 'python-packaging' 'python-yaml' 'clang'
-  )
-  
+  'llvm'
+)
+
 makedepends+=('rust' 'rust-bindgen') # rusticl dependencies
 
 DLAGENTS=(
@@ -20,11 +21,13 @@ DLAGENTS=(
 )
 
 depends=(
-  'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 
+  'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'llvm-libs'
   'systemd' 'systemd-libs' 'xcb-util-keysyms' 'libomxil-bellagio' 
   'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat'
-  'spirv-llvm-translator' 'spirv-tools' 'python' 'cbindgen'
+  'spirv-llvm-translator' 'spirv-tools' 'python' 'cbindgen' 'libxcb'
+  'libxext' 'libxfixes'
 )
+
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
 provides=('mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl')
 conflicts=('mesa' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
@@ -32,6 +35,7 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
+  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-rusticl-do-not-use-CL-vector-types-in-bindings-and-c.patch"
 )
 
 sha256sums=('0079beac0a33f45e7e0aec59e6913eafbc4268a3f1e2e330017440494f91b13c'
@@ -74,8 +78,8 @@ for _crate in "${!_crates[@]}"; do
 done
 
 
-GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink,d3d12"
-VULKAN_DRIVERS="amd,intel,intel_hasvk,swrast,virtio,nouveau"
+GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,llvmpipe,softpipe,iris,crocus,i915,zink,d3d12"
+VULKAN_DRIVERS="amd,intel,intel_hasvk,nouveau,swrast,virtio"
 VULKAN_LAYERS="device-select,intel-nullhw,overlay"
 
 _extra_lto_flag=""
@@ -121,6 +125,7 @@ build() {
     --sbindir bin \
     --auto-features enabled \
     --wrap-mode nodownload \
+    -D buildtype=release \
     -D debug=false \
     -D optimization=2 \
     -D b_ndebug=true \
@@ -153,7 +158,7 @@ build() {
     -D gles1=disabled \
     -D gles2=enabled \
     \
-    -D glvnd=true \
+    -D glvnd=enabled \
     -D glx=dri \
     -D libunwind=disabled \
     -D llvm=enabled \
