@@ -29,7 +29,10 @@ depends=(
 )
 
 optdepends=('opengl-man-pages: for the OpenGL API man pages')
-provides=('mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl')
+provides=(
+  'mesa' "mesa=${pkgver}" 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 
+  'mesa-vdpau' 'vulkan-swrast' 'vulkan-driver' 'opengl-driver' 'opencl-driver' 'mesa-libgl'
+  )
 conflicts=('mesa' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-mesa-layer' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
 url="https://www.mesa3d.org"
 license=('custom')
@@ -118,7 +121,7 @@ build() {
   # Inject subproject packages
   export MESON_PACKAGE_CACHE_DIR="$srcdir"
 
-  meson mesa-${_pkgver} build-clang \
+  arch-meson mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
