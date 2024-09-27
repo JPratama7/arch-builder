@@ -121,7 +121,7 @@ build() {
   # Inject subproject packages
   export MESON_PACKAGE_CACHE_DIR="$srcdir"
 
-  arch-meson mesa-${_pkgver} build-clang \
+  meson setup mesa-${_pkgver} build-clang \
     --prefix /usr \
     --libexecdir lib \
     --sbindir bin \
