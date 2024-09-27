@@ -17,8 +17,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-xanmod-custom
-_major=6.4
-pkgver=${_major}.8
+_major=6.11
+pkgver=${_major}.0
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -42,32 +42,25 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
-        choose-gcc-optimization.sh
-        "0001-Revert-XANMOD-fair-Remove-all-energy-efficiency-func.patch"
-        "${_cachy}sched/0001-tt-cachy.patch"
-        "${_lucjan}kbuild-patches-v5/0001-kbuild-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}kbuild-cachyos-patches/0001-kbuild-cachyos-patches.patch"
-        "${_lucjan}btrfs-patches-v5/0001-btrfs-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}lrng-ddcci-patches-all/0001-lrng-ddcci-patches.patch"
-        "${_lucjan}maple-lru-patches-v10/0001-mm-6.4-add-maple-tree-and-mglru-fixes.patch"
-        "${_lucjan}x86-cachyos-patches-v2/0001-x86-build-Avoid-relocation-information-in-final-vmli.patch"
-        "${_lucjan}bfq-cachyos-patches/0001-bfq-cachyos-patches.patch"
-        "${_lucjan}ksm-patches/0001-ksm-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}drm-patches-v2/0001-drm-6.4-Add-HDR-patches.patch"
-        "${_lucjan}zstd-cachyos-patches/0001-zstd-6.4-import-v1.5.5.patch"
-        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback.patch"
-        "${_lucjan}uksmd-cachyos-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
-        "${_lucjan}clang-patches/0001-clang-6.4-add-miscellaneous-fixes-for-clang.patch"
-        "${_lucjan}fixes-miscellaneous-v9/0001-fixes-miscellaneous.patch"
-        ##### Misc Patch
-        "${_lucjan}amd-pstate-patches-v2/0001-amd-6.4-merge-changes-from-dev-tree.patch"
-        "${_lucjan}cpupower-patches/0001-cpupower-6.4-Add-various-feature-control-support-for.patch"
-        "${_lucjan}block-cachyos-patches/0001-block-set-rq_affinity-to-force-full-multithreading-I.patch"
-        # "${_lucjan}ext4-patches-v6/0001-ext4-6.3-merge-changes-from-dev-tree.patch"
-        "${_tkg}0002-mm-Support-soft-dirty-flag-read-with-reset.patch"
-        "ck-hrtimer-$_commit_ck.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit_ck.tar.gz"
-        "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v${_branch}/cjktty-${_major}.patch"
+
+        "https://master.dl.sourceforge.net/project/xanmod/releases/edge/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
+        
+        "choose-gcc-optimization.sh"
+        
+        "0001-bore.patch"
+        "${_lucjan}amd-pstate-patches-v2/0001-amd-6.11-merge-changes-from-dev-tree.patch"
+        "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
+
+        "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
+        "${_lucjan}cachyos-fixes-patches/0001-x86-amd_nb-Add-new-PCI-IDs-for-AMD-family-1Ah-model-.patch"
+
+        "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
+        "${_lucjan}mm-patches/0001-mm-patches.patch"
+        "${_lucjan}uksmd-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
+        "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
+        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
+        "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
+        
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -105,6 +98,7 @@ prepare() {
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
+    # patch -Np1 -F2 --input="../$src" -r -
     OUT="$(patch -Np1 -F2 --input="../$src" -r -)" || echo "${OUT}" | grep "Skipping patch" -q || (echo "$OUT" && false);
 
   done
@@ -114,60 +108,64 @@ prepare() {
   msg2 "Copy configuration"
   cp -vf CONFIGS/xanmod/gcc/config_x86-64-v3 .config
 
+
+  # enable ECHO Scheduler
+  scripts/config -e ECHO_SCHED
+
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enabling LTO CLANG"
     scripts/config \
-            --enable LTO \
-            --enable LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG_THIN \
-            --disable CONFIG_LTO_NONE \
-            --enable HAS_LTO_CLANG \
-            --disable LTO_CLANG_FULL \
-            --enable CONFIG_LTO_CLANG_FULL \
-            --enable HAVE_GCC_PLUGINS
+            -e LTO \
+            -e LTO_CLANG \
+            -e ARCH_SUPPORTS_LTO_CLANG \
+            -e ARCH_SUPPORTS_LTO_CLANG_THIN \
+            -d CONFIG_LTO_NONE \
+            -e HAS_LTO_CLANG \
+            -d LTO_CLANG_FULL \
+            -e CONFIG_LTO_CLANG_FULL \
+            -e HAVE_GCC_PLUGINS
   fi
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
-  scripts/config --enable CONFIG_STACK_VALIDATION
+  scripts/config -e CONFIG_STACK_VALIDATION
 
   # Enable IKCONFIG following Arch's philosophy
   msg2 "Enable IKCONFIG"
-  scripts/config --enable CONFIG_IKCONFIG \
-                 --enable CONFIG_IKCONFIG_PROC
+  scripts/config -e CONFIG_IKCONFIG \
+                 -e CONFIG_IKCONFIG_PROC
 
   # User set. See at the top of this file
   if [ "$use_tracers" = "n" ]; then
     msg2 "Disabling FUNCTION_TRACER/GRAPH_TRACER only if we are not compiling with clang..."
     if [ "${_compiler}" = "gcc" ]; then
-      scripts/config --disable CONFIG_FUNCTION_TRACER \
-                     --disable CONFIG_STACK_TRACER
+      scripts/config -d CONFIG_FUNCTION_TRACER \
+                     -d CONFIG_STACK_TRACER
     fi
   fi
 
   if [ "$use_numa" = "n" ]; then
     msg2 "Disabling NUMA..."
-    scripts/config --disable NUMA \
-                   --disable AMD_NUMA \
-                   --disable X86_64_ACPI_NUMA \
-                   --disable NODES_SPAN_OTHER_NODES \
-                   --disable NUMA_EMU \
-                   --disable NEED_MULTIPLE_NODES \
-                   --disable USE_PERCPU_NUMA_NODE_ID \
-                   --disable ACPI_NUMA \
-                   --disable ARCH_SUPPORTS_NUMA_BALANCING \
-                   --disable NODES_SHIFT \
+    scripts/config -d NUMA \
+                   -d AMD_NUMA \
+                   -d X86_64_ACPI_NUMA \
+                   -d NODES_SPAN_OTHER_NODES \
+                   -d NUMA_EMU \
+                   -d NEED_MULTIPLE_NODES \
+                   -d USE_PERCPU_NUMA_NODE_ID \
+                   -d ACPI_NUMA \
+                   -d ARCH_SUPPORTS_NUMA_BALANCING \
+                   -d NODES_SHIFT \
                    --undefine NODES_SHIFT \
-                   --disable NEED_MULTIPLE_NODES
+                   -d NEED_MULTIPLE_NODES
   fi
 
   # Compress modules by default (following Arch's kernel)
   if [ "$_compress_modules" = "y" ]; then
     msg2 "Compress Modules"
     scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19 \
-                   --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
+                   -e CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
                    --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22 \
                    --set-val CONFIG_ZSTD_COMP_VAL 22
     msg2 "Done Compress Modules"
@@ -177,13 +175,13 @@ prepare() {
   scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "XANMOD-X86_64-V3"
 
   msg2 "AMD PSTATE"
-  scripts/config  --enable CONFIG_X86_AMD_PSTATE
+  scripts/config  -e CONFIG_X86_AMD_PSTATE
 
   msg2 "Enable v4l2loopback support"
-  scripts/config --enable CONFIG_V4L2_LOOPBACK
+  scripts/config -e CONFIG_V4L2_LOOPBACK
 
   msg2 "Enable WINE FASTSYNC"
-  scripts/config --enable WINESYNC
+  scripts/config -e WINESYNC
 
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
@@ -191,13 +189,13 @@ prepare() {
   
 
   msg2 "Enabling KBUILD_CFLAGS -O3..."
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
-                 --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+  scripts/config -d CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
+                 -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module TCP_CONG_CUBIC \
-                 --disable DEFAULT_CUBIC \
+                 -d DEFAULT_CUBIC \
                  -e TCP_CONG_BBR2 \
                  -e DEFAULT_BBR2 \
                  --set-str DEFAULT_TCP_CONG bbr2
@@ -205,122 +203,51 @@ prepare() {
   # BBR2 doesn't work properly with FQ_CODEL
   msg2 "Disabling fq_codel by default..."
   scripts/config --module NET_SCH_FQ_CODEL \
-                 --enable NET_SCH_FQ \
-                 --disable DEFAULT_FQ_CODEL \
-                 --enable DEFAULT_FQ \
+                 -e NET_SCH_FQ \
+                 -d DEFAULT_FQ_CODEL \
+                 -e DEFAULT_FQ \
                  --set-str DEFAULT_NET_SCH fq
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC \
-                 --disable CONFIG_DEFAULT_CUBIC
+                 -d CONFIG_DEFAULT_CUBIC
 
   msg2 "Enabling multigenerational LRU..."
-  scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG \
-                 --enable CONFIG_LRU_GEN \
-                 --enable CONFIG_LRU_GEN_ENABLED \
-                 --disable CONFIG_LRU_GEN_STATS
+  scripts/config -e CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG \
+                 -e CONFIG_LRU_GEN \
+                 -e CONFIG_LRU_GEN_ENABLED \
+                 -d CONFIG_LRU_GEN_STATS
 
   msg2 "Enabling DAMON Data Access Monitoring "
-  scripts/config --enable CONFIG_DAMON \
-                 --enable CONFIG_DAMON_VADDR \
-                 --enable CONFIG_DAMON_DBGFS \
-                 --enable CONFIG_DAMON_SYSFS \
-                 --enable CONFIG_DAMON_PADDR \
-                 --enable CONFIG_DAMON_RECLAIM \
-                 --enable CONFIG_DAMON_LRU_SORT
+  scripts/config -e CONFIG_DAMON \
+                 -e CONFIG_DAMON_VADDR \
+                 -e CONFIG_DAMON_DBGFS \
+                 -e CONFIG_DAMON_SYSFS \
+                 -e CONFIG_DAMON_PADDR \
+                 -e CONFIG_DAMON_RECLAIM \
+                 -e CONFIG_DAMON_LRU_SORT
 
   msg2 "Change zram zswap compression to ZSTD"
-  scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE \
-                 --enable CONFIG_ZRAM_DEF_COMP_ZSTD \
+  scripts/config -d CONFIG_ZRAM_DEF_COMP_LZORLE \
+                 -e CONFIG_ZRAM_DEF_COMP_ZSTD \
                  --set-str CONFIG_ZRAM_DEF_COMP zstd \
-                 --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
-                 --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \
+                 -d CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
+                 -e CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \
                  --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
 
   msg2 "Enable Anbox"
-  scripts/config --enable CONFIG_ASHMEM \
-                 --enable CONFIG_ANDROID \
-                 --enable CONFIG_ANDROID_BINDER_IPC \
-                 --enable CONFIG_ANDROID_BINDERFS \
-                 --enable CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
+  scripts/config -e CONFIG_ASHMEM \
+                 -e CONFIG_ANDROID \
+                 -e CONFIG_ANDROID_BINDER_IPC \
+                 -e CONFIG_ANDROID_BINDERFS \
+                 -e CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
 
   msg2 "Enable NTFS + NTFS3"
   scripts/config --module CONFIG_NTFS_FS \
                  --module CONFIG_NTFS3_FS \
-                 --enable CONFIG_NTFS3_64BIT_CLUSTER \
-                 --enable CONFIG_NTFS3_LZX_XPRESS \
-                 --enable CONFIG_NTFS3_FS_POSIX_ACL
-
-  msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config --disable RANDOM_DEFAULT_IMPL \
-                 --enable LRNG \
-                 --enable LRNG_SHA256 \
-                 --enable LRNG_COMMON_DEV_IF \
-                 --enable LRNG_DRNG_ATOMIC \
-                 --enable LRNG_SYSCTL \
-                 --enable LRNG_RANDOM_IF \
-                 --enable LRNG_AIS2031_NTG1_SEEDING_STRATEGY \
-                 --module LRNG_KCAPI_IF \
-                 --module LRNG_HWRAND_IF \
-                 --enable LRNG_DEV_IF \
-                 --enable LRNG_RUNTIME_ES_CONFIG \
-                 --enable LRNG_IRQ_DFLT_TIMER_ES \
-                 --disable LRNG_SCHED_DFLT_TIMER_ES \
-                 --enable LRNG_TIMER_COMMON \
-                 --disable LRNG_COLLECTION_SIZE_256 \
-                 --disable LRNG_COLLECTION_SIZE_512 \
-                 --enable LRNG_COLLECTION_SIZE_1024 \
-                 --disable LRNG_COLLECTION_SIZE_2048 \
-                 --disable LRNG_COLLECTION_SIZE_4096 \
-                 --disable LRNG_COLLECTION_SIZE_8192 \
-                 --set-val LRNG_COLLECTION_SIZE 1024 \
-                 --enable LRNG_HEALTH_TESTS \
-                 --set-val LRNG_RCT_CUTOFF 31 \
-                 --set-val LRNG_APT_CUTOFF 325 \
-                 --enable LRNG_IRQ \
-                 --enable LRNG_CONTINUOUS_COMPRESSION_ENABLED \
-                 --disable LRNG_CONTINUOUS_COMPRESSION_DISABLED \
-                 --enable LRNG_ENABLE_CONTINUOUS_COMPRESSION \
-                 --enable LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
-                 --set-val LRNG_IRQ_ENTROPY_RATE 256 \
-                 --enable LRNG_JENT \
-                 --set-val LRNG_JENT_ENTROPY_RATE 16 \
-                 --enable LRNG_CPU \
-                 --set-val LRNG_CPU_FULL_ENT_MULTIPLIER 1 \
-                 --set-val LRNG_CPU_ENTROPY_RATE 8 \
-                 --enable LRNG_SCHED \
-                 --set-val LRNG_SCHED_ENTROPY_RATE 4294967295 \
-                 --enable LRNG_DRNG_CHACHA20 \
-                 --module LRNG_DRBG \
-                 --module LRNG_DRNG_KCAPI \
-                 --enable LRNG_SWITCH \
-                 --enable LRNG_SWITCH_HASH \
-                 --module LRNG_HASH_KCAPI \
-                 --enable LRNG_SWITCH_DRNG \
-                 --module LRNG_SWITCH_DRBG \
-                 --module LRNG_SWITCH_DRNG_KCAPI \
-                 --enable LRNG_DFLT_DRNG_CHACHA20 \
-                 --disable LRNG_DFLT_DRNG_DRBG \
-                 --disable LRNG_DFLT_DRNG_KCAPI \
-                 --enable LRNG_TESTING_MENU \
-                 --disable LRNG_RAW_HIRES_ENTROPY \
-                 --disable LRNG_RAW_JIFFIES_ENTROPY \
-                 --disable LRNG_RAW_IRQ_ENTROPY \
-                 --disable LRNG_RAW_RETIP_ENTROPY \
-                 --disable LRNG_RAW_REGS_ENTROPY \
-                 --disable LRNG_RAW_ARRAY \
-                 --disable LRNG_IRQ_PERF \
-                 --disable LRNG_RAW_SCHED_HIRES_ENTROPY \
-                 --disable LRNG_RAW_SCHED_PID_ENTROPY \
-                 --disable LRNG_RAW_SCHED_START_TIME_ENTROPY \
-                 --disable LRNG_RAW_SCHED_NVCSW_ENTROPY \
-                 --disable LRNG_SCHED_PERF \
-                 --disable LRNG_ACVT_HASH \
-                 --disable LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
-                 --disable LRNG_TEST_CPU_ES_COMPRESSION \
-                 --enable LRNG_SELFTEST \
-                 --disable LRNG_SELFTEST_PANIC \
-                 --disable LRNG_RUNTIME_FORCE_SEEDING_DISABLE
+                 -e CONFIG_NTFS3_64BIT_CLUSTER \
+                 -e CONFIG_NTFS3_LZX_XPRESS \
+                 -e CONFIG_NTFS3_FS_POSIX_ACL
 
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
@@ -360,7 +287,9 @@ prepare() {
     fi
   fi
 
+  msg2 "make ${_compiler_flags} olddefconfig"
   make ${_compiler_flags} olddefconfig
+  #diff -u CONFIGS/xanmod/gcc/${_config} .config || :
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
@@ -376,6 +305,7 @@ prepare() {
 build() {
   cd linux-${_major}
   make ${_compiler_flags} all
+  make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
 _package() {
@@ -390,8 +320,7 @@ _package() {
             V4L2LOOPBACK-MODULE)
 
   cd linux-${_major}
-  local kernver="$(<version)"
-  local modulesdir="$pkgdir/usr/lib/modules/$kernver"
+  local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
 
   msg2 "Installing boot image..."
   # systemd expects to find the kernel here to allow hibernation
@@ -402,10 +331,11 @@ _package() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   msg2 "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+  ZSTD_CLEVEL=19 make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
+    DEPMOD=/doesnt/exist modules_install  # Suppress depmod
 
-  # remove build and source links
-  rm "$modulesdir"/{source,build}
+  # remove build link
+  rm "$modulesdir"/build
 }
 
 _package-headers() {
@@ -417,7 +347,7 @@ _package-headers() {
 
   msg2 "Installing build files..."
   install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
-    localversion.* version vmlinux
+    localversion.* version vmlinux tools/bpf/bpftool/vmlinux.h
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
   install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
   cp -t "$builddir" -a scripts
@@ -426,7 +356,7 @@ _package-headers() {
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
   # required when DEBUG_INFO_BTF_MODULES is enabled
-  if [ -f "tools/bpf/resolve_btfids/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
+  install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
 
   msg2 "Installing headers..."
   cp -t "$builddir" -a include
@@ -470,7 +400,7 @@ _package-headers() {
   msg2 "Stripping build tools..."
   local file
   while read -rd '' file; do
-    case "$(file -bi "$file")" in
+    case "$(file -Sib "$file")" in
       application/x-sharedlib\;*)      # Libraries (.so)
         strip -v $STRIP_SHARED "$file" ;;
       application/x-archive\;*)        # Libraries (.a)
@@ -484,7 +414,7 @@ _package-headers() {
 
   msg2 "Stripping vmlinux..."
   strip -v $STRIP_STATIC "$builddir/vmlinux"
-  
+
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
