@@ -1,4 +1,4 @@
-name: Bootstrap Stage 1
+name: LLVM Bootstrap
 on:
   workflow_dispatch:
   push:
