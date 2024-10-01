@@ -199,9 +199,9 @@ package() {
     mkdir -p "${srcdir:?}/llvm-project/build/docs/ocamldoc/html/"
   fi
 
-  msg2 "Installing...."
   DESTDIR="${pkgdir:?}" ninja -C build install
 
+  msg2 "Setup lit"
   pushd llvm/utils/lit || (
     echo -e "\E[1;31mpushd utils/lit - Package Failed! \E[0m"
     exit 1
@@ -212,23 +212,29 @@ package() {
     echo -e "\E[1;31mpopd - Package Failed!  \E[0m"
     exit 1
   )
+  msg2 "Done Setup lit"
 
+
+  msg2 "Setup config.h"
   if [[ "${CARCH:?}" == "x86_64" ]]; then
     mv "${pkgdir:?}/usr/include/llvm/Config/llvm-config"{,-64}.h
     cp "${srcdir:?}/llvm-config.h" "${pkgdir:?}/usr/include/llvm/Config/llvm-config.h"
   fi
 
+  msg2 "Setup LLVMgold"
   # Symlink LLVMgold.so from /usr/lib/bfd-plugins
   # https://bugs.archlinux.org/task/28479
   mkdir -p "${pkgdir:?}/usr/lib/bfd-plugins"
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
 
+  msg2 "symlink to /usr/lib"
   # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
   pushd ${pkgdir:?}/usr/lib/
   ln -s x86_64-pc-linux-gnu/* .
   popd
 
 
+  msg2 "Setup clang"
   # Clang
   site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -d "${pkgdir:?}/${site_packages}"
