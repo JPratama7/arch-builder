@@ -201,7 +201,6 @@ package() {
 
   DESTDIR="${pkgdir:?}" ninja -C build install
 
-  msg2 "Setup lit"
   pushd llvm/utils/lit || (
     echo -e "\E[1;31mpushd utils/lit - Package Failed! \E[0m"
     exit 1
@@ -212,29 +211,18 @@ package() {
     echo -e "\E[1;31mpopd - Package Failed!  \E[0m"
     exit 1
   )
-  msg2 "Done Setup lit"
 
 
-  msg2 "Setup config.h"
   if [[ "${CARCH:?}" == "x86_64" ]]; then
     mv "${pkgdir:?}/usr/include/llvm/Config/llvm-config"{,-64}.h
     cp "${srcdir:?}/llvm-config.h" "${pkgdir:?}/usr/include/llvm/Config/llvm-config.h"
   fi
 
-  msg2 "Setup LLVMgold"
   # Symlink LLVMgold.so from /usr/lib/bfd-plugins
   # https://bugs.archlinux.org/task/28479
   mkdir -p "${pkgdir:?}/usr/lib/bfd-plugins"
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
 
-  msg2 "symlink to /usr/lib"
-  # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
-  pushd ${pkgdir:?}/usr/lib/
-  ln -s x86_64-pc-linux-gnu/* .
-  popd
-
-
-  msg2 "Setup clang"
   # Clang
   site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -d "${pkgdir:?}/${site_packages}"
@@ -261,21 +249,74 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # Fallback for llvm 16
-  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
+  # Fallback for llvm 18
+  # Array of actual files
+  _llvm_libs=(
+    libclang-cpp.so.18.1
+    libclang.so.18.1.8
+    liblldb.so.18.1.8
+    liblldbIntelFeatures.so.18.1
+    libLLVM.so.18.1
+    libLLVMSPIRVLib.so.18.1
+    libLTO.so.18.1
+    libMLIR.so.18.1
+    libmlir_arm_runner_utils.so.18.1
+    libmlir_arm_sme_abi_stubs.so.18.1
+    libmlir_async_runtime.so.18.1
+    libmlir_c_runner_utils.so.18.1
+    libmlir_float16_utils.so.18.1
+    libmlir_runner_utils.so.18.1
+    libomptarget.rtl.amdgpu.so.18.1
+    libomptarget.rtl.cuda.so.18.1
+    libomptarget.rtl.x86_64.so.18.1
+    libomptarget.so.18.1
+    libRemarks.so.18.1
+  )
 
-  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
-  #   echo "- Copy libLLVM-16.0.6.so"
-  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
-  # else
-  #   echo "- libLLVM-16.0.6.so exist"
-  # fi
+  # Array of symlinks and their targets
+  declare -A _llvm_symlinks=(
+    ["libclang-cpp.so"]="libclang-cpp.so.18.1"
+    ["libclang.so"]="libclang.so.18.1"
+    ["libclang.so.18.1"]="libclang.so.18.1.8"
+    ["liblldb.so"]="liblldb.so.18.1"
+    ["liblldb.so.18.1"]="liblldb.so.18.1.8"
+    ["liblldbIntelFeatures.so"]="liblldbIntelFeatures.so.18.1"
+    ["libLLVM-18.so"]="libLLVM.so.18.1"
+    ["libLLVM.so"]="libLLVM.so.18.1"
+    ["libLLVMSPIRVLib.so"]="libLLVMSPIRVLib.so.18.1"
+    ["libLTO.so"]="libLTO.so.18.1"
+    ["libMLIR.so"]="libMLIR.so.18.1"
+    ["libmlir_arm_runner_utils.so"]="libmlir_arm_runner_utils.so.18.1"
+    ["libmlir_arm_sme_abi_stubs.so"]="libmlir_arm_sme_abi_stubs.so.18.1"
+    ["libmlir_async_runtime.so"]="libmlir_async_runtime.so.18.1"
+    ["libmlir_c_runner_utils.so"]="libmlir_c_runner_utils.so.18.1"
+    ["libmlir_float16_utils.so"]="libmlir_float16_utils.so.18.1"
+    ["libmlir_runner_utils.so"]="libmlir_runner_utils.so.18.1"
+    ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
+    ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
+    ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
+    ["libomptarget.so"]="libomptarget.so.18.1"
+    ["libRemarks.so"]="libRemarks.so.18.1"
+  )
+
+  # Copy actual library files
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exists"
+    fi
+  done
+
+  # Create symlinks
+  for symlink in "${!_llvm_symlinks[@]}"; do
+    target="${_llvm_symlinks[$symlink]}"
+    if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
+      echo "- Create symlink ${symlink:?} -> ${target:?}"
+      ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
+    else
+      echo "- Symlink ${symlink:?} exists"
+    fi
+  done
 }
