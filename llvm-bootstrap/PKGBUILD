@@ -151,10 +151,8 @@ build() {
     -DLLVM_ENABLE_FFI=ON \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;openmp;compiler-rt;polly" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
-    -DLLDB_USE_SYSTEM_SIX=1 \
     -DLIBOMP_INSTALL_ALIASES=OFF \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF \
-    -DPOLLY_ENABLE_GPGPU_CODEGEN=OFF \
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
     "${_extra_build_flags[@]}"
 
@@ -201,6 +199,7 @@ package() {
     mkdir -p "${srcdir:?}/llvm-project/build/docs/ocamldoc/html/"
   fi
 
+  msg2 "Installing...."
   DESTDIR="${pkgdir:?}" ninja -C build install
 
   pushd llvm/utils/lit || (
