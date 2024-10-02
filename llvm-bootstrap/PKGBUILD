@@ -254,18 +254,8 @@ package() {
   _llvm_libs=(
     libclang-cpp.so.18.1
     libclang.so.18.1.8
-    liblldb.so.18.1.8
-    liblldbIntelFeatures.so.18.1
     libLLVM.so.18.1
-    libLLVMSPIRVLib.so.18.1
     libLTO.so.18.1
-    libMLIR.so.18.1
-    libmlir_arm_runner_utils.so.18.1
-    libmlir_arm_sme_abi_stubs.so.18.1
-    libmlir_async_runtime.so.18.1
-    libmlir_c_runner_utils.so.18.1
-    libmlir_float16_utils.so.18.1
-    libmlir_runner_utils.so.18.1
     libomptarget.rtl.amdgpu.so.18.1
     libomptarget.rtl.cuda.so.18.1
     libomptarget.rtl.x86_64.so.18.1
@@ -278,20 +268,10 @@ package() {
     ["libclang-cpp.so"]="libclang-cpp.so.18.1"
     ["libclang.so"]="libclang.so.18.1"
     ["libclang.so.18.1"]="libclang.so.18.1.8"
-    ["liblldb.so"]="liblldb.so.18.1"
-    ["liblldb.so.18.1"]="liblldb.so.18.1.8"
-    ["liblldbIntelFeatures.so"]="liblldbIntelFeatures.so.18.1"
     ["libLLVM-18.so"]="libLLVM.so.18.1"
     ["libLLVM.so"]="libLLVM.so.18.1"
     ["libLLVMSPIRVLib.so"]="libLLVMSPIRVLib.so.18.1"
     ["libLTO.so"]="libLTO.so.18.1"
-    ["libMLIR.so"]="libMLIR.so.18.1"
-    ["libmlir_arm_runner_utils.so"]="libmlir_arm_runner_utils.so.18.1"
-    ["libmlir_arm_sme_abi_stubs.so"]="libmlir_arm_sme_abi_stubs.so.18.1"
-    ["libmlir_async_runtime.so"]="libmlir_async_runtime.so.18.1"
-    ["libmlir_c_runner_utils.so"]="libmlir_c_runner_utils.so.18.1"
-    ["libmlir_float16_utils.so"]="libmlir_float16_utils.so.18.1"
-    ["libmlir_runner_utils.so"]="libmlir_runner_utils.so.18.1"
     ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
     ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
     ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
