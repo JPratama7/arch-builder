@@ -149,7 +149,8 @@ build() {
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;openmp;compiler-rt;polly" \
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;compiler-rt;polly" \
+    -DLLVM_ENABLE_RUNTIMES="openmp" \
     -DCLANG_LINK_CLANG_DYLIB=ON \
     -DLIBOMP_INSTALL_ALIASES=OFF \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF \
@@ -256,8 +257,6 @@ package() {
     libclang.so.18.1.8
     libLLVM.so.18.1
     libLTO.so.18.1
-    libomptarget.rtl.amdgpu.so.18.1
-    libomptarget.rtl.cuda.so.18.1
     libomptarget.rtl.x86_64.so.18.1
     libomptarget.so.18.1
     libRemarks.so.18.1
@@ -272,8 +271,6 @@ package() {
     ["libLLVM.so"]="libLLVM.so.18.1"
     ["libLLVMSPIRVLib.so"]="libLLVMSPIRVLib.so.18.1"
     ["libLTO.so"]="libLTO.so.18.1"
-    ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
-    ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
     ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
     ["libomptarget.so"]="libomptarget.so.18.1"
     ["libRemarks.so"]="libRemarks.so.18.1"
