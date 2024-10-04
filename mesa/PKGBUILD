@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=24.2.3
+pkgver=24.2.4
 _pkgver=${pkgver//_/-}
 pkgrel=2
 epoch=1
