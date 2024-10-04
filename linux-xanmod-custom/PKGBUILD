@@ -18,7 +18,7 @@ fi
 
 pkgbase=linux-xanmod-custom
 _major=6.11
-pkgver=${_major}.0
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -52,15 +52,22 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
 
         "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
-        "${_lucjan}cachyos-fixes-patches/0001-x86-amd_nb-Add-new-PCI-IDs-for-AMD-family-1Ah-model-.patch"
+        "${_lucjan}cachyos-fixes-patches-v2/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
         "${_lucjan}mm-patches/0001-mm-patches.patch"
-        "${_lucjan}uksmd-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
+        "${_lucjan}uksmd-patches-v2/0001-uksmd-patches.patch"
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
-        
+
+        "${_lucjan}openvpn-patches-v2-all/0001-openvpn-patches.patch"
+        "${_lucjan}perf-patches/0001-perf-6.11-merge-changes-from-dev-tree.patch"
+        "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
+
+        "${_tkg}0013-optimize_harder_O3.patch"
+        "${_cachy}misc/0001-acpi-call.patch"
+        "${_tkg}0003-glitched-base.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -109,8 +116,10 @@ prepare() {
   cp -vf CONFIGS/xanmod/gcc/config_x86-64-v3 .config
 
 
-  # enable ECHO Scheduler
-  scripts/config -e ECHO_SCHED
+  # enable BORE Scheduler
+  scripts/config -e CONFIG_SCHED_BORE
+
+  scripts/config  --set-val X86_64_VERSION 3
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
@@ -122,7 +131,6 @@ prepare() {
             -e ARCH_SUPPORTS_LTO_CLANG_THIN \
             -d CONFIG_LTO_NONE \
             -e HAS_LTO_CLANG \
-            -d LTO_CLANG_FULL \
             -e CONFIG_LTO_CLANG_FULL \
             -e HAVE_GCC_PLUGINS
   fi
