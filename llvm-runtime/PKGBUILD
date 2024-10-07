@@ -1,6 +1,6 @@
 pkgname=llvm-runtime
-pkgver=18.1.8
-pkgrel=3
+pkgver=19.1.1
+pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -34,8 +34,6 @@ makedepends_x86_64=('lib32-gcc-libs')
 source=(
   "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
   'llvm-config.h'
-  clangd-handle-missing-ending-brace.patch::https://github.com/llvm/llvm-project/commit/9d1dada57741.patch
-  SelectionDAG.patch::https://github.com/llvm/llvm-project/commit/46505b3cbfc5.patch
 )
 
 sha256sums=(
@@ -78,14 +76,6 @@ prepare() {
     exit 1
   )
 
-  # https://github.com/llvm/llvm-project/issues/82431
-  sed '/^diff.*inline-asm-memop.ll/,$d' ../$pkgname-SelectionDAG.patch | patch -Np2
-
-
-  # https://github.com/clangd/clangd/issues/1559
-  sed 's|clang-tools-extra|clang/tools/extra|' \
-    clangd-handle-missing-ending-brace.patch | patch -Np2
-
   # Attempt to convert script to Python 3
   2to3 -wn --no-diffs \
     clang-tools-extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
@@ -109,31 +99,32 @@ build() {
   export CFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
 
-  cmake -S llvm -B build -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_SKIP_RPATH=ON \
-    -DLLVM_BUILD_LLVM_DYLIB=ON \
-    -DLLVM_LINK_LLVM_DYLIB=ON \
-    -DLLVM_INSTALL_UTILS=ON \
-    -DLLVM_ENABLE_RTTI=ON \
-    -DCLANG_LINK_CLANG_DYLIB=ON \
-    -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
-    -DLLVM_ENABLE_FFI=ON \
-    -DLLVM_BUILD_TESTS=OFF \
-    -DLLVM_BUILD_DOCS=OFF \
-    -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)" \
-    -DLLVM_ENABLE_SPHINX=OFF \
-    -DLLVM_ENABLE_PIC=ON \
-    -DLIBCXX_INSTALL_MODULES=ON \
-    -DLLVM_ENABLE_DOXYGEN=OFF \
-    -DSPHINX_WARNINGS_AS_ERRORS=OFF \
-    -DLLVM_BINUTILS_INCDIR=/usr/include \
-    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' \
-    -DLIBCLC_TARGETS_TO_BUILD="all" \
-    -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp" \
-    -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*} \
-    "${_extra_build_flags[@]}"
+  _extra_build_flags+=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_SKIP_RPATH=ON
+    -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)"
+    -DLLVM_BINUTILS_INCDIR=/usr/include
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_ENABLE_RTTI=ON
+    -DLLVM_ENABLE_FFI=ON
+    -DLLVM_BUILD_TESTS=OFF
+    -DLLVM_BUILD_DOCS=OFF
+    -DLLVM_ENABLE_BINDINGS=ON
+    -DLLVM_ENABLE_SPHINX=OFF
+    -DLLVM_ENABLE_PIC=ON
+    -DLLVM_ENABLE_DOXYGEN=OFF
+    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra'
+    -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp"
+    -DSPHINX_WARNINGS_AS_ERRORS=OFF
+    -DCLANG_LINK_CLANG_DYLIB=ON
+    -DCLANG_DEFAULT_PIE_ON_LINUX=ON
+    -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*}
+  )
+
+  cmake -S llvm -B build -G Ninja "${_extra_build_flags[@]}"
     ninja -C build
     
   ninja -C build ocaml_doc
@@ -204,21 +195,68 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/compiler-rt/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/compiler-rt-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
   install -Dm644 "$srcdir"/llvm-project/libclc/LICENSE.TXT "${pkgdir:?}/usr/share/licenses/${pkgname}/libclc-LICENSE"
-  # Fallback for llvm 16
-  # _llvm_libs=(libLLVM-16.so libLTO.so.16 libRemarks.so.16 libclang.so.16.0.6 libclang-cpp.so.16)
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exist"
-  #   fi
-  # done
 
-  # if [[ ! -e "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so" ]]; then
-  #   echo "- Copy libLLVM-16.0.1.so"
-  #   ln -s /usr/lib/libLLVM-16.so "${pkgdir:?}/usr/lib/libLLVM-16.0.6.so"
-  # else
-  #   echo "- libLLVM-16.0.6.so exist"
-  # fi
+  # Fallback for llvm 18
+  # Actual files
+  local _llvm_libs=(
+    libclang-cpp.so.18.1
+    libclang.so.18.1.8
+    libLLVM.so.18.1
+    libLTO.so.18.1
+    libMLIR.so.18.1
+    libmlir_arm_runner_utils.so.18.1
+    libmlir_arm_sme_abi_stubs.so.18.1
+    libmlir_async_runtime.so.18.1
+    libmlir_c_runner_utils.so.18.1
+    libmlir_float16_utils.so.18.1
+    libmlir_runner_utils.so.18.1
+    libomptarget.rtl.amdgpu.so.18.1
+    libomptarget.rtl.cuda.so.18.1
+    libomptarget.rtl.x86_64.so.18.1
+    libomptarget.so.18.1
+    libRemarks.so.18.1
+  )
+
+  # Symlinks and their targets
+  declare -A _llvm_symlinks=(
+    ["libclang-cpp.so"]="libclang-cpp.so.18.1"
+    ["libclang.so"]="libclang.so.18.1"
+    ["libclang.so.18.1"]="libclang.so.18.1.8"
+    ["libLLVM-18.so"]="libLLVM.so.18.1"
+    ["libLLVM.so"]="libLLVM.so.18.1"
+    ["libLTO.so"]="libLTO.so.18.1"
+    ["libMLIR.so"]="libMLIR.so.18.1"
+    ["libmlir_arm_runner_utils.so"]="libmlir_arm_runner_utils.so.18.1"
+    ["libmlir_arm_sme_abi_stubs.so"]="libmlir_arm_sme_abi_stubs.so.18.1"
+    ["libmlir_async_runtime.so"]="libmlir_async_runtime.so.18.1"
+    ["libmlir_c_runner_utils.so"]="libmlir_c_runner_utils.so.18.1"
+    ["libmlir_float16_utils.so"]="libmlir_float16_utils.so.18.1"
+    ["libmlir_runner_utils.so"]="libmlir_runner_utils.so.18.1"
+    ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
+    ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
+    ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
+    ["libomptarget.so"]="libomptarget.so.18.1"
+    ["libRemarks.so"]="libRemarks.so.18.1"
+  )
+
+  # Copy actual library files
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exists"
+    fi
+  done
+
+  # Create symlinks
+  for symlink in "${!_llvm_symlinks[@]}"; do
+    target="${_llvm_symlinks[$symlink]}"
+    if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
+      echo "- Create symlink ${symlink:?} -> ${target:?}"
+      ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
+    else
+      echo "- Symlink ${symlink:?} exists"
+    fi
+  done
 }
