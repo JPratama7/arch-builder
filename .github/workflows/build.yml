@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          packettracer, thorium,  mimalloc, earlyoom, linux-xanmod-custom
+          packettracer, thorium,  mimalloc, earlyoom, linux-lilium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
