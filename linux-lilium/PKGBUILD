@@ -3,7 +3,6 @@
 # Contributor: Torge Matthies <openglfreak at googlemail dot com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
-
 _microarchitecture=92
 use_numa=y
 use_tracers=y
@@ -178,7 +177,7 @@ prepare() {
   # EROFS as module
   scripts/config --module CONFIG_EROFS_FS
 
-  # enable BORE Scheduler
+  # enable BORE Scheduler + RT
   scripts/config  -e SCHED_BORE \
                   -e PREEMPT_COUNT \
                   -e PREEMPTION \
@@ -244,15 +243,16 @@ prepare() {
   # Compress modules by default (following Arch's kernel)
   if [ "$_compress_modules" = "y" ]; then
     msg2 "Compress Modules"
-    scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19 \
-                   -e CONFIG_MODULE_COMPRESS_ZSTD_ULTRA \
-                   --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22 \
-                   --set-val CONFIG_ZSTD_COMP_VAL 22
-    msg2 "Done Compress Modules"
+    scripts/config -e CONFIG_MODULE_COMPRESS_ZSTD 
   fi
 
   msg2 "Set HOSTNAME"
-  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "CUSTORIZER"
+  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "Lilium"
+
+  ## Use Arch Wiki TOMOYO configuration: https://wiki.archlinux.org/title/TOMOYO_Linux#Installation_2
+  msg2 "Replacing Debian TOMOYO configuration with upstream Arch Linux..."
+  scripts/config --set-str CONFIG_SECURITY_TOMOYO_POLICY_LOADER      "/usr/bin/tomoyo-init"
+  scripts/config --set-str CONFIG_SECURITY_TOMOYO_ACTIVATION_TRIGGER "/usr/lib/systemd/systemd"
 
   msg2 "AMD PSTATE"
   scripts/config  -e CONFIG_X86_AMD_PSTATE
@@ -267,11 +267,9 @@ prepare() {
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
   
-
   msg2 "Enabling KBUILD_CFLAGS -O3..."
   scripts/config -d CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
                  -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
-
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module TCP_CONG_CUBIC \
@@ -390,14 +388,26 @@ build() {
 
 _package() {
   pkgdesc="The Linux kernel and modules with Xanmod patches"
-  depends=(coreutils kmod initramfs)
-  optdepends=('crda: to set the correct wireless channels of your country'
-              'linux-firmware: firmware images needed for some devices')
-  provides=(VIRTUALBOX-GUEST-MODULES
-            WIREGUARD-MODULE
-            KSMBD-MODULE
-            NTFS3-MODULE
-            V4L2LOOPBACK-MODULE)
+  depends=(
+    coreutils 
+    kmod 
+    initramfs
+  )
+  optdepends=(
+    'crda: to set the correct wireless channels of your country'
+    'linux-firmware: firmware images needed for some devices'
+  )
+  provides=(
+    VIRTUALBOX-GUEST-MODULES
+    WIREGUARD-MODULE
+    KSMBD-MODULE
+    NTFS3-MODULE
+    V4L2LOOPBACK-MODULE
+  )
+  replaces=(
+    virtualbox-guest-modules-arch
+    wireguard-arch
+  )
 
   cd linux-${_major}
   local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
