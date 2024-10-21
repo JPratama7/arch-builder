@@ -115,7 +115,7 @@ build() {
     export CC_LD=lld
     export CXX_LD=lld
     export HOSTLD=ld.lld
-    _extra_build_flags+=(-DLLVM_USE_LINKER=lld)
+    _extra_build_flags+=(-DLLVM_ENABLE_LLD=ON)
   fi
 
   while true; do
