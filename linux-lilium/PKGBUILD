@@ -179,7 +179,17 @@ prepare() {
   scripts/config --module CONFIG_EROFS_FS
 
   # enable BORE Scheduler
-  scripts/config -e CONFIG_SCHED_BORE
+  scripts/config  -e SCHED_BORE \
+                  -e PREEMPT_COUNT \
+                  -e PREEMPTION \
+                  -d PREEMPT_VOLUNTARY \
+                  -d PREEMPT \
+                  -d PREEMPT_NONE \
+                  -d PREEMPT_RT \
+                  -d PREEMPT_DYNAMIC \
+                  -e PREEMPT_BUILD \
+                  -e PREEMPT_BUILD_AUTO \
+                  -e PREEMPT_AUTO;
 
   scripts/config  --set-val X86_64_VERSION 1
 
