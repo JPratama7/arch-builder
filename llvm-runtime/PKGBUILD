@@ -181,11 +181,6 @@ package() {
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
   cp -a clang/bindings/python/clang "${pkgdir:?}/${site_packages}/"
 
-  # Symlink all files inside x86_64-pc-linux-gnu to /usr/lib/
-  pushd ${pkgdir:?}/usr/lib/
-  ln -s x86_64-pc-linux-gnu/* .
-  popd
-
   _python_optimize "${pkgdir:?}/usr/share" "${pkgdir:?}/${site_packages}"
 
   # Licenses
