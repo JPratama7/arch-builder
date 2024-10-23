@@ -8,18 +8,18 @@ pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
 
 provides=(
   'llvm' "llvm=${pkgver}" 'llvm-libs' 'clang' 'clang-tools-extra'
-  'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental'
+  'llvm-ocaml' 'libc++' 'libc++abi' 'libc++experimental' 'compiler-rt'
 )
 
 replaces=(
-  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind'
+  'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'compiler-rt'
   'libc++' 'libc++abi' 'libc++experimental' 'clang' 'clang-tools-extra'
 )
 
 conflicts=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'libunwind' 'clang' 'clang-tools-extra'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
-  'libc++abi' 'libc++experimental'
+  'libc++abi' 'libc++experimental' 'compiler-rt'
 )
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
