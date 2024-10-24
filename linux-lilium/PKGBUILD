@@ -17,7 +17,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.11
-pkgver=${_major}.4
+pkgver=${_major}.5
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -81,7 +81,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
         "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
-        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v11/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
         "${_lucjan}mm-patches/0001-mm-patches.patch"
@@ -94,10 +94,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}perf-patches/0001-perf-6.11-merge-changes-from-dev-tree.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}x86-patches/0001-x86-patches.patch"
+        "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
 
         "${_tkg}0013-optimize_harder_O3.patch"
         "${_lucjan}amd-patches/0001-amd-patches.patch"
-        "${_lucjan}amd-hfi-patches-all/0001-amd-hfi-patches.patch"
+        "${_lucjan}amd-hfi-patches-v4-all/0001-amd-hfi-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
         "${_tkg}0003-glitched-base.patch"
         )
