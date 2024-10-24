@@ -1,6 +1,6 @@
 pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, polly, lldb, lld"
-pkgver=19.1.1
+pkgver=19.1.2
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
@@ -9,20 +9,20 @@ license=('custom:Apache 2.0 with LLVM Exception')
 provides=(
   'llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
   'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt' 'openmp'
-  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental' 'bolt' 'mlir'
+  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental' 'llvm-bolt' 'mlir'
   )
 
 replaces=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp' 'mlir'
-  'libc++' 'libc++abi' 'libc++experimental' 'bolt'
+  'libc++' 'libc++abi' 'libc++experimental' 'llvm-bolt'
   )
 
 conflicts=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
-  'libc++abi' 'libc++experimental' 'bolt' 'mlir'
+  'libc++abi' 'libc++experimental' 'llvm-bolt' 'mlir'
   )
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
@@ -136,7 +136,7 @@ build() {
     export CC_LD=lld
     export CXX_LD=lld
     export HOSTLD=ld.lld
-    _extra_build_flags+=(-DLLVM_USE_LINKER=lld)
+    _extra_build_flags+=(-DLLVM_ENABLE_LLD=ON)
   fi
 
   while true; do
