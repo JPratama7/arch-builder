@@ -96,7 +96,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
         "${_lucjan}x86-patches/0001-x86-patches.patch"
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
-        "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
 
         "${_tkg}0013-optimize_harder_O3.patch"
         "${_lucjan}amd-patches/0001-amd-patches.patch"
