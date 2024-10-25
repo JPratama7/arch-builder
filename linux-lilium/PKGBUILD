@@ -80,11 +80,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
-        "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
-        "${_lucjan}cachyos-fixes-patches-v11/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}le9uo-patches-v2/0001-mm-6.11-add-le9uo.patch"
+        "${_lucjan}cachyos-fixes-patches-v16/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
-        "${_lucjan}mm-patches/0001-mm-patches.patch"
+        "${_lucjan}mm-cachyos-patches-v2/0001-mm-cachyos-patches.patch"
         "${_lucjan}uksmd-patches-v2/0001-uksmd-patches.patch"
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
