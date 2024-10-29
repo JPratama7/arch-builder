@@ -15,6 +15,7 @@ wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl,
 grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git,
 libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git,
 xdg-desktop-portal-hyprland-git cava zed-git hyprpicker-git libva-nvidia-driver-git
+beekeeper studio
 ```
 With GCC:
 ```
