@@ -32,8 +32,10 @@ jobs:
       #   run: |
       #     cd ${{ matrix.build }} && sed -i 's/+clang//g' PKGBUILD
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@gccnolto
+        uses: JPratama7/pkgbuild-action@original
         with:
+          clanged: "y"
+          officialRepo: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       # - name: Wait
