@@ -48,5 +48,5 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "./jp7-arch.*"
+          artifacts: "jp7-arch.db,jp7-arch.db.tar,jp7-arch.db.tar.old,jp7-arch.files,jp7-arch.files.tar,jp7-arch.files.tar.old"
           token: ${{ secrets.GITHUB_TOKEN }}
