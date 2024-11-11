@@ -37,10 +37,12 @@ jobs:
         with:
           repository: sarcasticadmin/empty-repo
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@clanged
+        uses: JPratama7/pkgbuild-action@original
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
+          clanged: "y"
+          clangedpflags: "y"
           cflags: "-funified-lto"
           cxxflags: "-funified-lto"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
@@ -78,7 +80,7 @@ jobs:
         with:
           repository: sarcasticadmin/empty-repo
       - id: makepkg
-        uses: JPratama7/pkgbuild-action@gcced
+        uses: JPratama7/pkgbuild-action@original
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
