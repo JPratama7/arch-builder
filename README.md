@@ -9,13 +9,13 @@ With Clang:
 ```
 microsoft-edge-dev-bin postman-bin geany-git tor-browser-bin 
 slimjet mpc-qt-git spotify insomnium lightdm-settings paru jamesdsp 
-wlogout trizen swww sweet-theme-git swaylock-effects eww mission-center,
-python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme,
-wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl,
-grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git,
+wlogout trizen swww sweet-theme-git swaylock-effects eww mission-center
+python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme
+wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl
+grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git
 libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git,
-xdg-desktop-portal-hyprland-git cava zed-git hyprpicker-git libva-nvidia-driver-git
-beekeeper studio
+xdg-desktop-portal-hyprland-git cava zed-git cava zed-git libva-nvidia-driver-git sourcegit
+slack-electron linux-lqx waydroid pwvucontrol
 ```
 With GCC:
 ```
