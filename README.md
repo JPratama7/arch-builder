@@ -20,7 +20,7 @@ slack-electron linux-lqx waydroid pwvucontrol
 With GCC:
 ```
 visual-studio-code-bin xampp zramd 7-zip jdk-lts jdk21-graalvm-ee-bin wget2-git,
-zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin premid-git github-desktop podman-desktop,
+zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin podman-desktop,
 yay aws-cli-v2
 ```
 
