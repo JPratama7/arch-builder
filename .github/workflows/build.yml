@@ -92,6 +92,7 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
+          officialRepo: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
