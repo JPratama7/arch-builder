@@ -42,9 +42,10 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
+          officialRepo: "y"
           clangedpflags: "y"
-          cflags: "-funified-lto"
-          cxxflags: "-funified-lto"
+          # cflags: "-funified-lto"
+          # cxxflags: "-funified-lto"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.14.0
