@@ -13,14 +13,14 @@ wlogout trizen swww sweet-theme-git swaylock-effects eww mission-center
 python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme
 wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl
 grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git
-libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git,
+libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git
 xdg-desktop-portal-hyprland-git cava zed-git cava zed-git libva-nvidia-driver-git sourcegit
 slack-electron linux-lqx waydroid pwvucontrol
 ```
 With GCC:
 ```
-visual-studio-code-bin xampp zramd 7-zip jdk-lts jdk21-graalvm-ee-bin wget2-git,
-zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin podman-desktop,
+visual-studio-code-bin xampp zramd 7-zip jdk-lts jdk21-graalvm-ee-bin wget2-git
+zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin podman-desktop
 yay aws-cli-v2
 ```
 
