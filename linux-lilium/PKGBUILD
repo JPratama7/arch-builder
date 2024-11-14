@@ -17,7 +17,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.11
-pkgver=${_major}.5
+pkgver=${_major}.7
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -30,7 +30,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-6.11.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.6.1
+_bore=5.7.3
 
 license=(GPL2)
 makedepends=(
@@ -81,7 +81,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
         "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
-        "${_lucjan}cachyos-fixes-patches-v16/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v19/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
         "${_lucjan}mm-cachyos-patches-v2/0001-mm-cachyos-patches.patch"
