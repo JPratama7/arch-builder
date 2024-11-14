@@ -80,26 +80,22 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
-        "${_lucjan}le9uo-patches/0001-mm-6.11-add-le9uo.patch"
-        "${_lucjan}cachyos-fixes-patches-v19/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v26/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
-        "${_lucjan}mm-cachyos-patches-v2/0001-mm-cachyos-patches.patch"
         "${_lucjan}uksmd-patches-v2/0001-uksmd-patches.patch"
-        "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
 
         "${_lucjan}openvpn-patches-v2-all/0001-openvpn-patches.patch"
-        "${_lucjan}perf-patches/0001-perf-6.11-merge-changes-from-dev-tree.patch"
+        "${_lucjan}perf-patches-v3-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
-        "${_lucjan}x86-patches/0001-x86-patches.patch"
+        "${_lucjan}x86-patches-v3/0001-x86-uaccess-Avoid-barrier_nospec-in-64-bit-copy_from.patch"
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
 
         "${_tkg}0013-optimize_harder_O3.patch"
-        "${_lucjan}amd-patches/0001-amd-patches.patch"
-        "${_lucjan}amd-hfi-patches-v4-all/0001-amd-hfi-patches.patch"
+        "${_lucjan}amd-hfi-patches-v6-all/0001-amd-hfi-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
         "${_tkg}0003-glitched-base.patch"
         )
