@@ -46,6 +46,7 @@ jobs:
           clangedpflags: "y"
           # cflags: "-funified-lto"
           # cxxflags: "-funified-lto"
+          ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.14.0
