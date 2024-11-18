@@ -27,7 +27,8 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
-          bootstrap: "y"
+          # bootstrap: "y"
+          clangedPolly: "y"
           clangedPFlags: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
