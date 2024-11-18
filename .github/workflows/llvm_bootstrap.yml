@@ -35,7 +35,8 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
-          officialRepo: "y"
+          clangedPFlags: "y"
+          clangedPolly: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       # - name: Wait
