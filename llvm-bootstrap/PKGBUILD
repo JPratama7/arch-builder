@@ -21,7 +21,7 @@ conflicts=('llvm' 'llvm-libs' 'clang' 'clang-analyzer'
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'compiler-rt' 'libisl')
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm' 'clang'
+  'git' 'ninja' 'cmake' 'llvm' 'clang' 'openmp'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark' 'mimalloc' 'libc++' 'libc++abi'
 )
