@@ -35,6 +35,7 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           officialRepo: "y"
+          gccPflags: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       # - name: Wait
