@@ -30,6 +30,8 @@ jobs:
           clangedpflags: "y"
           clangedPolly: "y"
           bootstrap: "y"
+          cflags: "-mllvm --dse-optimize-memoryssa -mllvm --polly-on-isl-error-abort -mllvm --polly-enable-optree"
+          cxxflags: "-mllvm --dse-optimize-memoryssa -mllvm --polly-on-isl-error-abort -mllvm --polly-enable-optree"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
