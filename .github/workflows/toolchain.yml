@@ -27,9 +27,9 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
-          # bootstrap: "y"
+          clangedpflags: "y"
           clangedPolly: "y"
-          clangedPFlags: "y"
+          bootstrap: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
