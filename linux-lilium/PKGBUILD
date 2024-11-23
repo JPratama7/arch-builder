@@ -17,7 +17,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.11
-pkgver=${_major}.7
+pkgver=${_major}.9
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -37,7 +37,7 @@ makedepends=(
   bc cpio kmod libelf perl tar xz
 )
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(llvm-all python)
+  makedepends+=(clang llvm python)
 fi
 options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
@@ -80,7 +80,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
         "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
-        "${_lucjan}cachyos-fixes-patches-v26/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v29/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
         "${_lucjan}uksmd-patches-v2/0001-uksmd-patches.patch"
@@ -153,7 +153,6 @@ prepare() {
   echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
 
   msg2 "Applying RT patch"
-  apply_patch "../patch-6.11-rt7.patch"
   apply_patch "../patch-6.11-rt7.patch"
 
   # Archlinux patches
