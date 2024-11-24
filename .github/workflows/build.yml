@@ -93,6 +93,7 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
+          clangedpflags: "y"
           officialRepo: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}

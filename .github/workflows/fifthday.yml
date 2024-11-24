@@ -43,9 +43,7 @@ jobs:
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
           clangedpflags: "y"
-          clangedPolly: "y"
-          # cflags: "-funified-lto"
-          # cxxflags: "-funified-lto"
+          officialRepo: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
