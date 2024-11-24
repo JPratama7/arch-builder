@@ -28,6 +28,7 @@ jobs:
         with:
           clanged: "y"
           clangedpflags: "y"
+          clangedPolly: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"

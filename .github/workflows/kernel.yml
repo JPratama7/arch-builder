@@ -34,9 +34,11 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
+          clanged: "y"
+          clangedpflags: "y"
+          clangedPolly: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-          clanged: "y"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.12.0
         with:

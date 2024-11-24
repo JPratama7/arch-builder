@@ -42,8 +42,8 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
-          officialRepo: "y"
           clangedpflags: "y"
+          clangedPolly: "y"
           # cflags: "-funified-lto"
           # cxxflags: "-funified-lto"
           ldflags: "-Wl,-z,nostart-stop-gc"
