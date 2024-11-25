@@ -22,7 +22,7 @@ DLAGENTS=(
 
 depends=(
   'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'llvm-libs'
-  'systemd' 'systemd-libs' 'xcb-util-keysyms' 'libomxil-bellagio' 
+  'systemd' 'systemd-libs' 'xcb-util-keysyms'
   'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat'
   'spirv-llvm-translator' 'spirv-tools' 'python' 'cbindgen' 'libxcb'
   'libxext' 'libxfixes'
@@ -82,7 +82,7 @@ done
 
 GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,llvmpipe,softpipe,iris,crocus,i915,zink,d3d12"
 VULKAN_DRIVERS="amd,intel,intel_hasvk,nouveau,swrast,virtio"
-VULKAN_LAYERS="device-select,intel-nullhw,overlay"
+VULKAN_LAYERS="device-select,intel-nullhw,overlay,screenshot"
 
 _extra_lto_flag=""
 
@@ -142,12 +142,10 @@ build() {
     -D vulkan-drivers="${VULKAN_DRIVERS}" \
     -D vulkan-layers="${VULKAN_LAYERS}" \
     \
-    -D dri3=enabled \
     -D egl=enabled \
     \
     -D gallium-extra-hud=true \
     -D gallium-nine=true \
-    -D gallium-omx=bellagio \
     -D gallium-opencl=icd \
     -D gallium-va=enabled \
     -D gallium-vdpau=enabled \
