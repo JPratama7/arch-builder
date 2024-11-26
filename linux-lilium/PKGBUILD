@@ -16,8 +16,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=6.11
-pkgver=${_major}.9
+_major=6.12
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -43,7 +43,6 @@ options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
-        "https://cdn.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt7.patch."{xz,sign}
         "choose-gcc-optimization.sh"
         "config"
 
@@ -59,7 +58,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
         "${_xanmod}clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
         "${_xanmod}net/mac80221/0001-mac80211-ignore-AP-power-level-when-tx-power-type-is.patch"
-        "${_xanmod}net/netfilter/0001-netfilter-Add-netfilter-nf_tables-fullcone-support.patch"
         "${_xanmod}net/netfilter/0002-netfilter-add-xt_FLOWOFFLOAD-target.patch"
         "${_xanmod}net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
         "${_xanmod}pci_acso/0001-PCI-Enable-overrides-for-missing-ACS-capabilities.patch"
@@ -76,26 +74,26 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
         "${_lucjan}ntsync-patches-all/0001-ntsync-patches.patch"
-        "${_lucjan}futex-patches/0001-futex-6.11-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+        "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
 
-        "${_lucjan}powercap-patches/0001-powercap-intel_rapl-Add-support-for-AMD-family-1Ah.patch"
-        "${_lucjan}intel-pstate-patches-all/0001-intel-pstate-patches.patch"
-        "${_lucjan}cachyos-fixes-patches-v29/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
+        "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
+        "${_lucjan}zram-patches/0001-zram-6.12-merge-changes-from-dev-tree.patch"
 
-        "${_lucjan}kbuild-patches/0001-kbuild-patches.patch"
-        "${_lucjan}uksmd-patches-v2/0001-uksmd-patches.patch"
+        "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
+        "${_lucjan}pksm-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
 
-        "${_lucjan}openvpn-patches-v2-all/0001-openvpn-patches.patch"
-        "${_lucjan}perf-patches-v3-all/0001-perf-patches.patch"
+        "${_lucjan}crypto-next-patches-v2-all/0001-crypto-next-patches.patch"
+
+        "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}cpu-cachyos-patches-v6/0001-cpu-cachyos-patches.patch"
-        "${_lucjan}x86-patches-v3/0001-x86-uaccess-Avoid-barrier_nospec-in-64-bit-copy_from.patch"
-        "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
+        "${_lucjan}cpu-cachyos-patches/0001-cpu-cachyos-patches.patch"
 
         "${_tkg}0013-optimize_harder_O3.patch"
-        "${_lucjan}amd-hfi-patches-v6-all/0001-amd-hfi-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
         "${_tkg}0003-glitched-base.patch"
         )
@@ -150,10 +148,7 @@ prepare() {
 
   msg2 "Setting version..."
   echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
-
-  msg2 "Applying RT patch"
-  apply_patch "../patch-6.11-rt7.patch"
+  echo "${pkgbase#linux-lilium}" > localversion.20-pkgname
 
   # Archlinux patches
   msg2 "Applying Patches"
@@ -187,7 +182,7 @@ prepare() {
                   -e PREEMPT_BUILD_AUTO \
                   -e PREEMPT_AUTO;
 
-  scripts/config  --set-val X86_64_VERSION 1
+  scripts/config  --set-val X86_64_VERSION 2
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
