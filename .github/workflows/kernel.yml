@@ -48,6 +48,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   
   TRIGGER_PUBLISH:
+    if: ${{ always() }}
     needs: [LLVM]
     runs-on: ubuntu-latest
     steps:
