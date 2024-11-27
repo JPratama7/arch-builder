@@ -166,6 +166,10 @@ prepare() {
   msg2 "Copy configuration"
   cp ../config .config
 
+
+  msg2 "make ${_compiler_flags} olddefconfig"
+  make ${_compiler_flags} olddefconfig
+
   # EROFS as module
   scripts/config --module CONFIG_EROFS_FS
 
@@ -325,26 +329,6 @@ prepare() {
     "$srcdir"/choose-gcc-optimization.sh $_microarchitecture
   fi
 
-  # This is intended for the people that want to build this package with their own config
-  # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
-  # If we detect partial file with scripts/config commands, we execute as a script
-  # If not, it's a full config, will be replaced
-  for _myconfig in "${SRCDEST}/myconfig" "${HOME}/.config/linux-xanmod/myconfig" "${XDG_CONFIG_HOME}/linux-xanmod/myconfig" ; do
-    if [ -f "${_myconfig}" ] && [ "$(wc -l <"${_myconfig}")" -gt "0" ]; then
-      if grep -q 'scripts/config' "${_myconfig}"; then
-        # myconfig is a partial file. Executing as a script
-        msg2 "Applying myconfig..."
-        bash -x "${_myconfig}"
-      else
-        # myconfig is a full config file. Replacing default .config
-        msg2 "Using user CUSTOM config..."
-        cp -f "${_myconfig}" .config
-      fi
-      echo
-      break
-    fi
-  done
-
   ### Optionally load needed modules for the make localmodconfig
   # See https://aur.archlinux.org/packages/modprobed-db
   if [ "$_localmodcfg" = "y" ]; then
@@ -356,10 +340,6 @@ prepare() {
       exit 1
     fi
   fi
-
-  msg2 "make ${_compiler_flags} olddefconfig"
-  make ${_compiler_flags} olddefconfig
-  #diff -u CONFIGS/xanmod/gcc/${_config} .config || :
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
