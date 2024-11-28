@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+      - name: Install Dependencies
+        run: |
+          pacman -Syu --needed aria2 base-devel ruby --noconfirm
+
       - name: Wait DB Manual
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
@@ -20,7 +24,6 @@ jobs:
 
       - name: "Downloading"
         run: |
-          pacman -Syu --needed aria2 base-devel --noconfirm
           urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s|grep "/JPratama7/arch-builder/releases/download/temp/"|awk -F '"|"' '{print$2}')
 
           for i in ${urls[*]}; do 
