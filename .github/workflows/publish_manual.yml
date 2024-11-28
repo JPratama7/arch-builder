@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   
 concurrency: 
-  group: ${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   create_aur_repository:
@@ -12,14 +12,16 @@ jobs:
     steps:
       - name: Install Dependencies
         run: |
-          pacman -Syu --needed aria2 base-devel ruby --noconfirm
-      - name: Wait DB Manual
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.ref }}
-          running-workflow-name: 'Create DB Manual'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          pacman -Syu --needed aria2 base-devel
+
+      - name: Wait for primary workflow to finish
+        run: |
+          while ! gh run list --workflow=Create DB\ Workflow --status=completed > /dev/null; do
+            echo "Waiting for Create DB Workflow to complete..."
+            sleep 30
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: "Downloading"
         run: |
