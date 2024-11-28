@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   
 concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: publish-group
 
 jobs:
   create_aur_repository:
@@ -12,16 +12,7 @@ jobs:
     steps:
       - name: Install Dependencies
         run: |
-          pacman -Syu --needed aria2 base-devel
-
-      - name: Wait for primary workflow to finish
-        run: |
-          while ! gh run list --workflow=Create DB\ Workflow --status=completed > /dev/null; do
-            echo "Waiting for Create DB Workflow to complete..."
-            sleep 30
-          done
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          pacman -Syu --needed aria2 base-devel --noconfirm
 
       - name: "Downloading"
         run: |
