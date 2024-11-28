@@ -12,15 +12,14 @@ _localmodcfg=n
 _makenconfig=n
 
 if [ "${_compiler}" = "clang" ]; then
-  _compiler_flags="CC=clang HOSTCC=clang LLVM=1 LLVM_IAS=1"
+  _compiler_flags="CC=clang HOSTCC=clang LD=ld.lld LLVM=1 LLVM_IAS=1"
 fi
 
 pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.1
 _branch=6.x
-xanmod=1
-pkgrel=${xanmod}
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -40,7 +39,7 @@ if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm python)
 fi
 options=('!strip')
-_srcname="linux-${pkgver}-xanmod${xanmod}"
+_srcname="linux-${pkgver}-lilium${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
         "choose-gcc-optimization.sh"
@@ -74,10 +73,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
         "${_lucjan}ntsync-patches-all/0001-ntsync-patches.patch"
-        "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+        "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
         "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
         "${_lucjan}zram-patches/0001-zram-6.12-merge-changes-from-dev-tree.patch"
@@ -166,40 +166,33 @@ prepare() {
   msg2 "Copy configuration"
   cp ../config .config
 
-
-  msg2 "make ${_compiler_flags} olddefconfig"
+  ### Setting config
+  msg2 "Setting config..."
   make ${_compiler_flags} olddefconfig
 
   # EROFS as module
   scripts/config --module CONFIG_EROFS_FS
 
   # enable BORE Scheduler + RT
-  scripts/config  -e SCHED_BORE \
-                  -e PREEMPT_COUNT \
-                  -e PREEMPTION \
-                  -d PREEMPT_VOLUNTARY \
-                  -d PREEMPT \
-                  -d PREEMPT_NONE \
-                  -d PREEMPT_RT \
-                  -d PREEMPT_DYNAMIC \
-                  -e PREEMPT_BUILD \
-                  -e PREEMPT_BUILD_AUTO \
-                  -e PREEMPT_AUTO;
+  scripts/config -e SCHED_BORE \
+                 -d PREEMPT \
+                 -d PREEMPT_DYNAMIC \
+                 -e PREEMPT_RT
 
   scripts/config  --set-val X86_64_VERSION 2
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enabling LTO CLANG"
-    scripts/config \
-            -e LTO \
-            -e LTO_CLANG \
-            -e ARCH_SUPPORTS_LTO_CLANG \
-            -e ARCH_SUPPORTS_LTO_CLANG_THIN \
-            -d CONFIG_LTO_NONE \
-            -e HAS_LTO_CLANG \
-            -e CONFIG_LTO_CLANG_FULL \
-            -e HAVE_GCC_PLUGINS
+    scripts/config -e LTO \
+                   -e LTO_CLANG \
+                   -e ARCH_SUPPORTS_LTO_CLANG \
+                   -e ARCH_SUPPORTS_LTO_CLANG_THIN \
+                   -d LTO_NONE \
+                   -e HAS_LTO_CLANG \
+                   -d LTO_CLANG_FULL \
+                   -e LTO_CLANG_THIN \
+                   -e HAVE_GCC_PLUGINS;
   fi
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
@@ -254,10 +247,10 @@ prepare() {
   scripts/config  -e CONFIG_X86_AMD_PSTATE
 
   msg2 "Enable v4l2loopback support"
-  scripts/config -e CONFIG_V4L2_LOOPBACK
+  scripts/config -m CONFIG_V4L2_LOOPBACK
 
   msg2 "Enable WINE FASTSYNC"
-  scripts/config -e WINESYNC
+  scripts/config --module WINESYNC
 
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
@@ -268,19 +261,15 @@ prepare() {
                  -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
   msg2 "Disabling TCP_CONG_CUBIC..."
-  scripts/config --module TCP_CONG_CUBIC \
+  scripts/config -m TCP_CONG_CUBIC \
                  -d DEFAULT_CUBIC \
-                 -e TCP_CONG_BBR2 \
-                 -e DEFAULT_BBR2 \
-                 --set-str DEFAULT_TCP_CONG bbr2
-
-  # BBR2 doesn't work properly with FQ_CODEL
-  msg2 "Disabling fq_codel by default..."
-  scripts/config --module NET_SCH_FQ_CODEL \
+                 -e TCP_CONG_BBR \
+                 -e DEFAULT_BBR \
+                 --set-str DEFAULT_TCP_CONG bbr \
+                 -m NET_SCH_FQ_CODEL \
                  -e NET_SCH_FQ \
-                 -d DEFAULT_FQ_CODEL \
-                 -e DEFAULT_FQ \
-                 --set-str DEFAULT_NET_SCH fq
+                 -d CONFIG_DEFAULT_FQ_CODEL \
+                 -e CONFIG_DEFAULT_FQ
 
   msg2 "Disabling TCP_CONG_CUBIC..."
   scripts/config --module CONFIG_TCP_CONG_CUBIC \
@@ -291,15 +280,6 @@ prepare() {
                  -e CONFIG_LRU_GEN \
                  -e CONFIG_LRU_GEN_ENABLED \
                  -d CONFIG_LRU_GEN_STATS
-
-  msg2 "Enabling DAMON Data Access Monitoring "
-  scripts/config -e CONFIG_DAMON \
-                 -e CONFIG_DAMON_VADDR \
-                 -e CONFIG_DAMON_DBGFS \
-                 -e CONFIG_DAMON_SYSFS \
-                 -e CONFIG_DAMON_PADDR \
-                 -e CONFIG_DAMON_RECLAIM \
-                 -e CONFIG_DAMON_LRU_SORT
 
   msg2 "Change zram zswap compression to ZSTD"
   scripts/config -d CONFIG_ZRAM_DEF_COMP_LZORLE \
