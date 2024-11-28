@@ -15,8 +15,7 @@ wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl
 grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git
 libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git
 xdg-desktop-portal-hyprland-git cava zed-git cava zed-git libva-nvidia-driver-git sourcegit
-slack-electron linux-lqx waydroid pwvucontrol
-libastal-gjs libastal-meta
+slack-electron linux-lqx waydroid pwvucontrol apple-music-desktop
 ```
 With GCC:
 ```
