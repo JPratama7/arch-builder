@@ -2,12 +2,22 @@ name: Create DB
 on:
   workflow_dispatch:
 
-jobs:
+concurrency: 
+  group: ${{ github.ref }}
 
+jobs:
   create_aur_repository:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+      - name: Wait DB Manual
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          running-workflow-name: 'Create DB Manual'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - name: "Downloading"
         run: |
           pacman -Syu --needed aria2 base-devel --noconfirm
@@ -50,3 +60,9 @@ jobs:
           tag: "latest"
           artifacts: "./jp7-arch.*"
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: "temp"
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
