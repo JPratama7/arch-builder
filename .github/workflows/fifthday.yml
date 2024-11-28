@@ -18,7 +18,7 @@ jobs:
           grimblast-git, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit-git,
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
-          slack-electron, waydroid, pwvucontrol, libastal-gjs, libastal-meta
+          slack-electron, waydroid, pwvucontrol
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -60,8 +60,7 @@ jobs:
         build: [
             libastal-git, libastal-network-git, libastal-wireplumber-git, libastal-powerprofiles-git, libastal-bluetooth-git, libastal-river-git, 
             libastal-mpris-git, libastal-hyprland-git, libastal-battery-git, libastal-tray-git, libastal-notifd-git, libastal-apps-git, libastal-auth-git, 
-            libastal-meta, libastal-io-git, libastal-greetd-git, libastal-gjs-git, libastal-cava-git, libastal-4-git, libastal-lua-git, libastal-lua53-git, 
-            libastal-lua51-git 
+            libastal-meta, libastal-io-git, libastal-greetd-git, libastal-gjs-git, libastal-cava-git, libastal-4-git, libastal-lua-git, libastal-lua-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
