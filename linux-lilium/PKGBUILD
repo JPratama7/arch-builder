@@ -76,7 +76,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
         "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
