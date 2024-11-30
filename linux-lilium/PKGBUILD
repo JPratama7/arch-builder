@@ -19,7 +19,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.1
 _branch=6.x
-pkgrel=2
+pkgrel=4
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -29,7 +29,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-6.11.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.7.3
+_bore=5.7.4
 
 license=(GPL2)
 makedepends=(
@@ -39,7 +39,7 @@ if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm python)
 fi
 options=('!strip')
-_srcname="linux-${pkgver}-lilium${xanmod}"
+_srcname="linux-${pkgver}-lilium${pkgrel}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
         "choose-gcc-optimization.sh"
@@ -69,12 +69,14 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0015-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
         "${_xanmod}xanmod/0016-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
         "${_xanmod}xanmod/0015-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+        "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
         
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
         "${_lucjan}ntsync-patches-all/0001-ntsync-patches.patch"
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
+
 
         "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
@@ -87,11 +89,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
 
-        "${_lucjan}crypto-next-patches-v2-all/0001-crypto-next-patches.patch"
+        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
 
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}cpu-cachyos-patches/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}amd-pstate-patches-v2-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
 
         "${_tkg}0013-optimize_harder_O3.patch"
         "${_cachy}misc/0001-acpi-call.patch"
@@ -148,7 +151,7 @@ prepare() {
 
   msg2 "Setting version..."
   echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-lilium}" > localversion.20-pkgname
+  echo "${pkgbase#linux}" > localversion.20-pkgname
 
   # Archlinux patches
   msg2 "Applying Patches"
@@ -165,10 +168,10 @@ prepare() {
   # Applying configuration
   msg2 "Copy configuration"
   cp ../config .config
-
-  ### Setting config
-  msg2 "Setting config..."
+  
+  msg2 "make ${_compiler_flags} olddefconfig"
   make ${_compiler_flags} olddefconfig
+  #diff -u CONFIGS/xanmod/gcc/${_config} .config || :
 
   # EROFS as module
   scripts/config --module CONFIG_EROFS_FS
@@ -194,6 +197,9 @@ prepare() {
                    -e LTO_CLANG_THIN \
                    -e HAVE_GCC_PLUGINS;
   fi
+
+  # https://bbs.archlinux.org/viewtopic.php?pid=1824594#p1824594
+  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
@@ -236,7 +242,7 @@ prepare() {
   fi
 
   msg2 "Set HOSTNAME"
-  scripts/config --set-val CONFIG_DEFAULT_HOSTNAME "Lilium"
+  scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "Lilium"
 
   ## Use Arch Wiki TOMOYO configuration: https://wiki.archlinux.org/title/TOMOYO_Linux#Installation_2
   msg2 "Replacing Debian TOMOYO configuration with upstream Arch Linux..."
@@ -362,6 +368,7 @@ _package() {
   )
 
   cd linux-${_major}
+
   local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
 
   msg2 "Installing boot image..."
@@ -373,10 +380,10 @@ _package() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   msg2 "Installing modules..."
-  ZSTD_CLEVEL=19 make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
-    DEPMOD=/doesnt/exist modules_install  # Suppress depmod
+  ZSTD_CLEVEL=19 make "${BUILD_FLAGS[@]}" INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
+      DEPMOD=/doesnt/exist  modules_install  # Suppress depmod
 
-  # remove build link
+  # remove build links
   rm "$modulesdir"/build
 }
 
