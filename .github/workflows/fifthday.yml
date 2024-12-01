@@ -60,7 +60,8 @@ jobs:
         build: [
             libastal-git, libastal-network-git, libastal-wireplumber-git, libastal-powerprofiles-git, libastal-bluetooth-git, libastal-river-git, 
             libastal-mpris-git, libastal-hyprland-git, libastal-battery-git, libastal-tray-git, libastal-notifd-git, libastal-apps-git, libastal-auth-git, 
-            libastal-meta, libastal-io-git, libastal-greetd-git, libastal-gjs-git, libastal-cava-git, libastal-4-git, libastal-lua-git, libastal-lua-git
+            libastal-meta, libastal-io-git, libastal-greetd-git, libastal-gjs-git, libastal-cava-git, libastal-4-git, libastal-lua-git, libastal-lua-git,
+            libcava-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
