@@ -241,6 +241,9 @@ prepare() {
                  -e CONFIG_MODULE_COMPRESS_ALL \
                  -e CONFIG_MODULE_COMPRESS_ZSTD 
 
+  msg2 "Change kernel tick rate to 300"
+  scripts/config -d HZ_250 -e "HZ_300" --set-val HZ "300";
+
   msg2 "Set HOSTNAME"
   scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "Lilium"
 
