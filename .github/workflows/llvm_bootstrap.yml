@@ -5,6 +5,10 @@ on:
     paths:
     - 'llvm-bootstrap/*'
 
+concurrency: 
+  group: ${{ github.ref }}/toolchain
+  cancel-in-progress: true
+
 jobs:
   bootstrap1:
     strategy:
