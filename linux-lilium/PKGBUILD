@@ -37,7 +37,7 @@ makedepends=(
 if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm python)
 fi
-options=('!strip')
+options=('!strip' '!buildflags')
 _srcname="linux-${pkgver}-lilium${pkgrel}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
