@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.12
-pkgver=${_major}.3
+pkgver=${_major}.4
 _branch=6.x
-pkgrel=8
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -65,14 +65,14 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0008-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
         "${_xanmod}xanmod/0009-XANMOD-blk-wbt-Set-wbt_default_latency_nsec-to-2msec.patch"
         "${_xanmod}xanmod/0011-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-        "${_xanmod}xanmod/000012-XANMOD-mm-Raise-max_map_count-default-value.patch"
+        "${_xanmod}xanmod/0012-XANMOD-mm-Raise-max_map_count-default-value.patch"
         "${_xanmod}xanmod/0014-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
         "${_xanmod}xanmod/0015-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
         "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
         
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
-        "${_lucjan}ntsync-patches-all/0001-ntsync-patches.patch"
+        "${_lucjan}ntsync-patches-v2-all/0001-ntsync-patches.patch"
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
 
@@ -81,7 +81,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
         "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
-        "${_lucjan}zram-patches/0001-zram-6.12-merge-changes-from-dev-tree.patch"
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
@@ -89,16 +88,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
 
-        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
+        "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
 
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
         "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
-
-        "${_tkg}0013-optimize_harder_O3.patch"
         "${_cachy}misc/0001-acpi-call.patch"
-        "${_tkg}0003-glitched-base.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
