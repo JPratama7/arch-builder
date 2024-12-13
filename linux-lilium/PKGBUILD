@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.4
 _branch=6.x
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -28,7 +28,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.7.10
+_bore=5.7.13
 
 license=(GPL2)
 makedepends=(
@@ -178,7 +178,7 @@ prepare() {
                  -d PREEMPT_DYNAMIC \
                  -e PREEMPT_RT
 
-  scripts/config  --set-val X86_64_VERSION 2
+  scripts/config  --set-val X86_64_VERSION 1
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
@@ -195,7 +195,7 @@ prepare() {
   fi
 
   # https://bbs.archlinux.org/viewtopic.php?pid=1824594#p1824594
-  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
+  scripts/config -e CONFIG_PSI_DEFAULT_DISABLED
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
@@ -288,6 +288,10 @@ prepare() {
 
   msg2 "Change zram zswap compression to ZSTD"
   scripts/config -d CONFIG_ZRAM_DEF_COMP_LZORLE \
+                 -d CONFIG_ZRAM_BACKEND_FORCE_LZO=y \
+                 -d CONFIG_ZRAM_BACKEND_LZO=y \
+                 -d CONFIG_ZRAM_DEF_COMP_LZORLE=y \
+                 -e CONFIG_ZRAM_BACKEND_ZSTD \
                  -e CONFIG_ZRAM_DEF_COMP_ZSTD \
                  --set-str CONFIG_ZRAM_DEF_COMP zstd \
                  -d CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
