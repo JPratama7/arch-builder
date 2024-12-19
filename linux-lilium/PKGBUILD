@@ -3,7 +3,7 @@
 # Contributor: Torge Matthies <openglfreak at googlemail dot com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
-_microarchitecture=92
+_microarchitecture=91
 use_numa=y
 use_tracers=y
 _compiler=gcc
@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.5
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -72,6 +72,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
         
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
+        "${_lucjan}openvpn-dco/0001-openvpn-dco-patches.patch"
         "${_lucjan}ntsync-patches-v3-all/0001-ntsync-patches.patch"
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
@@ -107,7 +108,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
         "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
-        "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
