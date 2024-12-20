@@ -6,7 +6,7 @@
 _microarchitecture=91
 use_numa=y
 use_tracers=y
-_compiler=gcc
+_compiler=clang
 _localmodcfg=n
 _makenconfig=n
 
