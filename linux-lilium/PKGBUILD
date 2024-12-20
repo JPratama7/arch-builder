@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.12
-pkgver=${_major}.5
+pkgver=${_major}.6
 _branch=6.x
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -102,12 +102,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}pksm-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
+        "${_lucjan}perf-amd-patches/0001-perf-6.12-merge-changes-from-dev-tree.patch"
 
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
 
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}amd-pstate-patches-v6-all/0001-amd-pstate-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
         )
@@ -301,12 +302,24 @@ prepare() {
                  -e CONFIG_LRU_GEN_ENABLED \
                  -d CONFIG_LRU_GEN_STATS
 
+
+  msg2 "Enabling all ZRAM backend support..."
+  scripts/config -e CONFIG_ZRAM_BACKEND_LZ4 \
+                 -e CONFIG_ZRAM_BACKEND_LZ4HC \
+                 -e CONFIG_ZRAM_BACKEND_DEFLATE \
+                 -e CONFIG_ZRAM_BACKEND_LZO \
+                 -e CONFIG_ZRAM_BACKEND_ZSTD
+
+  msg2 "Disable compression except ZSTD"
+  scripts/config -e ZRAM_DEF_COMP_LZORLE \
+                 -e ZRAM_DEF_COMP_LZO \
+                 -e ZRAM_DEF_COMP_LZ4 \
+                 -e ZRAM_DEF_COMP_LZ4HC \
+                 -e ZRAM_DEF_COMP_DEFLATE \
+                 -e ZRAM_DEF_COMP_842
+
   msg2 "Change zram zswap compression to ZSTD"
-  scripts/config -d CONFIG_ZRAM_DEF_COMP_LZORLE \
-                 -d CONFIG_ZRAM_BACKEND_FORCE_LZO=y \
-                 -d CONFIG_ZRAM_BACKEND_LZO=y \
-                 -d CONFIG_ZRAM_DEF_COMP_LZORLE=y \
-                 -e CONFIG_ZRAM_BACKEND_ZSTD \
+  scripts/config -e CONFIG_ZRAM_BACKEND_ZSTD \
                  -e CONFIG_ZRAM_DEF_COMP_ZSTD \
                  --set-str CONFIG_ZRAM_DEF_COMP zstd \
                  -d CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
