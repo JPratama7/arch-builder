@@ -102,7 +102,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}pksm-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
-        "${_lucjan}perf-amd-patches/0001-perf-6.12-merge-changes-from-dev-tree.patch"
 
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
 
