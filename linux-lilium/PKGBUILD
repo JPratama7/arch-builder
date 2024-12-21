@@ -274,9 +274,6 @@ prepare() {
   msg2 "Enable v4l2loopback support"
   scripts/config -m CONFIG_V4L2_LOOPBACK
 
-  msg2 "Enable WINE FASTSYNC"
-  scripts/config --module WINESYNC
-
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
@@ -308,19 +305,19 @@ prepare() {
 
 
   msg2 "Enabling all ZRAM backend support..."
-  scripts/config -m CONFIG_ZRAM_BACKEND_LZ4 \
-                 -m CONFIG_ZRAM_BACKEND_LZ4HC \
-                 -m CONFIG_ZRAM_BACKEND_DEFLATE \
-                 -m CONFIG_ZRAM_BACKEND_LZO \
-                 -m CONFIG_ZRAM_BACKEND_ZSTD
+  scripts/config -e CONFIG_ZRAM_BACKEND_LZ4 \
+                 -e CONFIG_ZRAM_BACKEND_LZ4HC \
+                 -e CONFIG_ZRAM_BACKEND_DEFLATE \
+                 -e CONFIG_ZRAM_BACKEND_LZO \
+                 -e CONFIG_ZRAM_BACKEND_ZSTD
 
   msg2 "Disable compression except ZSTD"
-  scripts/config -e ZRAM_DEF_COMP_LZORLE \
-                 -e ZRAM_DEF_COMP_LZO \
-                 -e ZRAM_DEF_COMP_LZ4 \
-                 -e ZRAM_DEF_COMP_LZ4HC \
-                 -e ZRAM_DEF_COMP_DEFLATE \
-                 -e ZRAM_DEF_COMP_842
+  scripts/config -d ZRAM_DEF_COMP_LZORLE \
+                 -d ZRAM_DEF_COMP_LZO \
+                 -d ZRAM_DEF_COMP_LZ4 \
+                 -d ZRAM_DEF_COMP_LZ4HC \
+                 -d ZRAM_DEF_COMP_DEFLATE \
+                 -d ZRAM_DEF_COMP_842
 
   msg2 "Change zram zswap compression to ZSTD"
   scripts/config -e CONFIG_ZRAM_BACKEND_ZSTD \
