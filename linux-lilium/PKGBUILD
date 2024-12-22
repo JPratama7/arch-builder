@@ -44,9 +44,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "${_cachy}misc/0001-rt.patch"
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$_major.y-bore$_bore.patch"
-        
+
         # Xanmod Feature
         "${_xanmod}binder/0001-binder-turn-into-module.patch"
         "${_xanmod}binder/0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
@@ -71,7 +70,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0015-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
         "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
-        
+
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
         "${_lucjan}openvpn-dco/0001-openvpn-dco-patches.patch"
         "${_lucjan}ntsync-patches-v3-all/0001-ntsync-patches.patch"
@@ -111,6 +110,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}amd-pstate-patches-v6-all/0001-amd-pstate-patches.patch"
         "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
         "${_cachy}misc/0001-acpi-call.patch"
+        "${_cachy}misc/0001-rt.patch"
 
         "${_tkg}0012-misc-additions.patch"
         )
@@ -136,7 +136,7 @@ export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_
 apply_patch() {
     local patch_file=$(realpath "$1" 2>/dev/null)
     local output
-  
+
     # Cek apakah file patch ada
     if [[ ! -f "$patch_file" ]]; then
         echo "Error: Patch File '$patch_file' not found."
@@ -248,7 +248,7 @@ prepare() {
   msg2 "Compress Modules"
   scripts/config -e CONFIG_MODULE_COMPRESS \
                  -e CONFIG_MODULE_COMPRESS_ALL \
-                 -e CONFIG_MODULE_COMPRESS_ZSTD 
+                 -e CONFIG_MODULE_COMPRESS_ZSTD
 
   msg2 "Change kernel tick rate to 300"
   scripts/config -d HZ_250 -e "HZ_300" --set-val HZ "300";
@@ -273,7 +273,7 @@ prepare() {
   msg2 "Enabling FULLCONENAT..."
   scripts/config --module IP_NF_TARGET_FULLCONENAT \
                  --module NETFILTER_XT_TARGET_FULLCONENAT
-  
+
   msg2 "Enabling KBUILD_CFLAGS -O3..."
   scripts/config -d CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
                  -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
@@ -345,7 +345,7 @@ prepare() {
 
   ### Optionally load needed modules for the make localmodconfig
   # See https://aur.archlinux.org/packages/modprobed-db
-  if [ "$_localmodcfg" = "y" ]; then
+  if [ "$_localmodcfg" -ne "n" ]; then
     if [ -f $HOME/.config/modprobed.db ]; then
       msg2 "Running Steven Rostedt's make localmodconfig now"
       make ${_compiler_flags} LSMOD=$HOME/.config/modprobed.db localmodconfig
@@ -355,19 +355,22 @@ prepare() {
     fi
   fi
 
-  make -s kernelrelease > version
-  msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
-
   msg2 "make ${_compiler_flags} olddefconfig"
   make ${_compiler_flags} olddefconfig
-  diff -u ../confg .config || :
+  make ${_compiler_flags} prepare
+  # diff -u ../confg .config || :
 
-  if [ "$_makenconfig" = "y" ]; then
+  msg2 "Finishing..."
+  make -s kernelrelease > version
+  msg2 "Prepared %s version %s" "$pkgbase" "$version"
+
+  if [ "$_makenconfig" -ne "n" ]; then
     make ${_compiler_flags} nconfig
   fi
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
+  cat ${SRCDEST}/config.last
 }
 
 build() {
@@ -379,8 +382,8 @@ build() {
 _package() {
   pkgdesc="The Linux kernel and modules with Xanmod patches"
   depends=(
-    coreutils 
-    kmod 
+    coreutils
+    kmod
     initramfs
   )
   optdepends=(
