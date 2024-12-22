@@ -44,6 +44,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
+        "${_cachy}misc/0001-rt.patch"
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$_major.y-bore$_bore.patch"
         
         # Xanmod Feature
@@ -181,19 +182,14 @@ prepare() {
   # Applying configuration
   msg2 "Copy configuration"
   cp ../config .config
-  
-  msg2 "make ${_compiler_flags} olddefconfig"
-  make ${_compiler_flags} olddefconfig
-  #diff -u CONFIGS/xanmod/gcc/${_config} .config || :
 
   # EROFS as module
+  msg2 "Enable EROFS"
   scripts/config --module CONFIG_EROFS_FS
 
   # enable BORE Scheduler + RT
-  scripts/config -e SCHED_BORE \
-                 -d PREEMPT \
-                 -d PREEMPT_DYNAMIC \
-                 -e PREEMPT_RT
+  msg2 "Enabling BORE + RT"
+  scripts/config -e SCHED_BORE -d PREEMPT -d PREEMPT_DYNAMIC -e PREEMPT_RT
 
   scripts/config  --set-val X86_64_VERSION 1
 
@@ -361,6 +357,10 @@ prepare() {
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
+
+  msg2 "make ${_compiler_flags} olddefconfig"
+  make ${_compiler_flags} olddefconfig
+  diff -u ../confg .config || :
 
   if [ "$_makenconfig" = "y" ]; then
     make ${_compiler_flags} nconfig
