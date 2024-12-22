@@ -370,7 +370,6 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
-  cat ${SRCDEST}/config.last
 }
 
 build() {
