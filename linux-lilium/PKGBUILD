@@ -345,7 +345,7 @@ prepare() {
 
   ### Optionally load needed modules for the make localmodconfig
   # See https://aur.archlinux.org/packages/modprobed-db
-  if [ "$_localmodcfg" -ne "n" ]; then
+  if [ "$_localmodcfg" = "y" ]; then
     if [ -f $HOME/.config/modprobed.db ]; then
       msg2 "Running Steven Rostedt's make localmodconfig now"
       make ${_compiler_flags} LSMOD=$HOME/.config/modprobed.db localmodconfig
@@ -364,7 +364,7 @@ prepare() {
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$version"
 
-  if [ "$_makenconfig" -ne "n" ]; then
+  if [ "$_makenconfig" = "y" ]; then
     make ${_compiler_flags} nconfig
   fi
 
