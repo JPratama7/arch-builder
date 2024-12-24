@@ -28,7 +28,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.7.13
+_bore=5.7.14
 
 license=(GPL2)
 makedepends=(
