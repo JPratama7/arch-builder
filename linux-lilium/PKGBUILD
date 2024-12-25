@@ -281,21 +281,6 @@ prepare() {
   scripts/config -d CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
                  -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-  msg2 "Disabling TCP_CONG_CUBIC..."
-  scripts/config -m TCP_CONG_CUBIC \
-                 -d DEFAULT_CUBIC \
-                 -e TCP_CONG_BBR \
-                 -e DEFAULT_BBR \
-                 --set-str DEFAULT_TCP_CONG bbr \
-                 -m NET_SCH_FQ_CODEL \
-                 -e NET_SCH_FQ \
-                 -d CONFIG_DEFAULT_FQ_CODEL \
-                 -e CONFIG_DEFAULT_FQ
-
-  msg2 "Disabling TCP_CONG_CUBIC..."
-  scripts/config --module CONFIG_TCP_CONG_CUBIC \
-                 -d CONFIG_DEFAULT_CUBIC
-
   msg2 "Enabling multigenerational LRU..."
   scripts/config -e CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG \
                  -e CONFIG_LRU_GEN \
