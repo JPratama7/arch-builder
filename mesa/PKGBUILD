@@ -10,7 +10,7 @@ makedepends=(
   'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils' 'libxrandr'
   'wayland-protocols' 'meson' 'ninja' 'glslang' 'python-ply'
   'python-setuptools' 'python-packaging' 'python-yaml' 'clang'
-  'llvm'
+  'llvm' 'libpng'
 )
 
 makedepends+=('rust' 'rust-bindgen') # rusticl dependencies
@@ -22,7 +22,7 @@ DLAGENTS=(
 
 depends=(
   'libdrm' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf' 'llvm-libs'
-  'systemd' 'systemd-libs' 'xcb-util-keysyms'
+  'systemd' 'systemd-libs' 'xcb-util-keysyms' 'zlib'
   'libglvnd' 'wayland' 'lm_sensors' 'libclc' 'vulkan-icd-loader' 'zstd' 'expat'
   'spirv-llvm-translator' 'spirv-tools' 'python' 'cbindgen' 'libxcb'
   'libxext' 'libxfixes'
