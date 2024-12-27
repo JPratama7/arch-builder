@@ -106,44 +106,6 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-
-  EXPERIMENTAL:
-    strategy:
-      matrix:
-        build: [
-          aircrack-ng
-          ]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Maximize build space
-        uses: AdityaGarg8/remove-unwanted-software@v4.1
-        with:
-          remove-android: 'true'
-          remove-dotnet: 'true'
-          remove-haskell: 'true'
-          remove-cached-tools: 'true'
-          remove-large-packages: 'true'
-          remove-codeql: 'true'
-      - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
-        with:
-          submodules: true
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - id: makepkg
-        uses: JPratama7/pkgbuild-action@original
-        with:
-          pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.14.0
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "temp"
-          artifacts: "*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   GCC:
     strategy:
       matrix:
