@@ -1,0 +1,74 @@
+# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Contributor: Metal A-wing <1 at 233 dot email>
+
+pkgname=deno
+pkgver=2.1.4
+pkgrel=1
+_rusty_v8_ver=130.0.1
+pkgdesc="A secure runtime for JavaScript and TypeScript"
+arch=('x86_64')
+url="https://deno.land"
+license=('MIT')
+options=('!lto')
+depends=('gcc-libs')
+makedepends=('git' 'python' 'rust' 'nodejs' 'gn' 'ninja' 'clang' 'lld' 'cmake' 'protobuf')
+source=("git+https://github.com/denoland/deno.git#tag=v$pkgver"
+        "git+https://github.com/denoland/rusty_v8.git#tag=v$_rusty_v8_ver"
+        "compiler-rt-adjust-paths.patch")
+sha512sums=('7d54d0e8798987997c7e2eded727ed49162b68411741565d9603acec6b3f8e8b855be7a6d3f64bff2a55fe8da4cc4629e3eb228ef8bdbc35382c1b27cb4d665e'
+            '97d293e9aec8b5f36c4d8c09c2cc6bbbe41f8102b5f79d1119758813e16c30371ab664be34334cca6f5dbaa776c0f542a101b706bd19a72db9d0be90a4eb8c13'
+            '796dd9dcb44ac65b3a1e47b13219549af3c55598f1ce1493ae5ebed469b3791f977415e4dc8528e5f0f4520398665400411f2ecdf15968aa7e405aadd6fbe125')
+
+prepare() {
+  cd rusty_v8
+  git config -f .gitmodules submodule.v8.shallow true
+  git submodule update --init --recursive
+
+  # https://github.com/denoland/rusty_v8/issues/1587
+  patch -Np1 -i ../compiler-rt-adjust-paths.patch
+
+  cd ../deno
+  echo -e "\n[patch.crates-io]\nv8 = { path = '../rusty_v8' }" >> Cargo.toml
+}
+
+build() {
+  cd $pkgname
+
+  # this uses malloc_usable_size, which is incompatible with fortification level 3
+  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+
+  local _clang_version=$(clang --version | grep -m1 version | sed 's/.* \([0-9]\+\).*/\1/')
+  local _extra_gn_args=(
+    'custom_toolchain="//build/toolchain/linux/unbundle:default"'
+    'host_toolchain="//build/toolchain/linux/unbundle:default"'
+    "clang_version=\"$_clang_version\""
+  )
+
+  export CC=clang CXX=clang++ AR=ar NM=nm
+  export V8_FROM_SOURCE=1
+  export CLANG_BASE_PATH=/usr
+  export GN=/usr/bin/gn NINJA=/usr/bin/ninja
+  export EXTRA_GN_ARGS="${_extra_gn_args[@]}"
+
+  cargo build --release
+}
+
+check() {
+  cd $pkgname
+  ./target/release/deno run tests/testdata/run/002_hello.ts
+}
+
+package() {
+  cd $pkgname
+  install -Dm755 target/release/deno "$pkgdir"/usr/bin/deno
+
+  install -dm755 "$pkgdir"/usr/share/bash-completion/completions
+  ./target/release/deno completions bash > "$pkgdir"/usr/share/bash-completion/completions/deno
+  install -dm755 "$pkgdir"/usr/share/zsh/site-functions
+  ./target/release/deno completions zsh > "$pkgdir"/usr/share/zsh/site-functions/_deno
+  install -dm755 "$pkgdir"/usr/share/fish/vendor_completions.d
+  ./target/release/deno completions fish > "$pkgdir"/usr/share/fish/vendor_completions.d/deno.fish
+
+  install -Dm644 LICENSE.md -t "$pkgdir"/usr/share/licenses/$pkgname/
+}
