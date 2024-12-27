@@ -18,7 +18,7 @@ jobs:
           grimblast-git, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit-git,
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
-          slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf, proton-ge-custom
+          slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf, proton-ge-custom, afdko
           ]
       fail-fast: false
     runs-on: ubuntu-latest
