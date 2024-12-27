@@ -65,7 +65,7 @@ jobs:
         libastal-battery-git,
         libastal-bluetooth-git,
         libastal-cava-git,
-        libastal-greetd-git.git,
+        libastal-greetd-git,
         libastal-hyprland-git,
         libastal-io-git,
         libastal-mpris-git,
