@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, 
+          microsoft-edge-dev-bin, postman-bin, geany-git, tor-browser-bin, aircrack-ng-git,
           slimjet, mpc-qt-git, spotify, insomnium, lightdm-settings, paru, jamesdsp, 
           wlogout, trizen, swww, sweet-theme-git, swaylock-effects, eww, mission-center,
           python-manimpango, python-clickgen, pfetch, pacseek, emote, bibata-cursor-theme,
