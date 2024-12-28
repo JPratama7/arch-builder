@@ -18,7 +18,7 @@ jobs:
           grimblast-git, gtklock, gtklock-userinfo-module, pywal-16-colors, sway-audio-idle-inhibit-git,
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
-          slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf, proton-ge-custom,
+          slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf,
           python-ufonormalizer, afdko
           ]
       fail-fast: false
@@ -118,7 +118,7 @@ jobs:
         build: [
           visual-studio-code-bin, xampp, zramd, 7-zip, jdk-lts, jdk21-graalvm-ee-bin, wget2-git,
           zulu-17-bin, appimagelauncher, jdk17-graalvm-ee-bin, podman-desktop,
-          yay, aws-cli-v2
+          yay, aws-cli-v2, proton-ge-custom
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -139,6 +139,8 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
+          maxJobs: "5"
+          gccPFlags: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - uses: ncipollo/release-action@v1.14.0
