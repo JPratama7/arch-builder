@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.12
-pkgver=${_major}.6
+pkgver=${_major}.7
 _branch=6.x
-pkgrel=6
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -28,7 +28,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.7.14
+_bore=5.7.15
 
 license=(GPL2)
 makedepends=(
@@ -252,6 +252,9 @@ prepare() {
   scripts/config -e CONFIG_MODULE_COMPRESS \
                  -e CONFIG_MODULE_COMPRESS_ALL \
                  -e CONFIG_MODULE_COMPRESS_ZSTD
+
+  msg2 "AMD Private Color"
+  scripts/config -e AMD_PRIVATE_COLOR
 
   msg2 "Change kernel tick rate to 300"
   scripts/config -d HZ_250 -e "HZ_300" --set-val HZ "300";
