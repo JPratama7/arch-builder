@@ -107,7 +107,7 @@ jobs:
 
   TRIGGER_PUBLISH:
     if: ${{ always() }}
-    needs: [EXPERIMENTAL, GCC, INTERNAL, CLANG, CLMUL]
+    needs: [GCC, INTERNAL, CLANG]
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
