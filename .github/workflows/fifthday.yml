@@ -155,7 +155,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          proton-ge-custom, wine-ge-custom
+          proton-ge-custom, wine-ge-custom, lib32-lzo
           ]
       fail-fast: false
     runs-on: ubuntu-latest
