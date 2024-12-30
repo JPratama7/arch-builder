@@ -37,13 +37,15 @@ prepare() {
 build() {
   cd "$pkgname"
 
-  ./configure \
+  ./configure ARIA2_STATIC=yes \
     --prefix=/usr \
     --with-openssl \
     --without-gnutls \
     --without-wintls \
     --without-appletls \
     --enable-libaria2 \
+    --enable-bittorrent \
+    --enable-static \
     --with-libssh2 \
     --with-sqlite3 \
     --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt

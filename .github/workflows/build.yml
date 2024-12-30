@@ -44,7 +44,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          libva-vdpau-driver, libva, libvdpau, mesa, aria2
+          libva-vdpau-driver, libva, libvdpau, mesa
           ]
       fail-fast: false
     runs-on: ubuntu-latest
