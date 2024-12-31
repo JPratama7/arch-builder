@@ -19,7 +19,7 @@ jobs:
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
           slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf,
-          python-ufonormalizer, afdko, aria2-git
+          python-ufonormalizer, afdko, aria2-git, python-imageio, python-imageio-ffmpeg
           ]
       fail-fast: false
     runs-on: ubuntu-latest
