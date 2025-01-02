@@ -118,7 +118,7 @@ jobs:
         build: [
           visual-studio-code-bin, xampp, zramd, 7-zip, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
           zulu-17-bin, appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin
-          yay, aws-cli-v2, jdk17-zulu-prime-bin 
+          yay, aws-cli-v2, jdk17-zulu-prime-bin, jdk21-graalvm-ee-bin
           ]
       fail-fast: false
     runs-on: ubuntu-latest
