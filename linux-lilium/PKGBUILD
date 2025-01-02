@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.12
-pkgver=${_major}.7
+pkgver=${_major}.8
 _branch=6.x
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -194,6 +194,7 @@ prepare() {
   scripts/config -e SCHED_BORE -d PREEMPT -d PREEMPT_DYNAMIC -e PREEMPT_RT
 
   scripts/config  --set-val X86_64_VERSION 1
+  scripts/config -e AMD_3D_VCACHE
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
