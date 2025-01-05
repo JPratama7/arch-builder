@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.8
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -217,6 +217,10 @@ prepare() {
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
   scripts/config -e CONFIG_STACK_VALIDATION
+
+  msg2 "Enable THP"
+  scripts/config -d TRANSPARENT_HUGEPAGE_MADVISE \
+                 -e TRANSPARENT_HUGEPAGE_ALWAYS
 
   # Enable IKCONFIG following Arch's philosophy
   msg2 "Enable IKCONFIG"
