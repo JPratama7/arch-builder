@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.8
 _branch=6.x
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -77,21 +77,22 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0001-drm-amd-Taint-the-kernel-when-enabling-overdrive.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0002-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0003-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0004-fs-ntfs3-Add-more-checks-in-mi_enum_attr-part-2.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0005-fs-ntfs3-Add-check-in-ntfs_extend_initialized_size.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0006-fs-ntfs3-Switch-to-folio-to-release-resources.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0007-fs-ntfs3-Accumulated-refactoring-changes.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0008-workqueue-Reduce-expensive-locks-for-unbound-workque.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0009-Reapply-x86-tlb-put-cpumask_test_cpu-in-prev-next-un.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0010-Bluetooth-btmtk-Remove-resetting-mt7921-before-downl.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0011-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0013-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0014-ALSA-hda-realtek-fixup-ASUS-GA605W.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0015-drm-amd-Invert-APU-check-for-amdgpu_device_evict_res.patch"
-        "${_lucjan}cachyos-fixes-patches-v18-sep/0016-drm-amd-Add-Suspend-Hibernate-notification-callback-.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0001-drm-amd-Taint-the-kernel-when-enabling-overdrive.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0002-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0003-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0004-fs-ntfs3-Add-more-checks-in-mi_enum_attr-part-2.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0005-fs-ntfs3-Add-check-in-ntfs_extend_initialized_size.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0006-fs-ntfs3-Switch-to-folio-to-release-resources.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0007-fs-ntfs3-Accumulated-refactoring-changes.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0008-workqueue-Reduce-expensive-locks-for-unbound-workque.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0009-Reapply-x86-tlb-put-cpumask_test_cpu-in-prev-next-un.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0010-Bluetooth-btmtk-Remove-resetting-mt7921-before-downl.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0011-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0013-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0014-ALSA-hda-realtek-fixup-ASUS-GA605W.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0015-drm-amd-Invert-APU-check-for-amdgpu_device_evict_res.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0016-drm-amd-Add-Suspend-Hibernate-notification-callback-.patch"
+        "${_lucjan}cachyos-fixes-patches-v19-sep/0017-sched_ext-Include-remaining-task-time-slice-in-error.patch"
 
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
@@ -102,17 +103,18 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}pksm-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
+        "${_lucjan}le9uo-default-on-patches-v2/0001-mm-6.12-add-le9uo.patch"
 
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
-
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}amd-pstate-patches-v6-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}amd-pstate-patches-v7/0001-amd-6.12-merge-changes-from-dev-tree.patch"
         "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
         "${_cachy}misc/0001-rt.patch"
         "${_cachy}misc/0001-clang-polly.patch"
+
 
         "${_tkg}0012-misc-additions.patch"
         )
@@ -201,7 +203,7 @@ prepare() {
     msg2 "Enabling LTO CLANG"
     scripts/config -e LTO \
                    -e LTO_CLANG \
-                   -e POLLY_CLANG \
+                   -e CONFIG_POLLY_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
