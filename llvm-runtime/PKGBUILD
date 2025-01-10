@@ -81,10 +81,6 @@ prepare() {
   ./update-isl.sh isl-0.27
   popd
 
-  # Attempt to convert script to Python 3
-  2to3 -wn --no-diffs \
-    clang-tools-extra/clang-include-fixer/find-all-symbols/tool/run-find-all-symbols.py
-
   if [ -n "$CC" ] && [ -n "$CXX" ]; then
     _extra_build_flags+=(
       -DCMAKE_C_COMPILER="$CC"
@@ -130,11 +126,10 @@ build() {
   )
 
   cmake -S llvm -B build -G Ninja "${_extra_build_flags[@]}"
-    ninja -C build
+  
+  ninja -C build
     
   ninja -C build ocaml_doc
-
-
 }
 
 check() {
