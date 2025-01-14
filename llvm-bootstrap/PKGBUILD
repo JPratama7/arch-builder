@@ -88,8 +88,8 @@ build() {
 
   _extra_build_flags+=(
     -DCMAKE_BUILD_TYPE=Release
-    -CMAKE_C_FLAGS=$CFLAGS
-    -CMAKE_CXX_FLAGS=$CXXFLAGS
+    -CMAKE_C_FLAGS="$CFLAGS"
+    -CMAKE_CXX_FLAGS="$CXXFLAGS"
     -CMAKE_C_COMPILER=gcc
     -CMAKE_CXX_COMPILER=g++
     -DCMAKE_INSTALL_PREFIX=/usr
