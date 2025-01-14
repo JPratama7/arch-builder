@@ -80,6 +80,12 @@ build() {
 
   export CFLAGS="$CFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
+  
+  cflags="$(echo $CFLAGS)"
+  cxxflags="$(echo $CXXFLAGS)"
+
+  unset CFLAGS
+  unset CXXFLAGS
 
   cd "${srcdir:?}/llvm-project" || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Build Failed! \E[0m"
@@ -88,8 +94,8 @@ build() {
 
   _extra_build_flags+=(
     -DCMAKE_BUILD_TYPE=Release
-    -CMAKE_C_FLAGS="$CFLAGS"
-    -CMAKE_CXX_FLAGS="$CXXFLAGS"
+    -CMAKE_C_FLAGS="$cflags"
+    -CMAKE_CXX_FLAGS="$cxxflags"
     -CMAKE_C_COMPILER=gcc
     -CMAKE_CXX_COMPILER=g++
     -DCMAKE_INSTALL_PREFIX=/usr
