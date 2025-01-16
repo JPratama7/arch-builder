@@ -98,8 +98,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
         "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
-        "${_lucjan}amd-tlb-broadcast-patches-v3/0001-amd-6.12-merge-changes-from-dev-tree.patch"
-        "${_lucjan}adios-iosched-patches/0001-iosched-6.12-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}amd-tlb-broadcast-patches-v2/0001-amd-6.12-merge-changes-from-dev-tree.patch"
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
@@ -111,13 +110,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}amd-pstate-patches-v7/0001-amd-6.12-merge-changes-from-dev-tree.patch"
+        "${_lucjan}amd-pstate-patches-v6/0001-amd-6.12-merge-changes-from-dev-tree.patch"
         "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
         "${_cachy}misc/0001-rt.patch"
         "${_cachy}misc/0001-clang-polly.patch"
-
 
         "${_tkg}0012-misc-additions.patch"
         )
@@ -196,9 +194,12 @@ prepare() {
 
   # enable BORE Scheduler + RT
   msg2 "Enabling BORE + RT"
-  scripts/config -e SCHED_BORE -d PREEMPT -d PREEMPT_DYNAMIC -e PREEMPT_RT
+  scripts/config -e SCHED_BORE \
+                 -d PREEMPT \
+                 -d PREEMPT_DYNAMIC \
+                 -e PREEMPT_RT
 
-  scripts/config  --set-val X86_64_VERSION 1
+  scripts/config --set-val X86_64_VERSION 1
   scripts/config -e AMD_3D_VCACHE
 
   # enable LTO_CLANG_THIN
@@ -217,7 +218,8 @@ prepare() {
   fi
 
   # https://bbs.archlinux.org/viewtopic.php?pid=1824594#p1824594
-  scripts/config -e CONFIG_PSI_DEFAULT_DISABLED
+  scripts/config -e CONFIG_PSI \
+                 -e CONFIG_PSI_DEFAULT_DISABLED
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
