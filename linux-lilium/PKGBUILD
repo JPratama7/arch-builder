@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.12
 pkgver=${_major}.9
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -77,29 +77,29 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0001-drm-amd-Taint-the-kernel-when-enabling-overdrive.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0002-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0003-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0004-fs-ntfs3-Add-more-checks-in-mi_enum_attr-part-2.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0005-fs-ntfs3-Add-check-in-ntfs_extend_initialized_size.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0006-fs-ntfs3-Switch-to-folio-to-release-resources.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0007-fs-ntfs3-Accumulated-refactoring-changes.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0008-workqueue-Reduce-expensive-locks-for-unbound-workque.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0009-Reapply-x86-tlb-put-cpumask_test_cpu-in-prev-next-un.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0010-Bluetooth-btmtk-Remove-resetting-mt7921-before-downl.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0011-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0013-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0014-ALSA-hda-realtek-fixup-ASUS-GA605W.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0015-drm-amd-Invert-APU-check-for-amdgpu_device_evict_res.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0016-drm-amd-Add-Suspend-Hibernate-notification-callback-.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0017-sched_ext-Include-remaining-task-time-slice-in-error.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0018-drm-amdkfd-fixed-page-fault-when-enable-MES-shader-d.patch"
-        "${_lucjan}cachyos-fixes-patches-v20-sep/0019-sched_ext-switch-class-when-preempted-by-higher-prio.patch"
+        "${_lucjan}0001-drm-amd-Taint-the-kernel-when-enabling-overdrive.patch"
+        "${_lucjan}0002-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
+        "${_lucjan}0003-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
+        "${_lucjan}0004-fs-ntfs3-Add-more-checks-in-mi_enum_attr-part-2.patch"
+        "${_lucjan}0005-fs-ntfs3-Add-check-in-ntfs_extend_initialized_size.patch"
+        "${_lucjan}0006-fs-ntfs3-Switch-to-folio-to-release-resources.patch"
+        "${_lucjan}0007-fs-ntfs3-Accumulated-refactoring-changes.patch"
+        "${_lucjan}0008-workqueue-Reduce-expensive-locks-for-unbound-workque.patch"
+        "${_lucjan}0009-Reapply-x86-tlb-put-cpumask_test_cpu-in-prev-next-un.patch"
+        "${_lucjan}0010-Bluetooth-btmtk-Remove-resetting-mt7921-before-downl.patch"
+        "${_lucjan}0011-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
+        "${_lucjan}0013-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
+        "${_lucjan}0014-ALSA-hda-realtek-fixup-ASUS-GA605W.patch"
+        "${_lucjan}0015-drm-amd-Invert-APU-check-for-amdgpu_device_evict_res.patch"
+        "${_lucjan}0016-drm-amd-Add-Suspend-Hibernate-notification-callback-.patch"
+        "${_lucjan}0017-sched_ext-Include-remaining-task-time-slice-in-error.patch"
+        "${_lucjan}0018-hid-asus-Disable-OOBE-mode-on-the-ProArt-P16.patch"
 
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
         "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
-        "${_lucjan}amd-tlb-broadcast-patches-v2/0001-amd-6.12-merge-changes-from-dev-tree.patch"
+        "${_lucjan}amd-tlb-broadcast-patches-v3/0001-amd-6.12-merge-changes-from-dev-tree.patch"
+        "${_lucjan}adios-iosched-patches/0001-iosched-6.12-introduce-ADIOS-I-O-scheduler.patch"
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
