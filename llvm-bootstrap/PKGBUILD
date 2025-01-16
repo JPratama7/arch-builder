@@ -1,14 +1,15 @@
 pkgname=llvm-bootstrap
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, compiler-rt, polly, lldb, lld"
-pkgver=19.1.6
-pkgrel=2
+pkgver=19.1.7
+pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'clang' "clang=${pkgver}"
   'clang-analyzer' 'clang-tools-extra' 'polly' 'openmp' 'compiler-rt'
-  'lld')
+  'lld'
+)
 
 replaces=('llvm' 'llvm-libs' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'openmp' 'lld' 'compiler-rt'
@@ -24,6 +25,7 @@ makedepends=(
   'git' 'ninja' 'cmake' 'llvm' 'clang' 'openmp'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark' 'mimalloc' 'libc++' 'libc++abi'
+  'clang18' 'llvm18' 'compiler-rt18'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
@@ -81,8 +83,10 @@ build() {
   export CFLAGS="$CFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   export CXXFLAGS="$CXXFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
   
-  cflags="$(echo $CFLAGS)"
-  cxxflags="$(echo $CXXFLAGS)"
+  cflags="$(echo $CFLAGS | tr -d \\n)"
+  cxxflags="$(echo $CXXFLAGS | tr -d \\n)"
+  echo $cflags
+  echo $cxxflags
 
   unset CFLAGS
   unset CXXFLAGS
@@ -94,10 +98,10 @@ build() {
 
   _extra_build_flags+=(
     -DCMAKE_BUILD_TYPE=Release
-    -CMAKE_C_FLAGS="$cflags"
-    -CMAKE_CXX_FLAGS="$cxxflags"
-    -CMAKE_C_COMPILER=gcc
-    -CMAKE_CXX_COMPILER=g++
+    -DCMAKE_C_FLAGS="$cflags"
+    -DCMAKE_CXX_FLAGS="$cxxflags"
+    -DCMAKE_C_COMPILER=gcc
+    -DCMAKE_CXX_COMPILER=g++
     -DCMAKE_INSTALL_PREFIX=/usr
     -DLLVM_BINUTILS_INCDIR=/usr/include
     -DLLVM_BUILD_RUNTIME=ON
