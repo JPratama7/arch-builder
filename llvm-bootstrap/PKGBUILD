@@ -25,7 +25,6 @@ makedepends=(
   'git' 'ninja' 'cmake' 'llvm' 'clang' 'openmp'
   'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark' 'mimalloc' 'libc++' 'libc++abi'
-  'clang18' 'llvm18' 'compiler-rt18'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
@@ -265,53 +264,53 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # Fallback for llvm 18
-  # Actual files
-  local _llvm_libs=(
-    libclang-cpp.so.18.1
-    libclang.so.18.1.8
-    libLLVM.so.18.1
-    libLTO.so.18.1
-    libomptarget.rtl.amdgpu.so.18.1
-    libomptarget.rtl.cuda.so.18.1
-    libomptarget.rtl.x86_64.so.18.1
-    libomptarget.so.18.1
-    libRemarks.so.18.1
-  )
+  # # Fallback for llvm 18
+  # # Actual files
+  # local _llvm_libs=(
+  #   libclang-cpp.so.18.1
+  #   libclang.so.18.1.8
+  #   libLLVM.so.18.1
+  #   libLTO.so.18.1
+  #   libomptarget.rtl.amdgpu.so.18.1
+  #   libomptarget.rtl.cuda.so.18.1
+  #   libomptarget.rtl.x86_64.so.18.1
+  #   libomptarget.so.18.1
+  #   libRemarks.so.18.1
+  # )
 
-  # Symlinks and their targets
-  declare -A _llvm_symlinks=(
-    ["libclang-cpp.so"]="libclang-cpp.so.18.1"
-    ["libclang.so"]="libclang.so.18.1"
-    ["libclang.so.18.1"]="libclang.so.18.1.8"
-    ["libLLVM-18.so"]="libLLVM.so.18.1"
-    ["libLLVM.so"]="libLLVM.so.18.1"
-    ["libLTO.so"]="libLTO.so.18.1"
-    ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
-    ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
-    ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
-    ["libomptarget.so"]="libomptarget.so.18.1"
-    ["libRemarks.so"]="libRemarks.so.18.1"
-  )
+  # # Symlinks and their targets
+  # declare -A _llvm_symlinks=(
+  #   ["libclang-cpp.so"]="libclang-cpp.so.18.1"
+  #   ["libclang.so"]="libclang.so.18.1"
+  #   ["libclang.so.18.1"]="libclang.so.18.1.8"
+  #   ["libLLVM-18.so"]="libLLVM.so.18.1"
+  #   ["libLLVM.so"]="libLLVM.so.18.1"
+  #   ["libLTO.so"]="libLTO.so.18.1"
+  #   ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
+  #   ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
+  #   ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
+  #   ["libomptarget.so"]="libomptarget.so.18.1"
+  #   ["libRemarks.so"]="libRemarks.so.18.1"
+  # )
 
-  # Copy actual library files
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exists"
-    fi
-  done
+  # # Copy actual library files
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exists"
+  #   fi
+  # done
 
-  # Create symlinks
-  for symlink in "${!_llvm_symlinks[@]}"; do
-    target="${_llvm_symlinks[$symlink]}"
-    if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
-      echo "- Create symlink ${symlink:?} -> ${target:?}"
-      ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
-    else
-      echo "- Symlink ${symlink:?} exists"
-    fi
-  done
+  # # Create symlinks
+  # for symlink in "${!_llvm_symlinks[@]}"; do
+  #   target="${_llvm_symlinks[$symlink]}"
+  #   if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
+  #     echo "- Create symlink ${symlink:?} -> ${target:?}"
+  #     ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
+  #   else
+  #     echo "- Symlink ${symlink:?} exists"
+  #   fi
+  # done
 }
