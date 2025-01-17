@@ -248,9 +248,6 @@ package() {
   ln -s ../LLVMgold.so "${pkgdir:?}/usr/lib/bfd-plugins/LLVMgold.so"
 
   # Clang
-  # Remove documentation sources
-  rm -r "$pkgdir"/usr/share/doc/clang{,-tools}/html/{_sources,.buildinfo}
-
   # Move scanbuild-py into site-packages and install Python bindings
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -d "$pkgdir/$site_packages"
