@@ -19,7 +19,13 @@ jobs:
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
           slack-electron, waydroid, pwvucontrol, apple-music-desktop, windsurf, python-screeninfo,
-          python-ufonormalizer, afdko, aria2-git, python-imageio, python-imageio-ffmpeg
+          python-ufonormalizer, afdko, aria2-git, python-imageio, python-imageio-ffmpeg,
+
+          swaylock-effects-git, wlr-randr-git, hyprprop, grimblast-git,
+          gnome-calculator-gtk3, flameshot-git, rofi-lbonn-wayland-git, bibata-cursor-theme-bin, tela-circle-icon-theme-dracula,
+          themix-theme-oomox-git, themix-plugin-base16-git, themix-gui-git, themix-export-spotify-git,
+          themix-theme-materia-git, oomox-qt5-styleplugin-git, oomox-qt6-styleplugin-git, pokemon-colorscripts,
+          youtube-dl, update-grub, ttf-meslo-nerd-font-powerlevel10k
           ]
       fail-fast: false
     runs-on: ubuntu-latest
