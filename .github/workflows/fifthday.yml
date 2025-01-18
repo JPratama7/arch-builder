@@ -49,6 +49,7 @@ jobs:
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
           clangedpflags: "y"
+          clangedPolly: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
@@ -105,6 +106,7 @@ jobs:
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
           clangedpflags: "y"
+          clangedPolly: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
