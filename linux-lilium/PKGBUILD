@@ -203,7 +203,7 @@ prepare() {
   msg2 "Setting custom config"
   scripts/config --set-val X86_64_VERSION 1
   scripts/config -e AMD_3D_VCACHE
-  scripts/config -y MQ_IOSCHED_ADIOS
+  scripts/config -e MQ_IOSCHED_ADIOS
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
