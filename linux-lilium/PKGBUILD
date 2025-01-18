@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.12
-pkgver=${_major}.9
+pkgver=${_major}.10
 _branch=6.x
-pkgrel=3
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -110,7 +110,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}amd-pstate-patches-v6/0001-amd-6.12-merge-changes-from-dev-tree.patch"
+        "${_lucjan}amd-pstate-patches-v7/0001-amd-6.12-merge-changes-from-dev-tree.patch"
         "${_lucjan}adios-iosched-patches-v2/0001-iosched-6.12-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
 
@@ -203,7 +203,7 @@ prepare() {
   msg2 "Setting custom config"
   scripts/config --set-val X86_64_VERSION 1
   scripts/config -e AMD_3D_VCACHE
-  scripts/config -m MQ_IOSCHED_ADIOS
+  scripts/config -y MQ_IOSCHED_ADIOS
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
