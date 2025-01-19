@@ -48,6 +48,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
           clanged: "y"
+          bootstrap: "y"
           clangedpflags: "y"
           clangedPolly: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
@@ -107,6 +108,7 @@ jobs:
           clanged: "y"
           clangedpflags: "y"
           clangedPolly: "y"
+          bootstrap: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
