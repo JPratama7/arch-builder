@@ -27,7 +27,8 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
-          clangedpflags: "y"
+          clangedPFlags: "y"
+          officialRepo: "y"
           clangedPolly: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
@@ -64,9 +65,9 @@ jobs:
         uses: JPratama7/pkgbuild-action@original
         with:
           clanged: "y"
-          clangedpflags: "y"
+          clangedPFlags: "y"
+          officialRepo: "y"
           clangedPolly: "y"
-          bootstrap: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
