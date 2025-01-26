@@ -2,9 +2,9 @@
 # Contributor: Metal A-wing <1 at 233 dot email>
 
 pkgname=deno
-pkgver=2.1.4
-pkgrel=1
-_rusty_v8_ver=130.0.1
+pkgver=2.1.7
+pkgrel=2
+_rusty_v8_ver=130.0.7
 pkgdesc="A secure runtime for JavaScript and TypeScript"
 arch=('x86_64')
 url="https://deno.land"
