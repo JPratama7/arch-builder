@@ -21,10 +21,10 @@ jobs:
           slack-electron, waydroid, pwvucontrol, windsurf, python-screeninfo,
           python-ufonormalizer, afdko, aria2-git, python-imageio, python-imageio-ffmpeg,
 
-          swaylock-effects-git, wlr-randr-git, hyprprop, grimblast-git,
+          swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           gnome-calculator-gtk3, flameshot-git, rofi-lbonn-wayland-git, bibata-cursor-theme-bin,
           themix-theme-oomox-git, themix-plugin-base16-git, themix-gui-git, themix-export-spotify-git,
-          themix-theme-materia-git, oomox-qt-styleplugin-git.git, youtube-dl, update-grub, ttf-meslo-nerd-font-powerlevel10k
+          themix-theme-materia-git, oomox-qt-styleplugin-git, youtube-dl, update-grub, ttf-meslo-nerd-font-powerlevel10k
           ]
       fail-fast: false
     runs-on: ubuntu-latest
