@@ -29,7 +29,6 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
-          clangedPolly: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
@@ -67,7 +66,6 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
-          clangedPolly: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"

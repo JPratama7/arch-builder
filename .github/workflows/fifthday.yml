@@ -50,7 +50,6 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
-          clangedPolly: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
@@ -108,7 +107,6 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
-          clangedPolly: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
@@ -123,7 +121,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, xampp, zramd, 7-zip, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
+          visual-studio-code-bin, xampp, 7-zip, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
           zulu-17-bin, appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin,
           yay, aws-cli-v2, jdk17-zulu-prime-bin
           ]
