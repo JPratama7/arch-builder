@@ -15,10 +15,10 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=6.12
-pkgver=${_major}.11
+_major=6.13
+pkgver=${_major}.0
 _branch=6.x
-pkgrel=1
+pkgrel=3
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -40,9 +40,11 @@ fi
 options=('!strip' '!buildflags')
 _srcname="linux-${pkgver}-lilium${pkgrel}"
 
-source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
+source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "choose-gcc-optimization.sh"
         "config"
+
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rc6-rt3.patch."{xz,sign}
 
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$_major.y-bore$_bore.patch"
 
@@ -55,68 +57,71 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
         "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
         "${_xanmod}clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
-        "${_xanmod}net/mac80221/0001-mac80211-ignore-AP-power-level-when-tx-power-type-is.patch"
         "${_xanmod}net/netfilter/0002-netfilter-add-xt_FLOWOFFLOAD-target.patch"
         "${_xanmod}net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
         "${_xanmod}pci_acso/0001-PCI-Enable-overrides-for-missing-ACS-capabilities.patch"
         "${_xanmod}userns/0001-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch"
         "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
-        "${_xanmod}xanmod/0007-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-        "${_xanmod}xanmod/0008-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
-        "${_xanmod}xanmod/0009-XANMOD-blk-wbt-Set-wbt_default_latency_nsec-to-2msec.patch"
-        "${_xanmod}xanmod/0011-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-        "${_xanmod}xanmod/0012-XANMOD-mm-Raise-max_map_count-default-value.patch"
-        "${_xanmod}xanmod/0014-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-        "${_xanmod}xanmod/0015-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
-        "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
 
+        "${_xanmod}xanmod/0001-XANMOD-x86-build-Add-more-CFLAGS-optimizations.patch"
+        "${_xanmod}xanmod/0002-XANMOD-kbuild-Add-GCC-SMS-based-modulo-scheduling-fl.patch"
+        "${_xanmod}xanmod/0003-kbuild-Re-add-.config-file-required-to-sign-external.patch"
+        "${_xanmod}xanmod/0004-kbuild-Remove-GCC-minimal-function-alignment.patch"
+        "${_xanmod}xanmod/0007-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+        "${_xanmod}xanmod/0008-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+        "${_xanmod}xanmod/0009-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
+        "${_xanmod}xanmod/0010-XANMOD-blk-wbt-Set-wbt_default_latency_nsec-to-2msec.patch"
+        "${_xanmod}xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+        "${_xanmod}xanmod/0012-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+        "${_xanmod}xanmod/0013-XANMOD-mm-Raise-max_map_count-default-value.patch"
+        "${_xanmod}xanmod/0014-XANMOD-mm-vmscan-Set-minimum-amount-of-swapping.patch"
+        "${_xanmod}xanmod/0015-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+        "${_xanmod}xanmod/0016-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
+        "${_xanmod}xanmod/0017-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
+        "${_xanmod}xanmod/0018-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+        "${_xanmod}xanmod/0019-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
+
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
-        "${_lucjan}openvpn-dco/0001-openvpn-dco-patches.patch"
-        "${_lucjan}ntsync-patches-v3-all/0001-ntsync-patches.patch"
-        "${_lucjan}futex-patches/0001-futex-6.12-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-        "${_lucjan}futex2-patches-all/0001-futex2-patches.patch"
+        "${_lucjan}openvpn-dco/0001-ovpn-dco-6.13-initial-merge.patch"
+        "${_lucjan}ntsync-patches-all/0001-ntsync-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0001-drm-amd-Taint-the-kernel-when-enabling-overdrive.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0002-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0003-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0004-fs-ntfs3-Add-more-checks-in-mi_enum_attr-part-2.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0005-fs-ntfs3-Add-check-in-ntfs_extend_initialized_size.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0006-fs-ntfs3-Switch-to-folio-to-release-resources.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0007-fs-ntfs3-Accumulated-refactoring-changes.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0008-workqueue-Reduce-expensive-locks-for-unbound-workque.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0009-Reapply-x86-tlb-put-cpumask_test_cpu-in-prev-next-un.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0010-Bluetooth-btmtk-Remove-resetting-mt7921-before-downl.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0011-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0013-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0014-ALSA-hda-realtek-fixup-ASUS-GA605W.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0015-drm-amd-Invert-APU-check-for-amdgpu_device_evict_res.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0016-drm-amd-Add-Suspend-Hibernate-notification-callback-.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0017-sched_ext-Include-remaining-task-time-slice-in-error.patch"
-        "${_lucjan}cachyos-fixes-patches-v21-sep/0018-hid-asus-Disable-OOBE-mode-on-the-ProArt-P16.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0001-drm-edid-add-a-quirk-for-two-240Hz-Samsung-monitors.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0002-kbuild-add-resolve_btfids-to-pacman-PKGBUILD.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0003-get_task_exe_file-check-PF_KTHREAD-locklessly.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0004-kprobes-Reduce-preempt-disable-scope-in-check_kprobe.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0005-Input-xpad-add-support-for-ASUS-ROG-RAIKIRI-PRO.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0006-Fix-GA605W-backlight.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0007-sched_ext-Include-remaining-task-time-slice-in-error.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0008-hid-asus-Disable-OOBE-mode-on-the-ProArt-P16.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0009-Revert-Fix-GA605W-backlight.patch"
+        "${_lucjan}cachyos-fixes-patches-v3-sep/0010-sched_ext-Include-task-weight-in-the-error-state-dum.patch"
 
-        "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
-        "${_lucjan}cpuidle-patches/0001-cpuidle-patches.patch"
-        "${_lucjan}cpufreq-ext-patches/0001-cpufreq-ext-patches.patch"
-        "${_lucjan}amd-tlb-broadcast-patches-v2/0001-amd-6.12-merge-changes-from-dev-tree.patch"
+        "${_lucjan}cpu-cachyos-patches/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}pksm-patches/0001-mm-expose-per-process-KSM-control-via-syscalls.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
-        "${_lucjan}le9uo-default-on-patches-v2/0001-mm-6.12-add-le9uo.patch"
+        "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
-        "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
+        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
-        "${_lucjan}amd-cache-optimizer-patches/0001-amd-cache-optimizer-patches.patch"
-        "${_lucjan}amd-pstate-patches-v7/0001-amd-6.12-merge-changes-from-dev-tree.patch"
-        "${_lucjan}adios-iosched-patches-v2/0001-iosched-6.12-introduce-ADIOS-I-O-scheduler.patch"
-        "${_lucjan}cpu-cachyos-patches-v3/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}amd-drm-patches-all/0001-amd-drm-patches.patch"
+        "${_lucjan}amd-pstate-patches-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}adios-iosched-patches-v6/0001-iosched-6.13-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}perf-amd-patches-all/0001-perf-amd-patches.patch"
+        "${_lucjan}itmt-core-ranking-patches-all/0001-itmt-core-ranking-patches.patch"
+
+        "${_lucjan}x86-patches-sep/0001-x86-Kconfig-Geode-CPU-has-cmpxchg8b.patch"
+        "${_lucjan}x86-patches-sep/0006-x86-remove-HIGHMEM64G-support.patch"
+        "${_lucjan}x86-patches-sep/0007-x86-drop-SWIOTLB-and-PHYS_ADDR_T_64BIT-for-PAE.patch"
+        "${_lucjan}x86-patches-sep/0008-x86-drop-support-for-CONFIG_HIGHPTE.patch"
+        "${_lucjan}x86-patches-sep/0009-x86-document-X86_INTEL_MID-as-64-bit-only.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
-        "${_cachy}misc/0001-rt.patch"
-        "${_cachy}misc/0001-clang-polly.patch"
 
         "${_tkg}0012-misc-additions.patch"
         )
@@ -166,7 +171,7 @@ apply_patch() {
   }
 
 prepare() {
-  mv linux-${pkgver} linux-${_major}
+  # mv linux-${pkgver} linux-${_major}
   cd linux-${_major}
 
   msg2 "Setting version..."
@@ -210,7 +215,6 @@ prepare() {
     msg2 "Enabling LTO CLANG"
     scripts/config -e LTO \
                    -e LTO_CLANG \
-                   -e CONFIG_POLLY_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
