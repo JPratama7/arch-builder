@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.13
 pkgver=${_major}.2
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -89,7 +89,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}pid-patches-all/0001-pid-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v7/0001-cachyos-fixes-patches.patch"
         "${_lucjan}sched-ext-fixes-patches-v2/0001-sched-6.13-fix-Kernel-OOPS-under-high-memory-pressur.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
@@ -194,8 +194,6 @@ prepare() {
   # enable BORE Scheduler + RT
   msg2 "Enabling BORE + RT"
   scripts/config -e SCHED_BORE \
-                 -d PREEMPT \
-                 -d PREEMPT_DYNAMIC \
                  -e PREEMPT_RT
 
   msg2 "Setting custom config"
@@ -226,7 +224,8 @@ prepare() {
   scripts/config -e CONFIG_STACK_VALIDATION
 
   msg2 "Enable THP"
-  scripts/config -d TRANSPARENT_HUGEPAGE_MADVISE \
+  scripts/config -e TRANSPARENT_HUGEPAGE \
+                 -d TRANSPARENT_HUGEPAGE_MADVISE \
                  -e TRANSPARENT_HUGEPAGE_ALWAYS
 
   # Enable IKCONFIG following Arch's philosophy
