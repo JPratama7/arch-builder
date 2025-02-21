@@ -16,9 +16,9 @@ fi
 
 pkgbase=linux-lilium
 _major=6.13
-pkgver=${_major}.2
+pkgver=${_major}.3
 _branch=6.x
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -85,7 +85,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
         "${_lucjan}openvpn-dco/0001-ovpn-dco-6.13-initial-merge.patch"
-        "${_lucjan}ntsync-patches-v2/0001-ntsync-6.13-merge-changes-from-dev-tree.patch"
+        "${_lucjan}ntsync-patches-v3/0001-ntsync-6.13-merge-changes-from-dev-tree.patch"
         "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}pid-patches-all/0001-pid-patches.patch"
 
@@ -97,11 +97,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
-        "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
+        "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
+        "${_lucjan}zstd-cachyos-patches-v2/0001-zstd-cachyos-patches.patch"
         "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
-        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
+        "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-drm-patches-all/0001-amd-drm-patches.patch"
         "${_lucjan}amd-pstate-patches-v3-all/0001-amd-pstate-patches.patch"
