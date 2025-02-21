@@ -122,69 +122,65 @@ build() {
   # Inject subproject packages
   export MESON_PACKAGE_CACHE_DIR="$srcdir"
 
-  meson setup mesa-${_pkgver} build-clang \
-    --prefix /usr \
-    --libexecdir lib \
-    --sbindir bin \
-    --auto-features enabled \
-    --wrap-mode nodownload \
-    -D buildtype=release \
-    -D debug=false \
-    -D optimization=2 \
-    -D b_ndebug=true \
-    -D b_lto=true ${_extra_lto_flag} \
-    -D b_pie=true \
-    -D b_lundef=false \
-    -D sysconfdir=/etc \
-    \
-    -D platforms=x11,wayland \
-    \
-    -D gallium-drivers="${GALLIUM_DRIVERS}" \
-    -D vulkan-drivers="${VULKAN_DRIVERS}" \
-    -D vulkan-layers="${VULKAN_LAYERS}" \
-    \
-    -D egl=enabled \
-    \
-    -D gallium-extra-hud=true \
-    -D gallium-nine=true \
-    -D gallium-opencl=icd \
-    -D gallium-va=enabled \
-    -D gallium-vdpau=enabled \
-    -D gallium-xa=enabled \
-	  -D gallium-rusticl=true \
-    -D gallium-d3d12-video=true \
-    -D gallium-d3d12-graphics=true \
-    \
-    -D rust_std=2021 \
-    -D gbm=enabled \
-    \
-    -D gles1=disabled \
-    -D gles2=enabled \
-    \
-    -D glvnd=enabled \
-    -D glx=dri \
-    -D libunwind=disabled \
-    -D llvm=enabled \
-    -D lmsensors=enabled \
-    -D osmesa=true \
-    -D shared-glapi=enabled \
-    -D microsoft-clc=disabled \
-    -D opengl=true \
-    -D zstd=auto \
-    -D valgrind=disabled \
-    -D android-libbacktrace=disabled \
-    -D intel-clc=enabled \
-    -D intel-rt=enabled \
-    -D video-codecs=all \
-    -D amdgpu-virtio=true \
-    -D legacy-x11='dri2'
-    \
-    -D c_args="$CFLAGS -Wno-format-truncation" \
-    -D c_link_args="$LDFLAGS -Wl,--undefined-version" \
-    -D cpp_args="$CXXFLAGS -Wno-format-truncation" \
-    -D cpp_link_args="$LDFLAGS -Wl,--undefined-version" \
-    --strip
+  local meson_options=(
+        --prefix /usr
+        --libexecdir lib
+        --sbindir bin
+        --auto-features enabled
+        --wrap-mode nodownload
+        -D debug=false
+        -D optimization=2
+        -D b_ndebug=true
+        -D b_lto=true ${_extra_lto_flag}
+        -D b_pie=true
+        -D b_lundef=false
+        -D sysconfdir=/etc
+        -D platforms=x11,wayland
+        -D gallium-drivers="${GALLIUM_DRIVERS}"
+        -D vulkan-drivers="${VULKAN_DRIVERS}"
+        -D vulkan-layers="${VULKAN_LAYERS}"
 
+        -D egl=enabled
+        
+        -D gallium-extra-hud=true
+        -D gallium-nine=true
+        -D gallium-opencl=icd
+        -D gallium-va=enabled
+        -D gallium-vdpau=enabled
+        -D gallium-xa=enabled
+        -D gallium-rusticl=true
+        -D gallium-d3d12-video=enabled
+        -D gallium-d3d12-graphics=enabled
+        
+        -D rust_std=2021
+        -D gbm=enabled
+        -D gles1=disabled
+        -D gles2=enabled
+        -D glvnd=enabled
+        -D glx=dri
+        
+        -D libunwind=disabled
+        -D llvm=enabled
+        -D lmsensors=enabled
+        -D osmesa=true
+        -D shared-glapi=enabled
+        -D microsoft-clc=disabled
+        -D opengl=true
+        -D zstd=auto
+        -D valgrind=disabled
+        -D android-libbacktrace=disabled
+        -D intel-clc=enabled
+        -D intel-rt=enabled
+        -D video-codecs=all
+        -D amdgpu-virtio=true
+        -D legacy-x11='dri2'
+        
+        -D c_args="$CFLAGS -Wno-format-truncation"
+        -D c_link_args="$LDFLAGS -Wl,--undefined-version"
+        -D cpp_args="$CXXFLAGS -Wno-format-truncation"
+        -D cpp_link_args="$LDFLAGS -Wl,--undefined-version"
+        --strip
+  )
 
   arch-meson mesa-$pkgver build-clang "${meson_options[@]}"
 
