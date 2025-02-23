@@ -16,7 +16,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.13
-pkgver=${_major}.3
+pkgver=${_major}.4
 _branch=6.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -89,7 +89,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}pid-patches-all/0001-pid-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v7/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
         "${_lucjan}sched-ext-fixes-patches-v2/0001-sched-6.13-fix-Kernel-OOPS-under-high-memory-pressur.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
@@ -104,7 +104,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
         "${_lucjan}perf-patches-v2-all/0001-perf-patches.patch"
         "${_lucjan}amd-drm-patches-all/0001-amd-drm-patches.patch"
-        "${_lucjan}amd-pstate-patches-v3-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
         "${_lucjan}adios-iosched-patches-v13/0001-iosched-6.13-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
         "${_lucjan}itmt-core-ranking-patches-v2-all/0001-itmt-core-ranking-patches.patch"
