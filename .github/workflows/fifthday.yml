@@ -121,7 +121,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, xampp, 7-zip, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
+          visual-studio-code-bin, xampp, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
           zulu-17-bin, appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin,
           yay, aws-cli-v2, jdk17-zulu-prime-bin
           ]
@@ -156,37 +156,9 @@ jobs:
           artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  Proton:
-    strategy:
-      matrix:
-        build: [
-          proton-ge-custom, wine-ge-custom, lib32-lzo
-          ]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
-        with:
-          repository: sarcasticadmin/empty-repo
-      - id: makepkg
-        uses: JPratama7/pkgbuild-action@original
-        with:
-          maxJobs: "5"
-          pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.14.0
-        with:
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "temp"
-          artifacts: "*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-
   TRIGGER_PUBLISH:
     if: ${{ always() }}
-    needs: [AUR_CLANG, AUR_GCC, Aylur, Proton]
+    needs: [AUR_CLANG, AUR_GCC, Aylur]
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
