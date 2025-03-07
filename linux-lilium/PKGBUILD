@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.13
 pkgver=${_major}.5
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -89,7 +89,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}pid-patches-all/0001-pid-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v10/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v11/0001-cachyos-fixes-patches.patch"
         "${_lucjan}sched-ext-fixes-patches-v2/0001-sched-6.13-fix-Kernel-OOPS-under-high-memory-pressur.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
@@ -97,8 +97,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
-        "${_lucjan}zstd-cachyos-patches-v2/0001-zstd-cachyos-patches.patch"
+        "${_lucjan}v4l2loopback-patches-v3/0001-v4l2loopback-patches.patch"
+        "${_lucjan}zstd-cachyos-patches-v3/0001-zstd-cachyos-patches.patch"
         "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
         "${_lucjan}crypto-patches-v2-all/0001-crypto-patches.patch"
