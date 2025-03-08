@@ -28,8 +28,7 @@ jobs:
         with:
           clanged: "y"
           clangedpflags: "y"
-          clangedPolly: "y"
-          bootstrap: "y"
+          # clangedPolly: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact

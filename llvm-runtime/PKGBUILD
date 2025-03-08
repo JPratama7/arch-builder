@@ -25,16 +25,17 @@ conflicts=(
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
 _ocaml_ver=4.14.0
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm-libs' 'clang'
+  'git' 'ninja' 'cmake' 'clang' 'llvm' 'llvm-libs'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
-  'python-setuptools' 'python-psutil' 'python-sphinx'
-  'python-recommonmark' 'ocaml-stdlib-shims'
+  'python-setuptools' 'python-psutil' 'python-sphinx' 'python-docutils'
+  'python-myst-parser' 'ocaml-stdlib-shims' 'mimalloc'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 source=(
   "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
   'llvm-config.h'
 )
+
 
 sha256sums=(
   'SKIP'
@@ -117,7 +118,7 @@ build() {
     -DLLVM_ENABLE_SPHINX=OFF
     -DLLVM_ENABLE_PIC=ON
     -DLLVM_ENABLE_DOXYGEN=OFF
-    -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;polly'
+    -DLLVM_ENABLE_PROJECTS='clang;polly'
     -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp"
     -DSPHINX_WARNINGS_AS_ERRORS=OFF
     -DCLANG_LINK_CLANG_DYLIB=ON
