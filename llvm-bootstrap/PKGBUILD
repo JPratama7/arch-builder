@@ -1,33 +1,34 @@
 pkgname=llvm-bootstrap
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, openmp, compiler-rt, polly, lldb, lld"
-pkgver=19.1.7
+pkgver=20.1.0
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
 
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'clang' "clang=${pkgver}"
-  'clang-analyzer' 'clang-tools-extra' 'polly' 'openmp' 'compiler-rt'
-  'lld'
+  'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt'
+  'lld' 'openmp'
 )
 
 replaces=('llvm' 'llvm-libs' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'openmp' 'lld' 'compiler-rt'
+  'clang-tools-extra' 'polly' 'lld' 'compiler-rt' 'openmp'
 )
 
 conflicts=('llvm' 'llvm-libs' 'clang' 'clang-analyzer'
-  'clang-tools-extra' 'polly' 'openmp' 'lld' 'compiler-rt'
-  'llvm-git' 'llvm-libs-git'
+  'clang-tools-extra' 'polly' 'lld' 'compiler-rt'
+  'llvm-git' 'llvm-libs-git' 'openmp'
 )
 
-depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'compiler-rt' 'libisl')
+depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
+_ocaml_ver=4.14.0
 makedepends=(
-  'git' 'ninja' 'cmake' 'llvm' 'clang' 'openmp'
-  'python-setuptools' 'python-psutil' 'python-sphinx'
-  'python-recommonmark' 'mimalloc' 'libc++' 'libc++abi'
+  'git' 'ninja' 'cmake' 'clang' 'llvm'
+  "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
+  'python-setuptools' 'python-psutil' 'python-sphinx' 'python-docutils'
+  'python-myst-parser' 'ocaml-stdlib-shims' 'mimalloc'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=8dfdcc7b7bf66834a761bd8de445840ef68e4d1a
 source=(
   "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-${pkgver}.zip"
   'llvm-config.h'
@@ -71,64 +72,61 @@ prepare() {
     exit 1
   )
 
-  # pushd polly/lib/External
-  # chmod +x update-isl.sh
-  # ./update-isl.sh isl-0.27
-  # popd
+  pushd polly/lib/External
+  chmod +x update-isl.sh
+  ./update-isl.sh isl-0.27
+  popd
+
+  # Remove CMake find module for zstd; breaks if out of sync with upstream zstd
+  rm llvm/cmake/modules/Findzstd.cmake
 }
 
 build() {
-
-  export CFLAGS="$CFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
-  export CXXFLAGS="$CXXFLAGS -Wno-unknown-warning-option -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
-  
-  cflags="$(echo $CFLAGS | tr -d \\n)"
-  cxxflags="$(echo $CXXFLAGS | tr -d \\n)"
-  echo $cflags
-  echo $cxxflags
-
-  unset CFLAGS
-  unset CXXFLAGS
 
   cd "${srcdir:?}/llvm-project" || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Build Failed! \E[0m"
     exit 1
   )
 
+
+  cflags="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition -fallocation-dce -freorder-blocks-algorithm='stc' -freschedule-modulo-scheduled-loops -fsplit-loops -fsplit-paths"
+  cxxflags="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition -fallocation-dce -freorder-blocks-algorithm='stc' -freschedule-modulo-scheduled-loops -fsplit-loops -fsplit-paths"
+  ldflags="$LDFLAGS"
+  
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+
   _extra_build_flags+=(
-    -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_C_FLAGS="$cflags"
     -DCMAKE_CXX_FLAGS="$cxxflags"
-    -DCMAKE_C_COMPILER=gcc
-    -DCMAKE_CXX_COMPILER=g++
+    -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=/usr
+    -DFFI_INCLUDE_DIR="$(pkg-config --variable=includedir libffi)"
     -DLLVM_BINUTILS_INCDIR=/usr/include
-    -DLLVM_BUILD_RUNTIME=ON
-    -DLLVM_ENABLE_BINDINGS=OFF
-    -DLLVM_ENABLE_PIC=ON
+    -DLLVM_STATIC_LINK_CXX_STDLIB=ON
     -DLLVM_HOST_TRIPLE="${CHOST:?}"
-    -DLLVM_ENABLE_CURL=ON
-    -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF
     -DLLVM_BUILD_LLVM_DYLIB=ON
     -DLLVM_LINK_LLVM_DYLIB=ON
     -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_ENABLE_CURL=ON
     -DLLVM_ENABLE_RTTI=ON
     -DLLVM_ENABLE_FFI=ON
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;compiler-rt;polly"
-    -DLLVM_ENABLE_RUNTIMES="openmp"
-    -DLIBOMP_INSTALL_ALIASES=OFF
+    -DLLVM_ENABLE_PIC=ON
+    -DLLVM_USE_PERF=ON
+    -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;lld;compiler-rt;polly;openmp"
     -DCLANG_LINK_CLANG_DYLIB=ON
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON
-    -DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON
+    -DLIBOMP_INSTALL_ALIASES=OFF
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*}
+    -DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON
+    -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF
+    -DPOLLY_ENABLE_GPGPU_CODEGEN=ON
+    -Wno-dev
   )
 
-  if ld.lld --version 2>/dev/null | grep -iq "LLD\s*[0-9]"; then
-    export LD=ld.lld
-    export CC_LD=lld
-    export CXX_LD=lld
-    export HOSTLD=ld.lld
-    _extra_build_flags+=(-DLLVM_ENABLE_LLD=ON)
+  if [ $_build_bindings -eq 1 ]; then
+    _extra_build_flags+=(-DLLVM_ENABLE_BINDINGS=ON)
   fi
 
   while true; do
@@ -264,53 +262,49 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/polly/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/polly-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
 
-  # # Fallback for llvm 18
-  # # Actual files
-  # local _llvm_libs=(
-  #   libclang-cpp.so.18.1
-  #   libclang.so.18.1.8
-  #   libLLVM.so.18.1
-  #   libLTO.so.18.1
-  #   libomptarget.rtl.amdgpu.so.18.1
-  #   libomptarget.rtl.cuda.so.18.1
-  #   libomptarget.rtl.x86_64.so.18.1
-  #   libomptarget.so.18.1
-  #   libRemarks.so.18.1
-  # )
+  # Fallback for llvm 19
+  # Actual files
+  local _llvm_libs=(
+    libclang-cpp.so.19.1
+    libclang.so.19.1.8
+    libLLVM.so.19.1
+    libMLIR.so.19.1
+    libLTO.so.19.1
+    libRemarks.so.19.1
+    libMLIRExecutionEngineShared.so.19.1
+  )
 
-  # # Symlinks and their targets
-  # declare -A _llvm_symlinks=(
-  #   ["libclang-cpp.so"]="libclang-cpp.so.18.1"
-  #   ["libclang.so"]="libclang.so.18.1"
-  #   ["libclang.so.18.1"]="libclang.so.18.1.8"
-  #   ["libLLVM-18.so"]="libLLVM.so.18.1"
-  #   ["libLLVM.so"]="libLLVM.so.18.1"
-  #   ["libLTO.so"]="libLTO.so.18.1"
-  #   ["libomptarget.rtl.amdgpu.so"]="libomptarget.rtl.amdgpu.so.18.1"
-  #   ["libomptarget.rtl.cuda.so"]="libomptarget.rtl.cuda.so.18.1"
-  #   ["libomptarget.rtl.x86_64.so"]="libomptarget.rtl.x86_64.so.18.1"
-  #   ["libomptarget.so"]="libomptarget.so.18.1"
-  #   ["libRemarks.so"]="libRemarks.so.18.1"
-  # )
+  # Symlinks and their targets
+  declare -A _llvm_symlinks=(
+    ["libclang-cpp.so"]="libclang-cpp.so.19.1"
+    ["libclang.so"]="libclang.so.19.1"
+    ["libclang.so.19.1"]="libclang.so.19.1.8"
+    ["libLLVM-19.so"]="libLLVM.so.19.1"
+    ["libLLVM.so"]="libLLVM.so.19.1"
+    ["libLTO.so"]="libLTO.so.19.1"
+    ["libRemarks.so"]="libRemarks.so.19.1"
+    ["libMLIR.so"]="libMLIR.so.19.1"
+    ["libMLIRExecutionEngineShared.so"]="libMLIRExecutionEngineShared.so.19.1"
+  )
 
-  # # Copy actual library files
-  # for lib in "${_llvm_libs[@]}"; do
-  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-  #     echo "- Copy ${lib:?}"
-  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-  #   else
-  #     echo "- ${lib:?} exists"
-  #   fi
-  # done
+  # Copy actual library files
+  for lib in "${_llvm_libs[@]}"; do
+    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+      echo "- Copy ${lib:?}"
+      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+    else
+      echo "- ${lib:?} exists"
+    fi
+  done
 
-  # # Create symlinks
-  # for symlink in "${!_llvm_symlinks[@]}"; do
-  #   target="${_llvm_symlinks[$symlink]}"
-  #   if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
-  #     echo "- Create symlink ${symlink:?} -> ${target:?}"
-  #     ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
-  #   else
-  #     echo "- Symlink ${symlink:?} exists"
-  #   fi
-  # done
+  # Create symlinks
+  for symlink in "${!_llvm_symlinks[@]}"; do
+    target="${_llvm_symlinks[$symlink]}"
+    if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
+      echo "- Create symlink ${symlink:?} -> ${target:?}"
+      ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
+    else
+      echo "- Symlink ${symlink:?} exists"
+    fi
+  done
 }
