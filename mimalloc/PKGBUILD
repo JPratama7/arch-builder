@@ -1,5 +1,5 @@
 pkgname=mimalloc
-pkgver=w2.2.2
+pkgver=2.2.2
 pkgrel=2
 pkgdesc='General-purpose allocator with excellent performance characteristics'
 arch=('x86_64')
@@ -8,7 +8,7 @@ license=('MIT')
 depends=('glibc')
 makedepends=('git' 'cmake')
 options=('!lto' 'staticlibs')
-_commit='a3070dc57fa03a43cae9079a2a879a66cec8f715'
+_commit='f81bf1b31af819a31195e08f9546dc80f8931587'
 source=("$pkgname::git+$url#commit=$_commit")
 b2sums=('SKIP')
 
