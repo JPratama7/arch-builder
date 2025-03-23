@@ -16,7 +16,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.13
-pkgver=${_major}.5
+pkgver=${_major}.8
 _branch=6.x
 pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -83,13 +83,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0018-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
         "${_xanmod}xanmod/0019-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
 
-        "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
+        "${_lucjan}bbr3-patches-v2/0001-bbr3-patches.patch"
         "${_lucjan}openvpn-dco/0001-ovpn-dco-6.13-initial-merge.patch"
         "${_lucjan}ntsync-patches-v3/0001-ntsync-6.13-merge-changes-from-dev-tree.patch"
         "${_lucjan}futex-patches/0001-futex-6.13-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}pid-patches-all/0001-pid-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v11/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v13/0001-cachyos-fixes-patches.patch"
         "${_lucjan}sched-ext-fixes-patches-v2/0001-sched-6.13-fix-Kernel-OOPS-under-high-memory-pressur.patch"
         "${_lucjan}cpu-cachyos-patches-v2/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
