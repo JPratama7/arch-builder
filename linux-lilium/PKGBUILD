@@ -95,7 +95,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
         "${_lucjan}ksm-patches/0001-ksm-add-ksm-involvement-information-for-each-process.patch"
 
-        "${_lucjan}clearlinux-patches/0001-clearlinux-patches.patch"
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}v4l2loopback-patches-v3/0001-v4l2loopback-patches.patch"
         "${_lucjan}zstd-cachyos-patches-v3/0001-zstd-cachyos-patches.patch"
