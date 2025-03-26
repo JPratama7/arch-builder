@@ -38,10 +38,9 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
-          officialRepo: "y"
           gccPflags: "y"
           pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
+          makepkgArgs: "--skippgpcheck --skipchecksums"
       # - name: Wait
       #   run: sleep 5m
       #   shell: bash
