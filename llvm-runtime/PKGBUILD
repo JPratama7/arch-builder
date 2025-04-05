@@ -124,7 +124,8 @@ build() {
     -DLLVM_ENABLE_SPHINX=OFF
     -DLLVM_ENABLE_PIC=ON
     -DLLVM_ENABLE_DOXYGEN=OFF
-    -DLLVM_ENABLE_PROJECTS='clang;polly;libunwind;libcxxabi;pstl;libcxx;compiler-rt;openmp'
+    -DLLVM_ENABLE_PROJECTS='clang;polly;compiler-rt;openmp'
+    -DLLVM_ENABLE_RUNTIMES='libunwind;libcxxabi;pstl;libcxx'
     -DSPHINX_WARNINGS_AS_ERRORS=OFF
     -DCLANG_LINK_CLANG_DYLIB=ON
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON
