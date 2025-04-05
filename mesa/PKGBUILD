@@ -1,6 +1,6 @@
 pkgname=mesa
 pkgdesc="Mesa open-source implementation of the OpenGL specification"
-pkgver=25.0.2
+pkgver=25.0.3
 _pkgver=${pkgver//_/-}
 pkgrel=2
 epoch=1
@@ -38,11 +38,8 @@ url="https://www.mesa3d.org"
 license=('custom')
 source=(
   "https://archive.mesa3d.org/mesa-${_pkgver}.tar.xz"{,.sig}
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-docs-Fix-build-with-Sphinx-8.2.patch"
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0002-gfxstream-Fix-log-format-error-on-x86.patch"
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0003-gallium-radeon-Make-sure-radeonsi-PCI-IDs-are-also-i.patch"
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0004-aco-insert-dependency-waits-in-certain-situations.patch"
-  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0005-radv-amdgpu-fix-device-deduplication.patch"
+  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0001-docs-Fix-HTML-build-with-Sphinx-8.2.patch"
+  "https://gitlab.archlinux.org/archlinux/packaging/packages/mesa/-/raw/main/0002-gfxstream-Use-proper-log-format-for-32-bit-Vulkan.patch"
 )
 
 sha256sums=('0079beac0a33f45e7e0aec59e6913eafbc4268a3f1e2e330017440494f91b13c'
@@ -58,7 +55,6 @@ validpgpkeys=(
   '57551DE15B968F6341C248F68D8E31AFC32428A6' # Keith Packard <keithp@keithp.com>
   '71C4B75620BC75708B4BDB254C95FAAB3EB073EC' # Dylan Baker <dylan@pnwbakers.com>
 )
-
 
 # Rust crates for NVK, used as Meson subprojects
 declare -A _crates=(
@@ -78,7 +74,6 @@ declare -A _crates=(
    ucd-trie        0.1.6
    unicode-ident   1.0.12
 )
-
 
 for _crate in "${!_crates[@]}"; do
   source+=($_crate-${_crates[$_crate]}.tar.gz::https://crates.io/api/v1/crates/$_crate/${_crates[$_crate]}/download)
