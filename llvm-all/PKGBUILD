@@ -147,8 +147,8 @@ build() {
     -DLLVM_ENABLE_FFI=ON
     -DLLVM_ENABLE_PIC=ON
     -DLLVM_USE_PERF=ON
-    -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;lld;lldb;polly"
-    -DLLVM_ENABLE_RUNTIMES="libcxxabi;pstl;libcxx;openmp;compiler-rt"
+    -DLLVM_ENABLE_PROJECTS="bolt;clang;clang-tools-extra;lld;lldb;polly;openmp;compiler-rt"
+    -DLLVM_ENABLE_RUNTIMES="libcxxabi;pstl;libcxx"
     -DCLANG_LINK_CLANG_DYLIB=ON
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON
     -DLIBCXXABI_USE_LLVM_UNWINDER=OFF
