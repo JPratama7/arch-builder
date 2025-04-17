@@ -26,6 +26,7 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
+          customPackages: "llvm-bootstrap"
           gccPflags: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
