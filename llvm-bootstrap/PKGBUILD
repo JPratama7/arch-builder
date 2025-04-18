@@ -124,6 +124,21 @@ build() {
     -Wno-dev
   )
 
+  if ${LD:-ld} --version 2>/dev/null | grep -iq "LLD[[:space:]]*[0-9]"; then
+      export LD=ld.lld
+      export CC_LD=lld
+      export CXX_LD=lld
+      export HOSTLD=ld.lld
+      _extra_build_flags+=(
+          -DLLVM_ENABLE_LLD=ON
+          -DLLVM_ENABLE_LTO=Thin
+      )
+  else
+      _extra_build_flags+=(
+          -DLLVM_ENABLE_LTO=Full
+      )
+  fi
+
   if [ $_build_bindings -eq 1 ]; then
     _extra_build_flags+=(-DLLVM_ENABLE_BINDINGS=ON)
   fi
