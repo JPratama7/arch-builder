@@ -132,6 +132,19 @@ build() {
     -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/${pkgver%%.*}
   )
 
+  if ${CC:-cc} --version 2>/dev/null | grep -iq "gcc"; then
+      cflags="$CFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
+      cxxflags="$CXXFLAGS -fno-plt -fomit-frame-pointer -fno-semantic-interposition"
+      ldflags="$LDFLAGS"
+      unset CFLAGS
+      unset CXXFLAGS
+      unset LDFLAGS
+      _extra_build_flags+=(
+        -DCMAKE_C_FLAGS="$cflags"
+        -DCMAKE_CXX_FLAGS="$cxxflags"
+      )
+  fi
+
   if ${LD:-ld} --version 2>/dev/null | grep -iq "LLD[[:space:]]*[0-9]"; then
       export LD=ld.lld
       export CC_LD=lld

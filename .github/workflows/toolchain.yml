@@ -26,8 +26,9 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
-          customPackages: "llvm-bootstrap"
-          gccPflags: "y"
+          clanged: "y"
+          clangedPFlags: "y"
+          bootstrap: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
