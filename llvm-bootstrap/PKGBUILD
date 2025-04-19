@@ -26,7 +26,7 @@ makedepends=(
   'git' 'ninja' 'cmake' 'clang' 'llvm'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
   'python-setuptools' 'python-psutil' 'python-sphinx' 'python-docutils'
-  'python-myst-parser' 'ocaml-stdlib-shims'
+  'python-myst-parser' 'ocaml-stdlib-shims' 'mimalloc'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 source=(
@@ -42,7 +42,9 @@ options=('staticlibs' '!lto' '!debug')
 _skip_build_test=y
 _skip_documentation=y
 _extra_build_flags=(
-)
+   -DCMAKE_EXE_LINKER_FLAGS=-Wl,--push-state,/usr/lib/libmimalloc.a,--pop-state 
+   -DCMAKE_CXX_STANDARD=17
+ )
 _build_documentation=0
 _build_tests=0
 _build_bindings=1
@@ -111,7 +113,6 @@ build() {
     -DLLVM_ENABLE_FFI=ON
     -DLLVM_ENABLE_PIC=ON
     -DLLVM_USE_PERF=ON
-    -DLLVM_ENABLE_RPMALLOC=ON
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;polly"
     -DLLVM_ENABLE_RUNTIMES='openmp;compiler-rt'
     -DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF
