@@ -93,7 +93,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
         "${_lucjan}cpu-cachyos-patches/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
-        "${_lucjan}clang-patches/0001-clang-patches.patch"
+        "${_cachy}misc/0001-clang-polly.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
