@@ -44,7 +44,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt5.patch."{xz,sign}
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt3.patch."{xz,sign}
 
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$_major.y-bore$_bore.patch"
 

@@ -8,7 +8,7 @@ license=('MIT')
 depends=('glibc')
 makedepends=('git' 'cmake')
 options=('!lto' 'staticlibs')
-_commit='f81bf1b31af819a31195e08f9546dc80f8931587'
+_commit='94036de6fe20bfd8a73d4a6d142fcf532ea604d9'
 source=("$pkgname::git+$url#commit=$_commit")
 b2sums=('SKIP')
 
