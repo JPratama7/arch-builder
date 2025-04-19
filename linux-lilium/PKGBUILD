@@ -49,12 +49,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$pkgver-bore$_bore.patch"
 
         # Xanmod Feature
-        "${_xanmod}0001-binder-turn-into-module.patch"
-        "${_xanmod}0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
-        "${_xanmod}0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
-        "${_xanmod}0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
-        "${_xanmod}0005-binder-turn-into-module-list_lru_add-list_lru_del.patch"
-        "${_xanmod}0006-binder-turn-into-module-lock_vma_under_rcu.patch"
+        "${_xanmod}binder/0001-binder-turn-into-module.patch"
+        "${_xanmod}binder/0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
+        "${_xanmod}binder/0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
+        "${_xanmod}binder/0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
+        "${_xanmod}binder/0005-binder-turn-into-module-list_lru_add-list_lru_del.patch"
+        "${_xanmod}binder/0006-binder-turn-into-module-lock_vma_under_rcu.patch"
         "${_xanmod}clearlinux/0001-sched-wait-Do-accept-in-LIFO-order-for-cache-efficie.patch"
         "${_xanmod}clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
         "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
