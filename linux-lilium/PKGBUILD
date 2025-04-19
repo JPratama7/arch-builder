@@ -103,7 +103,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
         "${_lucjan}asus-patches-v2/0001-asus-patches.patch"
         "${_lucjan}amd-drm-patches-all/0001-amd-drm-patches.patch"
-        "${_lucjan}amd-pstate-patches-v6/0001-amd-6.14-merge-changes-from-dev-tree.patch"
+        "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
         "${_lucjan}adios-iosched-patches-v2/0001-iosched-6.14-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}fuse-patches-v2/0001-virtiofs-add-filesystem-context-source-name-check.patch"
         "${_lucjan}mm-zblock-patches/0001-mm-add-zblock-allocator.patch"
