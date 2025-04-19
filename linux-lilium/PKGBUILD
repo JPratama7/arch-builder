@@ -54,7 +54,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
         "${_xanmod}0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
         "${_xanmod}0005-binder-turn-into-module-list_lru_add-list_lru_del.patch"
-        "${_xanmod}0006-binder-turn-into-module-lock_vma_under_rcu.patch
+        "${_xanmod}0006-binder-turn-into-module-lock_vma_under_rcu.patch"
         "${_xanmod}clearlinux/0001-sched-wait-Do-accept-in-LIFO-order-for-cache-efficie.patch"
         "${_xanmod}clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
         "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
