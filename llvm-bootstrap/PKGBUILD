@@ -135,10 +135,6 @@ build() {
           -DLLVM_ENABLE_LLD=ON
           -DLLVM_ENABLE_LTO=Thin
       )
-  else
-      _extra_build_flags+=(
-          -DLLVM_ENABLE_LTO=Full
-      )
   fi
 
   if [ $_build_bindings -eq 1 ]; then
