@@ -19,7 +19,7 @@ jobs:
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
           slack-electron, waydroid, pwvucontrol, windsurf, python-screeninfo,
-          python-ufonormalizer, afdko, aria2-git, python-imageio, python-imageio-ffmpeg,
+          python-ufonormalizer, aria2-git, python-imageio, python-imageio-ffmpeg,
 
           swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           gnome-calculator-gtk3, flameshot-git, rofi-lbonn-wayland-git, bibata-cursor-theme-bin,
@@ -123,7 +123,7 @@ jobs:
         build: [
           visual-studio-code-bin, visual-studio-code-insiders-bin, xampp, jdk-lts, jdk21-graalvm-ee-bin, wget2-git, 
           zulu-17-bin, appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin,
-          yay, aws-cli-v2, jdk17-zulu-prime-bin, libwireplumber-4.0-compat
+          yay, aws-cli-v2, jdk17-zulu-prime-bin, libwireplumber-4.0-compat, afdko
           ]
       fail-fast: false
     runs-on: ubuntu-latest
