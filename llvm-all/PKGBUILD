@@ -35,7 +35,7 @@ makedepends=(
 )
 makedepends_x86_64=('lib32-gcc-libs')
 source=(
-  "https://github.com/llvm/llvm-project/releases/download/llvmorg-${pkgver}/llvm-project-${pkgver}.src.tar.xz"
+  "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-${pkgver}.zip"
   'llvm-config.h'
 )
 
