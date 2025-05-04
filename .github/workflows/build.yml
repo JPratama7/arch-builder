@@ -28,6 +28,7 @@ jobs:
         with:
           clanged: "y"
           clangedPFlags: "y"
+          officialRepo: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
@@ -64,6 +65,7 @@ jobs:
         with:
           clanged: "y"
           clangedPFlags: "y"
+          officialRepo: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
@@ -93,6 +95,9 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
+          clanged: "y"
+          clangedPFlags: "y"
+          officialRepo: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - uses: ncipollo/release-action@v1.14.0
