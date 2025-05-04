@@ -63,7 +63,7 @@ _patch() {
 
 prepare() {
 
-  mv "${srcdir:?}/llvm-project-${pkgver}.src" llvm-project || (
+  mv "${srcdir:?}/llvmorg-${pkgver}" llvm-project || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Prepare Failed! \E[0m"
     exit 1
   )
