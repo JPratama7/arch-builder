@@ -111,7 +111,7 @@ jobs:
         build: [
           visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin, wget2-git, 
           appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin,
-          yay, aws-cli-v2, jdk17-zulu-prime-bin, libwireplumber-4.0-compat, afdko
+          yay, jdk17-zulu-prime-bin, libwireplumber-4.0-compat, afdko
           ]
       fail-fast: false
     runs-on: ubuntu-latest
