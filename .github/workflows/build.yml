@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          thorium,  mimalloc, earlyoom, deno
+          thorium,  mimalloc, earlyoom, deno, aria2
           ]
       fail-fast: false
     runs-on: ubuntu-latest

@@ -17,7 +17,7 @@ jobs:
           grimblast-git, gtklock, gtklock-userinfo-module, python-pywal16, sway-audio-idle-inhibit-git,
           libadwaita-without-adwaita-git, gtk-session-lock, hyprshade, waypaper, wallust-git,
           xdg-desktop-portal-hyprland-git, cava, zed-git, libva-nvidia-driver-git, sourcegit,
-          windsurf, python-screeninfo, windsurf-next, python-ufonormalizer, aria2-git, 
+          windsurf, python-screeninfo, windsurf-next, python-ufonormalizer, 
           python-imageio, python-imageio-ffmpeg, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           gnome-calculator-gtk3, flameshot-git, rofi-lbonn-wayland-git, bibata-cursor-theme-bin,
           themix-theme-oomox-git, themix-plugin-base16-git, themix-gui-git, themix-export-spotify-git,
@@ -136,7 +136,7 @@ jobs:
 
   TRIGGER_PUBLISH:
     if: ${{ always() }}
-    needs: [AUR_CLANG, AUR_GCC, Aylur]
+    needs: [AUR_CLANG, AUR_GCC]
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
