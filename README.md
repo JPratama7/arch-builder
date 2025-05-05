@@ -7,21 +7,24 @@ Rebuild AUR Package every five days
 ## Directly get from AUR Build 
 With Clang: 
 ```
-microsoft-edge-dev-bin postman-bin geany-git tor-browser-bin 
-slimjet mpc-qt-git spotify insomnium lightdm-settings paru jamesdsp 
-wlogout trizen swww sweet-theme-git swaylock-effects eww mission-center
-python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme
-wf-config mercury-browser-bin aylurs-gtk-shell vesktop matugen-bin asusctl
-grimblast-git gtklock gtklock-userinfo-module pywal-16-colors sway-audio-idle-inhibit-git
-libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git
-xdg-desktop-portal-hyprland-git cava zed-git cava zed-git libva-nvidia-driver-git sourcegit
-slack-electron linux-lqx waydroid pwvucontrol apple-music-desktop
+postman-bin geany-git mpc-qt-git spotify lightdm-settings paru jamesdsp 
+wlogout trizen swww sweet-theme-git swaylock-effects eww mission-center,
+python-manimpango python-clickgen pfetch pacseek emote bibata-cursor-theme,
+wf-config aylurs-gtk-shell vesktop matugen-bin asusctl,
+grimblast-git gtklock gtklock-userinfo-module python-pywal16 sway-audio-idle-inhibit-git,
+libadwaita-without-adwaita-git gtk-session-lock hyprshade waypaper wallust-git,
+xdg-desktop-portal-hyprland-git cava zed-git libva-nvidia-driver-git sourcegit,
+windsurf python-screeninfo windsurf-next python-ufonormalizer aria2-git 
+python-imageio python-imageio-ffmpeg swaylock-effects-git wlr-randr-git hyprprop-git grimblast-git,
+gnome-calculator-gtk3 flameshot-git rofi-lbonn-wayland-git bibata-cursor-theme-bin,
+themix-theme-oomox-git themix-plugin-base16-git themix-gui-git themix-export-spotify-git,
+themix-theme-materia-git oomox-qt-styleplugin-git youtube-dl update-grub ttf-meslo-nerd-font-powerlevel10k
 ```
 With GCC:
 ```
-visual-studio-code-bin xampp zramd 7-zip jdk-lts jdk21-graalvm-ee-bin wget2-git
-zulu-17-bin appimagelauncher jdk17-graalvm-ee-bin podman-desktop
-yay aws-cli-v2
+visual-studio-code-bin visual-studio-code-insiders-bin jdk21-graalvm-ee-bin wget2-git 
+appimagelauncher jdk22-graalvm-bin podman-desktop jdk23-graalvm-ee-bin,
+yay aws-cli-v2 jdk17-zulu-prime-bin libwireplumber-4.0-compat afdko
 ```
 
 
