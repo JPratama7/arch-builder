@@ -22,10 +22,8 @@ jobs:
         with:
           remove-android: 'true'
           remove-dotnet: 'true'
-          remove-haskell: 'true'
           remove-cached-tools: 'true'
           remove-large-packages: 'true'
-          remove-codeql: 'true'
       - name: Build packages for arch
         uses: actions/checkout@v3.0.2
         # with:
