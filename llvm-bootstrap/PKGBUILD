@@ -116,7 +116,7 @@ build() {
     -DLLVM_ENABLE_FFI=ON
     -DLLVM_ENABLE_PIC=ON
     -DLLVM_USE_PERF=ON
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;polly"
+    -DLLVM_ENABLE_PROJECTS="clang;lld;polly"
     -DLLVM_ENABLE_RUNTIMES='openmp;compiler-rt'
     -DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF
     -DCLANG_LINK_CLANG_DYLIB=ON
