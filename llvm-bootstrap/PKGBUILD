@@ -98,7 +98,6 @@ build() {
   
   unset CFLAGS
   unset CXXFLAGS
-  unset LDFLAGS
 
   _extra_build_flags+=(
     -DCMAKE_C_FLAGS="$cflags"
