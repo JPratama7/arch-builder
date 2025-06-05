@@ -88,7 +88,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}async-patches/0001-async-patches.patch"
         "${_lucjan}parallel-swapper-patches/0001-linux6.15.0-parallel-swapper-v0.2.patch"
         "${_lucjan}zram-patches/0001-linux6.15.y-zram-ir-1.2.patch"
-        "${_lucjan}zram-kcompressd-patches/0001-zram-kcompressd-patches.patch"
         "${_lucjan}zram-parallel-patches/0001-zram-parallel-patches.patch"
 
         "${_lucjan}cachyos-fixes-patches-v4/0001-cachyos-fixes-patches.patch"
