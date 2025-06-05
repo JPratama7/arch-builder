@@ -15,8 +15,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=6.14
-pkgver=${_major}.3
+_major=6.15
+pkgver=${_major}.1
 _branch=6.x
 pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -44,9 +44,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt3.patch."{xz,sign}
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt2.patch."{xz,sign}
 
-        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$pkgver-bore$_bore.patch"
+        # "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$pkgver-bore$_bore.patch"
+        "${_lucjan}bore-smt-cores-patches/0001-bore-smt-cores-patches.patch"
+
 
         # Xanmod Feature
         "${_xanmod}binder/0001-binder-turn-into-module.patch"
@@ -86,34 +88,26 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0019-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
 
         "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
-        "${_lucjan}openvpn-dco-patches/0001-ovpn-dco-6.14-initial-merge.patch"
-        "${_lucjan}futex-patches/0001-futex-6.14-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-        "${_lucjan}pid-patches-all/0001-pid-patches.patch"
+        "${_lucjan}openvpn-dco-patches-v4-all/0001-openvpn-dco-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-6.15-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+        "${_lucjan}async-patches/0001-async-patches.patch"
+        "${_lucjan}parallel-swapper-patches/0001-linux6.15.0-parallel-swapper-v0.2.patch"
+        "${_lucjan}zram-kcompressd-patches/0001-zram-kcompressd-patches.patch"
+        "${_lucjan}zram-parallel-patches/0001-zram-parallel-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
-        "${_lucjan}cpu-cachyos-patches/0001-cpu-cachyos-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v4/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cpu-cachyos-patches-all/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
-        "${_cachy}misc/0001-clang-polly.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
-        "${_lucjan}zstd-cachyos-patches/0001-zstd-cachyos-patches.patch"
-        "${_lucjan}btrfs-patches/0001-btrfs-patches.patch"
-
-        "${_lucjan}crypto-patches-all/0001-crypto-patches.patch"
-        "${_lucjan}asus-patches-v2/0001-asus-patches.patch"
-        "${_lucjan}amd-drm-patches-all/0001-amd-drm-patches.patch"
-        "${_lucjan}amd-pstate-patches-v5-all/0001-amd-pstate-patches.patch"
-        "${_lucjan}adios-iosched-patches-v2/0001-iosched-6.14-introduce-ADIOS-I-O-scheduler.patch"
-        "${_lucjan}fuse-patches-v2/0001-virtiofs-add-filesystem-context-source-name-check.patch"
         "${_lucjan}mm-zblock-patches/0001-mm-add-zblock-allocator.patch"
-        "${_lucjan}mm-patches-all/0001-mm-patches.patch"
+        "${_lucjan}mm-kcompressd-patches/0001-mm-Add-Kcompressd-for-accelerated-memory-compression.patch"
+        "${_lucjan}zram-patches/0001-linux6.15.y-zram-ir-1.2.patch"
 
-        "${_lucjan}x86-patches-sep/0001-x86-Kconfig-Geode-CPU-has-cmpxchg8b.patch"
-        "${_lucjan}x86-patches-sep/0006-x86-remove-HIGHMEM64G-support.patch"
-        "${_lucjan}x86-patches-sep/0007-x86-drop-SWIOTLB-and-PHYS_ADDR_T_64BIT-for-PAE.patch"
-        "${_lucjan}x86-patches-sep/0008-x86-drop-support-for-CONFIG_HIGHPTE.patch"
-        "${_lucjan}x86-patches-sep/0009-x86-document-X86_INTEL_MID-as-64-bit-only.patch"
+        "${_lucjan}amd-pstate-patches-all/0001-amd-pstate-patches.patch"
+        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-6.15-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
         "${_tkg}0012-misc-additions.patch"
