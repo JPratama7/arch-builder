@@ -43,6 +43,9 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck --skipchecksums"
           maxJobs: "99"
+          clanged: "y"
+          clangedPFlags: "y"
+          bootstrap: "y"
       # - name: Wait
       #   run: sleep 5m
       #   shell: bash
