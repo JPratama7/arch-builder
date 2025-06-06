@@ -39,7 +39,7 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
-          gccPflags: "y"
+          customPackages: "libxml2-legacy"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck --skipchecksums"
           maxJobs: "99"
