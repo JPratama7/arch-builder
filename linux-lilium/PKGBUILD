@@ -81,7 +81,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0016-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
         "${_xanmod}xanmod/0017-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
 
-        "${_lucjan}bbr3-patches/0001-tcp-bbr3-initial-import.patch"
+        "${_cachy}0004-bbr3.patch"
         "${_lucjan}openvpn-dco-patches-v4-all/0001-openvpn-dco-patches.patch"
         "${_lucjan}futex-patches/0001-futex-6.15-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
         "${_lucjan}async-patches/0001-async-patches.patch"
