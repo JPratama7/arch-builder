@@ -18,7 +18,7 @@ pkgbase=linux-lilium
 _major=6.15
 pkgver=${_major}.1
 _branch=6.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -87,6 +87,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}parallel-swapper-patches/0001-linux6.15.0-parallel-swapper-v0.2.patch"
         "${_lucjan}zram-patches/0001-linux6.15.y-zram-ir-1.2.patch"
         "${_lucjan}asus-patches/0001-asus-patches.patch"
+        "${_lucjan}le9uo-default-on-patches-v2/0001-mm-6.15-add-le9uo.patch"
 
         "${_lucjan}cachyos-fixes-patches-v4/0001-cachyos-fixes-patches.patch"
         "${_lucjan}cpu-cachyos-patches-all/0001-cpu-cachyos-patches.patch"
@@ -157,6 +158,7 @@ sha256sums=('44f1bb84fe512e7bafe0e6dc85d38ec1c6c8fcbe97ccb51d8c19930b799f0d64'
             'acb97a71772deaa2a772dfba5b276a7f2c8d3094b789bb89de2f9f385ecf5985'
             '460be6cbfcc8002994167111c801da61737d41d0df126416850a2fd9f2d1e0b9'
             '44d1dd0d7a93a32dd56c567e1031014d9ad3877da8df13344dcb6006e284a109'
+            'ea6e535738d5544fa524f1079fe345e959f24e1dd606d8ae46c324f99494b529'
             'b34788a17525a231192013a94b328d4fcbc1a8caac8b1ed7dc9a564d3da44078'
             '475235e0c9a4cbf910b08503cb1e8e8811f342e7eb90fa60732c05fe745393c8'
             'b981ab63625782f4522a505c8eb7705aeeba9666de80d5ab5120ffd668664d40'
