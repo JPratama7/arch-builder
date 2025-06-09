@@ -64,7 +64,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}net/netfilter/0002-netfilter-add-xt_FLOWOFFLOAD-target.patch"
         "${_xanmod}net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
         "${_xanmod}pci_acso/0001-PCI-Enable-overrides-for-missing-ACS-capabilities.patch"
-        "${_xanmod}userns/0001-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch"
         "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
         "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
 
@@ -87,6 +86,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}async-patches/0001-async-patches.patch"
         "${_lucjan}parallel-swapper-patches/0001-linux6.15.0-parallel-swapper-v0.2.patch"
         "${_lucjan}zram-patches/0001-linux6.15.y-zram-ir-1.2.patch"
+        "${_lucjan}asus-patches/0001-asus-patches.patch"
 
         "${_lucjan}cachyos-fixes-patches-v4/0001-cachyos-fixes-patches.patch"
         "${_lucjan}cpu-cachyos-patches-all/0001-cpu-cachyos-patches.patch"
@@ -102,6 +102,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
+        "${_cachy}misc/0001-clang-polly.patch"
         "${_tkg}0012-misc-additions.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -135,7 +136,6 @@ sha256sums=('44f1bb84fe512e7bafe0e6dc85d38ec1c6c8fcbe97ccb51d8c19930b799f0d64'
             'cd3e3aac8370bfdbbbd565e1e77204aff76f7265f2ec8cc7035fd59d5014d6b8'
             '5a6e083d0ab75c56ab4fec5365e7731c9001b16ac2e883a448368c950c0c6185'
             '97035ba2e14611c7df2d224c316e1f00b6b4fecec04713512f08d5a4c6829639'
-            'e085120b1bfeb66693f666709a46e67a4a0ec75d6ec121e41c512737c618ad13'
             '27f27ae19b75839537f64ea73f3411856e859abfda255e66d3965000760e7df8'
             'cc64148b8e701b102fbd93886bea8cb847bbaef1a5bc68a92babbbdad0719eb7'
             '0562286053fdd083839fdaf946fbffad81dabd5b23546543fad52b66fe6474b3'
@@ -150,23 +150,25 @@ sha256sums=('44f1bb84fe512e7bafe0e6dc85d38ec1c6c8fcbe97ccb51d8c19930b799f0d64'
             '49a10f0863553190e1d06dcc63fccea7adf78547cefa32cd4d86a78549255669'
             'ecc842514d4e8e58eb2dc46686134629771565cec511d3a532cf1a6ecc7baf3b'
             '4b608d7de68073b27c05dce2c90e22e15367754686b54701c1da3cab7a9a5fb8'
-            'cc754e9cd4fc4e94991017544047788de896581d62d5e6833d261bcbc7b4d579'
+            '5e9dcda04c738fcb1618e581ac24f3d22b56c774df3373d905970dd66c6a3117'
             '22ae498ff7b7a9d2b5ead571defbf06115d7c03d36ceece3d43a0f55d4343be5'
             '234b6e57ff59429b2fb675fc05dd433fc891cd94a822784f837f8ba224c0fb72'
             'a987a6eb83b9d4b31ff3cecf915fe3795a990650e1b4678f54dc9195be198d66'
             'acb97a71772deaa2a772dfba5b276a7f2c8d3094b789bb89de2f9f385ecf5985'
             '460be6cbfcc8002994167111c801da61737d41d0df126416850a2fd9f2d1e0b9'
+            '44d1dd0d7a93a32dd56c567e1031014d9ad3877da8df13344dcb6006e284a109'
             'b34788a17525a231192013a94b328d4fcbc1a8caac8b1ed7dc9a564d3da44078'
             '475235e0c9a4cbf910b08503cb1e8e8811f342e7eb90fa60732c05fe745393c8'
             'b981ab63625782f4522a505c8eb7705aeeba9666de80d5ab5120ffd668664d40'
             '8ad361ce6c08c4d817960194638861b4c21894293b9e19cef38f19cb9e1a252c'
             '4c3c9e6ac8f6430f1ea9b8aa7d46207107475d9f66fb077d317dc944c420de16'
             'aec4e96d83705bba3fbd6bc839cc572fcea689f94365e9e877c4f7df063c131d'
-            '61c38053c1db179cd37c88ad6c2d016c3b96a6f9d005c2eba052fea543075792'
+            'ea6e535738d5544fa524f1079fe345e959f24e1dd606d8ae46c324f99494b529'
             'fb4c8935a443ddcd5cfdaac542b243c58c9e3aeb033ac3565a3b400c64c0f666'
             '99549e27115b12b9cdd33062af8a5e9071e438e04a0c64551f49231a260dad32'
             '5d0e71ac2ffd9c20b77efceafb03bb1ac7ce1579bc2a4c40ec64ffd09d6a0144'
             'dcba9dc87fa263709c792ef869ca7b54a475f4f09380dadf284c2fadae1a2ca9'
+            '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
             'e9785cf826aa347c2f6f365791775bffd931f49c8d0fb2273fb687e87fcaa8da')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
