@@ -31,7 +31,7 @@ _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 _bore=5.9.6
 
 license=(GPL2)
-akedepends=(
+makedepends=(
   bc
   cpio
   gettext
