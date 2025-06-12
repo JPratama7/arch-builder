@@ -100,7 +100,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}le9uo-patches-v2/0001-mm-6.15-add-le9uo.patch"
 
         "${_lucjan}amd-pstate-patches-all/0001-amd-pstate-patches.patch"
-        "${_lucjan}adios-iosched-default-on-patches-v3/0001-iosched-6.15-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-6.15-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
