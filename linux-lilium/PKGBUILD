@@ -109,7 +109,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}le9uo-default-on-patches-v3/0001-mm-6.15-add-le9uo.patch"
         "${_lucjan}t2-patches-v3/0001-t2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v7/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
         "${_lucjan}cpu-cachyos-patches-all/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
