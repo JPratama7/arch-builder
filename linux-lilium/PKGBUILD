@@ -16,7 +16,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.15
-pkgver=${_major}.3
+pkgver=${_major}.4
 _branch=6.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -105,11 +105,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}async-patches/0001-async-patches.patch"
         "${_lucjan}parallel-swapper-patches/0001-linux6.15.0-parallel-swapper-v0.2.patch"
         "${_lucjan}zram-patches/0001-linux6.15.y-zram-ir-1.2.patch"
-        "${_lucjan}asus-patches/0001-asus-patches.patch"
+        "${_lucjan}asus-patches-v3/0001-asus-patches.patch"
         "${_lucjan}le9uo-default-on-patches-v3/0001-mm-6.15-add-le9uo.patch"
         "${_lucjan}t2-patches-v3/0001-t2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v10/0001-cachyos-fixes-patches.patch"
         "${_lucjan}cpu-cachyos-patches-all/0001-cpu-cachyos-patches.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
@@ -119,7 +119,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}le9uo-patches-v2/0001-mm-6.15-add-le9uo.patch"
 
         "${_lucjan}amd-pstate-patches-all/0001-amd-pstate-patches.patch"
-        "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-6.15-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches-v5/0001-iosched-6.15-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
