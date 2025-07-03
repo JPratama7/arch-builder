@@ -38,6 +38,7 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
+          chaoticAur: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
@@ -66,7 +67,9 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
-          maxJobs: "5"
+          maxJobs: "99"
+          gccPflags: "y"
+          chaoticAur: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - uses: ncipollo/release-action@v1.14.0
