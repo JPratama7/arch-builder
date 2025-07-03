@@ -44,7 +44,7 @@ jobs:
           maxJobs: "99"
           clanged: "y"
           clangedPFlags: "y"
-          # bootstrap: "y"
+          officialRepo: "y"
       # - name: Wait
       #   run: sleep 5m
       #   shell: bash
