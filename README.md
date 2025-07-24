@@ -7,10 +7,10 @@ Rebuild AUR Package every five days
 ## Directly get from AUR Build 
 With Clang: 
 ```
-postman-bin, spotify, paru, jamesdsp, swww, eww, pfetch, pacseek, emote, bibata-cursor-theme,
-wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git,
-cava, cava-git, zed-git, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
-flameshot-git, youtube-dl, update-grub, quickshell-git
+postman-bin spotify paru jamesdsp swww eww pfetch pacseek emote bibata-cursor-theme,
+wf-config matugen-bin asusctl grimblast-git hyprshade waypaper wallust-git
+cava cava-git zed-git sourcegit windsurf windsurf-next swaylock-effects-git wlr-randr-git hyprprop-git grimblast-git
+flameshot-git youtube-dl update-grub quickshell-git build quickshell google-breakpad-git google-breakpad
 ```
 With GCC:
 ```

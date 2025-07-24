@@ -13,7 +13,7 @@ jobs:
           postman-bin, spotify, paru, jamesdsp, swww, eww, pfetch, pacseek, emote, bibata-cursor-theme,
           wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git,
           cava, cava-git, zed-git, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
-          flameshot-git, youtube-dl, update-grub, quickshell-git
+          flameshot-git, youtube-dl, update-grub, quickshell, quickshell-git, google-breakpad-git, google-breakpad
           ]
       fail-fast: false
     runs-on: ubuntu-latest
