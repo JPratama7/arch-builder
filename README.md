@@ -11,6 +11,7 @@ postman-bin spotify-edge paru jamesdsp swww eww pfetch pacseek emote bibata-curs
 wf-config matugen-bin asusctl grimblast-git hyprshade waypaper wallust-git app2unit-git wl-screenrec-git
 cava cava-git zed-git sourcegit windsurf windsurf-next swaylock-effects-git wlr-randr-git hyprprop-git grimblast-git
 flameshot-git youtube-dl update-grub quickshell quickshell-git google-breakpad-git google-breakpad
+python-materialyoucolor python-materialyoucolor-git ttf-material-symbols-variable-git
 ```
 With GCC:
 ```
