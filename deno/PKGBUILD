@@ -1,7 +1,7 @@
 pkgname=deno
-pkgver=2.3.5
+pkgver=2.4.3
 pkgrel=1
-_rusty_v8_ver=137.1.0
+_rusty_v8_ver=137.2.1
 pkgdesc="A secure runtime for JavaScript and TypeScript"
 arch=('x86_64')
 url="https://deno.land"
