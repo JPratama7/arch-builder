@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         build: [
-          postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch, pacseek, emote, bibata-cursor-theme, wl-screenrec, 
+          postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch. bibata-cursor-theme, wl-screenrec, 
           wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
           cava, cava-git, zed-git, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
-          flameshot-git, youtube-dl, update-grub, quickshell, quickshell-git, google-breakpad-git, google-breakpad,
+          flameshot-git, youtube-dl, quickshell, quickshell-git, google-breakpad-git, google-breakpad,
           python-materialyoucolor, python-materialyoucolor-git, material-symbols-git
           ]
       fail-fast: false
@@ -47,8 +47,8 @@ jobs:
       matrix:
         build: [
           visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin, wget2-git, 
-          appimagelauncher, jdk22-graalvm-bin, podman-desktop, jdk23-graalvm-ee-bin,
-          yay, jdk17-zulu-prime-bin, afdko
+          appimagelauncher, podman-desktop, jdk23-graalvm-ee-bin,
+          yay, afdko
           ]
       fail-fast: false
     runs-on: ubuntu-latest
