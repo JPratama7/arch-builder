@@ -16,7 +16,7 @@ fi
 
 pkgbase=linux-lilium
 _major=6.16
-pkgver=${_major}.4
+pkgver=${_major}.7
 _branch=6.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -107,7 +107,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}drm-patches-all/0001-drm-patches.patch"
         "${_lucjan}async-patches/0001-async-patches.patch"
         "${_lucjan}s5-patches/0001-s5-patches.patch"
-        "${_lucjan}asus-patches/0001-asus-patches.patch"
+        "${_lucjan}asus-patches-v4/0001-asus-patches.patch"
         "${_lucjan}le9uo-default-on-patches/0001-mm-6.16-add-le9uo.patch"
         "${_lucjan}t2-patches-v2/0001-t2-patches.patch"
 
@@ -116,10 +116,11 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
+        "${_lucjan}v4l2loopback-patches-v2/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
+        "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
         "${_lucjan}mm-zblock-patches/0001-mm-add-zblock-allocator.patch"
 
-        "${_lucjan}adios-iosched-default-on-patches-v6/0001-iosched-6.16-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches-v13/0001-iosched-6.16-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
@@ -578,8 +579,31 @@ _package-headers() {
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
 
+_package-docs() {
+  pkgdesc="Documentation for the $pkgdesc kernel"
 
-pkgname=("${pkgbase}" "${pkgbase}-headers")
+  cd $_srcname
+  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
+
+  echo "Installing documentation..."
+  local src dst
+  while read -rd '' src; do
+    dst="${src#Documentation/}"
+    dst="$builddir/Documentation/${dst#output/}"
+    install -Dm644 "$src" "$dst"
+  done < <(find Documentation -name '.*' -prune -o ! -type d -print0)
+
+  echo "Adding symlink..."
+  mkdir -p "$pkgdir/usr/share/doc"
+  ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
+}
+
+
+pkgname=(
+  "$pkgbase"
+  "$pkgbase-headers"
+  "$pkgbase-docs"
+)
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
