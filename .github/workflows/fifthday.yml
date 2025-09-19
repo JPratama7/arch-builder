@@ -46,7 +46,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin, wget2-git, 
+          visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin,
           appimagelauncher, podman-desktop, jdk23-graalvm-ee-bin,
           yay
           ]
