@@ -12,7 +12,7 @@ jobs:
         build: [
           postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch, bibata-cursor-theme, wl-screenrec, 
           wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
-          cava, zed-git, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
+          cava, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           flameshot-git, quickshell, quickshell-git, google-breakpad-git, google-breakpad,
           python-materialyoucolor, python-materialyoucolor-git, material-symbols-git
           ]
@@ -47,8 +47,7 @@ jobs:
       matrix:
         build: [
           visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin,
-          appimagelauncher, podman-desktop, jdk23-graalvm-ee-bin,
-          yay
+          appimagelauncher, podman-desktop, jdk23-graalvm-ee-bin, zed-git, yay
           ]
       fail-fast: false
     runs-on: ubuntu-latest
