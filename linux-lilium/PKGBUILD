@@ -15,8 +15,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=6.16
-pkgver=${_major}.7
+_major=6.17
+pkgver=${_major}.6
 _branch=6.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -28,7 +28,7 @@ _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-t
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
 _commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
-_bore=5.9.6
+_bore=6.5.8
 
 license=(GPL2)
 makedepends=(
@@ -63,18 +63,16 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-$_major-rt3.patch."{xz,sign}
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-6.17.5-rt7.patch."{xz,sign}
 
-        # "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux$pkgver-bore$_bore.patch"
-        "${_lucjan}bore-smt-cores-patches-v3/0001-bore-smt-cores-patches.patch"
+        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux6.17.4-bore-$_bore.patch"
+        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0002-Prefer-the-previous-cpu-for-wakeup-v6.patch"
 
         # Xanmod Feature
         "${_xanmod}binder/0001-binder-turn-into-module.patch"
         "${_xanmod}binder/0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
         "${_xanmod}binder/0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
         "${_xanmod}binder/0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
-        "${_xanmod}binder/0005-binder-turn-into-module-list_lru_add-list_lru_del.patch"
-        "${_xanmod}binder/0006-binder-turn-into-module-lock_vma_under_rcu.patch"
         "${_xanmod}clearlinux/0001-sched-wait-Do-accept-in-LIFO-order-for-cache-efficie.patch"
         "${_xanmod}clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
         "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
@@ -103,24 +101,19 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_xanmod}xanmod/0007-XANMOD-sched-Add-yield_type-sysctl-to-reduce-or-disa.patch"
 
         "${_cachy}0002-bbr3.patch"
-        "${_lucjan}futex-patches/0001-futex-6.16-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-        "${_lucjan}drm-patches-all/0001-drm-patches.patch"
-        "${_lucjan}async-patches/0001-async-patches.patch"
-        "${_lucjan}s5-patches/0001-s5-patches.patch"
-        "${_lucjan}asus-patches-v4/0001-asus-patches.patch"
-        "${_lucjan}le9uo-default-on-patches/0001-mm-6.16-add-le9uo.patch"
-        "${_lucjan}t2-patches-v2/0001-t2-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-6.17-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+        "${_lucjan}asus-patches-v5/0001-asus-patches.patch"
+        "${_lucjan}le9uo-default-on-patches/0001-mm-6.17-add-le9uo.patch"
+        "${_lucjan}t2-patches/0001-t2-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v5/0001-cachyos-fixes-patches.patch"
-        "${_lucjan}cpu-patches/0001-cpu-6.16-merge-graysky-s-patchset.patch"
+        "${_lucjan}cachyos-fixes-patches-v8/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cpu-patches/0001-cpu-6.17-merge-graysky-s-patchset.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}v4l2loopback-patches-v2/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
-        "${_lucjan}v4l2loopback-patches-v2/0001-v4l2loopback-patches.patch"
-        "${_lucjan}mm-zblock-patches/0001-mm-add-zblock-allocator.patch"
+        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
 
-        "${_lucjan}adios-iosched-default-on-patches-v13/0001-iosched-6.16-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches-v4/0001-iosched-6.17-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
@@ -137,60 +130,55 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('d6a5e3c71a10b533a756251387cc8bf48bbd5c76d842ba5e957d8b1c316ab622'
+sha256sums=('8ecfbc6b693448abb46144a8d04d1e1631639c7661c1088425a2e5406f13c69c'
             'SKIP'
-            '3e9a99c37a182ec826bfc3017bb108257368e4404ab50cf6f2310da7373f8788'
-            'e91dc950eaab7ab6663287117170d02b7328f6322f0c36786b30a51d991b9b23'
-            '0cfdfae2a419826f84e1d30fead9a4e8475c10753faa75c63a0fd7e6e1c7541a'
+            '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
+            '216c5193beb785c1f66b43bb22bd484f4f630b2b9e0fd084c1f95babf255c987'
+            '52a6f6d4c014f8e9e9d6594c6ad7c4be981cdd71e0f921bbbce50ebcacae8984'
             'SKIP'
-            'c6e48143e5df25dbcf3a3fc4e99e6cb46c06c80ea106021441188223da039efb'
-            'c3c055b8c2edc294c419037a0be951190e95c646c119833f456c38913042d5f0'
-            '720586d19669023b9e130cfbda6ab3bdfda61979d2df26e6a2ad535d68d7160d'
-            'e9acba73f0b2bce3eb6a1b985527d54bb5d9676443c138a264a750c1babc1cae'
-            'de6e6ffbdeddca761c0faf8e61a1d00b7e6f99dec00ccf0212bbd3db702eaa30'
-            'b950f96822a0fe8b27bf0e6338bb33887467392fb2ac836b709409b5172a4100'
-            '0a2a45ac50388d6ad0175993e85f96038fc6a2c544a239f532672022acacdbc0'
-            'bf24341a575f2b6da61dd76df659ce34b7350ebe0bdc85260874320f07a8e1a8'
-            'b13356ca36b826c089fcd65dad990e8fd16767168338228db3aa6ae784f88f12'
-            '49dc9e462f60418e4f6de9510ca49899238cd073c999e6575d5ea337915577dd'
-            '5994a9d2b10183d189c4450401ac16bfe9438d41161024b3d4be5ae8ca631ae7'
-            '5c08152918996a8dddd8f3ab3da64828bfe88ed0fb6899dfb8e515fcff7db64e'
-            '77c2cfee16608e2b4d017f7864e4c2952db87d8fb502fd2029c9c5b639268395'
-            'f80ff644a8dc30bda21d1b273099a532cbffd8ef0e47762e15bc233f33ca3ee1'
-            '3472792130ebd1f474282b02f61b6ced2a68e42f62bc7afb7ce8e4bbe88504d5'
-            '27f27ae19b75839537f64ea73f3411856e859abfda255e66d3965000760e7df8'
-            'cc64148b8e701b102fbd93886bea8cb847bbaef1a5bc68a92babbbdad0719eb7'
-            'cc07710471b243ec3150f89e2f6d22fb4eceffb17b678c156530c81e51bc4365'
-            'd19577d9a03b6dca12dead5a9ea93dd548395c2fc5ea39d24848065adc8e379a'
-            '6ca66dfbcda0cd3d359fe25cce077a7072bd4d733d100db22b610605e35998c5'
-            '0c59a09003237e72e7e63192eeda6e444294af498f2c9e022984b83e0674f2af'
-            '71fb0483f07b1972c33c0a55f878db03f1538173fb682a54ae05f73fb3d767d4'
-            '141972404189428652d7964cef3e7cfb7cf72871c6eb801a5c9bcab684bc663a'
-            '5234a5b7f0278554ff930fe999b722dd101baaca5d4e7e64ef504fca345af15e'
-            'e24f3c1ab20a6260eb67e23fd22cc9a1fbc93a7777025167bc735a5c50236ac4'
-            '315a3cff4a9ceb999100f81352aebfafde879bf3fff510d475e4899a63429558'
-            'c9ee7c39efc3e07eb7a998671a36aed31ade8894836bac04013c4b7a0628d986'
-            'b214f175f174267beed0a459251c0051ce9309c07771a177d4b00c336393b066'
-            '6d78089aec27104ac92e254552a90c1110f45817b4c03d311d9ab58d8e47f127'
-            '35cc796e751ebc778f51b791ffabd2c6c72642c206eda7fe413479eef8e522d8'
-            '51a573a2691d8ac794b4b288de19cb800e431ccad4eda38ce29d13b890c72aa2'
-            'ee04ade8152e9f19d9714289c545e619083bf2bd34ab68384f656de29c71c11f'
-            '54a50fc1160cb0a368ed8101d59377a2940373f61043fdd5cc09a28d49fe4bfa'
-            '5498087398dc57e7182657e4f5237d7c5527692fceddd3c394a7dbd1a5b70ab2'
-            '64ffbc9a4bc3cdf00f747993dc4fe67568753b64c2e102cf0cdf3b533d4a5aa9'
-            'd88715f6042977c594bdc4029183151601620da8b3d7ed4dd534f1b981e12ff4'
-            '078a50d951397750fd0b03b062bee65b979aa1444d41d5ff0ec61d9bc993af53'
-            'c0f4597795c224c618cfb95347bb85dc5106fd9921237af72d852143bc33576b'
-            'c05e8f9f2bfbc16228dab7d3f409447df836e9c55210f355e5ddc49376097023'
-            'fea769e7c44b1cdef009116a56b00de50af92ed8e428b42b8e6dcd97aaa39c16'
-            '9fc44d38e7a9d55e481bddc778f40f62f187c498f6dee331967dc7461b9743b6'
-            '668e98f2452228c5ac181b50ac4e136d2d0357d09f5db34c8600f683e24796fb'
-            'df6186fca383cd04bca1a31f861f88bc390eb798e985b9250a55390a9301b562'
-            '69c1d4b6adad7ed8cc9ba9d7581b499b10c55dc38ae7c57b5296f4da9a36bca2'
-            '9c966ac4c900ab63574f45cb56aa4265979db8f7fc657dde075e0404b1847e0d'
-            '925a8b998f14fef87ee638dc37a51f22e467b623c8a9157e9c19deb55a2e2bf2'
-            '00c010bf5507d83114e2323ea20ba47d5387fd66b6a648705eb03ddce20923ab'
-            '37c20de5a3beb475e5c9075e66b811b37f83273a09a2753836365e560887b262'
+            'c3eb174ccb5d4512157416f730888c5edd624dfc164a06a53986b2b0c3f37437'
+            '27d782703405441804f39137be34bf94f58a064f1935adc38e0e741ebca70958'
+            '32d5423534406dfe7ea44b6ac7282c368a51b8a002f3c1ef782da156927319e1'
+            'db1a121c4b20a9d0e400b505152057a08368ef751ac8fac281f02a6207989c3a'
+            'a5c97d3087e8e92c477de377085e916b079fc2f8577ce1fdc2f7d384ce4b6fa2'
+            '33fb3ffa3dc29223a156fb7622cf64bb42ec4688a9f82257d9280c91bf5d12c4'
+            '20825c0421a611217cf10318fa9f3ba88be514fe38a3a1c4c7bd69c70d0b515c'
+            '2f9e7105eeff585d6af863228f32893cf3e2bb19eff14acebd6ce2e73fb3cdfc'
+            '786b0ec26d974c045e8060e8eb2e152f28e1115c170cc64cc85ab6868ccea0ce'
+            '703104a7bb1cfce576a3393861ed34133cd54ad011efff32d07032b261113875'
+            '7e87a297def91564ee6ba45f3357d461e9ff68bce8c4bc137dd6e3bc861b5404'
+            'affcfdef5b3eb31a398f317fda14c88d39d4659fbec65a0c6cafe26c115d1c4e'
+            '36c4b11460357841d8614f19fb8440d243d4975094b1205e1756c60e1342d754'
+            '1c54d2e1eeb4638b9879a02ed47d7fcdcdebb8124c01bec13e775efe36da7bff'
+            'dd3492684f566bc5c398789c420ab785808badd68a791fe19e9395e5dd92c184'
+            'f8b2d51e8e02e893a8ea1f6d48abc7fa92b6ce3d7fea8a0228591db9bdb4c567'
+            '2eea1db15a75e63ee0692de78ff2161ce68bbcff4335b1b89bfe407922fe202d'
+            '47037d2e99e40415a0a1c72b4007a6166c65999422482635d761dd557647722e'
+            '8678fa8bab5f0ada5b0e0c37cd99fc22a8c48ba8c496f85c204f51af33ae76aa'
+            'e6225f50fb9d103530fd491daa19775f826ed556524b4a658aef077fea52b6b7'
+            '5ce1223b3b533ac7e5e4ee6b4618db99c103561c126223d1f539bcfda3a7760c'
+            '4cc1c037844b7c50fc754fc4d8caceb76f88c8f58d8f5daea9b622001dfd607f'
+            'a490b88e9a863e251aee8c10b40f0490e061e4c4af275084ef18f9148df4cd62'
+            'a1a6cb0a365f17382dc527de1be43f93b4f869e32d592222b24a2cff3d5dfb20'
+            '885a9317f381f03c4c173f4016ec414933541fc5ec47bdb3c26092afb9e12305'
+            'c7c2b58af7a6a277f67f7058080aefeca45dd61e71f1aad792a42fccf16b1a86'
+            '5064355a31bb0053c639183b810e2f1a68322365872204c02c108cd760a1bbfc'
+            '2a7f1042bd02ea0f3ca06c53bd89f86031c26c4aeddd30e1a180bcd5dd7c2800'
+            '06c7db3873557693450ebdd9d2b276f1d954619ddf5a2d7604cecd6f5abe78ae'
+            'f18a420e710e007a7cf46066726ee893c4c4bb8648361dc92897dc8eb3e18a8d'
+            'a3ec589cc759573fde49c7aa92df85680939854b61dc0a2ac06e2e3b388fc93c'
+            '551e137c4046ad05db851c61b23587571541195eb5b34bed30728e9f8501efb8'
+            'e1618857989fb6a72f9f9b30f3cb39b474264a793a252e70b855861679b42b8a'
+            '702b5b4d01005a91d8dd1ba07b3d2e459af4babbaa4d540cfb74b59afb7c00d9'
+            '2dff30920fc1e0e79ddf795f44ca514a2a553b6cd842952ccc0ce042bb56d52a'
+            'db42f72a3dfd74f15f9464f304add96c8c7a3a8bd60f5e98726a95ceae912d8e'
+            '4e625555442fafac55b1adf410c183895089af9ac24258930fbddae75e028c57'
+            '67333eed227c02c0fccd7410fd9557f47ae1fab9ed8c86d85bb7c5a633069307'
+            '17684cb40c78a553fb8f720bbb7101d5e80eed2b845c67c3b37c43d5cd7cefcc'
+            '20eaab9736bcc358bf42a2024759f6bd827038ce9ba4fee191778dc79d7dc602'
+            '27548db2ed5b23da8456ff81badb6e3f2e61cd36680e554deca7fe2443a6f8c9'
+            '96c70d09db273f1122742f6829972c8c6c271e213a05d8e246af6371822870eb'
+            'c3fbbc672cba6f2d55b6146f0fe4058e8187e431f6f0b3af3cf6b8e3a6bdcc5f'
             'dcba9dc87fa263709c792ef869ca7b54a475f4f09380dadf284c2fadae1a2ca9'
             '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
             '0bb07c0d5dc373f2043dc5915e4ac7ffa29bcbc5925f7d73d1b8bea6796eab16')
