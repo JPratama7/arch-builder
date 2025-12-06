@@ -13,7 +13,7 @@ jobs:
           postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch, bibata-cursor-theme, wl-screenrec, 
           wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
           cava, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
-          flameshot-git, quickshell, quickshell-git, google-breakpad-git, google-breakpad,
+          flameshot-git, quickshell-git, google-breakpad-git, google-breakpad,
           python-materialyoucolor, python-materialyoucolor-git, material-symbols-git
           ]
       fail-fast: false
