@@ -31,6 +31,8 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
+          aurHelper: "yay"
+          buildAurHelper: "y"
           chaoticAur: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"

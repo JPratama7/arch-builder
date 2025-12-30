@@ -38,6 +38,8 @@ jobs:
           clangedPFlags: "y"
           bootstrap: "y"
           chaoticAur: "y"
+          aurHelper: "yay"
+          buildAurHelper: "y"
           namcapDisable: true
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
