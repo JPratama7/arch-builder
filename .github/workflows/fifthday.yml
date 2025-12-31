@@ -64,6 +64,8 @@ jobs:
           maxJobs: "99"
           gccPflags: "y"
           chaoticAur: "y"
+          aurHelper: "yay"
+          buildAurHelper: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - uses: ncipollo/release-action@v1.14.0
