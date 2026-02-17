@@ -1,7 +1,7 @@
 name: Builder AUR
 on:
   schedule:
-    - cron: "0 0 */5 * *"
+    - cron: "0 0 */10 * *"
   workflow_dispatch:
 
 
@@ -11,7 +11,7 @@ jobs:
       matrix:
         build: [
           postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch, bibata-cursor-theme, wl-screenrec, 
-          wf-config, matugen-bin, asusctl, grimblast-git, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
+          wf-config, matugen-bin, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
           cava, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           flameshot-git, quickshell-git, google-breakpad-git, google-breakpad,
           python-materialyoucolor, python-materialyoucolor-git, material-symbols-git
@@ -31,6 +31,7 @@ jobs:
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
+          extraFlags: "-pthread"
           aurHelper: "yay"
           buildAurHelper: "y"
           chaoticAur: "y"
