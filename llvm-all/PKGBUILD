@@ -1,6 +1,6 @@
 pkgname=llvm-all
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, polly, lldb, lld"
-pkgver=20.1.6
+pkgver=21.1.8
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
@@ -9,20 +9,20 @@ license=('custom:Apache 2.0 with LLVM Exception')
 provides=(
   'llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}"
   'clang-analyzer' 'clang-tools-extra' 'polly' 'compiler-rt' 'openmp'
-  'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental' 'llvm-bolt'
+  'lld' 'lldb' 'libc++' 'libc++abi' 'llvm-bolt'
   )
 
 replaces=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
-  'libc++' 'libc++abi' 'libc++experimental' 'llvm-bolt'
+  'libc++' 'libc++abi' 'llvm-bolt'
   )
 
 conflicts=(
   'llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'polly' 'compiler-rt' 'lld' 'lldb' 'openmp'
   'llvm-git' 'llvm-libs-git' 'llvm-ocaml-git' 'libc++'
-  'libc++abi' 'libc++experimental' 'llvm-bolt'
+  'libc++abi' 'llvm-bolt'
   )
 
 depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses' 'xz' 'zlib' 'gcc-libs')
@@ -54,7 +54,7 @@ _extra_build_flags=(
 )
 _build_documentation=0
 _build_tests=0
-_build_bindings=0
+_build_bindings=1
 
 _rpatch() {
     echo -e "\E[1;33m Revert patch: ${1}\E[0m"
@@ -318,45 +318,45 @@ package() {
   install -Dm644 "${srcdir:?}/llvm-project/openmp/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/openmp-LICENSE"
   install -Dm644 "${srcdir:?}/llvm-project/bolt/LICENSE.TXT" "${pkgdir:?}/usr/share/licenses/${pkgname}/bolt-LICENSE"
 
-  # Fallback for llvm 19
-  # Actual files
-  local _llvm_libs=(
-    libclang-cpp.so.19.1
-    libclang.so.19.1.7
-    libLLVM.so.19.1
-    libLTO.so.19.1
-    libRemarks.so.19.1
-  )
+  # # Fallback for llvm 19
+  # # Actual files
+  # local _llvm_libs=(
+  #   libclang-cpp.so.19.1
+  #   libclang.so.19.1.7
+  #   libLLVM.so.19.1
+  #   libLTO.so.19.1
+  #   libRemarks.so.19.1
+  # )
 
-  # Symlinks and their targets
-  declare -A _llvm_symlinks=(
-    ["libclang-cpp.so"]="libclang-cpp.so.19.1"
-    ["libclang.so"]="libclang.so.19.1"
-    ["libclang.so.19.1"]="libclang.so.19.1.7"
-    ["libLLVM-19.so"]="libLLVM.so.19.1"
-    ["libLLVM.so"]="libLLVM.so.19.1"
-    ["libLTO.so"]="libLTO.so.19.1"
-    ["libRemarks.so"]="libRemarks.so.19.1"
-  )
+  # # Symlinks and their targets
+  # declare -A _llvm_symlinks=(
+  #   ["libclang-cpp.so"]="libclang-cpp.so.19.1"
+  #   ["libclang.so"]="libclang.so.19.1"
+  #   ["libclang.so.19.1"]="libclang.so.19.1.7"
+  #   ["libLLVM-19.so"]="libLLVM.so.19.1"
+  #   ["libLLVM.so"]="libLLVM.so.19.1"
+  #   ["libLTO.so"]="libLTO.so.19.1"
+  #   ["libRemarks.so"]="libRemarks.so.19.1"
+  # )
 
-  # Copy actual library files
-  for lib in "${_llvm_libs[@]}"; do
-    if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
-      echo "- Copy ${lib:?}"
-      install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
-    else
-      echo "- ${lib:?} exists"
-    fi
-  done
+  # # Copy actual library files
+  # for lib in "${_llvm_libs[@]}"; do
+  #   if [[ ! -e "${pkgdir:?}/usr/lib/${lib:?}" ]]; then
+  #     echo "- Copy ${lib:?}"
+  #     install -Dm644 "/usr/lib/${lib:?}" "${pkgdir:?}/usr/lib/${lib:?}"
+  #   else
+  #     echo "- ${lib:?} exists"
+  #   fi
+  # done
 
-  # Create symlinks
-  for symlink in "${!_llvm_symlinks[@]}"; do
-    target="${_llvm_symlinks[$symlink]}"
-    if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
-      echo "- Create symlink ${symlink:?} -> ${target:?}"
-      ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
-    else
-      echo "- Symlink ${symlink:?} exists"
-    fi
-  done
+  # # Create symlinks
+  # for symlink in "${!_llvm_symlinks[@]}"; do
+  #   target="${_llvm_symlinks[$symlink]}"
+  #   if [[ ! -L "${pkgdir:?}/usr/lib/${symlink:?}" ]]; then
+  #     echo "- Create symlink ${symlink:?} -> ${target:?}"
+  #     ln -s "${target:?}" "${pkgdir:?}/usr/lib/${symlink:?}"
+  #   else
+  #     echo "- Symlink ${symlink:?} exists"
+  #   fi
+  # done
 }
