@@ -4,7 +4,7 @@ pkgbase=thorium
 _name=${pkgbase}-browser
 pkgname=${_name}-bin
 pkgver=138.0.7204.300
-pkgrel=1
+pkgrel=2
 pkgdesc="The web browser from Chromium org and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
 url=""
@@ -26,18 +26,20 @@ source_x86_64=(
 	"https://github.com/Alex313031/Thorium/releases/download/M${pkgver}/${_name}_${pkgver}_AVX2.deb"
     $pkgbase.sh
 )
-sha512sums_x86_64=('SKIP')
+sha512sums_x86_64=('881df123775236f347e4cac47754363a1a692dca0b96ea6b3a3ca572e2b11cc1c5ed8a63c04adfd590755de7952f90203bbb9b893a58849e6a325b1e06c2b9c9'
+                   '91a532fde9e6e87d65b909a170d32808f1c05367104cdaab07043fef0de66bdfc307a4138584cd1eedc169a03207372df39c09268ab1ec741432e79e0dcc2dfb')
 
 package(){
 	# Extract package data
 	tar xf data.tar.xz -C "${pkgdir}"
+
 	rm -r \
 		"$pkgdir"/etc \
 		"$pkgdir"/opt/chromium.org/thorium/cron/
-	
+
 	install -m755 $pkgbase.sh "$pkgdir"/usr/bin/$pkgbase
 	install -Dm644 "$pkgdir/opt/chromium.org/thorium/thorium_shell.png" -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
-	
+
   # thorium-browser.xml
 	sed -E \
 		-e "s@/opt/chromium.org/thorium/@/opt/$_pkgname/@" \
@@ -49,14 +51,4 @@ package(){
         install -Dm644 "${pkgdir}"/opt/chromium.org/${pkgbase}/product_logo_${i/x*}.png \
                        "${pkgdir}"/usr/share/icons/hicolor/${i}/apps/${_name}.png
     done
-
-	rm -r -- \
-		"$pkgdir/opt/chromium.org" \
-		"$pkgdir/etc/cron.daily/" \
-		"$pkgdir/usr/share/doc/" \
-		"$pkgdir/opt/$_pkgname/cron/" \
-		"$pkgdir/opt/$_pkgname"/product_logo_*.{png,xpm} \
-		"$pkgdir/usr/share/menu/"
 }
-
-
