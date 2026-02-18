@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  LLVM:
+  Kernel:
     strategy:
       matrix:
         build: [
@@ -53,7 +53,7 @@ jobs:
   
   TRIGGER_PUBLISH:
     if: ${{ always() }}
-    needs: [LLVM]
+    needs: [Kernel]
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
