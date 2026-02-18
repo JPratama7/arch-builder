@@ -15,7 +15,7 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=6.18
+_major=6.19
 pkgver=${_major}.2
 _branch=6.x
 pkgrel=1
@@ -63,63 +63,29 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/$_major/patch-6.18-rc4-rt3.patch."{xz,sign}
-        "${_lucjan}cache-aware-patches/0001-Cache-Aware-Scheduling.patch"
-        "${_lucjan}bore-patches/0001-linux6.18-bore6.5.9.patch"
+        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-6.19-bore/0001-linux6.19-rc1-bore-6.6.1.patch"
 
-        # "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0001-linux6.17.4-bore-$_bore.patch"
-        # "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-$_major-bore/0002-Prefer-the-previous-cpu-for-wakeup-v6.patch"
-
-        # Xanmod Feature
-        "${_xanmod}binder/0001-binder-turn-into-module.patch"
-        "${_xanmod}binder/0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
-        "${_xanmod}binder/0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
-        "${_xanmod}binder/0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
-        "${_xanmod}clearlinux/0001-sched-wait-Do-accept-in-LIFO-order-for-cache-efficie.patch"
-        "${_xanmod}clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
-        "${_xanmod}clearlinux/0003-locking-rwsem-spin-faster.patch"
-        "${_xanmod}clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
-        "${_xanmod}net/netfilter/0001-netfilter-Add-netfilter-nf_tables-fullcone-support.patch"
-        "${_xanmod}net/netfilter/0001-netfilter-add-xt_FLOWOFFLOAD-target.patch"
-        "${_xanmod}net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
-        "${_xanmod}pci_acso/0001-PCI-Enable-overrides-for-missing-ACS-capabilities.patch"
-        "${_xanmod}zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
-        "${_xanmod}zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
-
-        "${_xanmod}xanmod/0001-XANMOD-x86-build-Add-more-CFLAGS-optimizations.patch"
-        "${_xanmod}xanmod/0008-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
-        "${_xanmod}xanmod/0009-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-        "${_xanmod}xanmod/0010-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
-        "${_xanmod}xanmod/0011-XANMOD-blk-wbt-Set-wbt_default_latency_nsec-to-2msec.patch"
-        "${_xanmod}xanmod/0013-XANMOD-vfs-Decrease-rate-at-which-vfs-caches-are-rec.patch"
-        "${_xanmod}xanmod/0014-XANMOD-mm-Raise-max_map_count-default-value.patch"
-        "${_xanmod}xanmod/0015-XANMOD-mm-vmscan-Reduce-amount-of-swapping.patch"
-        "${_xanmod}xanmod/0016-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-        "${_xanmod}xanmod/0017-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
-        "${_xanmod}xanmod/0018-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
-        "${_xanmod}xanmod/0002-XANMOD-x86-build-Add-LLVM-polyhedral-loop-optimizer-.patch"
-        "${_xanmod}xanmod/0003-XANMOD-kbuild-Add-SMS-based-software-pipelining-flag.patch"
-        "${_xanmod}xanmod/0004-XANMOD-kbuild-deb-pkg-Create-dbg-when-make-DEB_DEBUG.patch"
-        "${_xanmod}xanmod/0007-XANMOD-sched-Add-yield_type-sysctl-to-reduce-or-disa.patch"
-
-        "${_cachy}0004-bbr3.patch"
-        "${_lucjan}futex-patches/0001-futex-6.18-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-        "${_lucjan}asus-patches-v2/0001-asus-patches.patch"
-        "${_lucjan}le9uo-default-on-patches/0001-mm-6.18-add-le9uo.patch"
-        "${_lucjan}t2-patches/0001-t2-patches.patch"
-
-        "${_lucjan}cachyos-fixes-patches-v9/0001-cachyos-fixes-patches.patch"
-        "${_lucjan}cpu-patches/0001-cpu-6.18-merge-graysky-s-patchset.patch"
+        "${_cachy}0002-bbr3.patch"
+        "${_lucjan}futex-patches/0001-futex-6.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+        "${_lucjan}cachyos-fixes-patches-v6/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cpu-patches/0001-cpu-6.19-merge-graysky-s-patchset.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
+        "${_lucjan}le9uo-default-on-patches/0001-mm-6.19-add-le9uo.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
 
-        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-6.18-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-6.19-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
-        "${_lucjan}amd-pstate-patches-all/0001-amd-pstate-patches.patch"
-        "${_lucjan}lrng-patches-all/0001-lrng-patches.patch"
-        "${_lucjan}vmscape-patches-v2/0001-vmscape-patches.patch"
+        "${_lucjan}vmscape-patches/0001-vmscape-patches.patch"
+        "${_lucjan}t2-patches/0001-t2-patches.patch"
+        "${_lucjan}r8125-patches-v3/0001-r8125-patches.patch"
+        "${_lucjan}rt-patches/0001-rt-patches.patch"
+        "${_lucjan}poc-selector-patches-v8/0001-sched-6.19-introduce-POC-selector.patch"
+        "${_lucjan}hdmi-patches/0001-hdmi-patches.patch"
+        "${_lucjan}vesa-patches/0001-vesa-patches.patch"
+        "${_lucjan}reflex-patches/0001-Reflex-CPUFreq-Governor-v0.1.0.patch"
+        "${_lucjan}amd-isp-patches-all/0001-amd-isp-patches.patch"
 
         "${_cachy}misc/0001-acpi-call.patch"
         "${_cachy}misc/0001-clang-polly.patch"
@@ -135,61 +101,33 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('558c6bbab749492b34f99827fe807b0039a744693c21d3a7e03b3a48edaab96a'
+sha256sums=('88611981582cceb7cdd4d688d9d881073cf4977176252193a23ca6d4b982ee5a'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '216c5193beb785c1f66b43bb22bd484f4f630b2b9e0fd084c1f95babf255c987'
-            '8a4ec5dc22a2c49d73e337e2ed8c4648a924c800751e4cf383868565d50e16c5'
-            'SKIP'
-            '3b6bcac4c2c3e9d748bad54e6b26473d3f23299e3845ac91da3ef9b16a491561'
-            'b7781f3fbe99124c01a6769ae2bc3d042c27966adbbf4ad2b5b8a5760d8acc7d'
-            '6f66b529fae38ab615edbc4df9dbb67435c82f886d5ec084fb6249cf101e203b'
-            'ecf1ef2a0f580d183dccd2153dcdbe6f0af61aafe84305cd203d75cde59d9eec'
-            '1be4a54ebe3df575ee064309f9834862f1dce7ed6fd3486133a5e2d9af366c24'
-            '3a8e91d913456353d430b4d0edf25e4db40b426a332a6516ba3980a95888ebb0'
-            'c595b39fc539ca88a35c383abf7b09fbbbc0f84020c8f0867a42e2c7b4ca0a71'
-            '4a3439c0e2dcf5aff8da8f5a47d51996193e6961eb20fd435afd9194ced0b80c'
-            'e131e0b28e6e55041e90e3b6badccf4c78e1335340e6c180b371dbd788b061e1'
-            '996253d838703b7ff61a4a2b35197572b54bac8bab87c65fdfe8b50df772b2f1'
-            'e041a426a5fd7e9d0f5a722aacd22f5859cba12540c7322aed306cd52e7d059c'
-            'f3bcfe46ae7e6cc01e9d9daf78a053e1caae506f6b9beb09927955064bf577a5'
-            '8a95810f44631b4dce472a21bec460853f57f48e1f97477222e592b5aeafe6bb'
-            'd6974340c658689b5a1ace355b8e3a68f5db6bb24e29bd466d974fdbeed81a71'
-            'f8cf52c205e223a2ce0d5814f7bc9d7e575fc96261dd35af4a5e6389c688145b'
-            'd1045fd3248f6aac2d2f030ffceb82252e0a1b2e1e3dcef632137301da7004b8'
-            '586bbc5acfcf120659ad0a0e01cc5a03299a84cefc0424ec2b3ebaa8bb77a2a3'
-            'c940c1a47f1c062070a475e98ba34d32681e36d8625b8bb0963ecfdd3428baa5'
-            '87a94caa89cf9cb552f2a05060a712e4ef00fe4448c0ba974eea59b9e6f665b1'
-            '8caa7ae5057cc81f410fa14ce637a16d2b604a752e449b0e0ee4492cb5c34a58'
-            '78113a9676497fb1a6d76626bab128413494026566ac6190803cc8743e2eec96'
-            '1b5a77b9eccf0c5853fdf1d8770b50ec3891ecfc86a729834ba37d552ac2476c'
-            '36fee438b0781b27423240cec74b0000adcd75820dffbc00d7c69290b4bd3b56'
-            'db1bd25797d80a93cc8c8bc5bdf73b68a84a6cdb19cc88c09d7f8d647384e44a'
-            '45ca4f9990ff3e9a28a1fd202da51744c7e5ad31a17e7a50bbb5967ca43f5cb0'
-            'd9b7f2b3f6652cd1a93d833db5d3e96c2357a11680db7f39cb38bd5dd49540c6'
-            'e76f7a6ef5c8994be268ebae728cf978b6e0993513aa30652c43cf078076f817'
-            'badbb0c6db3b0bc6022e21b30a9b0f2b2de75905bf9c9a3571b6c9d42d67877f'
-            'ac8b7c279ee13a800a335eb2b79a23daf5c4cce35354c6ce900214e32cfacabf'
-            'ae7c3a9683ca7547b316d36d351dd38bdc1490f9aff523fb86d06c15983b84b1'
-            'aa31046b21789e2b23927f89e09a5022e65b3ea465784c3d26db059fcd4b7a29'
-            'b47d99538d95ea551ef2b8a70cee2e7d5870e24c3be4614259be4297b34f667f'
-            '2eb6b4bf992c45511f281830395b57e0fea7fc83aa68a461b6603c7e248f2fcf'
-            '2353595fbcfd1a4c60ab0a2b24f859f5bef704cd452f71d5788c3c5a7bc4ec45'
-            'c80c4a6e8dff1ed97e41f597f68bb9609abd366b0d1186452b9eb09d2cfedd2f'
-            'db94cea037e951132ede91de9843ee1e6ea8e61af7e1431259bc28ac1c68dc91'
-            '1d95abe0bec96aa05eb0aa7465e6965f21b51fae4845dc20e26df9c256387f95'
-            'c4796cd6c1940d087571fcc3277c001fd8ef442e4df391e6131a048810ca7de3'
-            'd2d3044b769aad3b6ebd673b01014caa997896a80198d40d09f4a69780ffbc33'
-            '9a5d08e96045625550b29eb9e6cb08efe9cca8779afac412e2d7e1dfecdb6c16'
-            '235e78ba7b72fac9923f8cbc7a74ec7058e4e1da28f3094c90205c41af1e1066'
-            'a67210f9dbf05cd98497dc8d987d9054a86045093f7fd738c490c155cc9d20b4'
-            '4e25fcfbfeeed927f62de8ea42b2118239aaf1ee9bd7ca5343bbd9987111d066'
-            'da888bf3124cc7db58850b98b0ec285ef00af09c2b239ac23af477e6d3017861'
-            '63c33cebdf080a947abf5f5d8581f3874016ffa7a3e440f9a39ec37a3a62069f'
-            '00bf21eb62244b4f15416cc847f5e63983c822125fbd075cbbea84adbdaca8ac'
-            'dcba9dc87fa263709c792ef869ca7b54a475f4f09380dadf284c2fadae1a2ca9'
+            'bd7ccb06d2e37da63426788a291510977f44906a7501f4187e41e3d13ea58d4a'
+            'b8c6c6273c3be9add00333251288455de9d39679aaea7d6f21e0eb29e2691913'
+            'a61bb2245959c193a06da9b3fa78886501ff52deb17b145a82774e28bce051d7'
+            '587755936d2f90e50f3464ff6275621d6abac9353709fdcf05d1c6b405cdcf69'
+            '49aab6c4ae3ce1ec0642dac5bca1456169652c125c2c004017a4ff9ae2917f35'
+            'b50c913765113be343a363fa93d3d33152d181a15a60961461d26cbd5736e75f'
+            '59e826a56775111c2831f64a6e90b85a40a7abc01b65b0f84e5ce65813664339'
+            'ead11412852ad92d173f222fc7ab65a75049d34bea573351279555264b73d8d8'
+            '3b37890f0ee93af079989e7c24e4468424ffef0512c8658724c644cdc6f1e2c3'
+            '9e3539a83b2d5a5cbc472465bf4b640a67eb54f22bfc3929d66bbaf73110a88f'
+            'a350a7e88f69885fcf3eb6e1fe7aaaa1ae0e8bd7971135ba23371e65bb556de4'
+            '4fd6bd8e4876155492ca46b45889e3f1337a81fd3e1f87ac47ecb8578e391d45'
+            'be2325a2486e4ab07df5bffc5a5e69ecd43cb98ca393c6bb84faf7b3cc67234e'
+            'd3bae4e13e87763d17cffa89261e1fb53a822934f572d2ca3a1170cdd5b04f36'
+            'c8d5ba0b403801b696ec4c1dfc99322c6d5619bc60e3f2c9f6e0d1c048f90814'
+            'd4d7ac64ed92bb88e684fd9d64510b345efe990a81739b5a2a661a1c373c6672'
+            '62760fd1742b6c77b009665e3b80432f8fe887f9bb0634737c8dc1b8acdbcfed'
+            '8316ae1a0f123a96d3c7d67aa3efc9511bb8fa090037e4762bd9b14e8f1eeaf8'
+            'b8bcbd848655c3fe776196c4e0be9a2cb486123173b5729f2eab014e9de5fc11'
+            '989246b1e7eebf0f0f4a7ae5c69e57fe2cfa04762fb4f5ccaf769481ccdfac8d'
+            'c46535bd2ff7a2ed6067d5265c91c9f3b2b71cc67111a9ac750cdcaccf73adf8'
+            'acd2ed34838556809839398a91a8fae99261b13a04c5f4cf34cbc03d1011fe6a'
             '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
-            '0bb07c0d5dc373f2043dc5915e4ac7ffa29bcbc5925f7d73d1b8bea6796eab16')
+            '843e836ca6af342cb2485d51436d98fc222b66383e6fc4ee39f20e75c730be5e')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
@@ -206,9 +144,9 @@ apply_patch() {
     fi
 
     echo "Applying $patch_file"
-    local output="$(patch -Np1 -F2 --input=$patch_file)"
-    local status=$?
-    echo $status
+    patch -Np1 -F2 --input=$patch_file 2>&1 | tee /tmp/patch_output
+    local status=${PIPESTATUS[0]}
+    local output="$(cat /tmp/patch_output)"
     if [[ $output == *"FAILED"* ]]; then
       echo "Error: Failed to apply patch '$patch_file'."
       echo $output
@@ -238,7 +176,6 @@ prepare() {
     [[ $src = *.patch ]] || continue
     msg2 "Applying patch $src..."
     apply_patch "../$src"
-    # OUT="$(patch -Np1 -F2 --input="../$src" -r -)" || echo "${OUT}" | grep "Skipping patch" -q | echo "${OUT}" || (echo "$OUT" && false);
   done
 
   # Applying configuration
