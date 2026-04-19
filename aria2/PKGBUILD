@@ -1,12 +1,4 @@
 # Maintainer: JPratama7 <josepratama080 at gmail dot com>
-# Contributor: Lex Black <autumn-wind@web.de>
-# Contributor: Thomas Berryhill (oats) <tb01110100 at gmail dot com>
-# Contributor: Felix Yan <felixonmars at archlinux dot org>
-# Contributor: Bartłomiej Piotrowski <bpiotrowski at archlinux dot org>
-# Contributor: Thomas Dziedzic <gostrc at gmail dot com>
-# Contributor: Angel Velasquez <angvp at archlinux dot org>
-# Contributor: Alexander Fehr <pizzapunk gmail com>
-# Contributor: Daniel J Griffiths <ghost1227 at archlinux dot us>
 
 pkgname=aria2-git
 pkgver=1.35.0.r13.g15cad965
@@ -37,7 +29,7 @@ prepare() {
 build() {
   cd "$pkgname"
 
-  ./configure ARIA2_STATIC=yes \
+  ./configure \
     --prefix=/usr \
     --with-openssl \
     --without-gnutls \
@@ -45,7 +37,6 @@ build() {
     --without-appletls \
     --enable-libaria2 \
     --enable-bittorrent \
-    --enable-static \
     --with-libssh2 \
     --with-sqlite3 \
     --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
