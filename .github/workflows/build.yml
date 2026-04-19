@@ -17,13 +17,17 @@ jobs:
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
+          pkgdir: ${{ matrix.build }}
+          makepkgArgs: "--skippgpcheck"
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
-          bootstrap: "y"
-          namcapDisable: true
-          pkgdir: ${{ matrix.build }}
-          makepkgArgs: "--skippgpcheck"
+          extraFlags: "-pthread"
+          aurHelper: "yay"
+          buildAurHelper: "y"
+          chaoticAur: "y"
+          ldflags: "-Wl,-z,nostart-stop-gc"
+          rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.14.0
         with:
