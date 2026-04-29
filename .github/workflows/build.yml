@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          mimalloc, earlyoom, aria2, quickshell-git
+          earlyoom, aria2, quickshell-git, thorium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
