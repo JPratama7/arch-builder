@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          earlyoom, aria2, quickshell-git, ik-llama.cpp-git
+          earlyoom, aria2, quickshell-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
