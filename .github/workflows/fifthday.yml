@@ -36,7 +36,7 @@ jobs:
           chaoticAur: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
-      - name: Check if temp release exists
+      - name: Ensure temp release exists
         id: check_temp
         run: |
           status=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -46,10 +46,16 @@ jobs:
           if [ "$status" = "200" ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            curl -s -o /dev/null -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d '{"tag_name":"temp","name":"temp","draft":false,"prerelease":false}' \
+              "${{ github.api_url }}/repos/${{ github.repository }}/releases"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Upload Artifact
-        if: ${{ steps.check_temp.outputs.exists == 'true' }}
         uses: ncipollo/release-action@v1.14.0
         with:
           allowUpdates: true
@@ -81,7 +87,7 @@ jobs:
           buildAurHelper: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
-      - name: Check if temp release exists
+      - name: Ensure temp release exists
         id: check_temp
         run: |
           status=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -91,10 +97,16 @@ jobs:
           if [ "$status" = "200" ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            curl -s -o /dev/null -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d '{"tag_name":"temp","name":"temp","draft":false,"prerelease":false}' \
+              "${{ github.api_url }}/repos/${{ github.repository }}/releases"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Upload Artifact
-        if: ${{ steps.check_temp.outputs.exists == 'true' }}
         uses: ncipollo/release-action@v1.14.0
         with:
           allowUpdates: true
