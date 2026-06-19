@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.0
-pkgver=${_major}.1
+pkgver=${_major}.12
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -62,12 +62,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}rt-patches/0001-rt-patches.patch"
         "https://raw.githubusercontent.com/firelzrd/bore-scheduler/refs/heads/main/patches/stable/linux-7.0-bore/0001-linux7.0-rc2-bore-6.6.3.patch"
-        "${_lucjan}lru-marie-patches-v4/0001-mm-7.0-introduce-LRU-MARIE.patch"
+        "${_lucjan}lru-marie-patches-v5/0001-mm-7.0-introduce-LRU-MARIE.patch"
         "${_lucjan}poc-selector-patches-v6/0001-sched-7.0-introduce-POC-selector.patch"  
         
-        "${_lucjan}cachyos-fixes-patches-v26/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v27/0001-cachyos-fixes-patches.patch"
 
-        "${_lucjan}bbr3-patches/0001-tcp-bbr3-add-BBRv3-congestion-control.patch"
+        "${_lucjan}cgroup-patches-v2/0001-cgroup-patches.patch"
         "${_lucjan}futex-patches/0001-futex-7.0-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
         "${_lucjan}cpu-patches/0001-cpu-7.0-merge-graysky-s-patchset.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
@@ -89,6 +89,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}amd-isp-patches-v3-all/0001-amd-isp-patches.patch"
         "${_lucjan}ntfs-patches-v8/0001-ntfs-7.0-merge-changes-from-dev-tree.patch"
 
+        "${_lucjan}nap-patches-v4/0001-7.0-nap-v0.5.0.patch"
+
         "${_cachy}misc/0001-clang-polly.patch"
         "${_tkg}0012-misc-additions.patch"
         )
@@ -102,7 +104,7 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('b2c935a36d24980e11e59bed3ca558ea6d67619ec0065faa335cdc0b64d887bf'
+sha256sums=('57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             '77adde4cdf93089d46ac3fdf66b94060771a73ad6e6ff09aba1e2a276a24ba3e'
@@ -111,7 +113,7 @@ sha256sums=('b2c935a36d24980e11e59bed3ca558ea6d67619ec0065faa335cdc0b64d887bf'
             '8bf3782adbdcb184da9a193e9cb1f8dfba14e9d00b43aec9946f59953bd3871b'
             '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
             '18f2103e473c893fa59551aedc6324066fd29a0c66205a78bbdb4521a8520e82'
-            '29a6a87cfd0debf40144fb751c5d3a168ab1d77bb7c20b15c188ee3e5a73afb1'
+            '487d8a203c447c14337ea1f9f7e4bd316e3306311f2650b0b794b97676dd25fc'
             '3570c598956ed00c106327e33dc202a03720d413d0baaa0017278799e107faab'
             'f77a5e0bef14fa778f4c83b9fbadd5c455d8ee3a3ae71b273bdf69d67c3dc8aa'
             '70f173e5682f791e2c2c7974fe46cb36c3247e770de664b238a6786c20c22c9c'
@@ -129,6 +131,7 @@ sha256sums=('b2c935a36d24980e11e59bed3ca558ea6d67619ec0065faa335cdc0b64d887bf'
             'fe069b949af30d7850cd640a8cbb0c286ef2f908b0e71a637c4577ea0f4d1732'
             '184113f7874e94b20777f290c7c0ca15e16ca34c5d1c08b27024cd550f2bc309'
             'e041845c0b38d7c3ff3ca0cc877569fc09979bd453217764898a022c67d3bf7f'
+            'fb3dacbc74f4fbc9606456892667bb6adee14b985015b5ffb4a0e729ea2a1570'
             '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
             '2b14ac8f09b5a6a7ba0f5fe3b4e9ab39fb9d8de8f350607978e4f56fccad6bc2')
 
