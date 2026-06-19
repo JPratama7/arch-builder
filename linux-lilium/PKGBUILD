@@ -60,6 +60,8 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
+        "${_lucjan}mglru-patches-v2-all/0001-mglru-patches.patch"
+
         "${_lucjan}rt-patches/0001-rt-patches.patch"
         "https://raw.githubusercontent.com/firelzrd/bore-scheduler/refs/heads/main/patches/stable/linux-7.0-bore/0001-linux7.0-rc2-bore-6.6.3.patch"
         "${_lucjan}lru-marie-patches-v5/0001-mm-7.0-introduce-LRU-MARIE.patch"
@@ -72,7 +74,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cpu-patches/0001-cpu-7.0-merge-graysky-s-patchset.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
-
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
 
@@ -83,7 +84,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}r8125-patches/0001-r8125-patches.patch"
         "${_lucjan}poc-selector-patches-v6/0001-sched-7.0-introduce-POC-selector.patch"
         "${_lucjan}hdmi-patches/0001-hdmi-patches.patch"
-        "${_lucjan}re-swappiness-patches/0001-7.0-rc3-Re-swappiness-v1.2.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
         "${_lucjan}reflex-patches/0001-Reflex-CPUFreq-Governor-v0.3.0r2.patch"
         "${_lucjan}amd-isp-patches-v3-all/0001-amd-isp-patches.patch"
@@ -107,12 +107,13 @@ done
 sha256sums=('57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '77adde4cdf93089d46ac3fdf66b94060771a73ad6e6ff09aba1e2a276a24ba3e'
+            'fdcb7a72152b3adbdd9289846d2f9c85882e4acbbf97b9d55ddacb9a8c71fb98'
+            '36a17151861dc95b091149411388d176d2cbdfdea4af36a2af89e67b46a67a55'
             'd1a1ef0d6428573cd2cc50a3583f32e0ce231d6620a249ecb4cf3e0671be4a93'
             '3875d67eca0123a17db8b2005d62fcbae2b5ed0a1595e24e1e5a02ba35db2b5b'
-            '8bf3782adbdcb184da9a193e9cb1f8dfba14e9d00b43aec9946f59953bd3871b'
+            'd4f46bd9efe1b4c96d6910523d3e294ee75b16e878d9d92064971652c0bb98d8'
             '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
-            '18f2103e473c893fa59551aedc6324066fd29a0c66205a78bbdb4521a8520e82'
+            '392c40235737f45dd2f2ee617d61ce5e69809643ba435697a37bb13b70cccf26'
             '487d8a203c447c14337ea1f9f7e4bd316e3306311f2650b0b794b97676dd25fc'
             '3570c598956ed00c106327e33dc202a03720d413d0baaa0017278799e107faab'
             'f77a5e0bef14fa778f4c83b9fbadd5c455d8ee3a3ae71b273bdf69d67c3dc8aa'
@@ -126,7 +127,6 @@ sha256sums=('57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da'
             '3fc27d0ad2b9fc209bdfd5de477803af6cfd24a04e88e4f76791631bb031cc43'
             '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
             '2f27b8d47342ee5d4161917374e89e89d1b2ae0ae3a9775cad03cf875ce0a524'
-            'ed32b4b191142c2132bfecd58f47e935c0848a75127cc496e3a33eed71a3175b'
             '9903ee8b4614f3418ee76b640ab17ab2c2f2796b373d8840945e8f5226ffe976'
             'fe069b949af30d7850cd640a8cbb0c286ef2f908b0e71a637c4577ea0f4d1732'
             '184113f7874e94b20777f290c7c0ca15e16ca34c5d1c08b27024cd550f2bc309'
@@ -207,6 +207,7 @@ prepare() {
     msg2 "Enabling LTO CLANG"
     scripts/config -e LTO \
                    -e LTO_CLANG \
+                   -e POLLY_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
@@ -303,6 +304,16 @@ prepare() {
                  -e CONFIG_LRU_GEN_ENABLED \
                  -d CONFIG_LRU_GEN_STATS
 
+  msg2 "Disabling TCP_CONG_CUBIC..."
+  scripts/config -m TCP_CONG_CUBIC \
+                 -d DEFAULT_CUBIC \
+                 -e TCP_CONG_BBR \
+                 -e DEFAULT_BBR \
+                 --set-str DEFAULT_TCP_CONG bbr \
+                 -m NET_SCH_FQ_CODEL \
+                 -e NET_SCH_FQ \
+                 -d CONFIG_DEFAULT_FQ_CODEL \
+                 -e CONFIG_DEFAULT_FQ
 
   msg2 "Enabling all ZRAM backend support..."
   scripts/config -e CONFIG_ZRAM_BACKEND_LZ4 \
@@ -374,6 +385,8 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
+
+  exit 0
 }
 
 build() {
