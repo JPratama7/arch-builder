@@ -16,9 +16,14 @@ jobs:
 
       - name: "Downloading"
         run: |
-          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s|grep "/JPratama7/arch-builder/releases/download/temp/"|awk -F '"|"' '{print$2}')
+          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s | grep "/JPratama7/arch-builder/releases/download/temp/" | awk -F '"|"' '{print$2}' || true)
 
-          for i in ${urls[*]}; do 
+          if [ -z "$urls" ]; then
+            echo "No packages found in temp release"
+            exit 0
+          fi
+
+          for i in ${urls[*]}; do
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
@@ -26,9 +31,9 @@ jobs:
 
       - name: "Download Older database"
         run: |
-          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep -E '/JPratama7/arch-builder/releases/download/latest/jp7-arch\.(db|files)' | awk -F '"|"' '{print$2}')
+          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep -E '/JPratama7/arch-builder/releases/download/latest/jp7-arch\.(db|files)' | awk -F '"|"' '{print$2}' || true)
 
-          for i in ${urls[*]}; do 
+          for i in ${urls[*]}; do
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
@@ -36,6 +41,8 @@ jobs:
 
       - name: creating database
         run:  |
+          # repo-add creates jp7-arch.db.tar fresh when no prior db was downloaded
+          ls *.pkg.tar.zst >/dev/null 2>&1 || { echo "No .pkg.tar.zst files found — nothing to add to database"; exit 1; }
           repo-add jp7-arch.db.tar *.pkg.tar.zst
           
       - name: upload files
