@@ -36,7 +36,7 @@ jobs:
         with:
           clanged: "y"
           clangedPFlags: "y"
-          bootstrap: "y"
+          OfficialRepo: "y"
           chaoticAur: "y"
           aurHelper: "yay"
           buildAurHelper: "y"
