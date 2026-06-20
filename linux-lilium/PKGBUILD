@@ -85,7 +85,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}poc-selector-patches-v6/0001-sched-7.0-introduce-POC-selector.patch"
         "${_lucjan}hdmi-patches/0001-hdmi-patches.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
-        "${_lucjan}reflex-patches/0001-Reflex-CPUFreq-Governor-v0.3.0r2.patch"
         "${_lucjan}amd-isp-patches-v3-all/0001-amd-isp-patches.patch"
         "${_lucjan}ntfs-patches-v8/0001-ntfs-7.0-merge-changes-from-dev-tree.patch"
 
