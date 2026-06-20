@@ -385,8 +385,6 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
-
-  exit 0
 }
 
 build() {
