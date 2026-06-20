@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         build: [
-          postman-bin, spotify-edge, paru, jamesdsp, swww, eww, pfetch,
+          postman-bin, paru, jamesdsp, swww, eww, pfetch,
           wf-config, matugen-bin, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
           cava, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
-          flameshot-git, google-breakpad-git, python-materialyoucolor, material-symbols-git
+          flameshot-git, python-materialyoucolor, material-symbols-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -67,8 +67,8 @@ jobs:
     strategy:
       matrix:
         build: [
-          visual-studio-code-bin, visual-studio-code-insiders-bin, jdk21-graalvm-ee-bin,
-          appimagelauncher, podman-desktop, jdk23-graalvm-ee-bin, zed-git, yay
+          visual-studio-code-bin, visual-studio-code-insiders-bin,
+          appimagelauncher, podman-desktop, zed-git, yay
           ]
       fail-fast: false
     runs-on: ubuntu-latest
