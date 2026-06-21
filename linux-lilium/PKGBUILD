@@ -15,7 +15,7 @@ pkgbase=linux-lilium
 _major=7.0
 pkgver=${_major}.12
 _branch=7.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -88,6 +88,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}amd-isp-patches-v3-all/0001-amd-isp-patches.patch"
         "${_lucjan}ntfs-patches-v8/0001-ntfs-7.0-merge-changes-from-dev-tree.patch"
 
+        "${_lucjan}panther-sched-patches/0001-panther-sched-patches.patch"
         "${_lucjan}nap-patches-v4/0001-7.0-nap-v0.5.0.patch"
 
         "${_cachy}misc/0001-clang-polly.patch"
@@ -103,10 +104,10 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da'
+sha256sums=('3c81edd0f716aca3dd48dff691681827580cc53d35a8eec3be47d346d1f89913'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            'fdcb7a72152b3adbdd9289846d2f9c85882e4acbbf97b9d55ddacb9a8c71fb98'
+            '3927cd5f9227d591caf4129421155dc57155919ba4c4013f142df6770df2aa03'
             '36a17151861dc95b091149411388d176d2cbdfdea4af36a2af89e67b46a67a55'
             'd1a1ef0d6428573cd2cc50a3583f32e0ce231d6620a249ecb4cf3e0671be4a93'
             '3875d67eca0123a17db8b2005d62fcbae2b5ed0a1595e24e1e5a02ba35db2b5b'
@@ -127,9 +128,9 @@ sha256sums=('57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da'
             '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
             '2f27b8d47342ee5d4161917374e89e89d1b2ae0ae3a9775cad03cf875ce0a524'
             '9903ee8b4614f3418ee76b640ab17ab2c2f2796b373d8840945e8f5226ffe976'
-            'fe069b949af30d7850cd640a8cbb0c286ef2f908b0e71a637c4577ea0f4d1732'
             '184113f7874e94b20777f290c7c0ca15e16ca34c5d1c08b27024cd550f2bc309'
             'e041845c0b38d7c3ff3ca0cc877569fc09979bd453217764898a022c67d3bf7f'
+            'd8583b50543fe2ff45fc2d34cf888ec82279102b66092459fbf038b969775ec5'
             'fb3dacbc74f4fbc9606456892667bb6adee14b985015b5ffb4a0e729ea2a1570'
             '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
             '2b14ac8f09b5a6a7ba0f5fe3b4e9ab39fb9d8de8f350607978e4f56fccad6bc2')
@@ -206,7 +207,6 @@ prepare() {
     msg2 "Enabling LTO CLANG"
     scripts/config -e LTO \
                    -e LTO_CLANG \
-                   -e POLLY_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
@@ -384,6 +384,7 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
+  exit 0
 }
 
 build() {
