@@ -12,10 +12,10 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=7.0
-pkgver=${_major}.12
+_major=7.1
+pkgver=${_major}.1
 _branch=7.x
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -60,38 +60,39 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "${_lucjan}mglru-patches-v2-all/0001-mglru-patches.patch"
+        "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
-        "${_lucjan}rt-patches/0001-rt-patches.patch"
-        "https://raw.githubusercontent.com/firelzrd/bore-scheduler/refs/heads/main/patches/stable/linux-7.0-bore/0001-linux7.0-rc2-bore-6.6.3.patch"
-        "${_lucjan}lru-marie-patches-v5/0001-mm-7.0-introduce-LRU-MARIE.patch"
-        "${_lucjan}poc-selector-patches-v6/0001-sched-7.0-introduce-POC-selector.patch"  
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1-rc1-rt1.patch.gz"
+        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-7.1-bore/0001-linux7.1-rc1-bore-6.6.3.patch"
+        "${_lucjan}lru-marie-patches-v2/0001-mm-7.1-introduce-LRU-MARIE.patch"
+        "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"  
         
-        "${_lucjan}cachyos-fixes-patches-v27/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v3/0001-cachyos-fixes-patches.patch"
 
-        "${_lucjan}cgroup-patches-v2/0001-cgroup-patches.patch"
-        "${_lucjan}futex-patches/0001-futex-7.0-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
-        "${_lucjan}cpu-patches/0001-cpu-7.0-merge-graysky-s-patchset.patch"
+        "${_lucjan}bbr3-cachyos-patches/0001-tcp-bbr3-add-BBRv3-congestion-control.patch"
+
+        "${_lucjan}cgroup-patches/0001-cgroup-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-7.1-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
+        "${_lucjan}cpu-cachyos-patches/0001-CACHY-Add-x86_64-ISA-and-Zen4-compiler-optimizations.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}v4l2loopback-patches/0001-v4l2loopback-patches.patch"
+        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
 
-        "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-7.0-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-7.1-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
         "${_lucjan}vmscape-patches/0001-vmscape-patches.patch"
-        "${_lucjan}t2-patches/0001-t2-patches.patch"
-        "${_lucjan}r8125-patches/0001-r8125-patches.patch"
-        "${_lucjan}poc-selector-patches-v6/0001-sched-7.0-introduce-POC-selector.patch"
-        "${_lucjan}hdmi-patches/0001-hdmi-patches.patch"
+        "${_lucjan}hdmi-patches-v2/0001-hdmi-patches.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
-        "${_lucjan}amd-isp-patches-v3-all/0001-amd-isp-patches.patch"
-        "${_lucjan}ntfs-patches-v8/0001-ntfs-7.0-merge-changes-from-dev-tree.patch"
+        "${_lucjan}amd-isp-patches/0001-amd-7.1-merge-changes-from-dev-tree.patch"
 
-        "${_lucjan}panther-sched-patches/0001-panther-sched-patches.patch"
-        "${_lucjan}nap-patches-v4/0001-7.0-nap-v0.5.0.patch"
+        "${_lucjan}nap-patches/0001-7.1-nap-v0.5.0.patch"
+        "${_lucjan}drm-fair-patches/0001-drm-fair-patches.patch"
+        "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
+        "${_lucjan}preempt-ipi-patches-v2/0001-preempt-ipi-patches.patch"
+        "${_lucjan}vmalloc-free-patches-v2/0001-vmalloc-freee-patches.patch"
 
-        "${_cachy}misc/0001-clang-polly.patch"
+        "${_lucjan}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -104,36 +105,36 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('3c81edd0f716aca3dd48dff691681827580cc53d35a8eec3be47d346d1f89913'
+sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '3927cd5f9227d591caf4129421155dc57155919ba4c4013f142df6770df2aa03'
-            '36a17151861dc95b091149411388d176d2cbdfdea4af36a2af89e67b46a67a55'
-            'd1a1ef0d6428573cd2cc50a3583f32e0ce231d6620a249ecb4cf3e0671be4a93'
-            '3875d67eca0123a17db8b2005d62fcbae2b5ed0a1595e24e1e5a02ba35db2b5b'
-            'd4f46bd9efe1b4c96d6910523d3e294ee75b16e878d9d92064971652c0bb98d8'
-            '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
-            '392c40235737f45dd2f2ee617d61ce5e69809643ba435697a37bb13b70cccf26'
-            '487d8a203c447c14337ea1f9f7e4bd316e3306311f2650b0b794b97676dd25fc'
-            '3570c598956ed00c106327e33dc202a03720d413d0baaa0017278799e107faab'
-            'f77a5e0bef14fa778f4c83b9fbadd5c455d8ee3a3ae71b273bdf69d67c3dc8aa'
-            '70f173e5682f791e2c2c7974fe46cb36c3247e770de664b238a6786c20c22c9c'
-            '2013e8b9a6800c16e355fc396095cbabcd23b86649b793c1651066212fcba081'
-            '6803e87753c689b0f9c3335751ce635c67dd3630d47c62fc31c4d75d0f45313f'
-            '5b677e3ef42f704c4b94483b3191792b98b986901051a525293a47a030c20a71'
-            '89c9b497eeaed09247d839308039f3ac6f25d647063671c21a3c5dea6a0126be'
-            'ddac33b5ffb41755f160c17c872f23249e11e32b6be678981638125fb8219d09'
-            '4172dc3fd043b9603f3a8e9424a4bb004e6d6e8c2b6a4ba7c7bd8d0e90b0dbfd'
-            '3fc27d0ad2b9fc209bdfd5de477803af6cfd24a04e88e4f76791631bb031cc43'
-            '8e893f1e8b55c89f70f6eaab01f27cf73f8c9785f6edd14e23f092d1fc7a0dff'
-            '2f27b8d47342ee5d4161917374e89e89d1b2ae0ae3a9775cad03cf875ce0a524'
-            '9903ee8b4614f3418ee76b640ab17ab2c2f2796b373d8840945e8f5226ffe976'
-            '184113f7874e94b20777f290c7c0ca15e16ca34c5d1c08b27024cd550f2bc309'
-            'e041845c0b38d7c3ff3ca0cc877569fc09979bd453217764898a022c67d3bf7f'
-            'd8583b50543fe2ff45fc2d34cf888ec82279102b66092459fbf038b969775ec5'
-            'fb3dacbc74f4fbc9606456892667bb6adee14b985015b5ffb4a0e729ea2a1570'
-            '71e5926efc30833a6fd756b9358529ac695fa688ae71cd74e31dd274ae1ecf05'
-            '2b14ac8f09b5a6a7ba0f5fe3b4e9ab39fb9d8de8f350607978e4f56fccad6bc2')
+            '893ff39a0fb5e58de2d805a7d67e86c5ddbe6903e8f7d63826e6d77e9ca8820b'
+            '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
+            'c371859d7ea78138a9666aa21e8082c349cf2f8ca4c6fdd03c9dedcdd369e003'
+            'b68cc950a34f320adb3735804ea8d1512f193ed4cc7ab6604c053cdf0d71da44'
+            'f2335697fde8c585f2f63ff3ca59b43a220f50f2e2a8676b8b279cedc59f505b'
+            'd254d791473b75bf83b072cdde00b565fd6d13d7e61e21a46672aef11c6f8c8f'
+            '906ab49ed3282096ff0d284bb3636c5d52999c8ac4fdd258a8c477fda8d010bb'
+            '86e46daf175a020c449701c4bd0a58056ee54a17b7c3df3b735cae6e455e5955'
+            'e5261894bf3b1534be6f4862473338b738d0010a56fc4d0e69d58615d0835a86'
+            '73b27133d2d30b5807c4fa4e3d13673cae552c4ae1468f1430202fb64f29c2f0'
+            '12ce2027416959c0f48a3e3ced5417e4eec21040da036117959a48e125080265'
+            '87af758b9afa7df927bec95df32d4ac572a01afcbe614ca2483cb144a1be69c3'
+            '17b3a8591a1c21ed6527286adb904d5d1681242f5475961d7b0a93752dba6949'
+            'af70cc5c69bc891e45a548e18623e182173180916a9c6faa8f2239522023be80'
+            '6c3569ac268e3481e494af3e7f11165e67904785cf9a58d12618bd6eb3466e65'
+            '1e3ad8b0bbc817c6e83d3acf848023fdc26f0e22299785b55c994c52583c1010'
+            '2ebf4b98d16a99e0e67fd9f770c8c4b41c90f82428d741a1bf78946146d1bb85'
+            '28b225b18a67e818c43b0a646e57aff4b5dc7c77e483cca7ffe4f3563edc3931'
+            '579515daad10a8ef7f4db1d9e66494339394a7d09a471616b8e0220e55fdf477'
+            'a731f6648770fd40dc54a8a7f2934eee284b6e1dd733c4f65ea220d1ce441688'
+            'f9f15da2804621ae3b42878464eb5210d69c5e6833e43edd4470d1974ac6e0bc'
+            '23496c6b58b594133ab6a808b1e6c83a304224ffcc71d47e55d703e628e1b84e'
+            '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
+            '54ace1edb318a3463d1734c39bb41c01312c8fdda3c9e01f806c527ff2702ea7'
+            'b9e51c8e33dbb3adfcab09ac8610211c6889a0992b7afc808780253fd8c6b24e'
+            '9906057085fb00260032b2ea937d7e478c20849e92d2f8b8a8b03c61e37df90d'
+            '5dbc9a845b54eb5d81c4d2d4d9d35156a8df0be4813db515c286d9f5893a765e')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
@@ -384,7 +385,6 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
-  exit 0
 }
 
 build() {
