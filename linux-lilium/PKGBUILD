@@ -62,7 +62,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1-rc1-rt1.patch.gz"
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1.1-rt2.patch.gz"
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-7.1-bore/0001-linux7.1-rc1-bore-6.6.3.patch"
         "${_lucjan}lru-marie-patches-v5/0001-mm-7.1-introduce-LRU-MARIE.patch"
         "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"  
