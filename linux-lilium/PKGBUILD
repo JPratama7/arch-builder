@@ -64,7 +64,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1-rc1-rt1.patch.gz"
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-7.1-bore/0001-linux7.1-rc1-bore-6.6.3.patch"
-        "${_lucjan}lru-marie-patches-v2/0001-mm-7.1-introduce-LRU-MARIE.patch"
+        "${_lucjan}lru-marie-patches-v5/0001-mm-7.1-introduce-LRU-MARIE.patch"
         "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"  
         
         "${_lucjan}cachyos-fixes-patches-v3/0001-cachyos-fixes-patches.patch"
@@ -108,7 +108,7 @@ done
 sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '893ff39a0fb5e58de2d805a7d67e86c5ddbe6903e8f7d63826e6d77e9ca8820b'
+            '7b4a7eec454aca14252042fcd95705d353532f7016ae20cae8e62d2abbff8d26'
             '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
             'c371859d7ea78138a9666aa21e8082c349cf2f8ca4c6fdd03c9dedcdd369e003'
             'b68cc950a34f320adb3735804ea8d1512f193ed4cc7ab6604c053cdf0d71da44'
