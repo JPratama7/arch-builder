@@ -72,7 +72,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}bbr3-cachyos-patches/0001-tcp-bbr3-add-BBRv3-congestion-control.patch"
 
         "${_lucjan}cgroup-patches/0001-cgroup-patches.patch"
-        "${_lucjan}futex-patches/0001-futex-7.1-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
+        "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
         "${_lucjan}cpu-cachyos-patches/0001-CACHY-Add-x86_64-ISA-and-Zen4-compiler-optimizations.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
@@ -108,16 +108,16 @@ done
 sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '7b4a7eec454aca14252042fcd95705d353532f7016ae20cae8e62d2abbff8d26'
+            '89b9020254196286e87db8d736afc20556037751ac19d33929a1d136d0bad8fe'
             '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
-            'c371859d7ea78138a9666aa21e8082c349cf2f8ca4c6fdd03c9dedcdd369e003'
+            '94a1fa80285bfd543758820201b1290f0960ac8a3b0cf72f9709f1bb7139ca2b'
             'b68cc950a34f320adb3735804ea8d1512f193ed4cc7ab6604c053cdf0d71da44'
             'f2335697fde8c585f2f63ff3ca59b43a220f50f2e2a8676b8b279cedc59f505b'
             'd254d791473b75bf83b072cdde00b565fd6d13d7e61e21a46672aef11c6f8c8f'
             '906ab49ed3282096ff0d284bb3636c5d52999c8ac4fdd258a8c477fda8d010bb'
             '86e46daf175a020c449701c4bd0a58056ee54a17b7c3df3b735cae6e455e5955'
             'e5261894bf3b1534be6f4862473338b738d0010a56fc4d0e69d58615d0835a86'
-            '73b27133d2d30b5807c4fa4e3d13673cae552c4ae1468f1430202fb64f29c2f0'
+            '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
             '12ce2027416959c0f48a3e3ced5417e4eec21040da036117959a48e125080265'
             '87af758b9afa7df927bec95df32d4ac572a01afcbe614ca2483cb144a1be69c3'
             '17b3a8591a1c21ed6527286adb904d5d1681242f5475961d7b0a93752dba6949'
@@ -200,7 +200,6 @@ prepare() {
 
   msg2 "Setting custom config"
   scripts/config --set-val X86_64_VERSION 1
-  scripts/config -e AMD_3D_VCACHE
   scripts/config -e MQ_IOSCHED_ADIOS
 
   # enable LTO_CLANG_THIN
@@ -224,11 +223,6 @@ prepare() {
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
   msg2 "Enable STACK VALIDATION"
   scripts/config -e CONFIG_STACK_VALIDATION
-
-  msg2 "Enable THP"
-  scripts/config -e TRANSPARENT_HUGEPAGE \
-                 -d TRANSPARENT_HUGEPAGE_MADVISE \
-                 -e TRANSPARENT_HUGEPAGE_ALWAYS
 
   # Enable IKCONFIG following Arch's philosophy
   msg2 "Enable IKCONFIG"
