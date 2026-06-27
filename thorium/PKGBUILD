@@ -27,7 +27,7 @@ source_x86_64=(
 	"https://github.com/gz83/thorium/releases/download/M${pkgver}/${_name}_${pkgver}_AVX2.deb"
     $pkgbase.sh
 )
-sha512sums_x86_64=('881df123775236f347e4cac47754363a1a692dca0b96ea6b3a3ca572e2b11cc1c5ed8a63c04adfd590755de7952f90203bbb9b893a58849e6a325b1e06c2b9c9'
+sha512sums_x86_64=('5967798b8ee7f66dff0e7564a1fd7e75a3a3c9c5cdfb02c33f8c3226e8bc6fd489454f4b70129deda4280d397a22848268c634c40dbc7a32afd48d55db5a3b04'
                    '91a532fde9e6e87d65b909a170d32808f1c05367104cdaab07043fef0de66bdfc307a4138584cd1eedc169a03207372df39c09268ab1ec741432e79e0dcc2dfb')
 
 package(){
