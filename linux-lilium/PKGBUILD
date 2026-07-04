@@ -15,7 +15,7 @@ pkgbase=linux-lilium
 _major=7.1
 pkgver=${_major}.1
 _branch=7.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -64,12 +64,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1.1-rt2.patch.gz"
         "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-7.1-bore/0001-linux7.1-rc1-bore-6.6.3.patch"
-        "${_lucjan}lru-marie-patches-v5/0001-mm-7.1-introduce-LRU-MARIE.patch"
+        "${_lucjan}lru-marie-patches-v7/0001-mm-7.1-introduce-LRU-MARIE.patch"
         "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"  
         
-        "${_lucjan}cachyos-fixes-patches-v3/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v5/0001-cachyos-fixes-patches.patch"
 
-        "${_lucjan}bbr3-cachyos-patches/0001-tcp-bbr3-add-BBRv3-congestion-control.patch"
+        "${_lucjan}bbr3-cachyos-patches-v2/0001-bbr3-cachyos-patches.patch"
 
         "${_lucjan}cgroup-patches/0001-cgroup-patches.patch"
         "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
@@ -88,8 +88,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}nap-patches/0001-7.1-nap-v0.5.0.patch"
         "${_lucjan}drm-fair-patches/0001-drm-fair-patches.patch"
-        "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
-        "${_lucjan}preempt-ipi-patches-v2/0001-preempt-ipi-patches.patch"
+        "${_lucjan}preempt-ipi-patches-v3/0001-preempt-ipi-patches.patch"
         "${_lucjan}vmalloc-free-patches-v2/0001-vmalloc-freee-patches.patch"
 
         "${_lucjan}clang-patches/0001-clang-patches.patch"
@@ -108,14 +107,14 @@ done
 sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '89b9020254196286e87db8d736afc20556037751ac19d33929a1d136d0bad8fe'
+            'cfa3d47615703a10c2d59940a62114eeccc50d3a0b4c7edf6385d3f94d691232'
             '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
             '94a1fa80285bfd543758820201b1290f0960ac8a3b0cf72f9709f1bb7139ca2b'
             'b68cc950a34f320adb3735804ea8d1512f193ed4cc7ab6604c053cdf0d71da44'
-            'f2335697fde8c585f2f63ff3ca59b43a220f50f2e2a8676b8b279cedc59f505b'
+            '0f245e1492bdf6bd9481e3b5111220af8a4522790751959767596478f1cd733b'
             'd254d791473b75bf83b072cdde00b565fd6d13d7e61e21a46672aef11c6f8c8f'
-            '906ab49ed3282096ff0d284bb3636c5d52999c8ac4fdd258a8c477fda8d010bb'
-            '86e46daf175a020c449701c4bd0a58056ee54a17b7c3df3b735cae6e455e5955'
+            'fb46fb6b328f70ccaf924b0acac426c5bdf6c928761c239ee45f0e399920950c'
+            '27dd2d51e17017febc74745fe4b570fce79464c7849ead96914c1a7e15411b95'
             'e5261894bf3b1534be6f4862473338b738d0010a56fc4d0e69d58615d0835a86'
             '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
             '12ce2027416959c0f48a3e3ced5417e4eec21040da036117959a48e125080265'
@@ -130,8 +129,7 @@ sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'a731f6648770fd40dc54a8a7f2934eee284b6e1dd733c4f65ea220d1ce441688'
             'f9f15da2804621ae3b42878464eb5210d69c5e6833e43edd4470d1974ac6e0bc'
             '23496c6b58b594133ab6a808b1e6c83a304224ffcc71d47e55d703e628e1b84e'
-            '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
-            '54ace1edb318a3463d1734c39bb41c01312c8fdda3c9e01f806c527ff2702ea7'
+            'd9a5ecbe9857f428df76a708803e94c7c9881b677e77675a40c3a9edc9f37675'
             'b9e51c8e33dbb3adfcab09ac8610211c6889a0992b7afc808780253fd8c6b24e'
             '9906057085fb00260032b2ea937d7e478c20849e92d2f8b8a8b03c61e37df90d'
             '5dbc9a845b54eb5d81c4d2d4d9d35156a8df0be4813db515c286d9f5893a765e')
@@ -198,9 +196,14 @@ prepare() {
   scripts/config -e SCHED_BORE \
                  -e PREEMPT_RT
 
+
   msg2 "Setting custom config"
-  scripts/config --set-val X86_64_VERSION 1
-  scripts/config -e MQ_IOSCHED_ADIOS
+  scripts/config --set-val X86_64_VERSION 1 \
+                 -e MQ_IOSCHED_ADIOS \
+                 -e DEBUG_INFO_BTF_MODULES \
+                 -e FUNCTION_TRACE_ARGS \
+                 -e PROBE_EVENTS_BTF_ARGS \
+                 -e IO_URING_BPF_OPS
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
@@ -210,6 +213,7 @@ prepare() {
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
+                   -e POLLY_CLANG
                    -e HAS_LTO_CLANG \
                    -d LTO_CLANG_FULL \
                    -e LTO_CLANG_THIN \
@@ -422,8 +426,7 @@ _package() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   echo "Installing modules..."
-  ZSTD_CLEVEL=19 make "${BUILD_FLAGS[@]}" INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
-    DEPMOD=/doesnt/exist modules_install  # Suppress depmod
+  ZSTD_CLEVEL=19 make "${BUILD_FLAGS[@]}" INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 DEPMOD=/doesnt/exist modules_install  # Suppress depmod
 
   # remove build link
   rm "$modulesdir"/build
