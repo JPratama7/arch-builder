@@ -213,7 +213,7 @@ prepare() {
                    -e ARCH_SUPPORTS_LTO_CLANG \
                    -e ARCH_SUPPORTS_LTO_CLANG_THIN \
                    -d LTO_NONE \
-                   -e POLLY_CLANG
+                   -e POLLY_CLANG \
                    -e HAS_LTO_CLANG \
                    -d LTO_CLANG_FULL \
                    -e LTO_CLANG_THIN \
