@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.1
-pkgver=${_major}.3
+pkgver=${_major}.5
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -63,13 +63,18 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
 
         "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1.1-rt2.patch.gz"
-        "https://github.com/firelzrd/bore-scheduler/raw/refs/heads/main/patches/stable/linux-7.1-bore/0001-linux7.1-rc1-bore-6.6.3.patch"
-        "${_lucjan}lru-marie-patches-v7/0001-mm-7.1-introduce-LRU-MARIE.patch"
-        "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"  
-        
-        "${_lucjan}cachyos-fixes-patches-v5/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}prjc-lfbmq-patches-v2/0001-PRJC-LFBMQ-for-7.1.patch"
+        "${_lucjan}lru-marie-patches-v14/0001-mm-7.1-introduce-LRU-MARIE.patch"
+        "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"
+
+        "${_lucjan}cachyos-fixes-patches-v14/0001-cachyos-fixes-patches.patch"
 
         "${_lucjan}bbr3-cachyos-patches-v2/0001-bbr3-cachyos-patches.patch"
+        "${_lucjan}arch-patches-v5-sep/0002-udmabuf-Do-not-create-malformed-scatterlists.patch"
+        "${_lucjan}arch-patches-v5-sep/0003-drm-amd-display-Fix-ISM-dc_lock-deadlock-during-susp.patch"
+        "${_lucjan}arch-patches-v5-sep/0004-drm-i915-mtl-Enable-PPS-before-PLL.patch"
+        "${_lucjan}arch-patches-v5-sep/0005-block-try-slab-allocation-in-bio_alloc_bioset-before.patch"
+        "${_lucjan}arch-patches-v5-sep/0006-drm-amdgpu-fix-check-in-amdgpu_hmm_invalidate_gfx.patch"
 
         "${_lucjan}cgroup-patches/0001-cgroup-patches.patch"
         "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
@@ -87,12 +92,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}amd-isp-patches/0001-amd-7.1-merge-changes-from-dev-tree.patch"
 
         "${_lucjan}nap-patches/0001-7.1-nap-v0.5.0.patch"
-        "${_lucjan}drm-fair-patches/0001-drm-fair-patches.patch"
+        "${_lucjan}drm-fair-patches-v2/0001-drm-fair-patches.patch"
         "${_lucjan}preempt-ipi-patches-v3/0001-preempt-ipi-patches.patch"
         "${_lucjan}vmalloc-free-patches-v2/0001-vmalloc-freee-patches.patch"
 
         "${_lucjan}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
+        "${_lucjan}aufs-patches/0001-aufs-7.1-merge-v20260713.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -104,17 +110,22 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
+sha256sums=('22a0196b3cbcdf34dc27b77561f4d040585fd3447edc9ab3531a1ac79e3041e7'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            'cfa3d47615703a10c2d59940a62114eeccc50d3a0b4c7edf6385d3f94d691232'
+            '671da59c58017d6a6132f8d5e62d77bf275379aa53578a16ca74f47f692c8542'
             '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
             '94a1fa80285bfd543758820201b1290f0960ac8a3b0cf72f9709f1bb7139ca2b'
-            'b68cc950a34f320adb3735804ea8d1512f193ed4cc7ab6604c053cdf0d71da44'
-            '0f245e1492bdf6bd9481e3b5111220af8a4522790751959767596478f1cd733b'
+            'bf01b1808670bb20f11875be26748ebb1e3b7cae6be3ae74413e5b0a4a3d6be2'
+            '05c7f43a283a537fc165a89245039553b19aec713af6476e07f31a5d8ff31cbd'
             'd254d791473b75bf83b072cdde00b565fd6d13d7e61e21a46672aef11c6f8c8f'
-            'fb46fb6b328f70ccaf924b0acac426c5bdf6c928761c239ee45f0e399920950c'
+            '9f456c1211f2edaf17ffe36f0225abefaa55c06eb363dbc8840cc1e874a69fff'
             '27dd2d51e17017febc74745fe4b570fce79464c7849ead96914c1a7e15411b95'
+            'b0bef70cb8f88e2a7525dde60b3707b90a3f70a55885f86dc4e296728f01a458'
+            '168c352af42d89979c0b3be6f8a80a781c9b141ce51fa76c0c6362ba4d9ac0b7'
+            '0f9dc09c87769f6012585358c37133255ad8c4fa05c65ba5f3e83884f3a26287'
+            '802327fce14dc1c475c56d9a1678c776b7f86d92597203f03ab9500dda995f14'
+            '0d6785d0bbd647eacd94627a2101e00ce3dc2886afc5d689cfc4f86c826fb77c'
             'e5261894bf3b1534be6f4862473338b738d0010a56fc4d0e69d58615d0835a86'
             '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
             '12ce2027416959c0f48a3e3ced5417e4eec21040da036117959a48e125080265'
@@ -132,7 +143,8 @@ sha256sums=('5215fa3541dc7e7f5bcd51bf7e57f169cec6fce508ca54e3dc85fdee14371d7d'
             'd9a5ecbe9857f428df76a708803e94c7c9881b677e77675a40c3a9edc9f37675'
             'b9e51c8e33dbb3adfcab09ac8610211c6889a0992b7afc808780253fd8c6b24e'
             '9906057085fb00260032b2ea937d7e478c20849e92d2f8b8a8b03c61e37df90d'
-            '5dbc9a845b54eb5d81c4d2d4d9d35156a8df0be4813db515c286d9f5893a765e')
+            'd1a830a9fbe8acd992fe8209935d0d6265784680cc3c07586231db4a4a17d8a1'
+            'abf590110316e590acd960abd4ba127c31f832e4e84bbc2ac9817a76462a606e')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
@@ -203,7 +215,8 @@ prepare() {
                  -e DEBUG_INFO_BTF_MODULES \
                  -e FUNCTION_TRACE_ARGS \
                  -e PROBE_EVENTS_BTF_ARGS \
-                 -e IO_URING_BPF_OPS
+                 -e IO_URING_BPF_OPS \
+                 -e AUFS_FS
 
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
