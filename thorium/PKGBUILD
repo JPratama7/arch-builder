@@ -3,8 +3,8 @@
 pkgbase=thorium
 _name=${pkgbase}-browser
 pkgname=${_name}-bin
-pkgver=150.0.7871.47
-pkgrel=2
+pkgver=151.0.7922.72
+pkgrel=1
 pkgdesc="The web browser from Chromium org and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
 url=""
@@ -27,16 +27,12 @@ source_x86_64=(
 	"https://github.com/gz83/thorium/releases/download/M${pkgver}/${_name}_${pkgver}_AVX2.deb"
     $pkgbase.sh
 )
-sha512sums_x86_64=('17dcd48e6c0e5001f17fc64a980900f9ed2a82cfb56ebf5157041be93df4cfbb736aa42b685f465cdd9ee4bc064b5f2477d184a83c08714bcee367e23a5ceadf'
+sha512sums_x86_64=('202ef9590334c539dc6aed29c19b9913d7d57b269c7fa65ed033f1352e2280b4436c18eaec1d80b8d20fedf8d79a08a264a3354184200974ca7f6aad58589956'
                    '91a532fde9e6e87d65b909a170d32808f1c05367104cdaab07043fef0de66bdfc307a4138584cd1eedc169a03207372df39c09268ab1ec741432e79e0dcc2dfb')
 
 package(){
 	# Extract package data
 	tar xf data.tar.xz -C "${pkgdir}"
-
-	rm -r \
-		"$pkgdir"/etc \
-		"$pkgdir"/opt/chromium.org/thorium/cron/
 
 	install -m755 $pkgbase.sh "$pkgdir"/usr/bin/$pkgbase
 	install -Dm644 "$pkgdir/opt/chromium.org/thorium/thorium_shell.png" -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"

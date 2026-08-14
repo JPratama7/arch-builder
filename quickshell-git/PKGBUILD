@@ -1,6 +1,6 @@
 _pkgname=quickshell
 pkgname="$_pkgname-git"
-pkgver=0.2.0.r1.g783b971
+pkgver=0.3.0.r20.g28771c7
 pkgrel=1
 pkgdesc='Flexible toolkit for making desktop shells with QtQuick'
 arch=(x86_64 aarch64)
@@ -39,8 +39,10 @@ source=(
     "$_pkgsrc"::"git+$url.git"
     "quickshell-check.hook::https://aur.archlinux.org/cgit/aur.git/plain/quickshell-check.hook?h=quickshell-git"
 )
-sha256sums=('SKIP'
-            '8543e21aeaaa5441b73a679160e7601a957f16c433e8d6bd9257e80bd0e94083')
+sha256sums=(
+    'SKIP'
+    '8543e21aeaaa5441b73a679160e7601a957f16c433e8d6bd9257e80bd0e94083'
+)
 
 
 pkgver() {
@@ -55,6 +57,7 @@ build() {
     -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCRASH_HANDLER=OFF \
+    -DVENDOR_CPPTRACE=OFF \
     -DDISTRIBUTOR="AUR JPratama7 Binary (package: quickshell-git)" \
     -DINSTALL_QML_PREFIX=lib/qt6/qml
 

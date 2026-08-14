@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          earlyoom, aria2, quickshell-git
+          earlyoom, aria2, quickshell-git, thorium-browser
           ]
       fail-fast: false
     runs-on: ubuntu-latest
