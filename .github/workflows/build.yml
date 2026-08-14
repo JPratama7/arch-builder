@@ -48,11 +48,12 @@ jobs:
             echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
+          replacesArtifacts: true
           tag: "temp"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   GCC:
@@ -96,11 +97,12 @@ jobs:
             echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
+          replacesArtifacts: true
           tag: "temp"
-          artifacts: "./*/*.zst"
+          artifacts: "*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   TRIGGER_PUBLISH:

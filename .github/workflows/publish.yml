@@ -2,7 +2,7 @@ name: Create DB
 on:
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: publish-group
 
 jobs:
@@ -44,9 +44,9 @@ jobs:
           # repo-add creates jp7-arch.db.tar fresh when no prior db was downloaded
           ls *.pkg.tar.zst >/dev/null 2>&1 || { echo "No .pkg.tar.zst files found — nothing to add to database"; exit 1; }
           repo-add jp7-arch.db.tar *.pkg.tar.zst
-          
+
       - name: upload files
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           replacesArtifacts: true
@@ -55,7 +55,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: upload database
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           replacesArtifacts: true
