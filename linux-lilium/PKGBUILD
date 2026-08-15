@@ -95,7 +95,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
-        "${_lucjan}aufs-patches/0001-aufs-7.1-merge-v20260713.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 

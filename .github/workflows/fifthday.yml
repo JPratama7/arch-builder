@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         build: [
-          postman-bin, paru, jamesdsp, swww, eww, pfetch,
+          paru, jamesdsp, swww, eww, pfetch,
           wf-config, matugen-bin, hyprshade, waypaper, wallust-git, app2unit-git, wl-screenrec-git,
-          cava, sourcegit, windsurf, windsurf-next, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
+          cava, sourcegit, swaylock-effects-git, wlr-randr-git, hyprprop-git, grimblast-git,
           flameshot-git, python-materialyoucolor, material-symbols-git
           ]
       fail-fast: false
@@ -32,7 +32,6 @@ jobs:
           officialRepo: "y"
           extraFlags: "-pthread"
           aurHelper: "yay"
-          buildAurHelper: "y"
           chaoticAur: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
@@ -84,7 +83,6 @@ jobs:
           gccPflags: "y"
           chaoticAur: "y"
           aurHelper: "yay"
-          buildAurHelper: "y"
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Ensure temp release exists
