@@ -12,8 +12,8 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 
 pkgbase=linux-lilium
-_major=7.1
-pkgver=${_major}.8
+_major=7.2
+pkgver=${_major}.5
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -60,38 +60,33 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "choose-gcc-optimization.sh"
         "config"
 
-        "${_lucjan}mglru-patches-all/0001-mglru-patches.patch"
+        "https://www.kernel.org/pub/linux/kernel/projects/rt/7.2/patch-7.2-rt5.patch.gz"
+        "${_lucjan}bore-patches/0001-linux7.2-bore6.8.0.patch"
+        "${_lucjan}lru-marie-patches-v4/0001-mm-7.2-introduce-LRU-MARIE.patch"
+        "${_lucjan}poc-selector/0001-sched-7.2-introduce-POC-selector.patch"
 
-        "https://www.kernel.org/pub/linux/kernel/projects/rt/7.1/patch-7.1.1-rt2.patch.gz"
-        "${_lucjan}bore-patches-v2/0001-linux7.1-bore6.8.0.patch"
-        "${_lucjan}lru-marie-patches-v17/0001-mm-7.1-introduce-LRU-MARIE.patch"
-        "${_lucjan}poc-selector-patches/0001-sched-7.1-introduce-POC-selector.patch"
+        "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
+        "${_lucjan}futex-patches/0001-futex-7.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v19/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v5/0001-cachyos-fixes-patches.patch"
 
-        "${_lucjan}bbr3-cachyos-patches-v2/0001-bbr3-cachyos-patches.patch"
-        "${_lucjan}arch-patches-v7-sep/0002-udmabuf-Do-not-create-malformed-scatterlists.patch"
-        "${_lucjan}arch-patches-v7-sep/0003-block-try-slab-allocation-in-bio_alloc_bioset-before.patch"
+        "${_lucjan}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
 
-        "${_lucjan}cgroup-patches-v2/0001-cgroup-patches.patch"
-        "${_lucjan}mmap-lock-patches/0001-mmap-lock-patches.patch"
+        "${_lucjan}cgroup-patches/0001-cgroup-patches.patch"
         "${_lucjan}cpu-cachyos-patches/0001-CACHY-Add-x86_64-ISA-and-Zen4-compiler-optimizations.patch"
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
+        "${_lucjan}reflex-patches-v2/0001-linux7.2-reflex0.3.1r2.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
 
-        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-7.1-introduce-ADIOS-I-O-scheduler.patch"
+        "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-7.2-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
-        "${_lucjan}vmscape-patches/0001-vmscape-patches.patch"
         "${_lucjan}hdmi-patches-v2/0001-hdmi-patches.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
-        "${_lucjan}amd-isp-patches/0001-amd-7.1-merge-changes-from-dev-tree.patch"
 
-        "${_lucjan}nap-patches/0001-7.1-nap-v0.5.0.patch"
-        "${_lucjan}drm-fair-patches-v2/0001-drm-fair-patches.patch"
-        "${_lucjan}preempt-ipi-patches-v3/0001-preempt-ipi-patches.patch"
-        "${_lucjan}vmalloc-free-patches-v2/0001-vmalloc-freee-patches.patch"
+        "${_lucjan}preempt-ipi-patches/0001-preempt-ipi-patches.patch"
+        "${_lucjan}s5-power-patches/0001-s5-power-patches.patch"
 
         "${_lucjan}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
@@ -106,38 +101,32 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('ff01dcb449279d5b4cfccdb01fee639cf5ff1803f1749a77844dd33915422c49'
+sha256sums=('55ddf0df8325d9dad96fcff7bd93977d22e3f50af06527572af59b77c7632b78'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             '671da59c58017d6a6132f8d5e62d77bf275379aa53578a16ca74f47f692c8542'
-            '36cb507b6235160f7d03cbe54360c81e9742500c1e1f4f85f30009741d6abe2c'
-            '94a1fa80285bfd543758820201b1290f0960ac8a3b0cf72f9709f1bb7139ca2b'
-            'ddb502cf60e8db4d4489fdb77f90a46321a79d414e6bde2bbfab452b525839e6'
-            '894e44633762392cce3c79bf677563e234066e03cbb31eeeaec0f9923838e4ad'
-            'd254d791473b75bf83b072cdde00b565fd6d13d7e61e21a46672aef11c6f8c8f'
-            '0c585e5b3dbe44c5ccfb9e7fe53fc1ac6ea80768e2412ff071d4aa7c3fd0abe7'
-            '27dd2d51e17017febc74745fe4b570fce79464c7849ead96914c1a7e15411b95'
-            '57019ef1d989f78bc642d6ac69c3542e333dc0587cc30f36aa13db6768f7a091'
-            '8d8ce67dd4eb89fb2ef6b8264633ce6d3dd6237a0bd1b370899cd28413a525ac'
-            'f14cd73b340b8d77ec1c5b4e84e276a8d7d1c55cfba9620936072d205a4494f6'
-            '725ecf6923e2cc1e9299b5d97335c8487f3000a9afd4b74be62b4bff422ee1ce'
-            '12ce2027416959c0f48a3e3ced5417e4eec21040da036117959a48e125080265'
-            '87af758b9afa7df927bec95df32d4ac572a01afcbe614ca2483cb144a1be69c3'
-            '17b3a8591a1c21ed6527286adb904d5d1681242f5475961d7b0a93752dba6949'
-            'af70cc5c69bc891e45a548e18623e182173180916a9c6faa8f2239522023be80'
-            '6c3569ac268e3481e494af3e7f11165e67904785cf9a58d12618bd6eb3466e65'
-            '1e3ad8b0bbc817c6e83d3acf848023fdc26f0e22299785b55c994c52583c1010'
-            '2ebf4b98d16a99e0e67fd9f770c8c4b41c90f82428d741a1bf78946146d1bb85'
-            '28b225b18a67e818c43b0a646e57aff4b5dc7c77e483cca7ffe4f3563edc3931'
-            '579515daad10a8ef7f4db1d9e66494339394a7d09a471616b8e0220e55fdf477'
-            'a731f6648770fd40dc54a8a7f2934eee284b6e1dd733c4f65ea220d1ce441688'
-            'f9f15da2804621ae3b42878464eb5210d69c5e6833e43edd4470d1974ac6e0bc'
-            '25a5d2eb5632eb55e4d0aa5351393676d264499dd08a5906619f12d4ad991f14'
-            'd9a5ecbe9857f428df76a708803e94c7c9881b677e77675a40c3a9edc9f37675'
-            'b9e51c8e33dbb3adfcab09ac8610211c6889a0992b7afc808780253fd8c6b24e'
-            '9906057085fb00260032b2ea937d7e478c20849e92d2f8b8a8b03c61e37df90d'
-            'b8811ce7144ce448f3c18037d1dcb81614cdfeaa47e847690a06977fdee43dd9'
-            'abf590110316e590acd960abd4ba127c31f832e4e84bbc2ac9817a76462a606e')
+            'fc206623b5c5bb27500d26ed0794b887f709dfc6e3a7e9b16ee76c418def108f'
+            'd2585701de6ca13078a4da634311b98fadffb5f93974f1604497c026df032fea'
+            'd08a650dbabbf8a2a1250233dd9a56bc8517d44153d179da7f7be5de277b9e54'
+            'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
+            'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
+            'af68fa63c61a3d662abf6e93f37ae02c3a2689795e0ac921b85ec0f0f85b312f'
+            '81d4b9deb7a6237260ad7789af01924d2babfd51886ced0cea3c9ea1e6c731c5'
+            '1560fd1e87b0211a731f64c61812830395ec4f7438aae486030c4fceb4304c9d'
+            '7d051e04b611040a1a2befb2fc723f3d6fc8ee64dcb8ec7f0a5ba772d1fb464f'
+            'fc6ef684b2d33efcc5d249b6854ad1fc7e4429439d2d632bd3b825400c3ae559'
+            'd9c57daabfa87f13ed2eec21f63f49dc9ebb04c43e0c82a81d0b1249c3ca7f06'
+            '1636dba584850b3a9fb9bc86effb856d36fb19e7f893b2ab17c3a78d60dd9fde'
+            '09e4eae0444b1b2430bb77a1761c7f09686c270accb5dd47f2b8943afae81a90'
+            '7310d4a42cb56057d74cd55884be00b8619876b637270e18a2774a3d04fd1f1d'
+            'b648e180795ab434bab4877370cb50108bf9cb18fe2c246936dbbc6c2cc805a3'
+            'dc4df7e9eea6679ba7e3e00e2dc6ece38cb33cd310fa5eb56b3b1b1bca21e30e'
+            '91a01c190772a23284125d20e74d659ec09747f202ea8830549e1b75a32f3a19'
+            '961c17c06e92d1cd677c9b61c86821c5c11ae10062b349c6d234ff7e8d0fddee'
+            '1a34dc471587cdf9fb5e3f0028c7cb8d206c3e70ef26a1c41313959168988a72'
+            'f0adb7d33b229109416e041445cd60636490760605101152644cabe4c23774b5'
+            '8488ed387203a64159d2388cfcb688218fc004314c85ac65dfe09986df9cafea'
+            '9d36d506eaf7216211de474a7e4c68a29d19442ddc57808f561a5b9cf3c09a65')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
