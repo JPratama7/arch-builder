@@ -68,7 +68,31 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
         "${_lucjan}futex-patches/0001-futex-7.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v5/0001-cachyos-fixes-patches.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0006-wifi-rtw89-fix-command-offload-delay-source.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0007-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0008-sched-idle-Fix-avg_idle-saturation-by-establishing-s.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0009-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0010-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0011-drm-i915-psr-Accept-PSR2-Early-Transport-panels-with.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0012-drm-edid-populate-monitor-range-from-DisplayID-adapt.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0013-drm-i915-psr-exit-Panel-Replay-during-updates-to-wor.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0014-drm-nouveau-Wire-up-dmem-cgroups.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0015-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0016-ALSA-hda-realtek-Fix-muffled-internal-speakers-on-AS.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0017-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0018-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Gaming-A1.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0019-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0023-PCI-Skip-Target-Speed-quirk-on-clamped-ports-with-no.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0024-Revert-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Ga.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0025-drm-xe-display-Do-not-allocate-into-stolen-for-new-f.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0026-ASoC-amd-yc-Add-quirk-for-Acer-Aspire-A314-23P.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0027-Revert-PCI-Skip-Target-Speed-quirk-on-clamped-ports-.patch"
+        "${_lucjan}cachyos-fixes-patches-v5-sep/0028-HID-asus-do-not-send-keyboard-init-reports-to-touchp.patch"
 
         "${_lucjan}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
 
@@ -79,7 +103,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
         "${_lucjan}reflex-patches-v2/0001-linux7.2-reflex0.3.1r2.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
-
         "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-7.2-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
         "${_lucjan}hdmi-patches-v2/0001-hdmi-patches.patch"
@@ -111,7 +134,31 @@ sha256sums=('55ddf0df8325d9dad96fcff7bd93977d22e3f50af06527572af59b77c7632b78'
             'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
             'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
             'af68fa63c61a3d662abf6e93f37ae02c3a2689795e0ac921b85ec0f0f85b312f'
-            '81d4b9deb7a6237260ad7789af01924d2babfd51886ced0cea3c9ea1e6c731c5'
+            '6ab31f4dbfc82534b3fc6f260a14e5676a837993bcaba799bbb30e60238725b7'
+            'f75b7ea812824cf85a9cb97c9b0c9379bcdb590f30d02de5b1211460ec4b7d1c'
+            '3792327c8fb75a76b051e72763a1eb2eed796fefabcc5189345b72079872d876'
+            '7d6a0ec0e73e2672ce160938c65886db493ed78221060369bff5c74aa9966e3a'
+            '9efe4e6b56b811ea189c51ba4419feb6dc4211c9c840e0ec4c2fc66eec34d44d'
+            '39b1122f1fa64530bc0af5ac32e850251ebc6d5b46f4f182d66d19ac3e3728fe'
+            '18112f9e4f4c6e176c3b216e6743fb487949b8e92707a3f3a65b504707517c15'
+            '29433708ae7be1823377145f47f2081be633658aa76abf0c6a446db10a3147c4'
+            '8f9c1d3288b2b0dfdc9294704c7d7b989f133c6df52b69c543b066161b940764'
+            '68ccd7a71ba3dcce8457f1384e8b4759ee148074b63635e3f0f91a9231262606'
+            'ffd639f437f4d7ff828a119d2e0729a1237a01fbe42ab61a0e77e488ac1c9476'
+            'f4228cc1a3ae090298c2cfec9dd697b1a61d532fd02adbc4e95951d019e96e1f'
+            'a2aadeb0b8418e57ef9e09fa1a8da75d27d4a419fcd4c10d7a6ad8ae4c495df5'
+            '74682cd7400fdd5b129eb045fc47215b14a203b1c6bd67bb9edfdbaa488707ae'
+            'a7626eda0784f6b1297cc97c1c8444756fbf7f528a231a40060a4137fb3f82fa'
+            '46b6a7a8d5b66575a54516498a823214fdc3085df5d29d93a17fe92fcdfe2917'
+            '130d7eda4e6c1d27320c26b692d32e770bd2c45263795932ef9a936fd28c1fba'
+            '150aa072ee36cfb2ebd473b7e5406965465802591acc9737b566f7ec3a54ae25'
+            'ad0bbaba5c0d4bde5ad17f63f8b82f4f7f9c177009a8d0b1f8ac8495049217ae'
+            '210f39b80a5cd0a370ac2c007f54a89a8d3cbc9e6a1c86b309e176440e051d83'
+            '267d363c26ead81d1f4e5f4786afe50ca3fce28b8e11634ffcdd0e46c566ecda'
+            'dda23db10e46dd34cd347aeaeaabd6fff892d52acc4b15046396c2b4424e52fd'
+            'e99ef0492c767031a143b863b1c4d6fb211926cc6fdc7ca4e6a75cd7b3110fb2'
+            'c1bd646a71c3ed03956fa5dd01984740d96c6ff261a98728ef712c747b63b05c'
+            '772a870199d7a08d21de6f7d864effa9cca1cd118bffde8011d11cab328700f6'
             '1560fd1e87b0211a731f64c61812830395ec4f7438aae486030c4fceb4304c9d'
             '7d051e04b611040a1a2befb2fc723f3d6fc8ee64dcb8ec7f0a5ba772d1fb464f'
             'fc6ef684b2d33efcc5d249b6854ad1fc7e4429439d2d632bd3b825400c3ae559'
