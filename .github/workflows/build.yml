@@ -25,7 +25,7 @@ jobs:
           officialRepo: "y"
           extraFlags: "-pthread"
           aurHelper: "yay"
-          buildAurHelper: "y"
+          buildAurHelper: "n"
           chaoticAur: "y"
           ldflags: "-Wl,-z,nostart-stop-gc"
           rustcflags: "-C link-arg=-Wl,-z,nostart-stop-gc"
