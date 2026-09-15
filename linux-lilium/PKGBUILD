@@ -13,17 +13,16 @@ fi
 
 pkgbase=linux-lilium
 _major=7.2
-pkgver=${_major}.5
+pkgver=${_major}.6
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
-url="http://www.xanmod.org/"
+url="http://www.kernel.org/"
 arch=(x86_64)
 _lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
 _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
 _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
-_commit_ck=2870d6ac146aa658af60bb18a9c7503efe5992d4
 
 _bore=6.5.8
 
@@ -66,33 +65,31 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}poc-selector/0001-sched-7.2-introduce-POC-selector.patch"
 
         "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
-        "${_lucjan}futex-patches/0001-futex-7.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0006-wifi-rtw89-fix-command-offload-delay-source.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0007-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0008-sched-idle-Fix-avg_idle-saturation-by-establishing-s.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0009-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0010-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0011-drm-i915-psr-Accept-PSR2-Early-Transport-panels-with.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0012-drm-edid-populate-monitor-range-from-DisplayID-adapt.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0013-drm-i915-psr-exit-Panel-Replay-during-updates-to-wor.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0014-drm-nouveau-Wire-up-dmem-cgroups.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0015-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0016-ALSA-hda-realtek-Fix-muffled-internal-speakers-on-AS.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0017-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0018-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Gaming-A1.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0019-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0023-PCI-Skip-Target-Speed-quirk-on-clamped-ports-with-no.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0024-Revert-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Ga.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0025-drm-xe-display-Do-not-allocate-into-stolen-for-new-f.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0026-ASoC-amd-yc-Add-quirk-for-Acer-Aspire-A314-23P.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0027-Revert-PCI-Skip-Target-Speed-quirk-on-clamped-ports-.patch"
-        "${_lucjan}cachyos-fixes-patches-v5-sep/0028-HID-asus-do-not-send-keyboard-init-reports-to-touchp.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0006-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0007-sched-idle-Fix-avg_idle-saturation-by-establishing-s.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0008-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0009-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0010-drm-i915-psr-Accept-PSR2-Early-Transport-panels-with.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0011-drm-edid-populate-monitor-range-from-DisplayID-adapt.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0012-drm-i915-psr-exit-Panel-Replay-during-updates-to-wor.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0013-drm-nouveau-Wire-up-dmem-cgroups.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0014-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0015-ALSA-hda-realtek-Fix-muffled-internal-speakers-on-AS.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0016-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0017-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Gaming-A1.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0018-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0022-PCI-Skip-Target-Speed-quirk-on-clamped-ports-with-no.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0023-Revert-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Ga.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0024-drm-xe-display-Do-not-allocate-into-stolen-for-new-f.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0025-ASoC-amd-yc-Add-quirk-for-Acer-Aspire-A314-23P.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0026-Revert-PCI-Skip-Target-Speed-quirk-on-clamped-ports-.patch"
+        "${_lucjan}cachyos-fixes-patches-v6-sep/0027-HID-asus-do-not-send-keyboard-init-reports-to-touchp.patch"
 
         "${_lucjan}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
 
@@ -101,12 +98,14 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
         "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
+        "${_lucjan}ksm-patches/0001-ksm-patches.patch"
         "${_lucjan}reflex-patches-v2/0001-linux7.2-reflex0.3.1r2.patch"
         "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
         "${_lucjan}adios-iosched-default-on-patches-v2/0001-iosched-7.2-introduce-ADIOS-I-O-scheduler.patch"
         "${_lucjan}block-patches-all/0001-block-patches.patch"
         "${_lucjan}hdmi-patches-v2/0001-hdmi-patches.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
+        "${_xanmod}mm/0001-mm-Add-working-set-protection-for-anon-and-clean-fil.patch"
 
         "${_lucjan}preempt-ipi-patches/0001-preempt-ipi-patches.patch"
         "${_lucjan}s5-power-patches/0001-s5-power-patches.patch"
@@ -124,7 +123,7 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('55ddf0df8325d9dad96fcff7bd93977d22e3f50af06527572af59b77c7632b78'
+sha256sums=('039aef84f2b0994aeda3f4fcfc3d02ec9d7a9bbb9020ea264c43f446c860f606'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             '671da59c58017d6a6132f8d5e62d77bf275379aa53578a16ca74f47f692c8542'
@@ -133,43 +132,43 @@ sha256sums=('55ddf0df8325d9dad96fcff7bd93977d22e3f50af06527572af59b77c7632b78'
             'd08a650dbabbf8a2a1250233dd9a56bc8517d44153d179da7f7be5de277b9e54'
             'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
             'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
-            'af68fa63c61a3d662abf6e93f37ae02c3a2689795e0ac921b85ec0f0f85b312f'
             '6ab31f4dbfc82534b3fc6f260a14e5676a837993bcaba799bbb30e60238725b7'
             'f75b7ea812824cf85a9cb97c9b0c9379bcdb590f30d02de5b1211460ec4b7d1c'
             '3792327c8fb75a76b051e72763a1eb2eed796fefabcc5189345b72079872d876'
             '7d6a0ec0e73e2672ce160938c65886db493ed78221060369bff5c74aa9966e3a'
             '9efe4e6b56b811ea189c51ba4419feb6dc4211c9c840e0ec4c2fc66eec34d44d'
-            '39b1122f1fa64530bc0af5ac32e850251ebc6d5b46f4f182d66d19ac3e3728fe'
-            '18112f9e4f4c6e176c3b216e6743fb487949b8e92707a3f3a65b504707517c15'
-            '29433708ae7be1823377145f47f2081be633658aa76abf0c6a446db10a3147c4'
-            '8f9c1d3288b2b0dfdc9294704c7d7b989f133c6df52b69c543b066161b940764'
-            '68ccd7a71ba3dcce8457f1384e8b4759ee148074b63635e3f0f91a9231262606'
-            'ffd639f437f4d7ff828a119d2e0729a1237a01fbe42ab61a0e77e488ac1c9476'
-            'f4228cc1a3ae090298c2cfec9dd697b1a61d532fd02adbc4e95951d019e96e1f'
-            'a2aadeb0b8418e57ef9e09fa1a8da75d27d4a419fcd4c10d7a6ad8ae4c495df5'
-            '74682cd7400fdd5b129eb045fc47215b14a203b1c6bd67bb9edfdbaa488707ae'
-            'a7626eda0784f6b1297cc97c1c8444756fbf7f528a231a40060a4137fb3f82fa'
-            '46b6a7a8d5b66575a54516498a823214fdc3085df5d29d93a17fe92fcdfe2917'
-            '130d7eda4e6c1d27320c26b692d32e770bd2c45263795932ef9a936fd28c1fba'
-            '150aa072ee36cfb2ebd473b7e5406965465802591acc9737b566f7ec3a54ae25'
-            'ad0bbaba5c0d4bde5ad17f63f8b82f4f7f9c177009a8d0b1f8ac8495049217ae'
-            '210f39b80a5cd0a370ac2c007f54a89a8d3cbc9e6a1c86b309e176440e051d83'
-            '267d363c26ead81d1f4e5f4786afe50ca3fce28b8e11634ffcdd0e46c566ecda'
-            'dda23db10e46dd34cd347aeaeaabd6fff892d52acc4b15046396c2b4424e52fd'
-            'e99ef0492c767031a143b863b1c4d6fb211926cc6fdc7ca4e6a75cd7b3110fb2'
-            'c1bd646a71c3ed03956fa5dd01984740d96c6ff261a98728ef712c747b63b05c'
-            '772a870199d7a08d21de6f7d864effa9cca1cd118bffde8011d11cab328700f6'
+            '7b59999854f13321ed891601e650e3917f47cd75af35b9ce898f377eb3d10932'
+            'bbbce19a403b8767d81a0012759587d732ef0867ce75f37969a4fb775d873656'
+            '3df196eb61d85e997b36db7567d1913748a63873e13e3f239128c90b02cb39e1'
+            'd915d1e5fb8a91d69fa56a940f0c9f4100f81dadb092f87fafcafcbee7cef499'
+            '4038f37de77c8c48b4518e1f9c39c16f61a2ba03d714f43a727793eda49827d4'
+            '9af38c2c19dc129b6fd4540e467c71a9499651b3291b2b723e3dd29ee27445c5'
+            '4a4845b2266930fc3d5bc5322766daa2c0706e6c50e7d238493055595e686187'
+            'e5952e6d23a7f23aa6fc6ac3aa3124dc5b0e460c024481626bd8e278376c77f6'
+            'ddd7d91908c519da3fc8996a8052536f3d2ef2d0939e9b35f862340eecc583b7'
+            'f4be3d63a65e62dcdaf7517a03488fcf9245e6fbdc4d3062bbc376550ca4ebad'
+            'a084edd9ef3a7f2533ddb44b8804e8f59abe0de1c60501247152dcb2c4d5bf55'
+            '85f642a62221e1b68b2a5dd5b68be45e441b1bd3f81b8cb064544940c6e8d777'
+            'ac0baba4538f15c2f6c33bab798f9affe6f832a4f63efd52a98ed973691113ac'
+            'c3d3db897eed3a06d6a8227fb767c97d4275355bf2d2e9e4b4fc43d914be281b'
+            '8299ea8eb01e32d87699aacf01d1d254b577bed11cab992f480087da00c8d938'
+            '5e961e4f9d53a1484d2a4d7691b7bfd0e66365f60e484a019227dfa57eb8d0ea'
+            '638afeee83c935bad087be44ff56989985725acca99e5970c453044793f276e9'
+            '0a1b1a14f574df845776b2af6e0fe0e5340ab289a451512be8652dbff58f55f4'
+            'c52d7c0043d3383c958c31a586a87a5f3ce0ade0490dec7410c4f0ea5bb1abf8'
             '1560fd1e87b0211a731f64c61812830395ec4f7438aae486030c4fceb4304c9d'
             '7d051e04b611040a1a2befb2fc723f3d6fc8ee64dcb8ec7f0a5ba772d1fb464f'
             'fc6ef684b2d33efcc5d249b6854ad1fc7e4429439d2d632bd3b825400c3ae559'
             'd9c57daabfa87f13ed2eec21f63f49dc9ebb04c43e0c82a81d0b1249c3ca7f06'
             '1636dba584850b3a9fb9bc86effb856d36fb19e7f893b2ab17c3a78d60dd9fde'
+            '5536998b013749fac231792349efce01fc6264531b149e51a665627a9c0e98f0'
             '09e4eae0444b1b2430bb77a1761c7f09686c270accb5dd47f2b8943afae81a90'
             '7310d4a42cb56057d74cd55884be00b8619876b637270e18a2774a3d04fd1f1d'
             'b648e180795ab434bab4877370cb50108bf9cb18fe2c246936dbbc6c2cc805a3'
             'dc4df7e9eea6679ba7e3e00e2dc6ece38cb33cd310fa5eb56b3b1b1bca21e30e'
             '91a01c190772a23284125d20e74d659ec09747f202ea8830549e1b75a32f3a19'
             '961c17c06e92d1cd677c9b61c86821c5c11ae10062b349c6d234ff7e8d0fddee'
+            '7483f012bb04b7c248c2a5e4bc246b27ab8db605798d8996200b2eedf8c1a15d'
             '1a34dc471587cdf9fb5e3f0028c7cb8d206c3e70ef26a1c41313959168988a72'
             'f0adb7d33b229109416e041445cd60636490760605101152644cabe4c23774b5'
             '8488ed387203a64159d2388cfcb688218fc004314c85ac65dfe09986df9cafea'
@@ -425,6 +424,8 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
+
+  exit 1
 }
 
 build() {
