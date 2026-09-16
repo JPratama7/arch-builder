@@ -112,13 +112,15 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
+
+        "0001-drm-amd-display-dml-frame-warn-4096.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
 # Archlinux patches
 _commit="ec9e9a4219fe221dec93fa16fddbe44a34933d8d"
 _patches=()
-for _patch in ${_patches[@]}; do
+for _patch in "${_patches[@]}"; do
     #source+=("${_patch}::https://git.archlinux.org/svntogit/packages.git/plain/trunk/${_patch}?h=packages/linux&id=${_commit}")
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
@@ -126,17 +128,17 @@ done
 sha256sums=('039aef84f2b0994aeda3f4fcfc3d02ec9d7a9bbb9020ea264c43f446c860f606'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '671da59c58017d6a6132f8d5e62d77bf275379aa53578a16ca74f47f692c8542'
+            '1bb606d6fbd737fcc5240e3dd5d25615536c060271a943fe0a96ddfc469613aa'
             'fc206623b5c5bb27500d26ed0794b887f709dfc6e3a7e9b16ee76c418def108f'
             'd2585701de6ca13078a4da634311b98fadffb5f93974f1604497c026df032fea'
             'd08a650dbabbf8a2a1250233dd9a56bc8517d44153d179da7f7be5de277b9e54'
             'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
             'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
-            '6ab31f4dbfc82534b3fc6f260a14e5676a837993bcaba799bbb30e60238725b7'
-            'f75b7ea812824cf85a9cb97c9b0c9379bcdb590f30d02de5b1211460ec4b7d1c'
-            '3792327c8fb75a76b051e72763a1eb2eed796fefabcc5189345b72079872d876'
-            '7d6a0ec0e73e2672ce160938c65886db493ed78221060369bff5c74aa9966e3a'
-            '9efe4e6b56b811ea189c51ba4419feb6dc4211c9c840e0ec4c2fc66eec34d44d'
+            'e2723ed304985ebf483c60f881a029530d0d5f678bee1eb552da3f785d95451c'
+            '536e2d7e168b3079a0f352cc7dd532ac6efc5d668c65c7875c2571f5748f386c'
+            '2ea410a3e76f709d5ba9096bcb34a775b545e076fbd64214f3fc5eb115422d51'
+            '39666de2815fe58052b20dc902d968e25aee2ca2643cd0e44cea3799c0c86364'
+            'a848a455ceb272c84186c203a1c9037178385de20d48a71195c0ea153cd2234b'
             '7b59999854f13321ed891601e650e3917f47cd75af35b9ce898f377eb3d10932'
             'bbbce19a403b8767d81a0012759587d732ef0867ce75f37969a4fb775d873656'
             '3df196eb61d85e997b36db7567d1913748a63873e13e3f239128c90b02cb39e1'
@@ -172,7 +174,8 @@ sha256sums=('039aef84f2b0994aeda3f4fcfc3d02ec9d7a9bbb9020ea264c43f446c860f606'
             '1a34dc471587cdf9fb5e3f0028c7cb8d206c3e70ef26a1c41313959168988a72'
             'f0adb7d33b229109416e041445cd60636490760605101152644cabe4c23774b5'
             '8488ed387203a64159d2388cfcb688218fc004314c85ac65dfe09986df9cafea'
-            '9d36d506eaf7216211de474a7e4c68a29d19442ddc57808f561a5b9cf3c09a65')
+            '9d36d506eaf7216211de474a7e4c68a29d19442ddc57808f561a5b9cf3c09a65'
+            '0346fc0f51b8c8b766cfee0afd6351139b4aa2f30a05e9b1be407924cc17568f')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
