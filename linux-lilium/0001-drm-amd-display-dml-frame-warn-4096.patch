@@ -1,0 +1,68 @@
+From e4479aecf6581af81bc0908575447878d2a07e01 Mon Sep 17 00:00:00 2001
+From: Jose Chasey Pratama <josepratama080@gmail.com>
+Date: Wed, 16 Sep 2026 23:50:00 +0700
+Subject: [PATCH] drm/amd/display: Set dml frame warn limit to 4096 unconditionally
+
+Clang 22.1.8 inlining combined with ThinLTO inflates stackframes past the 2048/2056
+defaults (measured 2184/2192/2280), and with CONFIG_WERROR=y the
+-Wframe-larger-than check trips at LTO link time. Rather than marking
+individual helpers noinline, raise the per-file frame warn limit to 4096
+for all dml/dml2_0 builds regardless of sanitizer configuration.
+
+This mirrors the 4096 limit already used for KASAN/KCSAN + clang +
+COMPILE_TEST builds.
+
+Signed-off-by: Jose Chasey Pratama <josepratama080@gmail.com>
+---
+ drivers/gpu/drm/amd/display/dc/dml/Makefile   | 16 +++-------------
+ drivers/gpu/drm/amd/display/dc/dml2_0/Makefile | 16 +++-------------
+ 2 files changed, 6 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+index 3e5d5b7f9f0c..a1b2c3d4e5f6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -31,15 +31,5 @@ dml_rcflags := $(CC_FLAGS_NO_FPU)
+ ifneq ($(CONFIG_FRAME_WARN),0)
+-    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
+-        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
+-            frame_warn_limit := 4096
+-        else
+-            frame_warn_limit := 3072
+-        endif
+-    else
+-        frame_warn_limit := 2048
+-    endif
+-
+-    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
+-        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
+-    endif
++    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), 4096),y)
++        frame_warn_flag := -Wframe-larger-than=4096
++    endif
+ endif
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/Makefile b/drivers/gpu/drm/amd/display/dc/dml2_0/Makefile
+index d9c27ebe12ee0..91c4f3b4bd5f4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/Makefile
+@@ -30,15 +30,5 @@ dml2_rcflags := $(CC_FLAGS_NO_FPU)
+ ifneq ($(CONFIG_FRAME_WARN),0)
+-    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
+-        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
+-            frame_warn_limit := 4096
+-        else
+-            frame_warn_limit := 3072
+-        endif
+-    else
+-        frame_warn_limit := 2056
+-    endif
+-
+-    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
+-        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
+-    endif
++    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), 4096),y)
++        frame_warn_flag := -Wframe-larger-than=4096
++    endif
+ endif
+-- 
+2.49.1
