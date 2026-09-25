@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.2
-pkgver=${_major}.6
+pkgver=${_major}.8
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -50,13 +50,6 @@ makedepends=(
   zlib
   zstd
   kmod
-
-  # htmldocs
-  graphviz
-  imagemagick
-  python-sphinx
-  python-yaml
-  texlive-latexextra
 )
 if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm python)
@@ -75,30 +68,30 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0006-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0007-sched-idle-Fix-avg_idle-saturation-by-establishing-s.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0008-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0009-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0010-drm-i915-psr-Accept-PSR2-Early-Transport-panels-with.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0011-drm-edid-populate-monitor-range-from-DisplayID-adapt.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0012-drm-i915-psr-exit-Panel-Replay-during-updates-to-wor.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0013-drm-nouveau-Wire-up-dmem-cgroups.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0014-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0015-ALSA-hda-realtek-Fix-muffled-internal-speakers-on-AS.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0016-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0017-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Gaming-A1.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0018-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0022-PCI-Skip-Target-Speed-quirk-on-clamped-ports-with-no.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0023-Revert-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Ga.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0024-drm-xe-display-Do-not-allocate-into-stolen-for-new-f.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0025-ASoC-amd-yc-Add-quirk-for-Acer-Aspire-A314-23P.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0026-Revert-PCI-Skip-Target-Speed-quirk-on-clamped-ports-.patch"
-        "${_lucjan}cachyos-fixes-patches-v6-sep/0027-HID-asus-do-not-send-keyboard-init-reports-to-touchp.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0006-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0007-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0008-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0009-drm-i915-psr-Accept-PSR2-Early-Transport-panels-with.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0010-drm-edid-populate-monitor-range-from-DisplayID-adapt.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0011-drm-i915-psr-exit-Panel-Replay-during-updates-to-wor.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0012-drm-nouveau-Wire-up-dmem-cgroups.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0013-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0014-ALSA-hda-realtek-Fix-muffled-internal-speakers-on-AS.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0015-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0016-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Gaming-A1.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0017-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0021-PCI-Skip-Target-Speed-quirk-on-clamped-ports-with-no.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0022-Revert-ASoC-amd-acp-Add-DMI-override-for-ASUS-TUF-Ga.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0023-drm-xe-display-Do-not-allocate-into-stolen-for-new-f.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0024-ASoC-amd-yc-Add-quirk-for-Acer-Aspire-A314-23P.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0025-Revert-PCI-Skip-Target-Speed-quirk-on-clamped-ports-.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0026-HID-asus-do-not-send-keyboard-init-reports-to-touchp.patch"
+        "${_lucjan}cachyos-fixes-patches-v8-sep/0027-Revert-drm-gud-validate-TV-mode-names-before-creatin.patch"
 
         "${_lucjan}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
 
@@ -140,39 +133,39 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('039aef84f2b0994aeda3f4fcfc3d02ec9d7a9bbb9020ea264c43f446c860f606'
+sha256sums=('12e8d5a973d1ad7c5a5c69882e4022b131ed715db7003fdcd760ddf8c3e51941'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '1bb606d6fbd737fcc5240e3dd5d25615536c060271a943fe0a96ddfc469613aa'
+            'aa6237e4d78a47782c9bdb18f9427afe5ef91096bea9d36c371b68e2f91b4969'
             'fc206623b5c5bb27500d26ed0794b887f709dfc6e3a7e9b16ee76c418def108f'
             'd2585701de6ca13078a4da634311b98fadffb5f93974f1604497c026df032fea'
             'd08a650dbabbf8a2a1250233dd9a56bc8517d44153d179da7f7be5de277b9e54'
             'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
             'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
-            'e2723ed304985ebf483c60f881a029530d0d5f678bee1eb552da3f785d95451c'
-            '536e2d7e168b3079a0f352cc7dd532ac6efc5d668c65c7875c2571f5748f386c'
-            '2ea410a3e76f709d5ba9096bcb34a775b545e076fbd64214f3fc5eb115422d51'
-            '39666de2815fe58052b20dc902d968e25aee2ca2643cd0e44cea3799c0c86364'
-            'a848a455ceb272c84186c203a1c9037178385de20d48a71195c0ea153cd2234b'
-            '7b59999854f13321ed891601e650e3917f47cd75af35b9ce898f377eb3d10932'
-            'bbbce19a403b8767d81a0012759587d732ef0867ce75f37969a4fb775d873656'
-            '3df196eb61d85e997b36db7567d1913748a63873e13e3f239128c90b02cb39e1'
-            'd915d1e5fb8a91d69fa56a940f0c9f4100f81dadb092f87fafcafcbee7cef499'
-            '4038f37de77c8c48b4518e1f9c39c16f61a2ba03d714f43a727793eda49827d4'
-            '9af38c2c19dc129b6fd4540e467c71a9499651b3291b2b723e3dd29ee27445c5'
-            '4a4845b2266930fc3d5bc5322766daa2c0706e6c50e7d238493055595e686187'
-            'e5952e6d23a7f23aa6fc6ac3aa3124dc5b0e460c024481626bd8e278376c77f6'
-            'ddd7d91908c519da3fc8996a8052536f3d2ef2d0939e9b35f862340eecc583b7'
-            'f4be3d63a65e62dcdaf7517a03488fcf9245e6fbdc4d3062bbc376550ca4ebad'
-            'a084edd9ef3a7f2533ddb44b8804e8f59abe0de1c60501247152dcb2c4d5bf55'
-            '85f642a62221e1b68b2a5dd5b68be45e441b1bd3f81b8cb064544940c6e8d777'
-            'ac0baba4538f15c2f6c33bab798f9affe6f832a4f63efd52a98ed973691113ac'
-            'c3d3db897eed3a06d6a8227fb767c97d4275355bf2d2e9e4b4fc43d914be281b'
-            '8299ea8eb01e32d87699aacf01d1d254b577bed11cab992f480087da00c8d938'
-            '5e961e4f9d53a1484d2a4d7691b7bfd0e66365f60e484a019227dfa57eb8d0ea'
-            '638afeee83c935bad087be44ff56989985725acca99e5970c453044793f276e9'
-            '0a1b1a14f574df845776b2af6e0fe0e5340ab289a451512be8652dbff58f55f4'
-            'c52d7c0043d3383c958c31a586a87a5f3ce0ade0490dec7410c4f0ea5bb1abf8'
+            '685aca024f5758ad12a7ca75f28be0db6ada83857e0770a0c16434e69f2f60ab'
+            '608f9f808fa235bd4ca7278980f9586b095e747308bfc436aa688d6ce39099ab'
+            '9637665284f8406c0b6704cb823d4b45dd2ac955a23bde91db8029d4dc0e2b33'
+            '99aa10139eb67162fea4e09fc62942abd485cdeacfcae79ee42f3f990ed4a345'
+            '1a1e592c746b300af3dba8c5ded585fae2d47f5e1f2d8a3e25a82d907b6ac084'
+            '4f6e0b21d7a18c42b1f5b26e840f2426d8b65afe29ba7e2a5768441e54417700'
+            'a5cae46a44d067a2a0f65cba1d2ceeebd0bdecb0c036c802610a54957d7b8494'
+            'c19b2eb8f580295a2ce294e1d0bf901e38366befb5424488d163c3dada3c37f8'
+            'a8369a9f7ed6b682868e4f09bf5c299fadfe97cf65f94197088931f85a69f559'
+            'e72ed29c992d6e278ca81dc37540169a7204795d94cc0c58ca98008d3fd29319'
+            '10e1d205e4403de7b99d5564dd351491c3cc8d64c64d3064347de94f1095965f'
+            '30d201b268e9642dff12c92bfb88d56609ade9671cd0d6730d1857086a093527'
+            '85b51399bcec8a05e3db0ade54f32169e5d426599679cc3930367253489e7442'
+            '0f1ad67aacf692531d7159d713beebe83eb35c6ba3f6056d9adf8e8bfbe872a3'
+            '3cdaa2b975cadebcea4a9b8bd9fb8765ae28a8c4948152ab7f2755ade45355ac'
+            'a8babfa3d8ef2d85e18f64118b9f0e25aed9943fdc5850b1023912b02de51606'
+            '001cc29ad8f7132583e6f22188062e83f2e5531f0855ae4f28666198a4fd004e'
+            'fcc10c411c5a13c03fecd2ffb6a5e33924b6a641513a41763ea0cda3c5a696db'
+            '55ac7c1732f7f0480aa84f7c2a28073700397937e62a42e763d1bc140c199782'
+            '2a1ec69ee35d3eb7c66cc16a6d7715b9aa8ec3b6d9282639e3d1fede2881fb22'
+            '6fc0ff7976ed06a2189dfe101727ec7405c226b9a1f167f1e5ccd2a234fdd303'
+            'fef4a1290dad3da18f8f8b081831230a9e640806a7363540ae251ec96e3d4aad'
+            '50674e46ba12d4445b6722e54ba7ccfa089681421d167050d53be007b885bac1'
+            '9ee2fcd2e4670c60720a9905820d4a186ffdd022715641d3902566a4a1addc93'
             '1560fd1e87b0211a731f64c61812830395ec4f7438aae486030c4fceb4304c9d'
             '7d051e04b611040a1a2befb2fc723f3d6fc8ee64dcb8ec7f0a5ba772d1fb464f'
             'fc6ef684b2d33efcc5d249b6854ad1fc7e4429439d2d632bd3b825400c3ae559'
@@ -190,7 +183,7 @@ sha256sums=('039aef84f2b0994aeda3f4fcfc3d02ec9d7a9bbb9020ea264c43f446c860f606'
             'f0adb7d33b229109416e041445cd60636490760605101152644cabe4c23774b5'
             '8488ed387203a64159d2388cfcb688218fc004314c85ac65dfe09986df9cafea'
             '9d36d506eaf7216211de474a7e4c68a29d19442ddc57808f561a5b9cf3c09a65'
-            '0346fc0f51b8c8b766cfee0afd6351139b4aa2f30a05e9b1be407924cc17568f')
+            'f13fd77253894400f33401b41ab6e2d3bad62985509380bf42df8eb3a7e6dbf8')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-$pkgbase}
@@ -447,12 +440,8 @@ prepare() {
 build() {
   cd linux-${_major}
 
-  make htmldocs SPHINXOPTS=-QT &
-  local pid_docs=$!
-
   make ${_compiler_flags} all
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
-  wait $pid_docs
 }
 
 _package() {
