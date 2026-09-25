@@ -53,11 +53,21 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   TRIGGER_PUBLISH:
-    if: ${{ always() }}
+    if: ${{ !cancelled() }}
     needs: [Kernel]
     runs-on: ubuntu-latest
     steps:
+      - name: Check at least one build succeeded
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh run view ${{ github.run_id }} --json jobs \
+            | jq -e 'any(.jobs[] | select(.name | startswith("Kernel")); .conclusion == "success")' > /dev/null; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Invoke workflow without inputs
+        if: steps.gate.outputs.go == 'true'
         uses: benc-uk/workflow-dispatch@v1.2.2
         with:
           workflow: Create DB
