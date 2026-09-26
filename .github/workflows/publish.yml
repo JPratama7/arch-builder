@@ -41,7 +41,8 @@ jobs:
 
       - name: creating database
         run:  |
-          # repo-add creates jp7-arch.db.tar fresh when no prior db was downloaded
+          # append to the downloaded older db (jp7-arch.db), else repo-add starts fresh
+          [ -f jp7-arch.db ] && mv jp7-arch.db jp7-arch.db.tar
           ls *.pkg.tar.zst >/dev/null 2>&1 || { echo "No .pkg.tar.zst files found — nothing to add to database"; exit 1; }
           repo-add jp7-arch.db.tar *.pkg.tar.zst
 
