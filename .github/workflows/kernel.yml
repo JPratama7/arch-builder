@@ -62,7 +62,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if gh run view ${{ github.run_id }} --json jobs \
+          if gh run view ${{ github.run_id }} -R ${{ github.repository }} --json jobs \
             | jq -e 'any(.jobs[] | select(.name | startswith("Kernel")); .conclusion == "success")' > /dev/null; then
             echo "go=true" >> "$GITHUB_OUTPUT"
           fi
