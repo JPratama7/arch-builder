@@ -17,9 +17,11 @@ jobs:
       - name: "Downloading"
         run: |
           urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s | grep "/JPratama7/arch-builder/releases/download/temp/" | awk -F '"|"' '{print$2}' || true)
+          old=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep "/JPratama7/arch-builder/releases/download/latest/" | grep "\.pkg\.tar\.zst" | awk -F '"|"' '{print$2}' || true)
+          urls="$urls $old"
 
-          if [ -z "$urls" ]; then
-            echo "No packages found in temp release"
+          if [ -z "${urls// /}" ]; then
+            echo "No packages found in temp or latest releases"
             exit 0
           fi
 
