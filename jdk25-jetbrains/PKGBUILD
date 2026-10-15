@@ -1,0 +1,374 @@
+# Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
+#
+# JetBrains Runtime (JBR) 25, built from the official jbr25 branch with
+# Arch's system clang (/usr/bin/clang).
+#
+# Every flag and dependency below was verified against the actual checkout:
+#   doc/building.md                 boot JDK, toolchain, library, hardware docs
+#   make/conf/version-numbers.conf  JDK version + acceptable boot JDK versions
+#   make/autoconf/toolchain.m4      clang toolchain selection, CC/CXX handling
+#                                   (min clang 13.0 on JDK 25)
+#   make/autoconf/jvm-features.m4   valid/default JVM features (static-build
+#                                   no longer exists in JDK 25)
+#   make/autoconf/libraries.m4      external libraries; JBR-specific on Linux:
+#                                   wayland + xkbcommon + wayland-protocols
+#                                   are REQUIRED, dbus headers are REQUIRED,
+#                                   speechd/vulkan are optional
+#   jb/project/tools/linux/scripts/mkimages_x64.sh + common.sh
+#                                   JetBrains' own canonical configure flags
+#
+# Optional environment variables (no file edits needed):
+#   makepkg.conf CFLAGS/CXXFLAGS/CPPFLAGS/LDFLAGS are forwarded into the
+#       build via --with-extra-*flags (the OpenJDK build ignores them as
+#       environment variables). -flto* is filtered out there and mapped to
+#       the 'link-time-opt' JVM feature instead (raw -flto breaks the JDK
+#       build, JDK-8340215); -fexceptions is dropped (breaks ZGC linking).
+#   JBR_EXTRA_CFLAGS / JBR_EXTRA_CXXFLAGS / JBR_EXTRA_LDFLAGS
+#       Additional flags appended after the makepkg.conf ones
+#   JBR_NO_LTO=1               keep the 'link-time-opt' JVM feature off
+#                              even when makepkg.conf enables LTO
+#   JBR_BOOT_JDK=/path/to/jdk   override boot JDK autodetection
+#   JBR_JOBS=<n>                override build parallelism (default: nproc,
+#                               capped at 12; hotspot jobs peak ~1-1.5 GB each)
+#   JBR_CONFIGURE_EXTRA="..."   raw extra configure arguments, e.g.
+#                               --with-vulkan (requires vulkan-headers and a
+#                               vulkan shader compiler)
+#
+# Versioning note: the jbr25 branch tip is kept current (rebased onto each
+# OpenJDK CPU update); the newest jbr-release-25.* tag can trail the tip by
+# a few commits. This package tracks the branch tip; pkgver() derives the
+# version from make/conf/version-numbers.conf plus the git state. After an
+# upstream rebase the r<N> counter can move non-monotonically.
+#
+# JCEF: included the same way JetBrains' own release pipeline does it —
+#       JCEF is NOT built from this tree; prebuilt JCEF jmods (JCEF 150 /
+#       Chromium 150.0.7871.129) are taken from the official jbrsdk_jcef
+#       bundle pinned below and injected after `make images` (module-info
+#       patch + java.desktop/java.base jmod repack + jlink), replicating
+#       jb/project/tools/linux/scripts/mkimages_x64.sh. Only the modules
+#       our build lacks (jcef, gluegen.rt, jogl.all) are taken from it.
+#       Bump _jcef_rel when the jbr25 base version changes.
+
+pkgname=jdk25-jetbrains
+pkgver=25.0.4.1.r0.gb4d19986
+pkgrel=1
+pkgdesc='JetBrains Runtime 25 development kit with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
+arch=('x86_64')
+url='https://github.com/JetBrains/JetBrainsRuntime'
+license=('GPL-2.0-only WITH Classpath-exception-2.0')
+depends=(
+  'java-runtime-common>=3'
+  'java-environment-common=3'
+  'ca-certificates-utils'
+  'glibc'
+  'gcc-libs'
+  'libgcc'
+  'libstdc++'
+  'freetype2' 'libfreetype.so'
+  'fontconfig'
+  'harfbuzz' 'libharfbuzz.so'
+  'lcms2' 'liblcms2.so'
+  'libjpeg-turbo' 'libjpeg.so'
+  'giflib' 'libgif.so'
+  'libpng'
+  'zlib'
+  'wayland'
+  'libxkbcommon'
+  'libx11' 'libxext' 'libxrender' 'libxrandr' 'libxt' 'libxtst'
+  # JCEF natives (libcef.so / JOGL) — direct DT_NEEDED entries, verified
+  # with readelf against the pinned jbrsdk_jcef bundle:
+  'libxcb' 'libxcomposite' 'libxdamage' 'libxfixes' 'libxi' 'libxcursor' 'libxxf86vm'
+  'libdrm' 'mesa'
+  'glib2' 'at-spi2-core' 'dbus' 'libcups' 'alsa-lib'
+  'cairo' 'pango' 'expat' 'nss' 'systemd-libs'
+)
+optdepends=(
+  'speech-dispatcher: accessible announcer (A11Y) support'
+  'gtk3: GTK look and feel for desktop usage'
+  'gvfs: open links e.g. hyperlinks'
+)
+# build-only tools; anything already in depends() is not repeated here
+makedepends=(
+  'git'
+  'java-environment=25'
+  'clang'
+  'binutils'
+  'make'
+  'zip' 'unzip'
+  'wayland-protocols'
+  'speech-dispatcher'
+)
+provides=(
+  'java-environment=25'
+  'java-environment-openjdk=25'
+  'java-runtime=25'
+  'java-runtime-openjdk=25'
+  'java-runtime-headless=25'
+  'java-runtime-headless-openjdk=25'
+)
+backup=(
+  etc/jdk25-jetbrains/logging.properties
+  etc/jdk25-jetbrains/management/jmxremote.access
+  etc/jdk25-jetbrains/management/jmxremote.password.template
+  etc/jdk25-jetbrains/management/management.properties
+  etc/jdk25-jetbrains/net.properties
+  etc/jdk25-jetbrains/security/java.policy
+  etc/jdk25-jetbrains/security/java.security
+  etc/jdk25-jetbrains/security/policy/README.txt
+  etc/jdk25-jetbrains/security/policy/limited/default_US_export.policy
+  etc/jdk25-jetbrains/security/policy/limited/default_local.policy
+  etc/jdk25-jetbrains/security/policy/limited/exempt_local.policy
+  etc/jdk25-jetbrains/security/policy/unlimited/default_US_export.policy
+  etc/jdk25-jetbrains/security/policy/unlimited/default_local.policy
+  etc/jdk25-jetbrains/sound.properties
+)
+
+options=('!ccache')
+install=jdk25-jetbrains.install
+
+# Prebuilt JCEF jmods (JCEF 150 / Chromium 150.0.7871.129) from the official
+# jbrsdk_jcef bundle matching the jbr25 base version. Bump _jcef_rel
+# together with make/conf/version-numbers.conf updates.
+_jcef_rel=25.0.4.1-linux-x64-b635.72
+_jcef_dirname=jbrsdk_jcef-${_jcef_rel}
+_jcef_sha256=641b2058353f828f89465cff74f6cbd49ab14aed6078fd841772e91e5f23775a
+
+source=(
+  'git+https://github.com/JetBrains/JetBrainsRuntime.git#branch=jbr25'
+  "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
+)
+sha256sums=('SKIP' "${_jcef_sha256}")
+
+_jvmdir=/usr/lib/jvm/java-25-jetbrains
+_conf_name=linux-x86_64-server-release
+
+filter_flags() {
+  local out="" f
+  for f in $1; do
+    case "$f" in
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions) ;;
+      *) out="${out:+${out} }${f}" ;;
+    esac
+  done
+  printf '%s' "$out"
+}
+
+# Port of update_jsdk_mods from jb/project/tools/common/scripts/common.sh:
+# re-create java.desktop.jmod with a module-info granting jcef/jogl.all
+# access to sun.awt/java.awt.peer, and java.base.jmod with updated hashes.
+#   $1 = built jdk image (javac/jmod tools), $2 = dir with JCEF jmods,
+#   $3 = dir with the original jmods, $4 = dir receiving the updated jmods
+update_jsdk_mods() {
+  local jsdk=$1 jcef_mods=$2 orig_mods=$3 updated_mods=$4
+  local tmp hash_modules
+  tmp=$(mktemp -d)
+
+  "$jsdk/bin/jmod" extract --dir "$tmp" "$orig_mods/java.desktop.jmod"
+  "$jsdk/bin/javac" \
+      --patch-module "java.desktop=$orig_mods/java.desktop.jmod" \
+      --module-path "$jcef_mods" -d "$tmp/classes" \
+      src/java.desktop/share/classes/module-info.java
+  "$jsdk/bin/jmod" create \
+      --class-path "$tmp/classes" --config "$tmp/conf" --header-files "$tmp/include" \
+      --legal-notice "$tmp/legal" --libs "$tmp/lib" \
+      "$tmp/java.desktop.jmod"
+  mv "$tmp/java.desktop.jmod" "$updated_mods/java.desktop.jmod"
+
+  hash_modules=$("$jsdk/bin/jmod" describe "$orig_mods/java.base.jmod" \
+      | grep hashes | awk '{print $2}' | tr '\n' '|' | sed 's/|$//')
+  "$jsdk/bin/jmod" extract --dir "$tmp" "$orig_mods/java.base.jmod"
+  rm -f "$updated_mods/java.base.jmod"
+  "$jsdk/bin/jmod" create \
+      --module-path "$updated_mods" --hash-modules "$hash_modules" \
+      --class-path "$tmp/classes" --cmds "$tmp/bin" --config "$tmp/conf" \
+      --header-files "$tmp/include" --legal-notice "$tmp/legal" --libs "$tmp/lib" \
+      "$tmp/java.base.jmod"
+  mv "$tmp/java.base.jmod" "$updated_mods/java.base.jmod"
+  rm -rf "$tmp"
+}
+
+# dotted version (feature.update[.patch]) from make/conf/version-numbers.conf
+_jbr_version() {
+  local f u p
+  f=$(awk -F= '$1=="DEFAULT_VERSION_FEATURE"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
+  u=$(awk -F= '$1=="DEFAULT_VERSION_UPDATE"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
+  p=$(awk -F= '$1=="DEFAULT_VERSION_PATCH"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
+  if [ "$p" = 0 ]; then
+    printf '%s.%s' "$f" "$u"
+  else
+    printf '%s.%s.%s' "$f" "$u" "$p"
+  fi
+}
+
+pkgver() {
+  cd JetBrainsRuntime
+  printf '%s.r%s.g%s' "$(_jbr_version)" "$(git rev-list --count HEAD)" "$(git rev-parse --short=8 HEAD)"
+}
+
+build() {
+  cd JetBrainsRuntime
+
+  # OpenJDK's build system controls its own parallelism; a -j in MAKEFLAGS
+  # breaks it (same workaround as Arch's java25-openjdk PKGBUILD).
+  local _makeflag_j=$(printf '%s' "${MAKEFLAGS-}" | sed -En 's/.*-j([0-9]+).*/\1/p')
+  export MAKEFLAGS=${MAKEFLAGS/-j${_makeflag_j}/}
+
+  local _conf_cflags="${CFLAGS:-}"
+  local _conf_cxxflags="${CXXFLAGS:-}"
+  _conf_cflags="${_conf_cflags//-O2/-O3}"
+  _conf_cxxflags="${_conf_cxxflags//-O2/-O3}"
+
+  local _extra_cflags="$(filter_flags "${_conf_cflags} ${CPPFLAGS:-}")"
+  local _extra_cxxflags="$(filter_flags "${_conf_cxxflags} ${CPPFLAGS:-}")"
+  local _extra_ldflags="$(filter_flags "${LDFLAGS:-}")"
+
+
+  _extra_cflags="${_extra_cflags:+${_extra_cflags} }${JBR_EXTRA_CFLAGS:-}"
+  _extra_cxxflags="${_extra_cxxflags:+${_extra_cxxflags} }${JBR_EXTRA_CXXFLAGS:-}"
+  _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }${JBR_EXTRA_LDFLAGS:-}"
+  echo "JBR build: cflags='${_extra_cflags}' cxxflags='${_extra_cxxflags}' ldflags='${_extra_ldflags}'"
+
+  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
+
+  local _version=$(_jbr_version)
+  local _sha=$(git rev-parse --short=8 HEAD)
+
+  # Default parallelism: one job per core, capped at 12 to keep peak RAM
+  # (~1-1.5 GB per hotspot compile job) within reach of a 16 GB machine.
+  local _jobs=${JBR_JOBS:-$(nproc)}
+  if (( _jobs > 12 )); then
+    _jobs=12
+  fi
+
+  # LTO is requested through OpenJDK's own 'link-time-opt' JVM feature
+  # (clang is supported, see make/hotspot/lib/JvmFeatures.gmk), never
+  # through raw -flto in the flags (JDK-8340215). JBR_NO_LTO=1 forces it
+  # off even when makepkg.conf enables LTO.
+  local _jvm_features="zgc,shenandoahgc"
+  if check_option "lto" "y" && [[ -z ${JBR_NO_LTO:-} ]]; then
+    _jvm_features="zgc,shenandoahgc,link-time-opt"
+  fi
+
+  local _boot_jdk_flag=()
+  if [[ -n ${JBR_BOOT_JDK:-} ]]; then
+    _boot_jdk_flag=(--with-boot-jdk="${JBR_BOOT_JDK}")
+  fi
+
+  bash configure \
+    --with-toolchain-type=clang \
+    --with-jobs="${_jobs}" \
+    --with-version-pre= \
+    --with-version-opt="arch.g${_sha}" \
+    --with-vendor-name="JetBrains s.r.o." \
+    --with-vendor-version-string="JBR-${_version}" \
+    --with-jvm-features="${_jvm_features}" \
+    --enable-cds=yes \
+    --with-stdc++lib=dynamic \
+    --with-zlib=system \
+    --with-libjpeg=system \
+    --with-giflib=system \
+    --with-libpng=system \
+    --with-lcms=system \
+    --with-harfbuzz=system \
+    --with-freetype=system \
+    --with-speechd-include=/usr/include/speech-dispatcher \
+    --with-native-debug-symbols=none \
+    --disable-warnings-as-errors \
+    --disable-ccache \
+    --with-extra-cflags="${_extra_cflags}" \
+    --with-extra-cxxflags="${_extra_cxxflags}" \
+    --with-extra-ldflags="${_extra_ldflags}" \
+    "${_boot_jdk_flag[@]}" \
+    ${JBR_CONFIGURE_EXTRA:-}
+
+  make images
+
+  # ---- JCEF injection (replicates JetBrains' mkimages_x64.sh "jcef" flow) ----
+  # JCEF is not built from this tree; JetBrains injects prebuilt JCEF jmods
+  # after `make images`. Only the modules our build lacks (jcef, gluegen.rt,
+  # jogl.all) are taken from the official bundle.
+  local JSDK="build/${_conf_name}/images/jdk"
+  local _mods_dir="build/${_conf_name}/images/jmods"
+  local _jcef_mods_src="$srcdir/${_jcef_dirname}/jmods"
+  local _jcef_modules="" _img _modules _name _jmodfile
+
+  for _jmodfile in "${_jcef_mods_src}"/*.jmod; do
+    _name=$(basename "$_jmodfile" .jmod)
+    [ -f "${_mods_dir}/${_name}.jmod" ] && continue
+    case "$_name" in
+      jcef|gluegen.rt|jogl.all) ;;
+      *)
+        echo "ERROR: unexpected module '${_name}' in the JCEF bundle (jbr base version mismatch?)"
+        return 1
+        ;;
+    esac
+    cp "$_jmodfile" "${_mods_dir}/"
+    _jcef_modules="${_jcef_modules:+${_jcef_modules},}${_name}"
+  done
+  echo "JBR build: JCEF modules: ${_jcef_modules}"
+
+  git apply -p0 jb/project/tools/patches/add_jcef_module.patch
+  update_jsdk_mods "$JSDK" "${_jcef_mods_src}" "$JSDK/jmods" "${_mods_dir}"
+
+  _modules=$(grep '^MODULES=' "${JSDK}/release" | sed 's/^MODULES=//; s/"//g; s/ /,/g')
+  _modules="${_modules},${_jcef_modules}"
+
+  _img="build/${_conf_name}/images/jdk-jcef"
+  rm -rf "$_img"
+  "$JSDK/bin/jlink" \
+    --module-path "${_mods_dir}" \
+    --add-modules "${_modules}" \
+    --compress=2 \
+    --generate-cds-archive \
+    --output "$_img"
+
+  grep -v '^JAVA_VERSION' "${JSDK}/release" | grep -v '^MODULES' >> "${_img}/release"
+  cp -a "${JSDK}/demo" "${_img}/"
+  cp "${JSDK}/lib/src.zip" "${_img}/lib/"
+  mkdir -p "${_img}/jmods"
+  cp "${_mods_dir}"/*.jmod "${_img}/jmods/"
+  # jmod does not preserve file permissions (JDK-8173610)
+  if [ -f "${_img}/lib/jcef_helper" ]; then chmod a+x "${_img}/lib/jcef_helper"; fi
+  if [ -f "${_img}/lib/cef_server" ]; then chmod a+x "${_img}/lib/cef_server"; fi
+}
+
+check() {
+  cd JetBrainsRuntime
+  local _img="build/${_conf_name}/images/jdk-jcef"
+  "${_img}/bin/java" -version
+  "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)@'
+}
+
+package() {
+  cd JetBrainsRuntime/build/${_conf_name}/images/jdk-jcef
+
+  install -dm 755 "${pkgdir}${_jvmdir}"
+  cp -a bin demo include jmods lib release "${pkgdir}${_jvmdir}"
+
+  # Configuration -> /etc, pacman-managed through backup=()
+  install -dm 755 "${pkgdir}/etc"
+  cp -r conf "${pkgdir}/etc/${pkgname}"
+  ln -s "/etc/${pkgname}" "${pkgdir}${_jvmdir}/conf"
+
+  # Legal notices
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -r legal "${pkgdir}/usr/share/licenses/${pkgname}"
+  ln -s "/usr/share/licenses/${pkgname}" "${pkgdir}${_jvmdir}/legal"
+
+  # Man pages, suffixed per ArchWiki (Java) packager notes
+  local f _man
+  for f in bin/*; do
+    f=$(basename "${f}")
+    _man=man/man1/"${f}.1"
+    if test -f "${_man}"; then
+      install -Dm 644 "${_man}" "${pkgdir}/usr/share/man/man1/${f}-jetbrains25.1"
+    fi
+  done
+  ln -s /usr/share/man "${pkgdir}${_jvmdir}/man"
+
+  # Use the system CA keystore (Arch convention)
+  rm -f "${pkgdir}${_jvmdir}/lib/security/cacerts"
+  ln -sf /etc/ssl/certs/java/cacerts "${pkgdir}${_jvmdir}/lib/security/cacerts"
+}
+
+# vim: ts=2 sw=2 et:
