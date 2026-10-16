@@ -1,13 +1,17 @@
 # Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
 #
 # JetBrains Runtime (JBR) 25, built from the official jbr25 branch with
-# Arch's system clang (/usr/bin/clang).
+# either Arch's system clang or gcc (see "Toolchain selection" below).
 #
 # Every flag and dependency below was verified against the actual checkout:
 #   doc/building.md                 boot JDK, toolchain, library, hardware docs
 #   make/conf/version-numbers.conf  JDK version + acceptable boot JDK versions
-#   make/autoconf/toolchain.m4      clang toolchain selection, CC/CXX handling
-#                                   (min clang 13.0 on JDK 25)
+#   make/autoconf/toolchain.m4      toolchain selection: --with-toolchain-type
+#                                   decides the toolchain *type* (min clang
+#                                   13.0 / gcc 10.0 on JDK 25); a user-supplied
+#                                   CC/CXX env var overrides the compiler
+#                                   binary but must match that type, so the
+#                                   type is derived from CC/CXX below
 #   make/autoconf/jvm-features.m4   valid/default JVM features (static-build
 #                                   no longer exists in JDK 25)
 #   make/autoconf/libraries.m4      external libraries; JBR-specific on Linux:
@@ -18,6 +22,14 @@
 #                                   JetBrains' own canonical configure flags
 #
 # Optional environment variables (no file edits needed):
+#   JBR_TOOLCHAIN=clang|gcc      explicit toolchain choice; beats CC/CXX
+#   CC / CXX                     compiler binaries; the toolchain type is
+#                                derived from them (name contains "clang"
+#                                -> clang, anything else -> gcc). When unset,
+#                                clang is used (matches the original build).
+#                                Note: configure honors CC/CXX as the compiler
+#                                binary, so keep them consistent with the
+#                                derived type or configure will abort.
 #   makepkg.conf CFLAGS/CXXFLAGS/CPPFLAGS/LDFLAGS are forwarded into the
 #       build via --with-extra-*flags (the OpenJDK build ignores them as
 #       environment variables). -flto* is filtered out there and mapped to
@@ -34,11 +46,13 @@
 #                               --with-vulkan (requires vulkan-headers and a
 #                               vulkan shader compiler)
 #
-# Versioning note: the jbr25 branch tip is kept current (rebased onto each
-# OpenJDK CPU update); the newest jbr-release-25.* tag can trail the tip by
-# a few commits. This package tracks the branch tip; pkgver() derives the
-# version from make/conf/version-numbers.conf plus the git state. After an
-# upstream rebase the r<N> counter can move non-monotonically.
+# Versioning note: this package pins a commit of the jbr25 branch (downloaded
+# as a GitHub archive, no git clone needed). To update, bump _commit (and
+# _commit_rev) below; pkgver() reads the JDK version from
+# make/conf/version-numbers.conf in the archive. The r<N> counter is manual:
+# bump it together with _commit so pacman always sees a newer version (the
+# archive carries no git history to count commits from). After an upstream
+# rebase the r<N> counter can move non-monotonically.
 #
 # JCEF: included the same way JetBrains' own release pipeline does it —
 #       JCEF is NOT built from this tree; prebuilt JCEF jmods (JCEF 150 /
@@ -50,7 +64,7 @@
 #       Bump _jcef_rel when the jbr25 base version changes.
 
 pkgname=jdk25-jetbrains
-pkgver=25.0.4.1.r0.gb4d19986
+pkgver=25.0.4.1.r1.fb137072
 pkgrel=1
 pkgdesc='JetBrains Runtime 25 development kit with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=('x86_64')
@@ -87,11 +101,27 @@ optdepends=(
   'gtk3: GTK look and feel for desktop usage'
   'gvfs: open links e.g. hyperlinks'
 )
-# build-only tools; anything already in depends() is not repeated here
+# Toolchain selection: JBR_TOOLCHAIN (explicit) > CC/CXX (detected) > clang.
+# Runs at PKGBUILD parse time so makedepends can follow the choice.
+_pick_toolchain() {
+  local cc="${CC:-${CXX:-}}"
+  if [[ -n ${JBR_TOOLCHAIN:-} ]]; then
+    printf '%s' "$JBR_TOOLCHAIN"
+  elif [[ -n $cc && $cc == *clang* ]]; then
+    printf 'clang'
+  elif [[ -n $cc ]]; then
+    printf 'gcc'
+  else
+    printf 'clang'
+  fi
+}
+_toolchain=$(_pick_toolchain)
+
+# build-only tools; anything already in depends() is not repeated here.
+# The compiler entry follows the detected toolchain ($_toolchain above).
 makedepends=(
-  'git'
   'java-environment=25'
-  'clang'
+  "$_toolchain"
   'binutils'
   'make'
   'zip' 'unzip'
@@ -126,6 +156,13 @@ backup=(
 options=('!ccache')
 install=jdk25-jetbrains.install
 
+# Pinned jbr25 commit; downloaded as a GitHub archive (no git clone).
+# To update: set _commit to the new tip, bump _commit_rev, refresh
+# sha256sums (updpkgsums), and bump _jcef_rel if the base version changed.
+_commit=fb137072f1c3e1fcf8a5bca302d983cf2278ed66
+_commit_rev=1
+_src_name=JetBrainsRuntime-${_commit}
+
 # Prebuilt JCEF jmods (JCEF 150 / Chromium 150.0.7871.129) from the official
 # jbrsdk_jcef bundle matching the jbr25 base version. Bump _jcef_rel
 # together with make/conf/version-numbers.conf updates.
@@ -134,10 +171,11 @@ _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
 _jcef_sha256=641b2058353f828f89465cff74f6cbd49ab14aed6078fd841772e91e5f23775a
 
 source=(
-  'git+https://github.com/JetBrains/JetBrainsRuntime.git#branch=jbr25'
+  "${_src_name}.tar.gz::https://github.com/JetBrains/JetBrainsRuntime/archive/${_commit}.tar.gz"
   "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
 )
-sha256sums=('SKIP' "${_jcef_sha256}")
+sha256sums=('b8901f3c738aab876340ba60b099ff3c59142a9d151c342f1eecff81463e9f06'
+            "${_jcef_sha256}")
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
 _conf_name=linux-x86_64-server-release
@@ -190,9 +228,9 @@ update_jsdk_mods() {
 # dotted version (feature.update[.patch]) from make/conf/version-numbers.conf
 _jbr_version() {
   local f u p
-  f=$(awk -F= '$1=="DEFAULT_VERSION_FEATURE"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
-  u=$(awk -F= '$1=="DEFAULT_VERSION_UPDATE"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
-  p=$(awk -F= '$1=="DEFAULT_VERSION_PATCH"{print $2}' make/conf/version-numbers.conf | tr -d '[:space:]')
+  f=$(awk -F= '$1=="DEFAULT_VERSION_FEATURE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
+  u=$(awk -F= '$1=="DEFAULT_VERSION_UPDATE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
+  p=$(awk -F= '$1=="DEFAULT_VERSION_PATCH"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
   if [ "$p" = 0 ]; then
     printf '%s.%s' "$f" "$u"
   else
@@ -201,12 +239,14 @@ _jbr_version() {
 }
 
 pkgver() {
-  cd JetBrainsRuntime
-  printf '%s.r%s.g%s' "$(_jbr_version)" "$(git rev-list --count HEAD)" "$(git rev-parse --short=8 HEAD)"
+  printf '%s.r%s.g%s' \
+    "$(_jbr_version "${srcdir}/${_src_name}")" \
+    "${_commit_rev}" \
+    "${_commit:0:8}"
 }
 
 build() {
-  cd JetBrainsRuntime
+  cd "${srcdir}/${_src_name}"
 
   # OpenJDK's build system controls its own parallelism; a -j in MAKEFLAGS
   # breaks it (same workaround as Arch's java25-openjdk PKGBUILD).
@@ -230,8 +270,8 @@ build() {
 
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
-  local _version=$(_jbr_version)
-  local _sha=$(git rev-parse --short=8 HEAD)
+  local _version=$(_jbr_version .)
+  local _sha=${_commit:0:8}
 
   # Default parallelism: one job per core, capped at 12 to keep peak RAM
   # (~1-1.5 GB per hotspot compile job) within reach of a 16 GB machine.
@@ -241,9 +281,9 @@ build() {
   fi
 
   # LTO is requested through OpenJDK's own 'link-time-opt' JVM feature
-  # (clang is supported, see make/hotspot/lib/JvmFeatures.gmk), never
-  # through raw -flto in the flags (JDK-8340215). JBR_NO_LTO=1 forces it
-  # off even when makepkg.conf enables LTO.
+  # (supported for both clang and gcc, see make/hotspot/lib/JvmFeatures.gmk),
+  # never through raw -flto in the flags (JDK-8340215). JBR_NO_LTO=1 forces
+  # it off even when makepkg.conf enables LTO.
   local _jvm_features="zgc,shenandoahgc"
   if check_option "lto" "y" && [[ -z ${JBR_NO_LTO:-} ]]; then
     _jvm_features="zgc,shenandoahgc,link-time-opt"
@@ -254,8 +294,10 @@ build() {
     _boot_jdk_flag=(--with-boot-jdk="${JBR_BOOT_JDK}")
   fi
 
+  echo "JBR build: toolchain=${_toolchain}"
+
   bash configure \
-    --with-toolchain-type=clang \
+    --with-toolchain-type="${_toolchain}" \
     --with-jobs="${_jobs}" \
     --with-version-pre= \
     --with-version-opt="arch.g${_sha}" \
@@ -307,7 +349,7 @@ build() {
   done
   echo "JBR build: JCEF modules: ${_jcef_modules}"
 
-  git apply -p0 jb/project/tools/patches/add_jcef_module.patch
+  patch -p0 < jb/project/tools/patches/add_jcef_module.patch
   update_jsdk_mods "$JSDK" "${_jcef_mods_src}" "$JSDK/jmods" "${_mods_dir}"
 
   _modules=$(grep '^MODULES=' "${JSDK}/release" | sed 's/^MODULES=//; s/"//g; s/ /,/g')
@@ -333,14 +375,14 @@ build() {
 }
 
 check() {
-  cd JetBrainsRuntime
+  cd "${srcdir}/${_src_name}"
   local _img="build/${_conf_name}/images/jdk-jcef"
   "${_img}/bin/java" -version
   "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)@'
 }
 
 package() {
-  cd JetBrainsRuntime/build/${_conf_name}/images/jdk-jcef
+  cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
 
   install -dm 755 "${pkgdir}${_jvmdir}"
   cp -a bin demo include jmods lib release "${pkgdir}${_jvmdir}"
