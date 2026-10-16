@@ -211,9 +211,11 @@ update_jsdk_mods() {
       --legal-notice "$tmp/legal" --libs "$tmp/lib" \
       "$tmp/java.desktop.jmod"
   mv "$tmp/java.desktop.jmod" "$updated_mods/java.desktop.jmod"
+  rm -rf "$tmp"
 
   hash_modules=$("$jsdk/bin/jmod" describe "$orig_mods/java.base.jmod" \
       | grep hashes | awk '{print $2}' | tr '\n' '|' | sed 's/|$//')
+  tmp=$(mktemp -d)
   "$jsdk/bin/jmod" extract --dir "$tmp" "$orig_mods/java.base.jmod"
   rm -f "$updated_mods/java.base.jmod"
   "$jsdk/bin/jmod" create \
