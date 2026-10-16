@@ -273,7 +273,7 @@ build() {
     --disable-warnings-as-errors \
     --disable-ccache \
     --enable-linktime-gc \
-    --with-jmod-compress=9 \
+    --with-jmod-compress="zip-9" \
     --with-extra-cflags="${_extra_cflags}" \
     --with-extra-cxxflags="${_extra_cxxflags}" \
     --with-extra-ldflags="${_extra_ldflags}" \
