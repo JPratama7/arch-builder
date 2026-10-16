@@ -107,7 +107,7 @@ makedepends=(
   'vulkan-headers'
 )
 
-options=('!ccache', 'lto')
+options=('!ccache' 'lto')
 
 # Pinned jbr25 commit; update procedure in the header.
 _commit=fb137072f1c3e1fcf8a5bca302d983cf2278ed66
