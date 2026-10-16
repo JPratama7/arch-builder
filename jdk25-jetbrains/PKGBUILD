@@ -380,7 +380,7 @@ check() {
   cd "${srcdir}/${_src_name}"
   local _img="build/${_conf_name}/images/jdk-jcef"
   "${_img}/bin/java" -version
-  "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)@'
+  "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)(@[0-9][^ ]*)?$'
 }
 
 package() {
