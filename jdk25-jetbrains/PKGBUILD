@@ -1,49 +1,35 @@
 # Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
 #
 # JetBrains Runtime (JBR) 25 from the official jbr25 branch, built with
-# Arch's system clang or gcc (see JBR_TOOLCHAIN / CC / CXX below).
+# Arch's system clang or gcc.
 #
-# Configure flags and deps below were verified against the pinned checkout
-# (doc/building.md, make/autoconf/*.m4, JetBrains' mkimages_x64.sh).
+# Optional env vars (no file edits): JBR_TOOLCHAIN=clang|gcc (beats CC/CXX;
+# the toolchain type is derived from the CC/CXX binary name, default clang),
+# JBR_EXTRA_CFLAGS/CXXFLAGS/LDFLAGS (appended after makepkg.conf's),
+# JBR_NO_LTO=1 (keep the link-time-opt JVM feature off),
+# JBR_BOOT_JDK=/path/to/jdk (override boot JDK autodetection),
+# JBR_JOBS=<n> (build parallelism, default nproc cap 12),
+# JBR_CONFIGURE_EXTRA="..." (raw extra configure args, e.g. --without-vulkan).
 #
-# On Linux, JBR hard-requires Wayland, xkbcommon, dbus and the X11 headers
-# (make/autoconf/libraries.m4), which is why DEPENDS_RUNTIME carries them.
-# speechd is optional; vulkan is opt-in via --with-vulkan below.
 #
-# Optional environment variables (no file edits needed):
-#   JBR_TOOLCHAIN=clang|gcc   explicit toolchain choice; beats CC/CXX
-#   CC / CXX                  compiler binaries; the toolchain type is derived
-#                             from the name (contains "clang" -> clang), so it
-#                             must match the binary or configure aborts.
-#                             Default: clang.
-#   JBR_EXTRA_CFLAGS / JBR_EXTRA_CXXFLAGS / JBR_EXTRA_LDFLAGS
-#                             extra flags appended after the makepkg.conf ones
-#   JBR_NO_LTO=1              keep the 'link-time-opt' JVM feature off
-#   JBR_BOOT_JDK=/path/to/jdk override boot JDK autodetection
-#   JBR_JOBS=<n>              override build parallelism (default: nproc, cap 12)
-#   JBR_CONFIGURE_EXTRA="..." raw extra configure args, appended after the
-#                             defaults (e.g. --without-vulkan turns it off)
+# Prebuilt JCEF jmods (jcef, gluegen.rt, jogl.all) from the pinned
+# jbrsdk_jcef bundle are injected.
 #
-# makepkg.conf CFLAGS/CXXFLAGS/CPPFLAGS/LDFLAGS are forwarded via
-# --with-extra-*flags (the OpenJDK build ignores them as env vars). -flto* is
-# mapped to the 'link-time-opt' JVM feature instead (raw -flto breaks the
-# build, JDK-8340215); -fexceptions is dropped (breaks ZGC linking).
-#
-# JCEF: Prebuilt jmods (jcef, gluegen.rt, jogl.all)
-# from the pinned jbrsdk_jcef bundle are injected after `make images`
-# (jb/project/tools/linux/scripts/mkimages_x64.sh flow).
-#
-# Split packages built from the same JDK image:
-#   jre25-jetbrains            runtime with JCEF (install this to run Java)
+# Split packages from the same JDK image:
+#   jre25-jetbrains            runtime; owns lib/modules (with the small
+#                              jcef/jogl.all/gluegen.rt classes) but not the
+#                              ~340 MB of JCEF natives
+#   jre25-jetbrains-jcef       JCEF natives (Chromium, JOGL, gluegen) into the
+#                              same _jvmdir; install on top for webviews
 #   jdk25-jetbrains-devel      headers + demo apps (no src.zip, like Arch's)
 #   jdk25-jetbrains-jmods      jmods for jlink
 #   jdk25-jetbrains-jmods-jcef jcef/jogl.all/gluegen.rt jmods
-#   jdk25-jetbrains            meta package pulling all four
-# bin/ is kept whole, so javac is present even without -devel.
+#   jdk25-jetbrains            meta package pulling everything above
+# bin/ is kept whole, so javac works even without -devel.
 
 pkgbase=jdk25-jetbrains
-pkgname=(jre25-jetbrains jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgver=25.0.4.1.r1.fb137072
+pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
+pkgver=25.0.4.1+arch.gfb137072
 pkgrel=1
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=('x86_64')
@@ -73,8 +59,11 @@ DEPENDS_RUNTIME=(
   'libdrm' 'mesa'
   'glib2' 'at-spi2-core' 'dbus' 'libcups' 'alsa-lib'
   'cairo' 'pango' 'expat' 'nss' 'systemd-libs'
+  # Custom allocator
+  'mimalloc'
 )
 OPTDEPENDS=(
+  'jre25-jetbrains-jcef: built-in browser engine (JCEF) for webviews, markdown preview and login dialogs'
   'speech-dispatcher: accessible announcer (A11Y) support'
   'gtk3: GTK look and feel for desktop usage'
   'gvfs: open links e.g. hyperlinks'
@@ -94,7 +83,6 @@ _pick_toolchain() {
 }
 _toolchain=$(_pick_toolchain)
 
-# build-only tools; runtime deps are in DEPENDS_RUNTIME above.
 makedepends=(
   'java-environment=25'
   "$_toolchain"
@@ -105,16 +93,16 @@ makedepends=(
   'speech-dispatcher'
   'shaderc'
   'vulkan-headers'
+  'mimalloc'
 )
 
 options=('!ccache' 'lto')
 
-# Pinned jbr25 commit; update procedure in the header.
-_commit=fb137072f1c3e1fcf8a5bca302d983cf2278ed66
-_commit_rev=1
+# Pinned jbr25 branch commit
+_commit=f2d580a0c83513231629e856dc1bdff084665f55
 _src_name=JetBrainsRuntime-${_commit}
 
-# Prebuilt JCEF jmods (JCEF 150 / Chromium 150.0.7871.129) from the official
+# Prebuilt JCEF jmods
 # jbrsdk_jcef bundle matching the jbr25 base version.
 _jcef_rel=25.0.4.1-linux-x64-b635.72
 _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
@@ -128,6 +116,36 @@ sha256sums=('b8901f3c738aab876340ba60b099ff3c59142a9d151c342f1eecff81463e9f06'
             "${_jcef_sha256}")
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
+
+# Files the jcef/jogl.all/gluegen.rt jmods contribute (relative to lib/).
+# Owned by jre25-jetbrains-jcef; the base jre package strips them from its
+# own copy so the two split packages never share a file with pacman.
+_jcef_files=(
+  cef_server
+  chrome-sandbox
+  chrome_100_percent.pak
+  chrome_200_percent.pak
+  icudtl.dat
+  jcef_helper
+  libcef.so
+  libEGL.so
+  libGLESv2.so
+  libjcef.so
+  libshared_mem_helper.so
+  libvk_swiftshader.so
+  libvulkan.so.1
+  resources.pak
+  v8_context_snapshot.bin
+  vk_swiftshader_icd.json
+  libjogl_desktop.so
+  libjogl_mobile.so
+  libnativewindow_awt.so
+  libnativewindow_drm.so
+  libnativewindow_x11.so
+  libnewt_drm.so
+  libnewt_head.so
+  libgluegen_rt.so
+)
 _conf_name=linux-x86_64-server-release
 
 filter_flags() {
@@ -191,9 +209,8 @@ _jbr_version() {
 }
 
 pkgver() {
-  printf '%s.r%s.g%s' \
+  printf '%s+arch.g%s' \
     "$(_jbr_version "${srcdir}/${_src_name}")" \
-    "${_commit_rev}" \
     "${_commit:0:8}"
 }
 
@@ -218,7 +235,7 @@ build() {
   _extra_cflags="${_extra_cflags:+${_extra_cflags} }${JBR_EXTRA_CFLAGS:-}"
   _extra_cxxflags="${_extra_cxxflags:+${_extra_cxxflags} }${JBR_EXTRA_CXXFLAGS:-}"
   _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }${JBR_EXTRA_LDFLAGS:-}"
-  echo "JBR build: cflags='${_extra_cflags}' cxxflags='${_extra_cxxflags}' ldflags='${_extra_ldflags}'"
+  _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }-Wl,--no-as-needed -lmimalloc"
 
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
@@ -248,9 +265,6 @@ build() {
 
   echo "JBR build: toolchain=${_toolchain}"
 
-  # JBR's Vulkan GPU pipeline for Java2D (opt-in upstream; needs vulkan-headers
-  # + a shader compiler, see makedepends). Disable with --without-vulkan via
-  # JBR_CONFIGURE_EXTRA if ever needed.
   bash configure \
     --with-toolchain-type="${_toolchain}" \
     --with-jobs="${_jobs}" \
@@ -283,7 +297,7 @@ build() {
 
   make images
 
-  # ---- JCEF injection (adds the jmods our build lacks; see header) ----
+  # ---- JCEF injection ----
   local JSDK="build/${_conf_name}/images/jdk"
   local _mods_dir="build/${_conf_name}/images/jmods"
   local _jcef_mods_src="$srcdir/${_jcef_dirname}/jmods"
@@ -334,10 +348,31 @@ check() {
   local _img="build/${_conf_name}/images/jdk-jcef"
   "${_img}/bin/java" -version
   "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)(@[0-9][^ ]*)?$'
+
+  # --- validate mimalloc wiring ---
+  local _needs=($(readelf -d "${_img}/lib/server/libjvm.so" | awk -F'[][]' '/NEEDED/{print $2}'))
+  local _i _mi=-1 _libc=-1
+  for _i in "${!_needs[@]}"; do
+    case "${_needs[$_i]}" in
+      libmimalloc.so.3*) _mi=$_i ;;
+      libc.so.6) _libc=$_i ;;
+    esac
+  done
+  if (( _mi < 0 || _libc < 0 || _mi > _libc )); then
+    echo "ERROR: mimalloc not ordered before libc in libjvm.so DT_NEEDED (got: ${_needs[*]})"
+    return 1
+  fi
+  echo "mimalloc check: DT_NEEDED order OK (${_needs[*]})"
+  # check mimalloc stats
+  if ! MIMALLOC_SHOW_STATS=1 "${_img}/bin/java" -Xmx64m -version 2>&1 | grep -q '^subproc'; then
+    echo "ERROR: java did not resolve malloc to mimalloc"
+    return 1
+  fi
+  echo "mimalloc check: malloc resolves through mimalloc OK"
 }
 
 package_jre25-jetbrains() {
-  pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
+  pkgdesc='JetBrains Runtime 25 runtime (OpenJDK 25 fork with DCEVM and improved font/desktop integration; browser engine shipped separately in jre25-jetbrains-jcef)'
   depends=("${DEPENDS_RUNTIME[@]}")
   optdepends=("${OPTDEPENDS[@]}")
   provides=(
@@ -368,6 +403,15 @@ package_jre25-jetbrains() {
 
   install -dm 755 "${pkgdir}${_jvmdir}"
   cp -a bin lib release "${pkgdir}${_jvmdir}"
+
+  # JCEF natives belong to jre25-jetbrains-jcef; strip them from here so the
+  # split packages never share a file. lib/modules keeps the (tiny) jcef
+  # module classes, so only natives need re-adding.
+  rm -rf "${pkgdir}${_jvmdir}/lib/locales"
+  for _f in "${_jcef_files[@]}"; do
+    rm -f "${pkgdir}${_jvmdir}/lib/${_f}"
+  done
+
   rm -f "${pkgdir}${_jvmdir}/lib/src.zip"
 
   # Configuration -> /etc, pacman-managed through backup=()
@@ -396,8 +440,26 @@ package_jre25-jetbrains() {
   ln -sf /etc/ssl/certs/java/cacerts "${pkgdir}${_jvmdir}/lib/security/cacerts"
 }
 
+package_jre25-jetbrains-jcef() {
+  pkgdesc='JetBrains Runtime 25 native browser support (JCEF/Chromium, JOGL, gluegen)'
+  depends=("jre25-jetbrains=${pkgver}")
+
+  cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef/lib"
+
+  install -dm 755 "${pkgdir}${_jvmdir}/lib"
+  for _f in "${_jcef_files[@]}"; do
+    if [[ ${_f} == chrome-sandbox ]]; then
+      # jmod extraction loses the setuid bit; restore it like upstream's image
+      install -Dm 4755 chrome-sandbox "${pkgdir}${_jvmdir}/lib/chrome-sandbox"
+    else
+      cp -a "${_f}" "${pkgdir}${_jvmdir}/lib/${_f}"
+    fi
+  done
+  cp -a locales "${pkgdir}${_jvmdir}/lib/locales"
+}
+
 package_jdk25-jetbrains-devel() {
-  pkgdesc='JetBrains Runtime 25 developer files (headers and demo apps; requires jre25-jetbrains)'
+  pkgdesc='JetBrains Runtime 25 developer files (headers and demo apps)'
   depends=("jre25-jetbrains=${pkgver}")
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
@@ -407,7 +469,7 @@ package_jdk25-jetbrains-devel() {
 }
 
 package_jdk25-jetbrains-jmods() {
-  pkgdesc='JetBrains Runtime 25 java module jmods for building custom runtimes with jlink (requires jre25-jetbrains)'
+  pkgdesc='JetBrains Runtime 25 java module jmods for building custom runtimes with jlink'
   depends=("jre25-jetbrains=${pkgver}")
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
@@ -424,7 +486,7 @@ package_jdk25-jetbrains-jmods() {
 }
 
 package_jdk25-jetbrains-jmods-jcef() {
-  pkgdesc='JetBrains Runtime 25 JCEF module jmods (jcef, jogl.all, gluegen.rt) for jlink (requires jre25-jetbrains)'
+  pkgdesc='JetBrains Runtime 25 JCEF module jmods (jcef, jogl.all, gluegen.rt) for jlink'
   depends=("jre25-jetbrains=${pkgver}")
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
@@ -436,9 +498,10 @@ package_jdk25-jetbrains-jmods-jcef() {
 }
 
 package_jdk25-jetbrains() {
-  pkgdesc='Meta package for the full JetBrains Runtime 25 development kit with JCEF (runtime + developer files + jmods)'
+  pkgdesc='Meta package for the full JetBrains Runtime 25 development kit with JCEF (runtime + browser engine + developer files + jmods)'
   depends=(
     "jre25-jetbrains=${pkgver}"
+    "jre25-jetbrains-jcef=${pkgver}"
     "jdk25-jetbrains-devel=${pkgver}"
     "jdk25-jetbrains-jmods=${pkgver}"
     "jdk25-jetbrains-jmods-jcef=${pkgver}"
