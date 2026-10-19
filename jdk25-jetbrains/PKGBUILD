@@ -29,10 +29,10 @@
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgver=25.0.4.1+arch.gfb137072
+pkgver=25.0.4.1+arch.gf2d580a0
 pkgrel=1
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
-arch=('x86_64')
+arch=("$CARCH")
 url='https://github.com/JetBrains/JetBrainsRuntime'
 license=('GPL-2.0-only WITH Classpath-exception-2.0')
 DEPENDS_RUNTIME=(
@@ -43,12 +43,12 @@ DEPENDS_RUNTIME=(
   'gcc-libs'
   'libgcc'
   'libstdc++'
-  'freetype2' 'libfreetype.so'
+  'freetype2' 'libfreetype.so=6'
   'fontconfig'
-  'harfbuzz' 'libharfbuzz.so'
-  'lcms2' 'liblcms2.so'
-  'libjpeg-turbo' 'libjpeg.so'
-  'giflib' 'libgif.so'
+  'harfbuzz' 'libharfbuzz.so=0'
+  'lcms2' 'liblcms2.so=2'
+  'libjpeg-turbo' 'libjpeg.so=8'
+  'giflib' 'libgif.so=7'
   'libpng'
   'zlib'
   'wayland'
@@ -112,7 +112,7 @@ source=(
   "${_src_name}.tar.gz::https://github.com/JetBrains/JetBrainsRuntime/archive/${_commit}.tar.gz"
   "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
 )
-sha256sums=('b8901f3c738aab876340ba60b099ff3c59142a9d151c342f1eecff81463e9f06'
+sha256sums=('471e2b5c4c3042ba33420fb8e09a83fcdfe3471d38aef6bc6a33feaf952f9601'
             "${_jcef_sha256}")
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
@@ -197,14 +197,15 @@ update_jsdk_mods() {
 
 # dotted version (feature.update[.patch]) from make/conf/version-numbers.conf
 _jbr_version() {
-  local f u p
+  local f i u p
   f=$(awk -F= '$1=="DEFAULT_VERSION_FEATURE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
+  i=$(awk -F= '$1=="DEFAULT_VERSION_INTERIM"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
   u=$(awk -F= '$1=="DEFAULT_VERSION_UPDATE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
   p=$(awk -F= '$1=="DEFAULT_VERSION_PATCH"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
   if [ "$p" = 0 ]; then
-    printf '%s.%s' "$f" "$u"
+    printf '%s.%s.%s' "$f" "$i" "$u"
   else
-    printf '%s.%s.%s' "$f" "$u" "$p"
+    printf '%s.%s.%s.%s' "$f" "$i" "$u" "$p"
   fi
 }
 
@@ -388,7 +389,6 @@ package_jre25-jetbrains() {
     etc/jre25-jetbrains/management/jmxremote.password.template
     etc/jre25-jetbrains/management/management.properties
     etc/jre25-jetbrains/net.properties
-    etc/jre25-jetbrains/security/java.policy
     etc/jre25-jetbrains/security/java.security
     etc/jre25-jetbrains/security/policy/README.txt
     etc/jre25-jetbrains/security/policy/limited/default_US_export.policy
@@ -445,7 +445,12 @@ package_jre25-jetbrains-jcef() {
   pkgdesc='JetBrains Runtime 25 native browser support (JCEF/Chromium, JOGL, gluegen)'
   depends=("jre25-jetbrains=${pkgver}")
 
-  cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef/lib"
+  cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
+
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -a legal "${pkgdir}/usr/share/licenses/${pkgname}/"
+
+  cd lib
 
   install -dm 755 "${pkgdir}${_jvmdir}/lib"
   for _f in "${_jcef_files[@]}"; do
@@ -465,6 +470,9 @@ package_jdk25-jetbrains-devel() {
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
 
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -a legal "${pkgdir}/usr/share/licenses/${pkgname}/"
+
   install -dm 755 "${pkgdir}${_jvmdir}"
   cp -a include demo "${pkgdir}${_jvmdir}"
 }
@@ -474,6 +482,9 @@ package_jdk25-jetbrains-jmods() {
   depends=("jre25-jetbrains=${pkgver}")
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
+
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -a legal "${pkgdir}/usr/share/licenses/${pkgname}/"
 
   install -dm 755 "${pkgdir}${_jvmdir}"
   for _jmodfile in jmods/*.jmod; do
@@ -491,6 +502,9 @@ package_jdk25-jetbrains-jmods-jcef() {
   depends=("jre25-jetbrains=${pkgver}")
 
   cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
+
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -a legal "${pkgdir}/usr/share/licenses/${pkgname}/"
 
   install -dm 755 "${pkgdir}${_jvmdir}/jmods"
   for _name in jcef gluegen.rt jogl.all; do
@@ -511,6 +525,10 @@ package_jdk25-jetbrains() {
     'java-environment=25'
     'java-environment-openjdk=25'
   )
+
+  cd "${srcdir}/${_src_name}/build/${_conf_name}/images/jdk-jcef"
+  install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+  cp -a legal "${pkgdir}/usr/share/licenses/${pkgname}/"
 }
 
 # vim: ts=2 sw=2 et:
