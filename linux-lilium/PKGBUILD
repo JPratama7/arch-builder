@@ -68,7 +68,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
         "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v8-sep/0001-x86-cpu-amd-Don-t-clear-RDSEED32-bit-on-znver5.patch"
         "${_lucjan}cachyos-fixes-patches-v8-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
         "${_lucjan}cachyos-fixes-patches-v8-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
         "${_lucjan}cachyos-fixes-patches-v8-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
@@ -140,7 +139,6 @@ sha256sums=('fd0fc479f983a8c05313f13e9c36330fe6651cf725396748c40d5cd93fa1e6a4'
             'd08a650dbabbf8a2a1250233dd9a56bc8517d44153d179da7f7be5de277b9e54'
             'a8f6e8ecfd4398805045403578156c1b9bcf9d19e6a8cac7b0848b05ccd4f109'
             'b32dec528c005bbb09a08a8414011fb04d168d43e2ad7e9c779274f3f20e4653'
-            '685aca024f5758ad12a7ca75f28be0db6ada83857e0770a0c16434e69f2f60ab'
             '608f9f808fa235bd4ca7278980f9586b095e747308bfc436aa688d6ce39099ab'
             '9637665284f8406c0b6704cb823d4b45dd2ac955a23bde91db8029d4dc0e2b33'
             '99aa10139eb67162fea4e09fc62942abd485cdeacfcae79ee42f3f990ed4a345'
