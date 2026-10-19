@@ -16,44 +16,75 @@ jobs:
 
       - name: "Downloading"
         run: |
-          urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s | grep "/JPratama7/arch-builder/releases/download/temp/" | awk -F '"|"' '{print$2}' || true)
-          old=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep "/JPratama7/arch-builder/releases/download/latest/" | grep "\.pkg\.tar\.zst" | awk -F '"|"' '{print$2}' || true)
-          urls="$urls $old"
+          mkdir -p new old
+          temp_urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/temp -s | grep "/JPratama7/arch-builder/releases/download/temp/" | awk -F '"|"' '{print$2}' || true)
+          old_urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep "/JPratama7/arch-builder/releases/download/latest/" | grep "\.pkg\.tar\.zst" | awk -F '"|"' '{print$2}' || true)
 
-          if [ -z "${urls// /}" ]; then
+          if [ -z "${temp_urls// /}" ] && [ -z "${old_urls// /}" ]; then
             echo "No packages found in temp or latest releases"
             exit 0
           fi
 
-          for i in ${urls[*]}; do
+          for i in ${temp_urls[*]}; do
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
-              aria2c -x 16 -s 16 https://github.com/$i
+              (cd new && aria2c -x 16 -s 16 "https://github.com/$i")
+              sleep $((RANDOM % 3))
+          done
+          for i in ${old_urls[*]}; do
+              pkg=$(echo $i|awk -F '/' '{print$7}')
+              echo Downloading $pkg
+              (cd old && aria2c -x 16 -s 16 "https://github.com/$i")
+              sleep $((RANDOM % 3))
           done
 
       - name: "Download Older database"
         run: |
           urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep "/JPratama7/arch-builder/releases/download/latest/" | grep jp7-arch | awk -F '"|"' '{print$2}')
 
-          for i in ${urls[*]}; do 
+          for i in ${urls[*]}; do
               pkg=$(echo $i|awk -F '/' '{print$7}')
               echo Downloading $pkg
               aria2c -x 16 -s 16 https://github.com/$i
+              sleep $((RANDOM % 3))
           done
 
       - name: creating database
         run:  |
           # append to the downloaded older db (jp7-arch.db), else repo-add starts fresh
           [ -f jp7-arch.db ] && mv jp7-arch.db jp7-arch.db.tar
-          repo-add jp7-arch.db.tar *.pkg.tar.zst
+          add_args=""
+          ls old/*.pkg.tar.zst >/dev/null 2>&1 && add_args="$add_args old/*.pkg.tar.zst"
+          ls new/*.pkg.tar.zst >/dev/null 2>&1 && add_args="$add_args new/*.pkg.tar.zst"
+          if [ -z "$add_args" ]; then
+            echo "No .pkg.tar.zst files found — nothing to add to database"
+            exit 1
+          fi
+          # old first, new last: repo-add replaces same-name entries, so the
+          # freshly built packages win over the stale copies from 'latest'
+          repo-add jp7-arch.db.tar $add_args
           
+      - name: filter unchanged packages
+        run: |
+          mkdir -p to-upload
+          shopt -s nullglob
+          for f in new/*.pkg.tar.zst; do
+              base=$(basename "$f")
+              if [ -f "old/$base" ] && cmp -s "$f" "old/$base"; then
+                  echo "Skipping $base (identical to latest)"
+              else
+                  mv -f "$f" to-upload/
+              fi
+          done
+
       - name: upload files
+        if: ${{ hashFiles('to-upload/*.zst') != '' }}
         uses: ncipollo/release-action@v1.14.0
         with:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "*.zst"
+          artifacts: "to-upload/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: upload database
