@@ -269,6 +269,7 @@ build() {
     --with-toolchain-type="${_toolchain}" \
     --with-jobs="${_jobs}" \
     --with-version-pre= \
+    --with-version-build="${pkgrel}" \
     --with-version-opt="arch.g${_sha}" \
     --with-vendor-name="JetBrains s.r.o." \
     --with-vendor-version-string="JBR-${_version}" \
