@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.2
-pkgver=${_major}.8
+pkgver=${_major}.11
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -107,7 +107,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_lucjan}block-patches-all/0001-block-patches.patch"
         "${_lucjan}hdmi-patches-v2/0001-hdmi-patches.patch"
         "${_lucjan}vesa-patches/0001-vesa-patches.patch"
-        "${_xanmod}mm/0001-mm-Add-working-set-protection-for-anon-and-clean-fil.patch"
 
         "${_lucjan}preempt-ipi-patches/0001-preempt-ipi-patches.patch"
 
@@ -132,7 +131,7 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('12e8d5a973d1ad7c5a5c69882e4022b131ed715db7003fdcd760ddf8c3e51941'
+sha256sums=('fd0fc479f983a8c05313f13e9c36330fe6651cf725396748c40d5cd93fa1e6a4'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             'aa6237e4d78a47782c9bdb18f9427afe5ef91096bea9d36c371b68e2f91b4969'
@@ -177,7 +176,6 @@ sha256sums=('12e8d5a973d1ad7c5a5c69882e4022b131ed715db7003fdcd760ddf8c3e51941'
             'dc4df7e9eea6679ba7e3e00e2dc6ece38cb33cd310fa5eb56b3b1b1bca21e30e'
             '91a01c190772a23284125d20e74d659ec09747f202ea8830549e1b75a32f3a19'
             '961c17c06e92d1cd677c9b61c86821c5c11ae10062b349c6d234ff7e8d0fddee'
-            '7483f012bb04b7c248c2a5e4bc246b27ab8db605798d8996200b2eedf8c1a15d'
             '1a34dc471587cdf9fb5e3f0028c7cb8d206c3e70ef26a1c41313959168988a72'
             '8488ed387203a64159d2388cfcb688218fc004314c85ac65dfe09986df9cafea'
             '9d36d506eaf7216211de474a7e4c68a29d19442ddc57808f561a5b9cf3c09a65'
