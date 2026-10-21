@@ -214,8 +214,6 @@ prepare() {
     apply_patch "../$src"
   done
 
-  exit 0
-
   # Applying configuration
   msg2 "Copy configuration"
   cp ../config .config
