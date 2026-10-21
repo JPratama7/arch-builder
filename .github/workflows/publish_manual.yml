@@ -1,6 +1,11 @@
 name: Create DB Manual
 on:
   workflow_dispatch:
+    inputs:
+      fresh_start:
+        description: "Rebuild database from scratch (old packages kept, old db dropped)"
+        type: boolean
+        default: false
   
 concurrency: 
   group: publish-group
@@ -39,6 +44,7 @@ jobs:
           done
 
       - name: "Download Older database"
+        if: ${{ !inputs.fresh_start }}
         run: |
           urls=$(curl https://github.com/JPratama7/arch-builder/releases/expanded_assets/latest -s | grep "/JPratama7/arch-builder/releases/download/latest/" | grep jp7-arch | awk -F '"|"' '{print$2}')
 
@@ -52,7 +58,11 @@ jobs:
       - name: creating database
         run:  |
           # append to the downloaded older db (jp7-arch.db), else repo-add starts fresh
-          [ -f jp7-arch.db ] && mv jp7-arch.db jp7-arch.db.tar
+          DB=jp7-arch.db
+          if [ "${{ inputs.fresh_start }}" != "true" ] && [ -f jp7-arch.db ]; then
+            mv jp7-arch.db jp7-arch.db.tar
+            DB=jp7-arch.db.tar
+          fi
           add_args=""
           ls old/*.pkg.tar.zst >/dev/null 2>&1 && add_args="$add_args old/*.pkg.tar.zst"
           ls new/*.pkg.tar.zst >/dev/null 2>&1 && add_args="$add_args new/*.pkg.tar.zst"
@@ -62,7 +72,7 @@ jobs:
           fi
           # old first, new last: repo-add replaces same-name entries, so the
           # freshly built packages win over the stale copies from 'latest'
-          repo-add jp7-arch.db.tar $add_args
+          repo-add "$DB" $add_args
           
       - name: filter unchanged packages
         run: |
@@ -93,7 +103,7 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
           tag: "latest"
-          artifacts: "jp7-arch.db,jp7-arch.db.tar,jp7-arch.db.tar.old,jp7-arch.files,jp7-arch.files.tar,jp7-arch.files.tar.old"
+          artifacts: "jp7-arch.db*,jp7-arch.files*"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: dev-drprasad/delete-tag-and-release@v1.1
