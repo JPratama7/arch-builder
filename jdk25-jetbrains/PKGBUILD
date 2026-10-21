@@ -351,6 +351,27 @@ check() {
   "${_img}/bin/java" -version
   "${_img}/bin/java" --list-modules | grep -E '^(jcef|gluegen\.rt|jogl\.all)(@[0-9][^ ]*)?$'
 
+  # --- validate version strings ---
+  # The JDK assembles the runtime version as <number>+<build>-<opt>; the build
+  # number is the pkgrel and the opt field carries the pinned commit.
+  local _version=$(_jbr_version .)
+  local _sha=${_commit:0:8}
+  local _expected_runtime="${_version}+${pkgrel}-arch.g${_sha}"
+  local _expected_impl="JBR-${_version}"
+  if ! "${_img}/bin/java" -version 2>&1 | grep -qF "build ${_expected_runtime}"; then
+    echo "ERROR: runtime version is not '${_expected_runtime}'"
+    return 1
+  fi
+  if ! grep -qx "JAVA_RUNTIME_VERSION=\"${_expected_runtime}\"" "${_img}/release"; then
+    echo "ERROR: release file does not carry JAVA_RUNTIME_VERSION=\"${_expected_runtime}\""
+    return 1
+  fi
+  if ! grep -qx "IMPLEMENTOR_VERSION=\"${_expected_impl}\"" "${_img}/release"; then
+    echo "ERROR: release file does not carry IMPLEMENTOR_VERSION=\"${_expected_impl}\""
+    return 1
+  fi
+  echo "version check: ${_expected_runtime} / ${_expected_impl} OK"
+
   # --- validate mimalloc wiring ---
   local _needs=($(readelf -d "${_img}/lib/server/libjvm.so" | awk -F'[][]' '/NEEDED/{print $2}'))
   local _i _mi=-1 _libc=-1
