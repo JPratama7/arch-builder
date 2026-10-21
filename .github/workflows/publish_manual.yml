@@ -57,11 +57,10 @@ jobs:
 
       - name: creating database
         run:  |
-          # append to the downloaded older db (jp7-arch.db), else repo-add starts fresh
-          DB=jp7-arch.db
+          # repo-add only accepts *.db.tar* names; a missing file starts fresh
+          DB=jp7-arch.db.tar
           if [ "${{ inputs.fresh_start }}" != "true" ] && [ -f jp7-arch.db ]; then
             mv jp7-arch.db jp7-arch.db.tar
-            DB=jp7-arch.db.tar
           fi
           add_args=""
           ls old/*.pkg.tar.zst >/dev/null 2>&1 && add_args="$add_args old/*.pkg.tar.zst"
