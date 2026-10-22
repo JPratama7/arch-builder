@@ -1,7 +1,7 @@
 # Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
 #
-# JetBrains Runtime (JBR) 25 from the official jbr25 branch, built with
-# Arch's system clang or gcc.
+# JetBrains Runtime (JBR) 25 from the pinned jbr-release-25.0.4.1b329.136 tag,
+# built with Arch's system clang or gcc.
 #
 # Optional env vars (no file edits): JBR_TOOLCHAIN=clang|gcc (beats CC/CXX;
 # the toolchain type is derived from the CC/CXX binary name, default clang),
@@ -98,22 +98,23 @@ makedepends=(
 
 options=('!ccache' 'lto')
 
-# Pinned jbr25 branch commit
-_commit=f2d580a0c83513231629e856dc1bdff084665f55
+_commit=db502e9d294bdc5422d2773fd930b85bb361f512
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
-# jbrsdk_jcef bundle matching the jbr25 base version.
-_jcef_rel=25.0.4.1-linux-x64-b635.72
+# jbrsdk_jcef bundle matching the jbr release build.
+_jcef_rel=25.0.4.1-linux-x64-b329.136
 _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
-_jcef_sha256=641b2058353f828f89465cff74f6cbd49ab14aed6078fd841772e91e5f23775a
+# Official sha512 from JetBrains' release checksum file
+_jcef_sha512=173f2b8b581c914e1bd1de543f4150f54d3b768d539eef4510baf92489e80924d6e061ccc35089240ae71742adfff8dba4fd9ac581eda209ce396986e91eb526
 
 source=(
   "${_src_name}.tar.gz::https://github.com/JetBrains/JetBrainsRuntime/archive/${_commit}.tar.gz"
   "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
 )
-sha256sums=('471e2b5c4c3042ba33420fb8e09a83fcdfe3471d38aef6bc6a33feaf952f9601'
-            "${_jcef_sha256}")
+# SKIP for the source tarball
+sha512sums=('SKIP'
+            "${_jcef_sha512}")
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
 
