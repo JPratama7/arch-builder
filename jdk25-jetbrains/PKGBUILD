@@ -84,7 +84,7 @@ _pick_toolchain() {
 _toolchain=$(_pick_toolchain)
 
 makedepends=(
-  'java-environment=25'
+  'jdk25-openjdk'
   "$_toolchain"
   'binutils'
   'make'
