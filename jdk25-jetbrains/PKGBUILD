@@ -60,7 +60,7 @@ DEPENDS_RUNTIME=(
   'libdrm' 'mesa'
   'glib2' 'at-spi2-core' 'dbus' 'libcups' 'alsa-lib'
   # libspeechd
-  'libspeechd' 'libspeechd.so=0'
+  'libspeechd'
   'cairo' 'pango' 'expat' 'nss' 'systemd-libs'
   # Custom allocator
   'mimalloc'
