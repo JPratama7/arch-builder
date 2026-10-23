@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: "0 0 */10 * *"
   workflow_dispatch:
+    inputs:
+      forceBuild:
+        description: "Force build even if the package version already exists in the repo"
+        type: boolean
+        default: false
 
 
 jobs:
@@ -27,6 +32,7 @@ jobs:
         with:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
+          forceBuild: ${{ github.event.inputs.forceBuild }}
           clanged: "y"
           clangedPFlags: "y"
           officialRepo: "y"
@@ -81,6 +87,7 @@ jobs:
         with:
           maxJobs: "99"
           gccPflags: "y"
+          forceBuild: ${{ github.event.inputs.forceBuild }}
           chaoticAur: "y"
           aurHelper: "yay"
           pkgdir: ${{ matrix.build }}
