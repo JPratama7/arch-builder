@@ -59,13 +59,15 @@ DEPENDS_RUNTIME=(
   'libxcb' 'libxcomposite' 'libxdamage' 'libxfixes' 'libxi' 'libxcursor' 'libxxf86vm'
   'libdrm' 'mesa'
   'glib2' 'at-spi2-core' 'dbus' 'libcups' 'alsa-lib'
+  # libspeechd
+  'libspeechd' 'libspeechd.so=0'
   'cairo' 'pango' 'expat' 'nss' 'systemd-libs'
   # Custom allocator
   'mimalloc'
 )
 OPTDEPENDS=(
   'jre25-jetbrains-jcef: built-in browser engine (JCEF) for webviews, markdown preview and login dialogs'
-  'speech-dispatcher: accessible announcer (A11Y) support'
+  'speech-dispatcher: speech-dispatcher daemon, needed at runtime for the announcer to actually speak'
   'gtk3: GTK look and feel for desktop usage'
   'gvfs: open links e.g. hyperlinks'
   'vulkan-icd-loader: Vulkan rendering pipeline (runtime loader, loaded via dlopen)'
@@ -308,7 +310,8 @@ build() {
     --with-vulkan \
     ${JBR_CONFIGURE_EXTRA:-}
 
-  make images
+  # lib-speechd.m4 forgets SPEECHD_LIBS on the --with-speechd-include path
+  make SPEECHD_LIBS=-lspeechd images
 
   # ---- JCEF injection ----
   local JSDK="build/${_conf_name}/images/jdk"
