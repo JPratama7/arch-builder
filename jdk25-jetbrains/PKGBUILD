@@ -1,35 +1,36 @@
 # Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
 #
-# JetBrains Runtime (JBR) 25 from the pinned jbr-release-25.0.4.1b329.136 tag,
-# built with Arch's system clang or gcc.
+# JetBrains Runtime (JBR) 25:
+#   - pinned to the jbr-release-25.0.4.1b329.136 tag
+#   - built with Arch's system clang or gcc
+#   - prebuilt JCEF jmods (jcef, gluegen.rt, jogl.all) from the pinned
+#     jbrsdk_jcef bundle are injected
 #
-# Optional env vars (no file edits): JBR_TOOLCHAIN=clang|gcc (beats CC/CXX;
-# the toolchain type is derived from the CC/CXX binary name, default clang),
-# JBR_EXTRA_CFLAGS/CXXFLAGS/LDFLAGS (appended after makepkg.conf's),
-# JBR_NO_LTO=1 (keep the link-time-opt JVM feature off),
-# JBR_BOOT_JDK=/path/to/jdk (override boot JDK autodetection),
-# JBR_JOBS=<n> (build parallelism, default nproc cap 12),
-# JBR_CONFIGURE_EXTRA="..." (raw extra configure args, e.g. --without-vulkan).
-#
-#
-# Prebuilt JCEF jmods (jcef, gluegen.rt, jogl.all) from the pinned
-# jbrsdk_jcef bundle are injected.
+# Optional env vars (no file edits):
+#   - JBR_TOOLCHAIN=clang|gcc     beats CC/CXX; toolchain type is derived
+#                                 from the CC/CXX binary name, default clang
+#   - JBR_EXTRA_CFLAGS/CXXFLAGS/LDFLAGS  appended after makepkg.conf's
+#   - JBR_NO_LTO=1                keep the link-time-opt JVM feature off
+#   - JBR_BOOT_JDK=/path/to/jdk   override boot JDK autodetection
+#   - JBR_JOBS=<n>                build parallelism, default nproc cap 12
+#   - JBR_CONFIGURE_EXTRA="..."   raw extra configure args,
+#                                 e.g. --without-vulkan
 #
 # Split packages from the same JDK image:
-#   jre25-jetbrains            runtime; owns lib/modules (with the small
-#                              jcef/jogl.all/gluegen.rt classes) but not the
-#                              ~340 MB of JCEF natives
-#   jre25-jetbrains-jcef       JCEF natives (Chromium, JOGL, gluegen) into the
-#                              same _jvmdir; install on top for webviews
-#   jdk25-jetbrains-devel      headers + demo apps (no src.zip, like Arch's)
-#   jdk25-jetbrains-jmods      jmods for jlink
-#   jdk25-jetbrains-jmods-jcef jcef/jogl.all/gluegen.rt jmods
-#   jdk25-jetbrains            meta package pulling everything above
+#   - jre25-jetbrains            runtime; owns lib/modules (with the small
+#                                jcef/jogl.all/gluegen.rt classes) but not
+#                                the ~340 MB of JCEF natives
+#   - jre25-jetbrains-jcef       JCEF natives (Chromium, JOGL, gluegen) into
+#                                the same _jvmdir; install on top for webviews
+#   - jdk25-jetbrains-devel      headers + demo apps (no src.zip, like Arch's)
+#   - jdk25-jetbrains-jmods      jmods for jlink
+#   - jdk25-jetbrains-jmods-jcef jcef/jogl.all/gluegen.rt jmods
+#   - jdk25-jetbrains            meta package pulling everything above
+#
 # bin/ is kept whole, so javac works even without -devel.
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgver=25.0.4.1+arch.gf2d580a0
 pkgrel=1
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=("$CARCH")
@@ -69,6 +70,7 @@ OPTDEPENDS=(
   'gvfs: open links e.g. hyperlinks'
   'vulkan-icd-loader: Vulkan rendering pipeline (runtime loader, loaded via dlopen)'
 )
+
 _pick_toolchain() {
   local cc="${CC:-${CXX:-}}"
   if [[ -n ${JBR_TOOLCHAIN:-} ]]; then
@@ -105,6 +107,7 @@ _src_name=JetBrainsRuntime-${_commit}
 # jbrsdk_jcef bundle matching the jbr release build.
 _jcef_rel=25.0.4.1-linux-x64-b329.136
 _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
+
 # Official sha512 from JetBrains' release checksum file
 _jcef_sha512=173f2b8b581c914e1bd1de543f4150f54d3b768d539eef4510baf92489e80924d6e061ccc35089240ae71742adfff8dba4fd9ac581eda209ce396986e91eb526
 
@@ -119,8 +122,8 @@ sha512sums=('SKIP'
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
 
 # Files the jcef/jogl.all/gluegen.rt jmods contribute (relative to lib/).
-# Owned by jre25-jetbrains-jcef; the base jre package strips them from its
-# own copy so the two split packages never share a file with pacman.
+# Owned by jre25-jetbrains-jcef
+# Base jre package strips them from its own copy so the two split packages never share a file with pacman.
 _jcef_files=(
   cef_server
   chrome-sandbox
@@ -147,6 +150,7 @@ _jcef_files=(
   libnewt_head.so
   libgluegen_rt.so
 )
+
 _conf_name=linux-x86_64-server-release
 
 filter_flags() {
@@ -196,13 +200,16 @@ update_jsdk_mods() {
   rm -rf "$tmp"
 }
 
-# dotted version (feature.update[.patch]) from make/conf/version-numbers.conf
+# dotted version (feature.update[.patch]) from a version-numbers.conf file;
+# single awk pass so a process-substitution input (read-once pipe) works
 _jbr_version() {
   local f i u p
-  f=$(awk -F= '$1=="DEFAULT_VERSION_FEATURE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
-  i=$(awk -F= '$1=="DEFAULT_VERSION_INTERIM"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
-  u=$(awk -F= '$1=="DEFAULT_VERSION_UPDATE"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
-  p=$(awk -F= '$1=="DEFAULT_VERSION_PATCH"{print $2}' "$1/make/conf/version-numbers.conf" | tr -d '[:space:]')
+  read -r f i u p <<<"$(awk -F= '
+    $1=="DEFAULT_VERSION_FEATURE" {f=$2}
+    $1=="DEFAULT_VERSION_INTERIM" {i=$2}
+    $1=="DEFAULT_VERSION_UPDATE"  {u=$2}
+    $1=="DEFAULT_VERSION_PATCH"   {p=$2}
+    END {printf "%s %s %s %s", f, i, u, p}' "$1")"
   if [ "$p" = 0 ]; then
     printf '%s.%s.%s' "$f" "$i" "$u"
   else
@@ -210,11 +217,14 @@ _jbr_version() {
   fi
 }
 
-pkgver() {
-  printf '%s+arch.g%s' \
-    "$(_jbr_version "${srcdir}/${_src_name}")" \
-    "${_commit:0:8}"
+# Version fetched from the source tree at the pinned commit
+# makepkg --printsrcinfo never runs a pkgver() function,
+# this must resolve at parse time
+_jbr_conf="$(curl -fsSL "https://raw.githubusercontent.com/JetBrains/JetBrainsRuntime/${_commit}/make/conf/version-numbers.conf")" || {
+  echo "ERROR: cannot fetch version-numbers.conf for ${_commit}" >&2
+  exit 1
 }
+pkgver="$(_jbr_version <(printf '%s\n' "$_jbr_conf"))+arch.g${_commit:0:8}"
 
 build() {
   cd "${srcdir}/${_src_name}"
@@ -241,7 +251,7 @@ build() {
 
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
-  local _version=$(_jbr_version .)
+  local _version=$(_jbr_version make/conf/version-numbers.conf)
   local _sha=${_commit:0:8}
 
   # Default parallelism: one job per core, capped at 12 to keep peak RAM
@@ -355,7 +365,7 @@ check() {
   # --- validate version strings ---
   # The JDK assembles the runtime version as <number>+<build>-<opt>; the build
   # number is the pkgrel and the opt field carries the pinned commit.
-  local _version=$(_jbr_version .)
+  local _version=$(_jbr_version make/conf/version-numbers.conf)
   local _sha=${_commit:0:8}
   local _expected_runtime="${_version}+${pkgrel}-arch.g${_sha}"
   local _expected_impl="JBR-${_version}"
