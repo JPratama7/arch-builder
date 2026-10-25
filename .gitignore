@@ -2,3 +2,16 @@
 docs/
 .devin/
 .kilo/
+
+# makepkg sources and build output: not tracked
+**/src/
+**/pkg/
+*.patch
+*.tar.xz
+*.tar.gz
+*.tar.zst
+*.tar.sign
+*.gz
+
+# but always keep PKGBUILD scripts tracked
+!**/PKGBUILD
