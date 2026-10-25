@@ -248,7 +248,7 @@ build() {
   _extra_cflags="${_extra_cflags:+${_extra_cflags} }${JBR_EXTRA_CFLAGS:-}"
   _extra_cxxflags="${_extra_cxxflags:+${_extra_cxxflags} }${JBR_EXTRA_CXXFLAGS:-}"
   _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }${JBR_EXTRA_LDFLAGS:-}"
-  _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }-Wl,--no-as-needed -lmimalloc"
+  _extra_ldflags="${_extra_ldflags:+${_extra_ldflags} }"
 
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
@@ -383,27 +383,6 @@ check() {
     return 1
   fi
   echo "version check: ${_expected_runtime} / ${_expected_impl} OK"
-
-  # --- validate mimalloc wiring ---
-  local _needs=($(readelf -d "${_img}/lib/server/libjvm.so" | awk -F'[][]' '/NEEDED/{print $2}'))
-  local _i _mi=-1 _libc=-1
-  for _i in "${!_needs[@]}"; do
-    case "${_needs[$_i]}" in
-      libmimalloc.so.3*) _mi=$_i ;;
-      libc.so.6) _libc=$_i ;;
-    esac
-  done
-  if (( _mi < 0 || _libc < 0 || _mi > _libc )); then
-    echo "ERROR: mimalloc not ordered before libc in libjvm.so DT_NEEDED (got: ${_needs[*]})"
-    return 1
-  fi
-  echo "mimalloc check: DT_NEEDED order OK (${_needs[*]})"
-  # check mimalloc stats
-  if ! MIMALLOC_SHOW_STATS=1 "${_img}/bin/java" -Xmx64m -version 2>&1 | grep -q '^subproc'; then
-    echo "ERROR: java did not resolve malloc to mimalloc"
-    return 1
-  fi
-  echo "mimalloc check: malloc resolves through mimalloc OK"
 }
 
 package_jre25-jetbrains() {
