@@ -100,7 +100,7 @@ makedepends=(
   'mimalloc'
 )
 
-options=('!ccache' '!lto')
+options=('!ccache', 'lto')
 
 _commit=db502e9d294bdc5422d2773fd930b85bb361f512
 _src_name=JetBrainsRuntime-${_commit}
@@ -159,7 +159,7 @@ filter_flags() {
   local out="" f
   for f in $1; do
     case "$f" in
-      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions) ;;
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections) ;;
       *) out="${out:+${out} }${f}" ;;
     esac
   done
@@ -238,8 +238,6 @@ build() {
 
   local _conf_cflags="${CFLAGS:-}"
   local _conf_cxxflags="${CXXFLAGS:-}"
-  _conf_cflags="${_conf_cflags//-O2/-O3}"
-  _conf_cxxflags="${_conf_cxxflags//-O2/-O3}"
 
   local _extra_cflags="$(filter_flags "${_conf_cflags} ${CPPFLAGS:-}")"
   local _extra_cxxflags="$(filter_flags "${_conf_cxxflags} ${CPPFLAGS:-}")"
@@ -301,7 +299,6 @@ build() {
     --with-native-debug-symbols=none \
     --disable-warnings-as-errors \
     --disable-ccache \
-    --enable-linktime-gc \
     --with-jmod-compress="zip-9" \
     --with-extra-cflags="${_extra_cflags}" \
     --with-extra-cxxflags="${_extra_cxxflags}" \
