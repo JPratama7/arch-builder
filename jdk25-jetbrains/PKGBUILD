@@ -100,7 +100,7 @@ makedepends=(
   'mimalloc'
 )
 
-options=('!ccache' 'lto')
+options=('!ccache' '!lto')
 
 _commit=db502e9d294bdc5422d2773fd930b85bb361f512
 _src_name=JetBrainsRuntime-${_commit}
