@@ -15,14 +15,14 @@ pkgbase=linux-lilium
 _major=7.3
 pkgver=${_major}
 _branch=7.x
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.kernel.org/"
 arch=(
   x86_64
 )
 license=(GPL-2.0-only)
-_lucjan="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/"
+_patches="https://raw.githubusercontent.com/JPratama7/kernel-patches/main/${_major}/"
 _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
 _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
 _xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
@@ -60,45 +60,45 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "config"
 
         "https://www.kernel.org/pub/linux/kernel/projects/rt/7.3/patch-7.3-rt2.patch.gz"
-        "${_lucjan}arch-patches-sep/0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch"
-        "${_lucjan}arch-patches-sep/0002-drm-i915-dp-On-DPCD-init-wake-the-DPRx-for-eDP.patch"
-        "${_lucjan}bore-patches/0001-linux7.3-bore7.0.0.patch"
-        "${_lucjan}lru-marie-patches/0001-mm-7.3-introduce-LRU-MARIE.patch"
-        "${_lucjan}poc-selector-patches/0001-sched-7.3-introduce-POC-selector.patch"
+        "${_patches}arch-patches-sep/0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch"
+        "${_patches}arch-patches-sep/0002-drm-i915-dp-On-DPCD-init-wake-the-DPRx-for-eDP.patch"
+        "${_patches}bore-patches/0001-linux7.3-bore7.0.0.patch"
+        "${_patches}lru-marie-patches/0001-mm-7.3-introduce-LRU-MARIE.patch"
+        "${_patches}poc-selector-patches/0001-sched-7.3-introduce-POC-selector.patch"
 
-        "${_lucjan}amd-pstate-patches/0001-amd-pstate-patches.patch"
+        "${_patches}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0006-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0007-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0008-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0009-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0010-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0011-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
-        "${_lucjan}cachyos-fixes-patches-v2-sep/0012-Revert-drm-gud-validate-TV-mode-names-before-creatin.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0002-drm-i915-rc6-Disable-RC6-for-InfinityBook-Pro-Gen8.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0003-drm-i915-rc6-Add-another-Boardname-to-Disable-RC6-fo.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0004-Add-BT-support-for-PRIME-B650M-A-AX6-II-motherboard.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0005-bluetooth-btusb-Add-VID-PID-13d3-3625.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0006-sched-fair-do-not-scan-twice-in-detach_tasks.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0007-sched-core-Make-finish_task_switch-and-its-subfuncti.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0008-USB-core-sanitize-string-descriptors-against-C0-cont.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0009-i2c-Force-ASUE140D-touchpad-i2c-freq-to-100khz.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0010-wifi-iwlwifi-mld-skip-TX-when-firmware-is-dead.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0011-sof-Add-quirk-for-Dell-XPS-13-DX13260.patch"
+        "${_patches}cachyos-fixes-patches-v2-sep/0012-Revert-drm-gud-validate-TV-mode-names-before-creatin.patch"
 
-        "${_lucjan}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
+        "${_patches}bbr3-cachyos-patches/0001-bbr3-cachyos-patches.patch"
 
-        "${_lucjan}cpu-cachyos-patches/0001-CACHY-Add-x86_64-ISA-and-Zen4-compiler-optimizations.patch"
-        "${_lucjan}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
+        "${_patches}cpu-cachyos-patches/0001-CACHY-Add-x86_64-ISA-and-Zen4-compiler-optimizations.patch"
+        "${_patches}cpuidle-patches/0001-cpuidle-Prefer-teo-over-menu-governor.patch"
 
-        "${_lucjan}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
-        "${_lucjan}reflex-patches/0001-linux7.3-reflex0.4.0.patch"
-        "${_lucjan}v4l2loopback-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
-        "${_lucjan}adios-iosched-default-on-patches/0001-iosched-7.3-introduce-ADIOS-I-O-scheduler.patch"
-        "${_lucjan}block-patches-all/0001-block-patches.patch"
-        "${_lucjan}hdmi-patches/0001-hdmi-patches.patch"
-        "${_lucjan}vesa-patches/0001-vesa-patches.patch"
+        "${_patches}kbuild-cachyos-patches/0001-Cachy-Allow-O3.patch"
+        "${_patches}reflex-patches/0001-linux7.3-reflex0.4.0.patch"
+        "${_patches}v4l2loopback-v2-patches/0001-media-v4l2-core-add-v4l2loopback-driver.patch"
+        "${_patches}adios-iosched-default-on-patches/0001-iosched-7.3-introduce-ADIOS-I-O-scheduler.patch"
+        "${_patches}block-patches-all/0001-block-patches.patch"
+        "${_patches}hdmi-patches/0001-hdmi-patches.patch"
+        "${_patches}vesa-patches/0001-vesa-patches.patch"
 
-        "${_lucjan}zram-patches/0001-zram-patches.patch"
-        "${_lucjan}zstd-patches/0001-zstd-patches.patch"
-        "${_lucjan}snd-codecs-patches/0001-snd-codecs-patches.patch"
-        "${_lucjan}amd-iommu-patches/0001-amd-iommu-patches.patch"
+        "${_patches}zram-patches/0001-zram-patches.patch"
+        "${_patches}zstd-v2-patches/0001-zstd-patches.patch"
+        "${_patches}snd-codecs-patches/0001-snd-codecs-patches.patch"
+        "${_patches}amd-iommu-patches/0001-amd-iommu-patches.patch"
 
-        "${_lucjan}clang-patches/0001-clang-patches.patch"
+        "${_patches}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
@@ -120,7 +120,7 @@ validpgpkeys=(
 sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            'eebde8cd4e53b2906c367188c13247af2b0b75e695333367998d58c466558847'
+            'aa6237e4d78a47782c9bdb18f9427afe5ef91096bea9d36c371b68e2f91b4969'
             'ff30b00e4d2eca5ab6a0ca3d703a9adb70d0a538ab1ecd17f786bce0fed8ba20'
             '961ff164044f698b2aa0e64ab9a9a12ec8d95fafe5e42b9a99bad0620130d513'
             'c81bcb2d043e4ad679fa5f544a73a8ffd578408013442cfe66ac7d300a46d6e5'
@@ -144,13 +144,13 @@ sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
             'b29589b3e12fc4bead274666ed837b258d37ebd2054c30fca31b18401d8c5055'
             '5397925a9819aecaed410921d889e3fc2c8f2f0c2d4c1aab1c72cad5dfb0cc5e'
             'acf7e551eb3fdfd3340d4b2a45030def4d0b7195dba52f4cf1fdcfd17452363b'
-            'e01359cdde9d28b8a422daaf2b4b5dfec1f03f3825d59e99180e5c28a03c1b84'
+            '98554d0c974e9a6f88e98cd0a015f5152a75cc68c77a0626dddde8ca8a660b92'
             '057e95252796b03faefb5d93f7b2cc36859eefa1e5df7ac5791e48e6158be283'
             '6213e06443e6ed53dc58f4b9ff62f3332ad0afc1471e3f8a9c9e36c02751ebcb'
             '0305a2177c7b53cd5d2e38a66f64f739e8c9c3164fc5cc75382e30bc9e58e2a7'
             '30c29922d61848dc76b706664f79dc8610ff102973122a378381772a3b04463e'
             '2829a14614674d01eff843ffe59426663a6b712fd6448aab1399c49519a6fd48'
-            'bd50fefdec2645ce20ec35632f1a42af12e489984c7a1ee0b947704e5bc48f17'
+            '62d7f0b5961490e9df5d0ffbd1b6b2871ceea0445858fb2657e5ad0725a223ef'
             'ad4b2d28cbf5eec16a7131a2ad1f54f469a43b7630102e7c8e249bbf86736177'
             '923bbd816bae35b2a079b447862fdf83d5d5a3d0c9c7f483ffd64c09be004ced'
             'd4f95bcb7fc0a84bdf29225a1597aea535afec74efef71aa0e9b9309d2d6d4f6'
