@@ -31,7 +31,7 @@
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgrel=6
+pkgrel=7
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=("$CARCH")
 url='https://github.com/JetBrains/JetBrainsRuntime'
@@ -160,7 +160,7 @@ filter_flags() {
   local out="" f
   for f in $1; do
     case "$f" in
-      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=safe) ;;
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fgraphite|-fgraphite-identity|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta|-flifetime-dse|-fdevirtualize-speculatively|-fno-semantic-interposition) ;;
       *) out="${out:+${out} }${f}" ;;
     esac
   done
@@ -237,8 +237,8 @@ build() {
   local _makeflag_j=$(printf '%s' "${MAKEFLAGS-}" | sed -En 's/.*-j([0-9]+).*/\1/p')
   export MAKEFLAGS=${MAKEFLAGS/-j${_makeflag_j}/}
 
-  local _conf_cflags="-O2 -pipe"
-  local _conf_cxxflags="-O2 -pipe"
+  local _conf_cflags="${CFLAGS:-}"
+  local _conf_cxxflags="${CXXFLAGS:-}"
 
   local _extra_cflags="$(filter_flags "${_conf_cflags} ${CPPFLAGS:-}")"
   local _extra_cxxflags="$(filter_flags "${_conf_cxxflags} ${CPPFLAGS:-}")"
@@ -299,6 +299,7 @@ build() {
     --with-native-debug-symbols=none \
     --disable-warnings-as-errors \
     --disable-ccache \
+    --enable-linktime-gc \
     --with-jmod-compress="zip-9" \
     --with-extra-cflags="${_extra_cflags}" \
     --with-extra-cxxflags="${_extra_cxxflags}" \
