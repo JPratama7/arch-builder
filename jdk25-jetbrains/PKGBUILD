@@ -31,7 +31,7 @@
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgrel=2
+pkgrel=3
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=("$CARCH")
 url='https://github.com/JetBrains/JetBrainsRuntime'
@@ -85,6 +85,7 @@ _pick_toolchain() {
     printf 'clang'
   fi
 }
+
 _toolchain=$(_pick_toolchain)
 
 makedepends=(
@@ -100,9 +101,9 @@ makedepends=(
   'mimalloc'
 )
 
-options=('!ccache', 'lto')
+options=('!ccache' 'lto')
 
-_commit=db502e9d294bdc5422d2773fd930b85bb361f512
+_commit=a1a247ef36251643713b00a3fb34c587b08682f2
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
@@ -159,7 +160,7 @@ filter_flags() {
   local out="" f
   for f in $1; do
     case "$f" in
-      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections) ;;
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections) ;;
       *) out="${out:+${out} }${f}" ;;
     esac
   done
