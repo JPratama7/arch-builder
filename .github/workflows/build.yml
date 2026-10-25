@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          earlyoom, aria2, quickshell-git, thorium
+          thorium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          ik-llama.cpp-git, jdk25-jetbrains
+          jdk25-jetbrains
           ]
       fail-fast: false
     runs-on: ubuntu-latest
