@@ -1,7 +1,7 @@
 # Maintainer: Jose Chasey Pratama (josepratama080@gmail.com)
 #
 # JetBrains Runtime (JBR) 25:
-#   - pinned to the jbr-release-25.0.4.1b329.136 tag
+#   - pinned to the jbr-release-25.0.4.1b635.79 tag
 #   - built with Arch's system clang or gcc
 #   - prebuilt JCEF jmods (jcef, gluegen.rt, jogl.all) from the pinned
 #     jbrsdk_jcef bundle are injected
@@ -31,7 +31,7 @@
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgrel=7
+pkgrel=8
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=("$CARCH")
 url='https://github.com/JetBrains/JetBrainsRuntime'
@@ -98,21 +98,20 @@ makedepends=(
   'speech-dispatcher'
   'shaderc'
   'vulkan-headers'
-  'mimalloc'
 )
 
 options=('!ccache' 'lto')
 
-_commit=a1a247ef36251643713b00a3fb34c587b08682f2
+_commit=0668a3de42329a40e2850ad439cf01294a703353s
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
 # jbrsdk_jcef bundle matching the jbr release build.
-_jcef_rel=25.0.4.1-linux-x64-b329.136
+_jcef_rel=25.0.4.1-linux-x64-b635.79
 _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
 
 # Official sha512 from JetBrains' release checksum file
-_jcef_sha512=173f2b8b581c914e1bd1de543f4150f54d3b768d539eef4510baf92489e80924d6e061ccc35089240ae71742adfff8dba4fd9ac581eda209ce396986e91eb526
+_jcef_sha512=bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e
 
 source=(
   "${_src_name}.tar.gz::https://github.com/JetBrains/JetBrainsRuntime/archive/${_commit}.tar.gz"
