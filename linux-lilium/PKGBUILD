@@ -15,7 +15,7 @@ pkgbase=linux-lilium
 _major=7.3
 pkgver=${_major}
 _branch=7.x
-pkgrel=2
+pkgrel=4
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.kernel.org/"
 arch=(
@@ -93,13 +93,51 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}hdmi-patches/0001-hdmi-patches.patch"
         "${_patches}vesa-patches/0001-vesa-patches.patch"
 
-        "${_patches}zram-patches/0001-zram-patches.patch"
+        "${_patches}zram-v2-patch/0001-zram-patches.patch"
         "${_patches}zstd-v2-patches/0001-zstd-patches.patch"
         "${_patches}snd-codecs-patches/0001-snd-codecs-patches.patch"
         "${_patches}amd-iommu-patches/0001-amd-iommu-patches.patch"
 
         "${_patches}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
+
+        "${_patches}xanmod-patches/binder/0001-binder-turn-into-module.patch"
+        "${_patches}xanmod-patches/binder/0002-binder-give-binder_alloc-its-own-debug-mask-file.patch"
+        "${_patches}xanmod-patches/binder/0003-wait-allow-to-use-__wake_up_pollfree-from-GPL-module.patch"
+        "${_patches}xanmod-patches/binder/0004-file-export-file_close_fd-instead-of-close_fd_get_fi.patch"
+        "${_patches}xanmod-patches/clearlinux/0001-sched-wait-Do-accept-in-LIFO-order-for-cache-efficie.patch"
+        "${_patches}xanmod-patches/clearlinux/0002-firmware-Enable-stateless-firmware-loading.patch"
+        "${_patches}xanmod-patches/clearlinux/0003-locking-rwsem-spin-faster.patch"
+        "${_patches}xanmod-patches/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
+        "${_patches}xanmod-patches/kconfig/0001-XANMOD-x86-build-Prevent-generating-avx2-floating-po.patch"
+        "${_patches}xanmod-patches/mm/0001-mm-Add-working-set-protection-for-anon-and-clean-fil.patch"
+        "${_patches}xanmod-patches/net/netfilter/0001-netfilter-Add-netfilter-nf_tables-fullcone-support.patch"
+        "${_patches}xanmod-patches/net/netfilter/0001-netfilter-add-xt_FLOWOFFLOAD-target.patch"
+        "${_patches}xanmod-patches/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
+        "${_patches}xanmod-patches/pci_acso/0001-PCI-Enable-overrides-for-missing-ACS-capabilities.patch"
+        "${_patches}xanmod-patches/valve/0001-extcon-Add-driver-for-Steam-Deck.patch"
+        "${_patches}xanmod-patches/valve/0002-hwmon-Add-driver-for-Steam-Deck-s-EC-sensors.patch"
+        "${_patches}xanmod-patches/valve/0003-hwmon-steamdeck-hwmon-Add-support-for-max-battery-le.patch"
+        "${_patches}xanmod-patches/valve/0004-leds-steamdeck-Add-support-for-Steam-Deck-LED.patch"
+        "${_patches}xanmod-patches/valve/0005-mfd-Add-MFD-core-driver-for-Steam-Deck.patch"
+        "${_patches}xanmod-patches/valve/0006-mfd-steamdeck-Expose-controller-board-power-in-sysfs.patch"
+        "${_patches}xanmod-patches/xanmod/0001-XANMOD-x86-build-Add-more-CFLAGS-optimizations.patch"
+        "${_patches}xanmod-patches/xanmod/0002-XANMOD-kbuild-Add-LLVM-polyhedral-loop-optimizer-fla.patch"
+        "${_patches}xanmod-patches/xanmod/0004-XANMOD-kbuild-deb-pkg-Create-dbg-when-make-DEB_DEBUG.patch"
+        "${_patches}xanmod-patches/xanmod/0005-kbuild-Re-add-.config-file-required-to-sign-external.patch"
+        "${_patches}xanmod-patches/xanmod/0007-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+        "${_patches}xanmod-patches/xanmod/0008-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+        "${_patches}xanmod-patches/xanmod/0009-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
+        "${_patches}xanmod-patches/xanmod/0010-XANMOD-blk-wbt-Set-wbt_default_latency_nsec-to-2msec.patch"
+        "${_patches}xanmod-patches/xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+        "${_patches}xanmod-patches/xanmod/0012-XANMOD-vfs-Decrease-rate-at-which-vfs-caches-are-rec.patch"
+        "${_patches}xanmod-patches/xanmod/0013-XANMOD-mm-Raise-max_map_count-default-value.patch"
+        "${_patches}xanmod-patches/xanmod/0014-XANMOD-mm-vmscan-Reduce-amount-of-swapping.patch"
+        "${_patches}xanmod-patches/xanmod/0015-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
+        "${_patches}xanmod-patches/xanmod/0016-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
+        "${_patches}xanmod-patches/xanmod/0018-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
+        "${_patches}xanmod-patches/zen/0001-ZEN-input-evdev-Use-call_rcu-when-detaching-client.patch"
+        "${_patches}xanmod-patches/zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
         )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 
@@ -154,7 +192,44 @@ sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
             'ad4b2d28cbf5eec16a7131a2ad1f54f469a43b7630102e7c8e249bbf86736177'
             '923bbd816bae35b2a079b447862fdf83d5d5a3d0c9c7f483ffd64c09be004ced'
             'd4f95bcb7fc0a84bdf29225a1597aea535afec74efef71aa0e9b9309d2d6d4f6'
-            '5c67d803767771db6bc69bcb1e0664a378b4bfbbee524c8ead6077798f98bad3')
+            '5c67d803767771db6bc69bcb1e0664a378b4bfbbee524c8ead6077798f98bad3'
+            'f2e2bcbbb24130d0c7a2b0c5a68ca3f2e783846b73282eeb961ce9a6282e837d'
+            'd83d7d5263a1ac7e940af5d0eaa45e3ad27193923e8307e360c1cb3d03ef610b'
+            'b93200a98193d7c3cd396b973742d13433a8fb45571ab851cdb5bc37691c2b7c'
+            'f81df6ab76817e9dc7d7111f01063cbb490c24f3eab1131f5f0385b0e2bccf86'
+            '125f5d2d329c58ea80b6160f592085656e1c992f544d41e66138515c7ac0b8be'
+            '9b7715e6fc68b11729099fde8c1f8cddbd812b49fb74adc494c26cd35cf07727'
+            '8243365232168fd3ee51dffffe454116319281534ea99f4d99b18fe8ea76f7d1'
+            '520744dab762ee6ca095e0b47e918a1631683028fda5b6555cef99e708840782'
+            '63244e0fb2a1c77396e1ec72fce00c3dc51e6959e149a12fbc371d780f98a048'
+            '6d9e9023fca1890f26b3712f4515269f1a5284afda4cdee92476e77f04b17368'
+            '7a97c385594a8826f7e4f1ab06b3877341b469a2e95a9433b957f865d64b7e0a'
+            'a71bacb3632f52b5b1e4b826ef07c47d6a8c016441778e5ced799964434214a2'
+            '0a5447f3770085a469ecffc7d732035fcfcc240a23b286ff56c41a40ea01766f'
+            '90a0bc6aca8232f3c7dcc5ec3075511f208d5b6fa9cf5587e0b35f97a6218b98'
+            '9cfdf6ee48b21cccbdc23e2d63a23c1ba04cfd75af379d5cd2a001ce58f149f6'
+            '6f6c28dcd99d583664baa5757ced68ffcbb84b6379d10829d0c34607686fe564'
+            'cafd7c301376f7209f9928aabc08d1d131d7327ca3f9f13d0228ada3d68691e2'
+            'b4432c38d8d54d588de75a6dd299315d30ce9517637f45200fa1927dc3cc927c'
+            '91296d025e08fd64d1263e4adff02c028346771e36251910a513452ffbff1efa'
+            '60965952789bf5c3e8f9c93a9f9d199924e525bc0567decef404e187eb2f45ba'
+            'ccbd6e13170dc77157bba5c7c58160193d7e95be34011b66a6aaf2ca0a44df97'
+            '05424cdf3fa6e50acbb7d8e2c26d2e05598008d91caceefd07f5118a5081517f'
+            'bb33cbe679fced64e4b6690a9c763e167d7a82f6b941301e17d7fc58a9c9d13e'
+            'c994ee99fc0f170dbb5260dda0c502866a41d2985a8648ba8dce985669d5d2cd'
+            'd9ed543cb0fb5aee8d722620195d303e9ac9ef55fe7affec6603e8b33856e773'
+            '5949a697b80404030cebc8c8fbe4c03d082278cb828f38035364372f0303b961'
+            'd55552741ed13ca236c5324b80da7c4cac036791218a9249e2eb9226368bb697'
+            '00743b104a5b3af8e3f03f3a36f2c7093ba25d02b42e282c220aefc33a7341b3'
+            '174634ceb4460b724f0fc69ba5e96c9800db103a54387bd8d0594f2d7f1d3862'
+            'd83f63e30c3b4beac2eff9ac4e3693528036d43e3e61d8f949e80d407dd64992'
+            '550e6cfb1262fcdba37ccb2701cf34ce6f48005a06751fc8d3172108bf3070ad'
+            '3bcc663cf57dd8eee166b263bf9ef4dff1882babcc000c08ac659b7ff040b1e6'
+            'c20478d7e13634b45ec2f0621b3996d4859f3b3c35b72f1d6c64fbaddf530945'
+            '0ee4b61f3c3b6ceaf7748a91fdbd15d1087eb2bd6384a842e17626e924d65932'
+            '7df80ac614fded2e4ebf1cbae9c09bcaa1ba303f9d6eeb85f31998095ebdc2d7'
+            '34cbb8efeb05c17846bd87e85b5c3a3bcf7aad4bda20d1bff9d462c8914d076d'
+            '3bb5a623a9c7fadaa61c0b5d1f1f2c868820df845501924a1255552a616cd92c')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-$pkgbase}
@@ -323,8 +398,8 @@ prepare() {
   scripts/config -m CONFIG_V4L2_LOOPBACK
 
   msg2 "Enabling FULLCONENAT..."
-  scripts/config -m IP_NF_TARGET_FULLCONENAT \
-                 -m NETFILTER_XT_TARGET_FULLCONENAT
+  scripts/config -m NFT_FULLCONE \
+                 -m NETFILTER_XT_TARGET_FLOWOFFLOAD
 
   msg2 "Enabling KBUILD Perf"
   scripts/config -e CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE \
