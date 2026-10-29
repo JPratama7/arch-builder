@@ -102,7 +102,7 @@ makedepends=(
 
 options=('!ccache' 'lto')
 
-_commit=0668a3de42329a40e2850ad439cf01294a703353s
+_commit=721f526cb550566f9875710d6788aa486fecc60a
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
@@ -118,8 +118,8 @@ source=(
   "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
 )
 # SKIP for the source tarball
-sha512sums=('SKIP'
-            "${_jcef_sha512}")
+sha512sums=('ccc5ffa27333244ed6dcc4fb464c02acb70d9e5682ed7ee3e9e0c25a11c96f9bf721e4149b36874b0d063a9adc2bcbbd3d2ed106df48be2d97568d2997a3966a'
+            'bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e')
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
 
