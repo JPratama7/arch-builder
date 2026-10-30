@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          linux-lilium, linux-lqx
+          linux-lilium
           ]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
           remove-large-packages: 'true'
           remove-codeql: 'true'
       - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
