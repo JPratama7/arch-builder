@@ -63,7 +63,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}arch-patches-sep/0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch"
         "${_patches}arch-patches-sep/0002-drm-i915-dp-On-DPCD-init-wake-the-DPRx-for-eDP.patch"
         "${_patches}bore-patches/0001-linux7.3-bore7.0.0.patch"
-        "${_patches}lru-marie-patches/0001-mm-7.3-introduce-LRU-MARIE.patch"
+        "${_patches}lru-cast-patches/0001-7.3-rc7-lru_cast-v0.2.8.patch"
         "${_patches}poc-selector-patches/0001-sched-7.3-introduce-POC-selector.patch"
 
         "${_patches}amd-pstate-patches/0001-amd-pstate-patches.patch"
@@ -110,7 +110,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}xanmod-patches/clearlinux/0003-locking-rwsem-spin-faster.patch"
         "${_patches}xanmod-patches/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
         "${_patches}xanmod-patches/kconfig/0001-XANMOD-x86-build-Prevent-generating-avx2-floating-po.patch"
-        "${_patches}xanmod-patches/mm/0001-mm-Add-working-set-protection-for-anon-and-clean-fil.patch"
         "${_patches}xanmod-patches/net/netfilter/0001-netfilter-Add-netfilter-nf_tables-fullcone-support.patch"
         "${_patches}xanmod-patches/net/netfilter/0001-netfilter-add-xt_FLOWOFFLOAD-target.patch"
         "${_patches}xanmod-patches/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
@@ -163,7 +162,7 @@ sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
             '961ff164044f698b2aa0e64ab9a9a12ec8d95fafe5e42b9a99bad0620130d513'
             'c81bcb2d043e4ad679fa5f544a73a8ffd578408013442cfe66ac7d300a46d6e5'
             '8f4bce654ad7ca8ed30290be6cfb656d61827f58a3d036fdf5e22bdd26eb7b22'
-            '9e370deafa682b79750b5f63204a5d1b2025e7f5e5bbcf482577290511d049e0'
+            'd267f5090bff0334b3e71c75823987fb82b9ec3122ddc6c4d7e90ddcd9bdfd79'
             '6df3f88c074878c08270bba2a6e5bcdeef6db614af1f8ffaaad776b6f1d7b9cf'
             '3f31075b9f975f49b724cf103afe6bbda43e94e929dc7dbc2b3d79e8aaa55f48'
             'bb1ead8195d2676cde87be304ac6ebbb9adeda2d27a7bf5a3907f24aeeb485cf'
@@ -202,7 +201,6 @@ sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
             '8243365232168fd3ee51dffffe454116319281534ea99f4d99b18fe8ea76f7d1'
             '520744dab762ee6ca095e0b47e918a1631683028fda5b6555cef99e708840782'
             '63244e0fb2a1c77396e1ec72fce00c3dc51e6959e149a12fbc371d780f98a048'
-            '6d9e9023fca1890f26b3712f4515269f1a5284afda4cdee92476e77f04b17368'
             '7a97c385594a8826f7e4f1ab06b3877341b469a2e95a9433b957f865d64b7e0a'
             'a71bacb3632f52b5b1e4b826ef07c47d6a8c016441778e5ced799964434214a2'
             '0a5447f3770085a469ecffc7d732035fcfcc240a23b286ff56c41a40ea01766f'
@@ -310,8 +308,7 @@ prepare() {
                  -e FUNCTION_TRACE_ARGS \
                  -e PROBE_EVENTS_BTF_ARGS \
                  -e IO_URING_BPF_OPS \
-                 -e AUFS_FS \
-                 -d CONFIG_LRU_MARIE_DEFRAG
+                 -e AUFS_FS
 
 
   # enable LTO_CLANG_THIN
