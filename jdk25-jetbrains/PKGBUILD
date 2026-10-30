@@ -158,6 +158,7 @@ _conf_name=linux-x86_64-server-release
 filter_flags() {
   local out="" f
   for f in $1; do
+    [[ $f == -O2 ]] && f="-O3"
     case "$f" in
       -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fgraphite|-fgraphite-identity|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta|-flifetime-dse|-fdevirtualize-speculatively|-fno-semantic-interposition) ;;
       *) out="${out:+${out} }${f}" ;;
