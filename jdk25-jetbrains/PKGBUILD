@@ -220,6 +220,8 @@ _jbr_version() {
   fi
 }
 
+_jbr_build=${_jcef_rel##*-b}
+
 # Version fetched from the source tree at the pinned commit
 # makepkg --printsrcinfo never runs a pkgver() function,
 # this must resolve at parse time
@@ -227,7 +229,7 @@ _jbr_conf="$(curl -fsSL "https://raw.githubusercontent.com/JetBrains/JetBrainsRu
   echo "ERROR: cannot fetch version-numbers.conf for ${_commit}" >&2
   exit 1
 }
-pkgver="$(_jbr_version <(printf '%s\n' "$_jbr_conf"))+arch.g${_commit:0:8}"
+pkgver="$(_jbr_version <(printf '%s\n' "$_jbr_conf"))+${pkgrel}.arch.${_jbr_build}"
 
 build() {
   cd "${srcdir}/${_src_name}"
