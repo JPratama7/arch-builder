@@ -96,7 +96,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}zram-v2-patch/0001-zram-patches.patch"
         "${_patches}zstd-v2-patches/0001-zstd-patches.patch"
         "${_patches}snd-codecs-patches/0001-snd-codecs-patches.patch"
-        "${_patches}amd-iommu-patches/0001-amd-iommu-patches.patch"
 
         "${_patches}clang-patches/0001-clang-patches.patch"
         "${_tkg}0012-misc-additions.patch"
