@@ -13,9 +13,9 @@ fi
 
 pkgbase=linux-lilium
 _major=7.3
-pkgver=${_major}
+pkgver=${_major}.1
 _branch=7.x
-pkgrel=5
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.kernel.org/"
 arch=(
@@ -154,10 +154,10 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('87363c24f10e06321eb362765521094e94471f6bff8bce2d6b3e40f39f004953'
+sha256sums=('fa595aad93734f829c963c2a90ef7c3673224fd7fdae7b49406e397cde2de231'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            'aa6237e4d78a47782c9bdb18f9427afe5ef91096bea9d36c371b68e2f91b4969'
+            '2a0d028b02f74b7510355ada89c5db0d66c7bab1e628ea46ee1a03ff866b1cef'
             'ff30b00e4d2eca5ab6a0ca3d703a9adb70d0a538ab1ecd17f786bce0fed8ba20'
             '961ff164044f698b2aa0e64ab9a9a12ec8d95fafe5e42b9a99bad0620130d513'
             'c81bcb2d043e4ad679fa5f544a73a8ffd578408013442cfe66ac7d300a46d6e5'
@@ -270,11 +270,10 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
-  # RT patch ships gzipped, so the *.patch loop skips it — decompress and apply here
   msg2 "Applying RT patch..."
-  gunzip -c "../patch-${pkgver}-rt2.patch.gz" > "../patch-${pkgver}-rt2.patch"
-  apply_patch "../patch-${pkgver}-rt2.patch"
-  rm "../patch-${pkgver}-rt2.patch"
+  gunzip -c "../patch-${_major}-rt2.patch.gz" > "../patch-${_major}-rt2.patch"
+  apply_patch "../patch-${_major}-rt2.patch"
+  rm "../patch-${_major}-rt2.patch"
 
   # Archlinux patches
   msg2 "Applying Patches"
