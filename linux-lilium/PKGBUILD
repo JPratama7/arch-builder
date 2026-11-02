@@ -93,7 +93,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}hdmi-patches/0001-hdmi-patches.patch"
         "${_patches}vesa-patches/0001-vesa-patches.patch"
 
-        "${_patches}zram-v2-patch/0001-zram-patches.patch"
+        "${_patches}zram-v2-patches/0001-zram-patches.patch"
         "${_patches}zstd-v2-patches/0001-zstd-patches.patch"
         "${_patches}snd-codecs-patches/0001-snd-codecs-patches.patch"
 
@@ -185,7 +185,7 @@ sha256sums=('fa595aad93734f829c963c2a90ef7c3673224fd7fdae7b49406e397cde2de231'
             '6213e06443e6ed53dc58f4b9ff62f3332ad0afc1471e3f8a9c9e36c02751ebcb'
             '0305a2177c7b53cd5d2e38a66f64f739e8c9c3164fc5cc75382e30bc9e58e2a7'
             '30c29922d61848dc76b706664f79dc8610ff102973122a378381772a3b04463e'
-            'b7544681d8e2f7fc72646ef4c4fa2d3955478da7ef34fd6315239e2e564bdaff'
+            '2829a14614674d01eff843ffe59426663a6b712fd6448aab1399c49519a6fd48'
             '62d7f0b5961490e9df5d0ffbd1b6b2871ceea0445858fb2657e5ad0725a223ef'
             'ad4b2d28cbf5eec16a7131a2ad1f54f469a43b7630102e7c8e249bbf86736177'
             'd4f95bcb7fc0a84bdf29225a1597aea535afec74efef71aa0e9b9309d2d6d4f6'
