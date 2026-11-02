@@ -203,21 +203,29 @@ update_jsdk_mods() {
   rm -rf "$tmp"
 }
 
-# dotted version (feature.update[.patch]) from a version-numbers.conf file;
-# single awk pass so a process-substitution input (read-once pipe) works
+# dotted version from a version-numbers.conf file, assembled like the JDK
+# does in jdk-version.m4: feature.interim.update.patch.extra1.extra2.extra3
+# with trailing .0 components stripped (a nonzero extra keeps the patch 0
+# before it, e.g. 25.0.5.0.3). $2 caps the fields used; 4 gives the short
+# JBR display version. Single awk pass so a process-substitution input
+# (read-once pipe) works.
 _jbr_version() {
-  local f i u p
-  read -r f i u p <<<"$(awk -F= '
+  local -a _n
+  read -ra _n <<<"$(awk -F= '
+    function o(x) { return x == "" ? 0 : x }
     $1=="DEFAULT_VERSION_FEATURE" {f=$2}
     $1=="DEFAULT_VERSION_INTERIM" {i=$2}
     $1=="DEFAULT_VERSION_UPDATE"  {u=$2}
     $1=="DEFAULT_VERSION_PATCH"   {p=$2}
-    END {printf "%s %s %s %s", f, i, u, p}' "$1")"
-  if [ "$p" = 0 ]; then
-    printf '%s.%s.%s' "$f" "$i" "$u"
-  else
-    printf '%s.%s.%s.%s' "$f" "$i" "$u" "$p"
-  fi
+    $1=="DEFAULT_VERSION_EXTRA1"  {e1=$2}
+    $1=="DEFAULT_VERSION_EXTRA2"  {e2=$2}
+    $1=="DEFAULT_VERSION_EXTRA3"  {e3=$2}
+    END {printf "%s %s %s %s %s %s %s",
+        o(f), o(i), o(u), o(p), o(e1), o(e2), o(e3)}' "$1")"
+  local _v="${_n[0]:-0}" _i
+  for ((_i = 1; _i < ${2:-7} && _i < 7; _i++)); do _v+=".${_n[_i]:-0}"; done
+  while [[ $_v == *.0 ]]; do _v=${_v%.0}; done
+  printf '%s' "$_v"
 }
 
 _jbr_build=${_jcef_rel##*-b}
@@ -253,7 +261,7 @@ build() {
 
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
-  local _version=$(_jbr_version make/conf/version-numbers.conf)
+  local _version=$(_jbr_version make/conf/version-numbers.conf 4)
   local _sha=${_commit:0:8}
 
   # Default parallelism: one job per core, capped at 12 to keep peak RAM
@@ -369,9 +377,10 @@ check() {
   # The JDK assembles the runtime version as <number>+<build>-<opt>; the build
   # number is the pkgrel and the opt field carries the pinned commit.
   local _version=$(_jbr_version make/conf/version-numbers.conf)
+  local _version_base=$(_jbr_version make/conf/version-numbers.conf 4)
   local _sha=${_commit:0:8}
   local _expected_runtime="${_version}+${pkgrel}-arch.g${_sha}"
-  local _expected_impl="JBR-${_version}"
+  local _expected_impl="JBR-${_version_base}"
   if ! "${_img}/bin/java" -version 2>&1 | grep -qF "build ${_expected_runtime}"; then
     echo "ERROR: runtime version is not '${_expected_runtime}'"
     return 1
