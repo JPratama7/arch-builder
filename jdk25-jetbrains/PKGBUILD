@@ -31,7 +31,7 @@
 
 pkgbase=jdk25-jetbrains
 pkgname=(jre25-jetbrains jre25-jetbrains-jcef jdk25-jetbrains-devel jdk25-jetbrains-jmods jdk25-jetbrains-jmods-jcef jdk25-jetbrains)
-pkgrel=9
+pkgrel=1
 pkgdesc='JetBrains Runtime 25 runtime with JCEF (OpenJDK 25 fork with DCEVM, Chromium embedding and improved font/desktop integration)'
 arch=("$CARCH")
 url='https://github.com/JetBrains/JetBrainsRuntime'
@@ -102,7 +102,7 @@ makedepends=(
 
 options=('!ccache' 'lto')
 
-_commit=721f526cb550566f9875710d6788aa486fecc60a
+_commit=30d87119ba8565d9b8cca1f7ff9194536d0698bb
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
@@ -160,7 +160,7 @@ filter_flags() {
   for f in $1; do
     [[ $f == -O2 ]] && f="-O3"
     case "$f" in
-      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fgraphite|-fgraphite-identity|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta|-flifetime-dse|-fdevirtualize-speculatively|-fno-semantic-interposition) ;;
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fgraphite|-fgraphite-identity|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta|-flifetime-dse|-fdevirtualize-speculatively) ;;
       *) out="${out:+${out} }${f}" ;;
     esac
   done
