@@ -15,7 +15,7 @@ pkgbase=linux-lilium
 _major=7.3
 pkgver=${_major}.1
 _branch=7.x
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.kernel.org/"
 arch=(
@@ -25,7 +25,6 @@ license=(GPL-2.0-only)
 _patches="https://raw.githubusercontent.com/JPratama7/kernel-patches/main/${_major}/"
 _cachy="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/${_major}/"
 _tkg="https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/${_major}/"
-_xanmod="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-${_major}.y-xanmod/"
 
 makedepends=(
   bc
@@ -452,6 +451,10 @@ prepare() {
                  -e CONFIG_NTFS3_64BIT_CLUSTER \
                  -e CONFIG_NTFS3_LZX_XPRESS \
                  -e CONFIG_NTFS3_FS_POSIX_ACL
+
+  msg2 "Enable hung task detection with 30s timeout"
+  scripts/config -e CONFIG_DETECT_HUNG_TASK \
+                 --set-val CONFIG_DEFAULT_HUNG_TASK_TIMEOUT "30"
 
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
