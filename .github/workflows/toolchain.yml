@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v7.0.1
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
@@ -32,7 +32,7 @@ jobs:
           pkgdir: ${{ matrix.build }}
           makepkgArgs: "--skippgpcheck"
       - name: Upload Artifact
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           tag: "temp"
@@ -44,6 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
-        uses: benc-uk/workflow-dispatch@v1.2.2
+        uses: benc-uk/workflow-dispatch@v1.3.3
         with:
           workflow: Create DB

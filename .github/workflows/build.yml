@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v7.0.1
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v7.0.1
       - id: makepkg
         uses: JPratama7/pkgbuild-action@original
         with:
@@ -112,6 +112,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Invoke workflow without inputs
-        uses: benc-uk/workflow-dispatch@v1.2.2
+        uses: benc-uk/workflow-dispatch@v1.3.3
         with:
           workflow: Create DB
