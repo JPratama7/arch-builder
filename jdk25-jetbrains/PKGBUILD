@@ -321,6 +321,12 @@ build() {
     --with-extra-ldflags="${_extra_ldflags}" \
     "${_boot_jdk_flag[@]}" \
     --with-vulkan \
+    AR="${AR:-ar}" \
+    NM="${NM:-nm}" \
+    OBJCOPY="${OBJCOPY:-objcopy}" \
+    OBJDUMP="${OBJDUMP:-objdump}" \
+    READELF="${READELF:-readelf}" \
+    STRIP="${STRIP:-strip}" \
     ${JBR_CONFIGURE_EXTRA:-}
 
   # lib-speechd.m4 forgets SPEECHD_LIBS on the --with-speechd-include path
