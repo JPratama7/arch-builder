@@ -406,6 +406,23 @@ check() {
   fi
   echo "version check: ${_expected_runtime} / ${_expected_impl} OK"
 
+  # `make test` recompiles java.desktop because add_jcef_module.patch
+  # touched module-info.java after `make images`; jcef/jogl.all are not on
+  # the build module path, so the recompile emits "module not found"
+  # warnings and javac's -Werror (JAVA_WARNINGS_AS_ERRORS, a separate flag
+  # from --disable-warnings-as-errors) fails the build. Revert the patch for
+  # the test build: the JCEF jmods/images are already built and unaffected.
+  if patch -R -p0 -s --dry-run < jb/project/tools/patches/add_jcef_module.patch; then
+    patch -R -p0 -s < jb/project/tools/patches/add_jcef_module.patch
+  fi
+
+  # Test-lib makefiles append -Wno-format after the extra cflags; with
+  # makepkg.conf's -Werror=format-security that turns the "-Wformat-security
+  # ignored without -Wformat" diagnostic into an error. Disable the warning
+  # for test libs only — product flags keep the -Werror promotion.
+  sed -i 's/\(DISABLED_WARNINGS_gcc :=\) format /\1 format format-security /' \
+      make/common/TestFilesCompilation.gmk
+
   # jtreg regress test for miscompile jvm
   local _jobs=${JBR_JOBS:-$(nproc)}
   (( _jobs > 12 )) && _jobs=12
