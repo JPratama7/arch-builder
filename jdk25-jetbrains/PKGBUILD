@@ -102,7 +102,7 @@ makedepends=(
 
 options=('!ccache' 'lto')
 
-_commit=30d87119ba8565d9b8cca1f7ff9194536d0698bb
+_commit=3941076f1914db4ce2404f12629f79e91f037136
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
@@ -113,13 +113,18 @@ _jcef_dirname=jbrsdk_jcef-${_jcef_rel}
 # Official sha512 from JetBrains' release checksum file
 _jcef_sha512=bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e
 
+# jtreg test harness for check()
+_jtreg_ver=8.3+1
+
 source=(
   "${_src_name}.tar.gz::https://github.com/JetBrains/JetBrainsRuntime/archive/${_commit}.tar.gz"
   "${_jcef_dirname}.tar.gz::https://cache-redirector.jetbrains.com/intellij-jbr/${_jcef_dirname}.tar.gz"
+  "jtreg-${_jtreg_ver}.zip::https://builds.shipilev.net/jtreg/jtreg-${_jtreg_ver//+/%2B}.zip"
 )
 # SKIP for the source tarball
 sha512sums=('ccc5ffa27333244ed6dcc4fb464c02acb70d9e5682ed7ee3e9e0c25a11c96f9bf721e4149b36874b0d063a9adc2bcbbd3d2ed106df48be2d97568d2997a3966a'
-            'bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e')
+            'bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e'
+            '57d29699f53a564cd84bd7756ddba7f52e4af753845c7951022b53dc09e09bf533276c8ac84c1978a86723adc2850ee3e78f27610e5ccd43a722691600a5b868')
 
 _jvmdir=/usr/lib/jvm/java-25-jetbrains
 
@@ -394,6 +399,13 @@ check() {
     return 1
   fi
   echo "version check: ${_expected_runtime} / ${_expected_impl} OK"
+
+  # jtreg regress test for miscompile jvm
+  local _jobs=${JBR_JOBS:-$(nproc)}
+  (( _jobs > 12 )) && _jobs=12
+  make test TEST="jdk_jfr" \
+      JT_HOME="${srcdir}/jtreg" \
+      JTREG="JOBS=${_jobs}"
 }
 
 package_jre25-jetbrains() {
