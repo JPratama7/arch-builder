@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.3
-pkgver=${_major}.1
+pkgver=${_major}.3
 _branch=7.x
 pkgrel=3
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -152,7 +152,7 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('fa595aad93734f829c963c2a90ef7c3673224fd7fdae7b49406e397cde2de231'
+sha256sums=('79c66dde66cd96877fcde8f7d36aec946b1f423d2b97b5a7b1751b75c764f3d1'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             '2a0d028b02f74b7510355ada89c5db0d66c7bab1e628ea46ee1a03ff866b1cef'
