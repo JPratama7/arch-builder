@@ -165,7 +165,7 @@ filter_flags() {
   for f in $1; do
     [[ $f == -O2 ]] && f="-O3"
     case "$f" in
-      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fmodulo-sched|-fmodulo-sched-allow-regmoves|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta) ;;
+      -flto|-flto=*|-ffat-lto-objects|-fno-fat-lto-objects|-fuse-linker-plugin|-fexceptions|-fdata-sections|-ffunction-sections|-Wl,--gc-sections|-Wl,--icf=*|-fmodulo-sched|-fmodulo-sched-allow-regmoves|-fipa-icf|-fipa-icf-functions|-fipa-icf-variables|-fipa-modref|-fipa-strict-aliasing|-fipa-pta|-flifetime-dse|-fdeclone-ctor-dtor|-fdevirtualize-speculatively) ;;
       *) out="${out:+${out} }${f}" ;;
     esac
   done
