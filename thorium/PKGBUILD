@@ -3,7 +3,7 @@
 pkgbase=thorium
 _name=${pkgbase}-browser
 pkgname=${_name}-bin
-pkgver=156.0.8078.28
+pkgver=156.0.8078.80
 pkgrel=1
 pkgdesc="The web browser from Chromium org and The Thorium Authors. Thorium is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 arch=('x86_64')
@@ -27,7 +27,7 @@ source_x86_64=(
 	"https://github.com/gz83/thorium/releases/download/M${pkgver}/${_name}_${pkgver}_AVX2.deb"
     $pkgbase.sh
 )
-sha512sums_x86_64=('202ef9590334c539dc6aed29c19b9913d7d57b269c7fa65ed033f1352e2280b4436c18eaec1d80b8d20fedf8d79a08a264a3354184200974ca7f6aad58589956'
+sha512sums_x86_64=('8a725fae03ab8ca635927b60b14ec73769e5ca878f1670208fbadfef05b426a8dca87a3b4aea9cfbf0c6b4a7bf4951df581ec9120457753834fdc6ff13ffc5ce'
                    '91a532fde9e6e87d65b909a170d32808f1c05367104cdaab07043fef0de66bdfc307a4138584cd1eedc169a03207372df39c09268ab1ec741432e79e0dcc2dfb')
 
 package(){
