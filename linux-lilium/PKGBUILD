@@ -13,9 +13,9 @@ fi
 
 pkgbase=linux-lilium
 _major=7.3
-pkgver=${_major}.3
+pkgver=${_major}.4
 _branch=7.x
-pkgrel=3
+pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
 url="http://www.kernel.org/"
 arch=(
@@ -62,8 +62,12 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "${_patches}arch-patches-sep/0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch"
         "${_patches}arch-patches-sep/0002-drm-i915-dp-On-DPCD-init-wake-the-DPRx-for-eDP.patch"
         "${_patches}bore-patches/0001-linux7.3-bore7.0.0.patch"
-        "${_patches}lru-cast-patches/0001-7.3-rc7-lru_cast-v0.2.8.patch"
+        "${_patches}lru-cast-v2-patches/0001-7.3-rc7-lru_cast-v0.2.10.patch"
         "${_patches}poc-selector-patches/0001-sched-7.3-introduce-POC-selector.patch"
+
+
+        "${_patches}io_uring-patches/0001-io_uring-patches.patch"
+        "${_patches}xhci-patches/0001-xhci-patches.patch"
 
         "${_patches}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
@@ -152,16 +156,18 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('79c66dde66cd96877fcde8f7d36aec946b1f423d2b97b5a7b1751b75c764f3d1'
+sha256sums=('b11b6df8295e8e991ff040b71aaa4994a8b55caa23b6b092907f195b5840fd1f'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
-            '2a0d028b02f74b7510355ada89c5db0d66c7bab1e628ea46ee1a03ff866b1cef'
+            'bb03d28b8af371cd47eebf18378197c57e26c951d33c872d52ae97a2690d1ec6'
             'ff30b00e4d2eca5ab6a0ca3d703a9adb70d0a538ab1ecd17f786bce0fed8ba20'
             '961ff164044f698b2aa0e64ab9a9a12ec8d95fafe5e42b9a99bad0620130d513'
             'c81bcb2d043e4ad679fa5f544a73a8ffd578408013442cfe66ac7d300a46d6e5'
             '8f4bce654ad7ca8ed30290be6cfb656d61827f58a3d036fdf5e22bdd26eb7b22'
-            'd267f5090bff0334b3e71c75823987fb82b9ec3122ddc6c4d7e90ddcd9bdfd79'
+            'f13ac591211d3af128f55f91658a98173472e5866d0cfcf7c730bd887cbf8271'
             '6df3f88c074878c08270bba2a6e5bcdeef6db614af1f8ffaaad776b6f1d7b9cf'
+            '401cbd5219f6bbc8e0886d0c88765a4baebe482a1dec5296cc18aec065dda17b'
+            'd652deeb83f7d88dec4b64a2dcc231dc59543d7c745580c5d9af15ca4b9bee00'
             '3f31075b9f975f49b724cf103afe6bbda43e94e929dc7dbc2b3d79e8aaa55f48'
             'bb1ead8195d2676cde87be304ac6ebbb9adeda2d27a7bf5a3907f24aeeb485cf'
             '9c11a233168e08a74691ac175b6d1e930e8f03841785ae81ba3c50ac3fcbae81'
@@ -455,6 +461,692 @@ prepare() {
   msg2 "Enable hung task detection with 30s timeout"
   scripts/config -e CONFIG_DETECT_HUNG_TASK \
                  --set-val CONFIG_DEFAULT_HUNG_TASK_TIMEOUT "30"
+
+  msg2 "Applying Lilium value overrides"
+
+  scripts/config --set-str CONFIG_DEFAULT_NET_SCH "fq"
+  scripts/config --set-str CONFIG_DRM_PANIC_SCREEN "kmsg"
+  scripts/config --set-str CONFIG_FAT_DEFAULT_IOCHARSET "utf8"
+  scripts/config --set-str CONFIG_HIBERNATION_DEF_COMP "lz4"
+  scripts/config --set-str CONFIG_LD_ORPHAN_WARN_LEVEL "error"
+  scripts/config --set-val CONFIG_DRM_FBDEV_OVERALLOC 300
+  scripts/config --set-val CONFIG_DRM_PANIC_BACKGROUND_COLOR 0x000000
+  scripts/config --set-val CONFIG_DUMMY_CONSOLE_COLUMNS 80
+  scripts/config --set-val CONFIG_DUMMY_CONSOLE_ROWS 25
+  scripts/config --set-val CONFIG_DVB_MAX_ADAPTERS 8
+  scripts/config --set-val CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE 0x1
+  scripts/config --set-val CONFIG_NR_CPUS 256
+  scripts/config --set-val CONFIG_NR_CPUS_DEFAULT 64
+  scripts/config --set-val CONFIG_NR_CPUS_RANGE_BEGIN 2
+  scripts/config --set-val CONFIG_NR_CPUS_RANGE_END 512
+  scripts/config --set-val CONFIG_PHYSICAL_ALIGN 0x1000000
+  scripts/config --set-val CONFIG_SERIAL_8250_RUNTIME_UARTS 4
+  scripts/config --set-val CONFIG_SND_AC97_POWER_SAVE_DEFAULT 0
+  scripts/config --set-val CONFIG_SND_HDA_POWER_SAVE_DEFAULT 0
+
+  msg2 "Lilium: enabling built-in options"
+  msg2 "Enabling filesystems & NVMe storage"
+  scripts/config -e CONFIG_BLK_DEV_NVME \
+                 CONFIG_EROFS_FS_PCPU_KTHREAD_HIPRI \
+                 CONFIG_EROFS_FS_ZIP_ACCEL \
+                 CONFIG_F2FS_FS \
+                 CONFIG_HIBERNATION_COMP_LZ4 \
+                 CONFIG_HIBERNATION_COMP_LZO \
+                 CONFIG_JFS_FS \
+                 CONFIG_NFSD_LEGACY_CLIENT_TRACKING \
+                 CONFIG_NLS_UCS2_UTILS \
+                 CONFIG_NVME_AUTH \
+                 CONFIG_NVME_CORE \
+                 CONFIG_NVME_KEYRING \
+                 CONFIG_OVERLAY_FS_REDIRECT_ALWAYS_FOLLOW \
+                 CONFIG_SQUASHFS_4K_DEVBLK_SIZE \
+                 CONFIG_XFS_FS
+
+  msg2 "Enabling TCP congestion algorithms & DNS resolver"
+  scripts/config -e CONFIG_ATM_BR2684_IPFILTER \
+                 CONFIG_DEFERRED_STRUCT_PAGE_INIT \
+                 CONFIG_DNS_RESOLVER \
+                 CONFIG_TCP_CONG_BIC \
+                 CONFIG_TCP_CONG_DCTCP \
+                 CONFIG_TCP_CONG_HSTCP \
+                 CONFIG_TCP_CONG_HTCP \
+                 CONFIG_TCP_CONG_HYBLA \
+                 CONFIG_TCP_CONG_ILLINOIS \
+                 CONFIG_TCP_CONG_LP \
+                 CONFIG_TCP_CONG_SCALABLE \
+                 CONFIG_TCP_CONG_VEGAS \
+                 CONFIG_TCP_CONG_VENO \
+                 CONFIG_TCP_CONG_WESTWOOD \
+                 CONFIG_TCP_CONG_YEAH
+
+  msg2 "Enabling KVM, Xen & EDAC scrubbing"
+  scripts/config -e CONFIG_EDAC_MEM_REPAIR \
+                 CONFIG_EDAC_SCRUB \
+                 CONFIG_KVM \
+                 CONFIG_KVM_X86 \
+                 CONFIG_XENFS \
+                 CONFIG_XEN_DEV_EVTCHN \
+                 CONFIG_XEN_NETDEV_FRONTEND \
+                 CONFIG_XEN_PCIDEV_FRONTEND \
+                 CONFIG_XEN_PRIVCMD \
+                 CONFIG_XEN_PVCALLS_BACKEND
+
+  msg2 "Enabling crypto & compression algorithms"
+  scripts/config -e CONFIG_842_COMPRESS \
+                 CONFIG_842_DECOMPRESS \
+                 CONFIG_CRYPTO_842 \
+                 CONFIG_CRYPTO_AUTHENC \
+                 CONFIG_CRYPTO_CHACHA20 \
+                 CONFIG_CRYPTO_CHACHA20POLY1305 \
+                 CONFIG_CRYPTO_DEFLATE \
+                 CONFIG_CRYPTO_ECRDSA \
+                 CONFIG_CRYPTO_GCM \
+                 CONFIG_CRYPTO_GENIV \
+                 CONFIG_CRYPTO_LIB_MLDSA \
+                 CONFIG_CRYPTO_LZ4HC \
+                 CONFIG_CRYPTO_MLDSA \
+                 CONFIG_CRYPTO_NULL \
+                 CONFIG_CRYPTO_SEQIV \
+                 CONFIG_CRYPTO_STREEBOG \
+                 CONFIG_CRYPTO_USER_API_ENABLE_OBSOLETE \
+                 CONFIG_DEVFREQ_GOV_POWERSAVE \
+                 CONFIG_LZ4HC_COMPRESS
+
+  msg2 "Enabling CPUFreq, PHY/MDIO bus & cgroups"
+  scripts/config -e CONFIG_ACPI_MDIO \
+                 CONFIG_BCM84881_PHY \
+                 CONFIG_CGROUP_FAVOR_DYNMODS \
+                 CONFIG_CPUSETS_V1 \
+                 CONFIG_DEVFREQ_GOV_PERFORMANCE \
+                 CONFIG_FIXED_PHY \
+                 CONFIG_FWNODE_MDIO \
+                 CONFIG_FW_CFG_SYSFS_CMDLINE \
+                 CONFIG_PCI_REALLOC_ENABLE_AUTO \
+                 CONFIG_PHYLIB \
+                 CONFIG_RT_GROUP_SCHED \
+                 CONFIG_SYSFS_SYSCALL \
+                 CONFIG_WERROR \
+                 CONFIG_X86_ACPI_CPUFREQ
+
+  msg2 "Enabling 16550A UART variant support"
+  scripts/config -e CONFIG_SERIAL_8250_16550A_VARIANTS
+
+  msg2 "Enabling DVB/SDR media & SOF audio"
+  scripts/config -e CONFIG_DEVFREQ_GOV_USERSPACE \
+                 CONFIG_DVB_DDBRIDGE_MSIENABLE \
+                 CONFIG_MEDIA_SDR_SUPPORT \
+                 CONFIG_MEDIA_SUBDRV_AUTOSELECT \
+                 CONFIG_SND_INTEL_BYT_PREFER_SOF
+
+  msg2 "Enabling Intel platform extras & THP tweaks"
+  scripts/config -e CONFIG_INTEL_ATOMISP \
+                 CONFIG_INTEL_TXT \
+                 CONFIG_IRQ_BYPASS_MANAGER \
+                 CONFIG_MAC_EMUMOUSEBTN \
+                 CONFIG_PERF_EVENTS_INTEL_UNCORE \
+                 CONFIG_TRANSPARENT_HUGEPAGE_MADVISE \
+                 CONFIG_TRANSPARENT_HUGEPAGE_SHMEM_HUGE_WITHIN_SIZE
+
+  msg2 "Enabling USB host controllers, sensors & thermal"
+  scripts/config -e CONFIG_BATTERY_BQ27XXX_DT_UPDATES_NVM \
+                 CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND \
+                 CONFIG_GPIO_PALMAS \
+                 CONFIG_MEMCG_V1 \
+                 CONFIG_MFD_PALMAS \
+                 CONFIG_MFD_TPS65912 \
+                 CONFIG_MFD_TPS65912_SPI \
+                 CONFIG_MUSB_PIO_ONLY \
+                 CONFIG_PERF_EVENTS_INTEL_CSTATE \
+                 CONFIG_PERF_EVENTS_INTEL_RAPL \
+                 CONFIG_PTP_1588_CLOCK_OPTIONAL \
+                 CONFIG_SENSORS_LTC2978_REGULATOR \
+                 CONFIG_SENSORS_W83795_FANCTRL \
+                 CONFIG_THERMAL_STATISTICS \
+                 CONFIG_TRANSPARENT_HUGEPAGE_TMPFS_HUGE_WITHIN_SIZE \
+                 CONFIG_USB_DWC2 \
+                 CONFIG_USB_DWC2_HOST \
+                 CONFIG_USB_DWC3_HOST \
+                 CONFIG_USB_ISP1760_HOST_ROLE \
+                 CONFIG_USB_MUSB_HOST \
+                 CONFIG_USB_OTG_PRODUCTLIST \
+                 CONFIG_USB_ROLE_SWITCH \
+                 CONFIG_W1_SLAVE_DS2408_READBACK \
+                 CONFIG_WATCHDOG_PRETIMEOUT_GOV_DUMP
+
+  msg2 "Enabling battery & charger manager"
+  scripts/config -e CONFIG_BATTERY_SAMSUNG_SDI \
+                 CONFIG_CHARGER_MANAGER
+
+  msg2 "Enabling misc drivers (NTSYNC, PTP, PPS)"
+  scripts/config -e CONFIG_BCMA_HOST_SOC \
+                 CONFIG_FDDI \
+                 CONFIG_LEGACY_TIOCSTI \
+                 CONFIG_NTSYNC \
+                 CONFIG_PCI_ENDPOINT \
+                 CONFIG_PCI_MESON \
+                 CONFIG_PPS \
+                 CONFIG_PTP_1588_CLOCK \
+                 CONFIG_RAID6_PQ_BENCHMARK \
+                 CONFIG_ZONE_DEVICE
+
+  msg2 "Enabling self-tests & error injection"
+  scripts/config -e CONFIG_ACPI_APEI_ERST_DEBUG \
+                 CONFIG_CEC_PIN_ERROR_INJ \
+                 CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP_DEFAULT_ON \
+                 CONFIG_NET_SELFTESTS \
+                 CONFIG_RCU_LAZY_DEFAULT_OFF
+
+  msg2 "Lilium: enabling modules"
+  msg2 "Building MTD flash, UFS & virtio-fs modules"
+  scripts/config -m CONFIG_FTL \
+                 CONFIG_INFTL \
+                 CONFIG_MTD_BLOCK_RO \
+                 CONFIG_MTD_OOPS \
+                 CONFIG_MTD_SWAP \
+                 CONFIG_NFTL \
+                 CONFIG_NLS_ASCII \
+                 CONFIG_NLS_CODEPAGE_437 \
+                 CONFIG_NVRAM \
+                 CONFIG_RFD_FTL \
+                 CONFIG_SCSI_UFS_DWC_TC_PCI \
+                 CONFIG_SM_FTL \
+                 CONFIG_SSFDC \
+                 CONFIG_VIRTIO_FS
+
+  msg2 "Building netfilter & WiFi modules"
+  scripts/config -m CONFIG_IP6_NF_NAT \
+                 CONFIG_IP6_NF_RAW \
+                 CONFIG_IP6_NF_SECURITY \
+                 CONFIG_IP6_NF_TARGET_HL \
+                 CONFIG_IP_NF_ARPFILTER \
+                 CONFIG_IP_NF_ARPTABLES \
+                 CONFIG_IP_NF_NAT \
+                 CONFIG_IP_NF_RAW \
+                 CONFIG_IP_NF_SECURITY \
+                 CONFIG_IP_NF_TARGET_TTL \
+                 CONFIG_IWLMLD \
+                 CONFIG_RTW88_8812AU \
+                 CONFIG_RTW88_8814AE \
+                 CONFIG_RTW88_8814AU \
+                 CONFIG_RTW88_8821AU \
+                 CONFIG_RTW89_8851BU \
+                 CONFIG_RTW89_8852AU \
+                 CONFIG_RTW89_8852BU \
+                 CONFIG_RTW89_8852CU \
+                 CONFIG_RTW89_8922AU \
+                 CONFIG_RTW89_8922DE \
+                 CONFIG_XFRM_USER_COMPAT
+
+  msg2 "Building virtio & EDAC modules"
+  scripts/config -m CONFIG_EDAC_DECODE_MCE \
+                 CONFIG_EDAC_ECS \
+                 CONFIG_EDAC_IMH \
+                 CONFIG_VIRTIO_CONSOLE \
+                 CONFIG_VIRTIO_PCI \
+                 CONFIG_VIRTIO_PCI_LIB \
+                 CONFIG_VIRTIO_PCI_LIB_LEGACY \
+                 CONFIG_VMGENID
+
+  msg2 "Building crypto lib & Cherryview pinctrl"
+  scripts/config -m CONFIG_CRYPTO_LIB_AESCFB \
+                 CONFIG_PINCTRL_CHERRYVIEW
+
+  msg2 "Building HW RNG & TPM modules"
+  scripts/config -m CONFIG_HW_RANDOM \
+                 CONFIG_TCG_TIS_CORE
+
+  msg2 "Building I2C, SPI & I3C bus modules"
+  scripts/config -m CONFIG_GPIO_VIRTUSER \
+                 CONFIG_I2C_CCGX_UCSI \
+                 CONFIG_I2C_DESIGNWARE_CORE \
+                 CONFIG_I2C_DESIGNWARE_PCI \
+                 CONFIG_I2C_DESIGNWARE_PLATFORM \
+                 CONFIG_I3C \
+                 CONFIG_I3C_OR_I2C \
+                 CONFIG_PSE_REALTEK_MCU_I2C \
+                 CONFIG_PSE_REALTEK_MCU_UART \
+                 CONFIG_SERIAL_DEV_BUS \
+                 CONFIG_SPI_DESIGNWARE \
+                 CONFIG_SPI_LANTIQ_SSC \
+                 CONFIG_SPMI
+
+  msg2 "Building audio, WMI laptop & video modules"
+  scripts/config -m CONFIG_LENOVO_WMI_GAMEZONE \
+                 CONFIG_LENOVO_WMI_HOTKEY_UTILITIES \
+                 CONFIG_LENOVO_WMI_TUNING \
+                 CONFIG_RC_CORE \
+                 CONFIG_REDMI_WMI \
+                 CONFIG_SND_BCM63XX_I2S_WHISTLER \
+                 CONFIG_SND_SOC_BT_SCO \
+                 CONFIG_SND_SOC_FSL_ASRC \
+                 CONFIG_SND_SOC_FSL_AUDMIX \
+                 CONFIG_SND_SOC_FSL_ESAI \
+                 CONFIG_SND_SOC_FSL_SAI \
+                 CONFIG_SND_SOC_FSL_SPDIF \
+                 CONFIG_SND_SOC_FSL_SSI \
+                 CONFIG_SND_SOC_IMX_AUDMUX \
+                 CONFIG_SND_SOC_SOF_BROADWELL \
+                 CONFIG_SND_SOC_SOF_KABYLAKE \
+                 CONFIG_SND_SOC_SOF_SKYLAKE \
+                 CONFIG_VIDEO_FB_IVTV \
+                 CONFIG_VIDEO_ZORAN
+
+  msg2 "Building handheld/laptop & HID modules"
+  scripts/config -m CONFIG_ASUS_ARMOURY \
+                 CONFIG_AYANEO_EC \
+                 CONFIG_DINGHAI \
+                 CONFIG_DMI_SYSFS \
+                 CONFIG_HID_HUAWEI \
+                 CONFIG_HID_HYPERX \
+                 CONFIG_HID_LENOVO_GO \
+                 CONFIG_HID_LENOVO_GO_S \
+                 CONFIG_HID_MSI \
+                 CONFIG_HID_OXP \
+                 CONFIG_HID_RAKK \
+                 CONFIG_INPUT_AMD_SFH_TABLETMODE \
+                 CONFIG_LENOVO_YB9_KBDOCK \
+                 CONFIG_SAMSUNG_GALAXYBOOK
+
+  msg2 "Building hwmon sensor & serial modules"
+  scripts/config -m CONFIG_LENOVO_SE30G2_SE60_WDT \
+                 CONFIG_LENOVO_SE30_WDT \
+                 CONFIG_MFD_NCT6694 \
+                 CONFIG_SENSORS_ADP1050_REGULATOR \
+                 CONFIG_SENSORS_APS_379 \
+                 CONFIG_SENSORS_ARCTIC_FAN_CONTROLLER \
+                 CONFIG_SENSORS_CRPS \
+                 CONFIG_SENSORS_D1U74T \
+                 CONFIG_SENSORS_E50SN12051 \
+                 CONFIG_SENSORS_EMC1812 \
+                 CONFIG_SENSORS_GPD \
+                 CONFIG_SENSORS_GPIO_FAN \
+                 CONFIG_SENSORS_HAC300S \
+                 CONFIG_SENSORS_HTU31 \
+                 CONFIG_SENSORS_INA233 \
+                 CONFIG_SENSORS_ISL28022 \
+                 CONFIG_SENSORS_KB9002 \
+                 CONFIG_SENSORS_KBATT \
+                 CONFIG_SENSORS_KFAN \
+                 CONFIG_SENSORS_LATTEPANDA_SIGMA_EC \
+                 CONFIG_SENSORS_LT3074 \
+                 CONFIG_SENSORS_LTC4283 \
+                 CONFIG_SENSORS_LX1308 \
+                 CONFIG_SENSORS_MAX17616 \
+                 CONFIG_SENSORS_MAX20830 \
+                 CONFIG_SENSORS_MAX20860A \
+                 CONFIG_SENSORS_MCP9982 \
+                 CONFIG_SENSORS_MP2869 \
+                 CONFIG_SENSORS_MP2925 \
+                 CONFIG_SENSORS_MP29502 \
+                 CONFIG_SENSORS_MP2985 \
+                 CONFIG_SENSORS_MP5926 \
+                 CONFIG_SENSORS_MP9945 \
+                 CONFIG_SENSORS_MPQ82D00 \
+                 CONFIG_SENSORS_MPQ8646 \
+                 CONFIG_SENSORS_NCT7363 \
+                 CONFIG_SENSORS_PROM21_XHCI \
+                 CONFIG_SENSORS_SQ24860 \
+                 CONFIG_SENSORS_STEF48H28 \
+                 CONFIG_SENSORS_TPS25990 \
+                 CONFIG_SENSORS_TSC1641 \
+                 CONFIG_SENSORS_VT7505 \
+                 CONFIG_SENSORS_XDP720 \
+                 CONFIG_SENSORS_XDPE1A2G7B \
+                 CONFIG_SENSORS_YOGAFAN \
+                 CONFIG_SERIAL_8250_MOXA_PCIE \
+                 CONFIG_SERIAL_MAX310X \
+                 CONFIG_USB_SERIAL
+
+  msg2 "Building misc modules (TPM, PCI stub, framebuffer)"
+  scripts/config -m CONFIG_FB_SM750 \
+                 CONFIG_HSI \
+                 CONFIG_N_GSM \
+                 CONFIG_PCI_STUB \
+                 CONFIG_TCG_CRB \
+                 CONFIG_TCG_TIS \
+                 CONFIG_TCG_TPM
+
+  msg2 "Lilium: disabling options"
+  msg2 "Disabling debug/tracing & default zswap"
+  scripts/config -d CONFIG_6LOWPAN_DEBUGFS \
+                 CONFIG_ATH10K_DEBUG \
+                 CONFIG_ATH10K_DEBUGFS \
+                 CONFIG_ATH10K_TRACING \
+                 CONFIG_ATH11K_DEBUG \
+                 CONFIG_ATH12K_DEBUG \
+                 CONFIG_ATH12K_TRACING \
+                 CONFIG_ATH5K_DEBUG \
+                 CONFIG_ATH6KL_DEBUG \
+                 CONFIG_ATH6KL_TRACING \
+                 CONFIG_ATH9K_HTC_DEBUGFS \
+                 CONFIG_B43LEGACY_DEBUG \
+                 CONFIG_BLK_ERROR_INJECTION \
+                 CONFIG_BRCM_TRACING \
+                 CONFIG_CEPH_LIB_PRETTYDEBUG \
+                 CONFIG_CIFS_DEBUG \
+                 CONFIG_CMA_DEBUGFS \
+                 CONFIG_CRYPTO_DEV_AMLOGIC_GXL_DEBUG \
+                 CONFIG_CRYPTO_DEV_CCP_DEBUGFS \
+                 CONFIG_DEBUG_RODATA_TEST \
+                 CONFIG_DEBUG_SHIRQ \
+                 CONFIG_DEBUG_WX \
+                 CONFIG_DLM_DEBUG \
+                 CONFIG_IWLEGACY_DEBUG \
+                 CONFIG_IWLWIFI_DEBUG \
+                 CONFIG_IWLWIFI_DEVICE_TRACING \
+                 CONFIG_L2TP_DEBUGFS \
+                 CONFIG_MAC80211_DEBUGFS \
+                 CONFIG_NTFS_DEBUG \
+                 CONFIG_OVMF_DEBUG_LOG \
+                 CONFIG_PCIEAER_INJECT \
+                 CONFIG_PCIE_DW_DEBUGFS \
+                 CONFIG_RSI_DEBUGFS \
+                 CONFIG_RTLWIFI_DEBUG \
+                 CONFIG_RTW88_DEBUG \
+                 CONFIG_RTW88_DEBUGFS \
+                 CONFIG_RTW89_DEBUGFS \
+                 CONFIG_RTW89_DEBUGMSG \
+                 CONFIG_SHRINKER_DEBUG \
+                 CONFIG_SND_DEBUG \
+                 CONFIG_SUNRPC_DEBUG \
+                 CONFIG_TRACE_GPU_MEM \
+                 CONFIG_USB_SERIAL_DEBUG \
+                 CONFIG_WCN36XX_DEBUGFS \
+                 CONFIG_WIL6210_DEBUGFS \
+                 CONFIG_WIL6210_TRACING \
+                 CONFIG_X86_CHECK_BIOS_CORRUPTION \
+                 CONFIG_X86_MCE_INJECT \
+                 CONFIG_ZSWAP_DEFAULT_ON
+
+  msg2 "Disabling storage & filesystem extras"
+  scripts/config -d CONFIG_BINFMT_MISC_BPF \
+                 CONFIG_CEPH_LIB_USE_DNS_RESOLVER \
+                 CONFIG_DM_INLINECRYPT \
+                 CONFIG_MTD_PARTITIONED_MASTER \
+                 CONFIG_MTD_PSTORE \
+                 CONFIG_NET_9P_USBG \
+                 CONFIG_OVERLAY_FS_METACOPY
+
+  msg2 "Disabling misc network & debug options"
+  scripts/config -d CONFIG_ATH12K_AHB \
+                 CONFIG_ATH12K_COREDUMP \
+                 CONFIG_ATH5K_TRACER \
+                 CONFIG_BACKLIGHT_MAX25014 \
+                 CONFIG_BRCMDBG \
+                 CONFIG_BRIDGE_NF_EBTABLES_LEGACY \
+                 CONFIG_BSD_PROCESS_ACCT \
+                 CONFIG_CAN_VIRTIO_CAN \
+                 CONFIG_FRAMEBUFFER_CONSOLE_DEFERRED_TAKEOVER \
+                 CONFIG_HYPERV_VSOCKETS \
+                 CONFIG_NET_DSA_TAG_MT7628 \
+                 CONFIG_NET_DSA_TAG_NETC \
+                 CONFIG_NET_SCH_BPF \
+                 CONFIG_PARAVIRT_TIME_ACCOUNTING \
+                 CONFIG_PORTWELL_EC \
+                 CONFIG_USB_XHCI_DBGCAP \
+                 CONFIG_USB_XHCI_SIDEBAND
+
+  msg2 "Disabling Hyper-V, kexec & virtio extras"
+  scripts/config -d CONFIG_BHYVE_GUEST \
+                 CONFIG_DRM_RAS \
+                 CONFIG_KEXEC_FILE \
+                 CONFIG_KEXEC_HANDOVER \
+                 CONFIG_PCI_HYPERV \
+                 CONFIG_PCI_HYPERV_INTERFACE \
+                 CONFIG_PROC_VMCORE_DEVICE_DUMP \
+                 CONFIG_SPI_VIRTIO \
+                 CONFIG_XEN_MCE_LOG
+
+  msg2 "Disabling QAT crypto, GPIO & PCIe extras"
+  scripts/config -d CONFIG_CRYPTO_DEV_QAT_6XXX \
+                 CONFIG_CRYPTO_SM3 \
+                 CONFIG_GPIO_BY_PINCTRL \
+                 CONFIG_GPIO_WAVESHARE_DSI_TOUCH \
+                 CONFIG_IPMI_SI_ASYNC_INIT \
+                 CONFIG_PCIE_ECRC \
+                 CONFIG_PCI_PWRCTRL_GENERIC \
+                 CONFIG_PCI_PWRCTRL_TC9563 \
+                 CONFIG_PINCTRL_AMDISP \
+                 CONFIG_POWER_RESET_QEMU_VIRT_CTRL \
+                 CONFIG_VERSAL_SYSMON_I2C
+
+  msg2 "Disabling NUMA balancing, sched-ext & profiling"
+  scripts/config -d CONFIG_ACPI_APEI_GHES_NVIDIA \
+                 CONFIG_ADIN1140_PHY \
+                 CONFIG_CXL_FEATURES \
+                 CONFIG_DP83640_PHY \
+                 CONFIG_LIST_HARDENED \
+                 CONFIG_NUMA_BALANCING \
+                 CONFIG_PM_DEVFREQ_EVENT \
+                 CONFIG_PPS_CLIENT_KTIMER \
+                 CONFIG_PRINTK_INDEX \
+                 CONFIG_PROFILING \
+                 CONFIG_PTP_NETC_V4_TIMER \
+                 CONFIG_SCHEDSTATS \
+                 CONFIG_SCHED_CLASS_EXT \
+                 CONFIG_SCHED_STACK_END_CHECK
+
+  msg2 "Disabling extra GPIO, serial & bus drivers"
+  scripts/config -d CONFIG_ADXL345_I2C \
+                 CONFIG_ADXL345_SPI \
+                 CONFIG_FPGA_MGR_EFINIX_SPI \
+                 CONFIG_GPIO_74X164 \
+                 CONFIG_GPIO_ALTERA \
+                 CONFIG_GPIO_QIXIS_FPGA \
+                 CONFIG_GPIO_WCD934X \
+                 CONFIG_GPIO_XILINX \
+                 CONFIG_HSU_DMA \
+                 CONFIG_I2C_AMD_ASF \
+                 CONFIG_I2C_DESIGNWARE_AMDISP \
+                 CONFIG_INV_ICM42607_I2C \
+                 CONFIG_INV_ICM42607_SPI \
+                 CONFIG_MCTP_TRANSPORT_USB \
+                 CONFIG_MCTP_TRANSPORT_USBLIB \
+                 CONFIG_MM81X_USB \
+                 CONFIG_MUX_CORE \
+                 CONFIG_SERIAL_8250_KEBA \
+                 CONFIG_SERIAL_8250_LPSS \
+                 CONFIG_SERIAL_8250_MID \
+                 CONFIG_SERIAL_8250_NI \
+                 CONFIG_SERIAL_LANTIQ \
+                 CONFIG_SPI_KSPI2 \
+                 CONFIG_SPI_MICROCHIP_CORE_SPI \
+                 CONFIG_SPI_OFFLOAD_TRIGGER_ADI_UTIL_SD \
+                 CONFIG_USB4_STREAM \
+                 CONFIG_USBIP_VUDC \
+                 CONFIG_VL53L1X_I2C
+
+  msg2 "Disabling extra audio & camera drivers"
+  scripts/config -d CONFIG_AIR_AN8801_PHY \
+                 CONFIG_BITLAND_MIFS_WMI \
+                 CONFIG_DWMAC_MOTORCOMM \
+                 CONFIG_F2FS_UNFAIR_RWSEM \
+                 CONFIG_GEHC_PMC_ADC \
+                 CONFIG_MEDIATEK_MT6323_AUXADC \
+                 CONFIG_PWM_PROVIDE_GPIO \
+                 CONFIG_SND_HDA_ACPI \
+                 CONFIG_SND_HDA_CODEC_CM9825 \
+                 CONFIG_SND_HDA_INPUT_BEEP \
+                 CONFIG_SND_HDA_SCODEC_AW88399_I2C \
+                 CONFIG_SND_HDA_SCODEC_TAS2781_SPI \
+                 CONFIG_SND_SOC_ADAU1373 \
+                 CONFIG_SND_SOC_ADAU1977_I2C \
+                 CONFIG_SND_SOC_ADAU1977_SPI \
+                 CONFIG_SND_SOC_AMD_ACP7X \
+                 CONFIG_SND_SOC_AMD_LEGACY_SDW_MACH \
+                 CONFIG_SND_SOC_AW88081 \
+                 CONFIG_SND_SOC_AW88166 \
+                 CONFIG_SND_SOC_CS42XX8_SPI \
+                 CONFIG_SND_SOC_INTEL_AVS_MACH_PCM3168A \
+                 CONFIG_SND_SOC_INTEL_AVS_MACH_RT5640 \
+                 CONFIG_SND_SOC_SDCA_CLASS \
+                 CONFIG_SND_SOC_SOF_AMD_ACP7X \
+                 CONFIG_SND_SOC_TAS675X \
+                 CONFIG_SND_SOC_UDA1380 \
+                 CONFIG_SND_SOC_USB \
+                 CONFIG_SND_SOC_WSA885X \
+                 CONFIG_SND_USB_US144MKII \
+                 CONFIG_SPI_OFFLOAD_TRIGGER_PWM \
+                 CONFIG_USB_USBIO \
+                 CONFIG_VIDEO_AMD_ISP4_CAPTURE \
+                 CONFIG_VIDEO_GC0310 \
+                 CONFIG_VIDEO_HWS \
+                 CONFIG_VIDEO_IMX111 \
+                 CONFIG_VIDEO_IMX471 \
+                 CONFIG_VIDEO_IMX678 \
+                 CONFIG_VIDEO_MAX96712 \
+                 CONFIG_VIDEO_MAX96717 \
+                 CONFIG_VIDEO_OG0VE1B \
+                 CONFIG_VIDEO_OS05B10 \
+                 CONFIG_VIDEO_OV02C10 \
+                 CONFIG_VIDEO_OV02E10 \
+                 CONFIG_VIDEO_OV2735 \
+                 CONFIG_VIDEO_OV6211 \
+                 CONFIG_VIDEO_S5K3M5 \
+                 CONFIG_VIDEO_S5KJN1 \
+                 CONFIG_VIDEO_T4KA3 \
+                 CONFIG_VIDEO_VD55G1 \
+                 CONFIG_VIDEO_VD56G3
+
+  msg2 "Disabling vendor platform drivers & tracers"
+  scripts/config -d CONFIG_ALIBABA_EEA \
+                 CONFIG_AMD_HALO_LED \
+                 CONFIG_AMD_HFI \
+                 CONFIG_AMD_ISP_PLATFORM \
+                 CONFIG_AMD_PMF_UTIL_SUPPORT \
+                 CONFIG_BACKLIGHT_AW99706 \
+                 CONFIG_BACKLIGHT_SY7758 \
+                 CONFIG_BATTERY_CHARGER_SURFACE_RT \
+                 CONFIG_DELL_DW5826E_RESET \
+                 CONFIG_DRM_ACCEL_AMDXDNA \
+                 CONFIG_DRM_CLIENT_LOG \
+                 CONFIG_DRM_PANEL_FOCALTECH_OTA7290B \
+                 CONFIG_GOOGLE_FIRMWARE \
+                 CONFIG_HWLAT_TRACER \
+                 CONFIG_INPUT_AW86927 \
+                 CONFIG_INPUT_ISA1200_HAPTIC \
+                 CONFIG_INTEL_EHL_PSE_IO \
+                 CONFIG_INTEL_SSEI \
+                 CONFIG_KEYBOARD_CHARLIEPLEX \
+                 CONFIG_LEDS_TRIGGER_CPU \
+                 CONFIG_MFD_UPBOARD_FPGA \
+                 CONFIG_OSNOISE_TRACER \
+                 CONFIG_PAGE_POISONING \
+                 CONFIG_QCOM_PAS \
+                 CONFIG_QCOM_PAS_TEE \
+                 CONFIG_QCOM_SCM \
+                 CONFIG_SCHED_TRACER \
+                 CONFIG_TIMERLAT_TRACER \
+                 CONFIG_TOUCHSCREEN_HYNITRON_CST816X \
+                 CONFIG_TOUCHSCREEN_WACOM_W9000 \
+                 CONFIG_TRANSPARENT_HUGEPAGE_ALWAYS \
+                 CONFIG_TRANSPARENT_HUGEPAGE_SHMEM_HUGE_ADVISE \
+                 CONFIG_X86_PLATFORM_DRIVERS_UNIWILL
+
+  msg2 "Disabling sensor, charger & USB dual-role drivers"
+  scripts/config -d CONFIG_AMD_HSMP_ACPI \
+                 CONFIG_AMD_HSMP_PLAT \
+                 CONFIG_APDS9999 \
+                 CONFIG_CHARGER_BQ25630 \
+                 CONFIG_CHARGER_MAX8971 \
+                 CONFIG_CHARGER_SGM41542 \
+                 CONFIG_CHARGER_TWL6030 \
+                 CONFIG_EXTCON_MAX14526 \
+                 CONFIG_FUEL_GAUGE_STC3117 \
+                 CONFIG_GPIO_MPSSE \
+                 CONFIG_GPIO_WATCHDOG \
+                 CONFIG_INPUT_TPS6594_PWRBUTTON \
+                 CONFIG_INTEL_MEI_CSC \
+                 CONFIG_INTEL_OC_WATCHDOG \
+                 CONFIG_INTEL_TURBO_MAX_3 \
+                 CONFIG_LEDS_LTC3220 \
+                 CONFIG_LTC2378 \
+                 CONFIG_MAX14001 \
+                 CONFIG_MAXSMP \
+                 CONFIG_MCP47A1 \
+                 CONFIG_MFD_BQ257XX \
+                 CONFIG_MFD_MAX5970 \
+                 CONFIG_MFD_MAX7360 \
+                 CONFIG_MFD_MAX77705 \
+                 CONFIG_MHZ19B \
+                 CONFIG_MLX5_SF \
+                 CONFIG_MLXREG_DPU \
+                 CONFIG_NCT7201 \
+                 CONFIG_NXPWIFI_SDIO \
+                 CONFIG_PHY_NXP_TJA1145 \
+                 CONFIG_PREEMPT_DYNAMIC \
+                 CONFIG_REGULATOR_ADP5055 \
+                 CONFIG_REGULATOR_MAX77838 \
+                 CONFIG_REGULATOR_PF0900 \
+                 CONFIG_REGULATOR_PF9453 \
+                 CONFIG_REGULATOR_RT8092 \
+                 CONFIG_REGULATOR_TPS65185 \
+                 CONFIG_ROHM_BD79112 \
+                 CONFIG_ROHM_BD79124 \
+                 CONFIG_SENSIRION_SLF3S \
+                 CONFIG_SYSFB_SIMPLEFB \
+                 CONFIG_TI_ADS1018 \
+                 CONFIG_TI_ADS112C14 \
+                 CONFIG_TI_ADS131M02 \
+                 CONFIG_TOUCHSCREEN_HIMAX_HX852X \
+                 CONFIG_TRANSPARENT_HUGEPAGE_TMPFS_HUGE_ADVISE \
+                 CONFIG_USB_CDNS3_GADGET \
+                 CONFIG_USB_CHIPIDEA_UDC \
+                 CONFIG_USB_DWC3_DUAL_ROLE \
+                 CONFIG_USB_DWC3_GOOGLE \
+                 CONFIG_USB_ISP1760_DUAL_ROLE \
+                 CONFIG_USB_MUSB_DUAL_ROLE \
+                 CONFIG_VEML3328 \
+                 CONFIG_WATCHDOG_SYSFS \
+                 CONFIG_ZL3073X_I2C \
+                 CONFIG_ZL3073X_SPI
+
+  msg2 "Disabling battery & power-reset drivers"
+  scripts/config -d CONFIG_BATTERY_CHAGALL \
+                 CONFIG_BATTERY_S2MU005 \
+                 CONFIG_CHARGER_RT9756 \
+                 CONFIG_POWER_RESET_RESTART
+
+  msg2 "Disabling misc drivers (ADC, InfiniBand, touch)"
+  scripts/config -d CONFIG_AD4030 \
+                 CONFIG_AD4080 \
+                 CONFIG_AD4134 \
+                 CONFIG_AD4170_4 \
+                 CONFIG_AD4691 \
+                 CONFIG_AD4851 \
+                 CONFIG_AD5706R \
+                 CONFIG_AD7191 \
+                 CONFIG_AD7405 \
+                 CONFIG_AD7625 \
+                 CONFIG_AD7779 \
+                 CONFIG_ADE9000 \
+                 CONFIG_ADF41513 \
+                 CONFIG_ADIN1140 \
+                 CONFIG_ADL8113 \
+                 CONFIG_BNGE \
+                 CONFIG_FONTS \
+                 CONFIG_FWCTL_BNXT \
+                 CONFIG_INFINIBAND_IONIC \
+                 CONFIG_INFINIBAND_USNIC \
+                 CONFIG_IXD \
+                 CONFIG_MFD_CGBC \
+                 CONFIG_MFD_QNAP_MCU \
+                 CONFIG_MGBE \
+                 CONFIG_MM81X_SDIO \
+                 CONFIG_MMC5983 \
+                 CONFIG_PPS_CLIENT_LDISC \
+                 CONFIG_PPS_GENERATOR \
+                 CONFIG_PTP_1588_CLOCK_INES \
+                 CONFIG_QMC5883L \
+                 CONFIG_QMC6308 \
+                 CONFIG_REGULATOR_FP9931 \
+                 CONFIG_RMI4_F1A \
+                 CONFIG_RMI4_F21 \
+                 CONFIG_SCSI_LEAPRAID \
+                 CONFIG_SEN0322 \
+                 CONFIG_SWITCHTEC_DMA \
+                 CONFIG_TCG_SVSM \
+                 CONFIG_TI_ADS7138
 
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
