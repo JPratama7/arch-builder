@@ -102,7 +102,7 @@ makedepends=(
 
 options=('!ccache' 'lto')
 
-_commit=1b5d5af9510803fdc84f14dc636282d6cd02a5aa
+_commit=ba444d50c594f4b86d856492a8d78b37dfd170ee
 _src_name=JetBrainsRuntime-${_commit}
 
 # Prebuilt JCEF jmods
@@ -122,7 +122,7 @@ source=(
   "jtreg-${_jtreg_ver}.zip::https://builds.shipilev.net/jtreg/jtreg-${_jtreg_ver//+/%2B}.zip"
 )
 # SKIP for the source tarball
-sha512sums=('dd354ee580e0ce68741928d09a19097c2dec0f28cf1c92e7bb55d46e95cefcd4724c0d8145df00a3c71ffc63207f8c422a7a733c74a124c52f4063895483fd55'
+sha512sums=('4496d21b28b6b013f5477eed2f404a5680e5c825ef444c17331ef2f9e56bb055858a0217196cd5e5edc1213f1ab047a62bb12566838c241c4b2d7b1dc44adbb0'
             'bd828d009f11c14fe85fbe2ad74169a21692f3e0bdb2124c74f0a9f98b5d16e878fa806974a62186e52096a3c7ea1556eabd9481fe8f2ad384b7cb980357be5e'
             '57d29699f53a564cd84bd7756ddba7f52e4af753845c7951022b53dc09e09bf533276c8ac84c1978a86723adc2850ee3e78f27610e5ccd43a722691600a5b868')
 
