@@ -13,7 +13,7 @@ fi
 
 pkgbase=linux-lilium
 _major=7.3
-pkgver=${_major}.4
+pkgver=${_major}.5
 _branch=7.x
 pkgrel=1
 pkgdesc='Linux Kernel - Current Stable (CURRENT) with Custom Patches'
@@ -61,13 +61,13 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
         "https://www.kernel.org/pub/linux/kernel/projects/rt/7.3/patch-7.3-rt2.patch.gz"
         "${_patches}arch-patches-sep/0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch"
         "${_patches}arch-patches-sep/0002-drm-i915-dp-On-DPCD-init-wake-the-DPRx-for-eDP.patch"
-        "${_patches}bore-patches/0001-linux7.3-bore7.0.0.patch"
-        "${_patches}lru-cast-v2-patches/0001-7.3-rc7-lru_cast-v0.2.10.patch"
+        "${_patches}bore-v2-patches/0001-linux7.3-rc2-bore-7.0.1.patch"
+        "${_patches}lru-cast-v3-patches/0001-7.3-rc7-lru_cast-v0.2.11.patch"
         "${_patches}poc-selector-patches/0001-sched-7.3-introduce-POC-selector.patch"
 
 
-        "${_patches}io_uring-patches/0001-io_uring-patches.patch"
-        "${_patches}xhci-patches/0001-xhci-patches.patch"
+        "${_patches}io_uring-v3-patches/0001-io_uring-v3-patches.patch"
+        "${_patches}xhci-v2-patches/0001-xhci-v2-patches.patch"
 
         "${_patches}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
