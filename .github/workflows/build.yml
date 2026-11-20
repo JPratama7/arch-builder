@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         build: [
-          thorium
+          thorium, quickshell-git
           ]
       fail-fast: false
     runs-on: ubuntu-latest
