@@ -67,7 +67,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar
 
 
         "${_patches}io_uring-v3-patches/0001-io_uring-v3-patches.patch"
-        "${_patches}xhci-v2-patches/0001-xhci-v2-patches.patch"
+        "${_patches}xhci-patches/0001-xhci-patches.patch"
 
         "${_patches}amd-pstate-patches/0001-amd-pstate-patches.patch"
 
@@ -156,18 +156,18 @@ validpgpkeys=(
 )
 
 # https://www.kernel.org/pub/linux/kernel/v7.x/sha256sums.asc
-sha256sums=('b11b6df8295e8e991ff040b71aaa4994a8b55caa23b6b092907f195b5840fd1f'
+sha256sums=('8f293f83d54f0b7b9be56863ebc5e4ea79d73e530b4ae55c572be97ef39f0990'
             'SKIP'
             '1ac18cad2578df4a70f9346f7c6fccbb62f042a0ee0594817fdef9f2704904ee'
             'bb03d28b8af371cd47eebf18378197c57e26c951d33c872d52ae97a2690d1ec6'
             'ff30b00e4d2eca5ab6a0ca3d703a9adb70d0a538ab1ecd17f786bce0fed8ba20'
             '961ff164044f698b2aa0e64ab9a9a12ec8d95fafe5e42b9a99bad0620130d513'
             'c81bcb2d043e4ad679fa5f544a73a8ffd578408013442cfe66ac7d300a46d6e5'
-            '8f4bce654ad7ca8ed30290be6cfb656d61827f58a3d036fdf5e22bdd26eb7b22'
-            'f13ac591211d3af128f55f91658a98173472e5866d0cfcf7c730bd887cbf8271'
+            '59349771e5cde001b5456b29b9d302f5dca9cdbe60beb43d1161a85b21c1a82d'
+            '0246c40040b6c65d41d3820a9f72d28592b37959f1204cb032e7a8148f2dc90c'
             '6df3f88c074878c08270bba2a6e5bcdeef6db614af1f8ffaaad776b6f1d7b9cf'
-            '401cbd5219f6bbc8e0886d0c88765a4baebe482a1dec5296cc18aec065dda17b'
-            'd652deeb83f7d88dec4b64a2dcc231dc59543d7c745580c5d9af15ca4b9bee00'
+            '332df7bdc2af7c66d8d030aa3ec6dca28811f1f09c94ffd755c0807d8df50395'
+            '013149a65d8e7092472c166fc878bb4230bdf49d95b84dc45b59525ab4a02307'
             '3f31075b9f975f49b724cf103afe6bbda43e94e929dc7dbc2b3d79e8aaa55f48'
             'bb1ead8195d2676cde87be304ac6ebbb9adeda2d27a7bf5a3907f24aeeb485cf'
             '9c11a233168e08a74691ac175b6d1e930e8f03841785ae81ba3c50ac3fcbae81'
@@ -288,6 +288,8 @@ prepare() {
     msg2 "Applying patch $src..."
     apply_patch "../$src"
   done
+
+  exit 0
 
   # Applying configuration
   msg2 "Copy configuration"
